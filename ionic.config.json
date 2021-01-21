@@ -1,0 +1,7 @@
+{
+  "name": "sanble-app",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "vue"
+}
