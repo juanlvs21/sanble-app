@@ -24,7 +24,6 @@
             >UI Components</a
           >
         </p>
-        <vs-button> Default </vs-button>
       </div>
     </ion-content>
   </ion-page>
