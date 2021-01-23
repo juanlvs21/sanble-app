@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
 import { IonApp, IonRouterOutlet, IonSplitPane } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
 import { Route, Redirect } from "react-router-dom";
@@ -28,17 +28,19 @@ import "./theme/styles.css";
 /* Style Font Family */
 import "./assets/fonts/Quicksand/Quicksand.css";
 
+/* Context */
+import { DataContext } from "./context/AppContext";
+
 /* Pages */
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 
 const App: React.FC = () => {
+  const { darkMode } = useContext(DataContext);
+
   useEffect(() => {
-    const darkMode: any = localStorage.getItem("darkMode");
-    if (darkMode === "true" && !document.body.classList.contains("dark")) {
-      document.body.classList.add("dark");
-    }
-  }, []);
+    darkMode.initDarkMode();
+  }, [darkMode]);
 
   return (
     <IonApp>
