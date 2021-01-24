@@ -2,20 +2,13 @@
   "name": "sanble-app",
   "version": "0.0.1",
   "private": false,
-  "description": "Management and information of gastronomic fairs and entrepreneurship fairs in the state of Nueva Esparta - Venezuela [Degree work]",
+  "description": "APP - Management and information of gastronomic fairs and entrepreneurship fairs in the state of Nueva Esparta - Venezuela [Degree work]",
   "license": "MIT",
-  "contributors": [
-    {
-      "name": "Juan Villarroel",
-      "email": "me@juanlvs.ml",
-      "url": "https://juanlvs.ml"
-    },
-    {
-      "name": "Néstor Juárez",
-      "email": "nestorjavierjuarez@gmail.com",
-      "url": "https://nestorjjr.netlify.app/"
-    }
-  ],
+  "author": {
+    "name": "Juan Villarroel",
+    "email": "me@juanlvs.ml",
+    "url": "https://juanlvs.ml"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
@@ -45,6 +38,13 @@
     "@types/react-router": "5.1.4",
     "@types/react-router-dom": "5.1.3",
     "typescript": "3.8.3"
+  },
+  "repository": {
+    "url": "https://github.com/juanlvs21/sanble-app"
+  },
+  "bugs": {
+    "url": "https://github.com/juanlvs21/sanble-app/issues",
+    "email": "me@juanlvs.ml"
   },
   "eslintConfig": {
     "extends": "react-app"
