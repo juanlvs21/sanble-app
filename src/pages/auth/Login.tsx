@@ -1,11 +1,14 @@
 import React, { useState } from "react";
-import { IonItem, IonLabel, IonInput, IonButton } from "@ionic/react";
+import { IonItem, IonLabel, IonInput, IonButton, IonToast } from "@ionic/react";
 
 // Layouts
 import Layout from "../../layouts/Auth";
 
 // Styles
 import styles from "./Auth.module.css";
+
+// Hooks
+import useAuth from "../../hooks/useAuth";
 
 interface IUser {
   username: string;
@@ -18,6 +21,8 @@ const Login: React.FC = () => {
     password: "",
   });
 
+  const { loading, errors, showErrors, setShowErrors, handleLogin } = useAuth();
+
   const handleChange = ({ target: { value, name } }: any) => {
     setUser({
       ...user,
@@ -27,7 +32,7 @@ const Login: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(user);
+    handleLogin(user);
   };
 
   return (
@@ -66,6 +71,12 @@ const Login: React.FC = () => {
           </IonButton>
         </div>
       </form>
+      <IonToast
+        isOpen={showErrors}
+        onDidDismiss={() => setShowErrors(false)}
+        message={errors}
+        duration={5000}
+      />
     </Layout>
   );
 };
