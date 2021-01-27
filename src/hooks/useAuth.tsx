@@ -3,7 +3,6 @@ import { useState } from "react";
 // Utils
 import { login } from "../utils/services/API";
 import emailValid from "../utils/validations/email";
-import formatMessageToasts from "../utils/formatMessageToasts";
 
 const useAuth = () => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -11,20 +10,19 @@ const useAuth = () => {
   const [showErrors, setShowErrors] = useState<boolean>(false);
 
   const handleLogin = async (user: object) => {
-    console.log("handleLogin");
-    // setLoading(true);
-    // setErrors([]);
+    setLoading(true);
+    setShowErrors(false);
+    setErrors("");
 
-    // await login
-    //   .then((user: any) => {
-    //     console.log(user);
-    //   })
-    //   .catch((error: any) => {
-    setShowErrors(true);
-    setErrors(formatMessageToasts(["2", "31", "#"]));
-    //     console.error(error);
-
-    //   });
+    await login(user)
+      .then((res: any) => console.log(res))
+      .catch((errors: any) => {
+        setErrors(errors);
+        setShowErrors(true);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   return { loading, errors, showErrors, setShowErrors, handleLogin };
