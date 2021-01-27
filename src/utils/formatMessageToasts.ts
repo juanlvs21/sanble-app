@@ -3,7 +3,7 @@ export default (messages: string | Array<string>): string => {
     let msg = "";
 
     messages.map((message: string, i: number) => {
-      msg = msg + message;
+      msg = msg + "- " + message;
       if (i < messages.length) msg = msg + "</br>";
     });
 
