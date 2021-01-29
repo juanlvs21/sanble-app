@@ -1,0 +1,45 @@
+.background {
+  background-color: var(--ion-color-primary);
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.logo {
+  width: 100px;
+  -webkit-animation: pulse 1.2s linear infinite;
+  -moz-animation: pulse 1.2s linear infinite;
+  animation: pulse 1.2s linear infinite;
+}
+
+@-moz-keyframes pulse {
+  50% {
+    -moz-transform: scale(1.1);
+  }
+  100% {
+    -moz-transform: scale(1);
+  }
+}
+@-webkit-keyframes pulse {
+  50% {
+    -webkit-transform: scale(1.1);
+  }
+  100% {
+    -webkit-transform: scale(1);
+  }
+}
+@keyframes pulse {
+  50% {
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+  }
+  100% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+}
