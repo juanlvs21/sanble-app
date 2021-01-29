@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { IonItem, IonLabel, IonInput, IonButton, IonToast } from "@ionic/react";
+import {
+  IonItem,
+  IonLabel,
+  IonInput,
+  IonButton,
+  IonToast,
+  IonProgressBar,
+} from "@ionic/react";
 
 // Layouts
 import Layout from "../../layouts/Auth";
@@ -44,6 +51,7 @@ const Login: React.FC = () => {
             name="username"
             value={user.username}
             onIonChange={handleChange}
+            disabled={loading}
             required
           />
         </IonItem>
@@ -54,12 +62,22 @@ const Login: React.FC = () => {
             value={user.password}
             type="password"
             onIonChange={handleChange}
+            disabled={loading}
             required
           />
         </IonItem>
         <div className={styles.container_btns}>
-          <IonButton expand="block" color="primary" type="submit">
-            Iniciar Sesión
+          <IonButton
+            expand="block"
+            color="primary"
+            type="submit"
+            disabled={loading}
+          >
+            {loading ? (
+              <IonProgressBar type="indeterminate" color="light" />
+            ) : (
+              "Iniciar Sesión"
+            )}
           </IonButton>
           <IonButton
             expand="block"
