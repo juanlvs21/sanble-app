@@ -1,23 +1,20 @@
-import axios from "axios";
-
 // Utils
 import formatMessageToasts from "../formatMessageToasts";
 
-axios.defaults.baseURL = process.env.REACT_APP_URL_API;
-
-// Catch
-const errorsCatch = (errors: any) => {
-  if (errors.response) return errors.response.data.data;
-  else return ["Error desconocido"];
-};
+const API_URL = process.env.REACT_APP_URL_API;
 
 // Auth
-export const login: any = (body: any): Promise<any> => {
-  return new Promise<any>(async (resolve, rejects) => {
-    await axios
-      .post(`/auth/login`, body)
-      .then(({ data: { data } }) => resolve(data))
-      .catch((errors) => rejects(formatMessageToasts(errorsCatch(errors))));
+export const login: any = (body: any): Promise<Response> => {
+  return new Promise<any>(async (resolve, reject) => {
+    const response = await fetch(`${API_URL}/auth/login`, {
+      method: "POST",
+      body: JSON.stringify(body),
+    });
+    const { data } = await response.json();
+
+    if (!response.ok) {
+      reject(formatMessageToasts(data));
+    } else resolve(data);
   });
 };
 
@@ -25,7 +22,7 @@ export const register: any = (body: any): Promise<Response> => {
   return new Promise<any>(async (resolve, reject) => {
     const response = await fetch(`/auth/register`, {
       method: "POST",
-      body,
+      body: JSON.stringify(body),
     });
     const { data } = await response.json();
 
