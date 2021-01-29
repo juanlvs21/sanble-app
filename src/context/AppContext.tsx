@@ -6,39 +6,31 @@ export const DataContext: any = createContext({
     initDarkMode: null,
     toggleDarkMode: null,
   },
-  user: null,
-  access: null,
+  session: null,
 });
 
 export const AppProvider = ({ children }: any) => {
   const [darkMode, setDarkMode] = useState<boolean>(false);
+  const [session, setSession] = useState<any>(null);
 
-  const initDarkMode = () => {
-    const darkMode: any = localStorage.getItem("darkMode");
-    if (darkMode === "true" && !document.body.classList.contains("dark")) {
-      toggleDarkMode();
-    }
+  const setDarkModeApp = (value: boolean) => {
+    setDarkMode(value);
+    localStorage.setItem("darkMode", value ? "true" : "false");
   };
 
-  const toggleDarkMode = () => {
-    document.body.classList.toggle("dark");
-    if (document.body.classList.contains("dark")) {
-      localStorage.setItem("darkMode", "true");
-      setDarkMode(true);
-    } else {
-      localStorage.setItem("darkMode", "false");
-      setDarkMode(false);
-    }
+  const setSessionUser = (data: any) => {
+    setSession(data);
+    if (data) localStorage.setItem("session", btoa(JSON.stringify(data)));
+    else localStorage.removeItem("session");
   };
 
   return (
     <DataContext.Provider
       value={{
-        darkMode: {
-          toggle: darkMode,
-          initDarkMode,
-          toggleDarkMode,
-        },
+        session,
+        setSessionUser,
+        darkMode,
+        setDarkModeApp,
       }}
     >
       {children}

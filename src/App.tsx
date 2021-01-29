@@ -1,7 +1,7 @@
-import React, { useEffect, useContext } from "react";
+import React, { useEffect } from "react";
 import { IonApp, IonRouterOutlet, IonSplitPane } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
-import { Route, Redirect } from "react-router-dom";
+import { Route } from "react-router-dom";
 
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
@@ -28,31 +28,47 @@ import "./theme/styles.css";
 /* Style Font Family */
 import "./assets/fonts/Quicksand/Quicksand.css";
 
-/* Context */
-import { DataContext } from "./context/AppContext";
+/* Hooks */
+import useAuth from "./hooks/useAuth";
+import useDarkmode from "./hooks/useDarkmode";
+
+/* Components */
+import PreloadScreen from "./components/preload/PreloadScreen";
+import PrivateRoute from "./components/route/Private";
 
 /* Pages */
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
+import Home from "./pages/home/Home";
 
 const App: React.FC = () => {
-  const { darkMode } = useContext(DataContext);
+  const { darkMode, initDarkMode } = useDarkmode();
+  const { gettingSession, handleGetSession } = useAuth();
 
   useEffect(() => {
-    darkMode.initDarkMode();
-  }, [darkMode]);
+    initDarkMode();
+    if (gettingSession) handleGetSession();
+  }, [darkMode, initDarkMode, gettingSession, handleGetSession]);
 
   return (
     <IonApp>
-      <IonReactRouter>
-        <IonSplitPane contentId="main">
-          <IonRouterOutlet id="main">
-            <Route path="/auth/login" component={Login} exact />
-            <Route path="/auth/register" component={Register} exact />
-            <Redirect from="/" to="/auth/login" exact />
-          </IonRouterOutlet>
-        </IonSplitPane>
-      </IonReactRouter>
+      {gettingSession ? (
+        <PreloadScreen />
+      ) : (
+        <IonReactRouter>
+          <IonSplitPane contentId="main">
+            <IonRouterOutlet id="main">
+              {/* Auth */}
+              <Route path="/auth/login" component={Login} exact />
+              <Route path="/auth/register" component={Register} exact />
+              {/* Home */}
+              <PrivateRoute path="/">
+                <Home />
+              </PrivateRoute>
+            </IonRouterOutlet>
+          </IonSplitPane>
+        </IonReactRouter>
+      )}
     </IonApp>
   );
 };
