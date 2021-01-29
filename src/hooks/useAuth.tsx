@@ -2,7 +2,7 @@ import { useState } from "react";
 
 // Utils
 import { login } from "../utils/services/API";
-import emailValid from "../utils/validations/email";
+// import emailValid from "../utils/validations/email";
 
 const useAuth = () => {
   const [loading, setLoading] = useState<boolean>(false);
