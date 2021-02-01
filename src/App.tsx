@@ -37,6 +37,7 @@ import PreloadScreen from "./components/preload/PreloadScreen";
 import PrivateRoute from "./components/route/Private";
 
 /* Pages */
+import NotFound from "./pages/404/NotFound";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 import Home from "./pages/home/Home";
@@ -65,6 +66,7 @@ const App: React.FC = () => {
               <PrivateRoute path="/">
                 <Home />
               </PrivateRoute>
+              <Route path="*" component={NotFound} exact />
             </IonRouterOutlet>
           </IonSplitPane>
         </IonReactRouter>
