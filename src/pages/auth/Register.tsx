@@ -1,5 +1,14 @@
-import React, { FormEvent, useState } from "react";
-import { IonItem, IonLabel, IonInput, IonButton } from "@ionic/react";
+import React, { useEffect } from "react";
+import {
+  IonItem,
+  IonLabel,
+  IonInput,
+  IonButton,
+  IonToast,
+  IonProgressBar,
+} from "@ionic/react";
+import { useForm } from "react-hook-form";
+import { useHistory } from "react-router-dom";
 
 // Layouts
 import Layout from "../../layouts/Auth";
@@ -7,89 +16,111 @@ import Layout from "../../layouts/Auth";
 // Styles
 import styles from "./Auth.module.css";
 
-interface IUser {
-  username: string;
-  name: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-}
+// Hooks
+import useAuth from "../../hooks/useAuth";
+
+// Utils
+import { validator, getErrorsMsg } from "../../utils/formValidator";
 
 const Register: React.FC = () => {
-  const [user, setUser] = useState<IUser>({
-    username: "",
-    name: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
+  const history = useHistory();
+  const {
+    loading,
+    errors,
+    showErrors,
+    setShowErrors,
+    setDataError,
+    handleRegister,
+  } = useAuth();
+
+  const { register, handleSubmit, errors: errorsForm } = useForm({
+    defaultValues: {
+      username: "",
+      name: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+    },
   });
 
-  const handleChange = ({ target: { value, name } }: any) => {
-    setUser({
-      ...user,
-      [name]: value,
-    });
-  };
+  useEffect(() => {
+    setDataError(getErrorsMsg(errorsForm));
+  }, [errorsForm]); // eslint-disable-line
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log(user);
+  const onSubmit = (data: any) => {
+    if (data.password !== data.confirmPassword)
+      setDataError("La contraseña no coincide");
+    else handleRegister(data).then(() => history.replace("/auth/welcome"));
   };
 
   return (
     <Layout compact={true}>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <IonItem className={styles.input}>
           <IonLabel position="floating">Usuario</IonLabel>
           <IonInput
             name="username"
-            value={user.username}
-            onIonChange={handleChange}
-            required
+            disabled={loading}
+            ref={
+              register(
+                validator("username", ["required", "minLength:4"])
+              ) as any
+            }
           />
         </IonItem>
         <IonItem className={styles.input}>
           <IonLabel position="floating">Nombre</IonLabel>
           <IonInput
             name="name"
-            value={user.name}
-            onIonChange={handleChange}
-            required
+            disabled={loading}
+            ref={
+              register(validator("name", ["required", "minLength:4"])) as any
+            }
           />
         </IonItem>
         <IonItem className={styles.input}>
           <IonLabel position="floating">Correo electrónico</IonLabel>
           <IonInput
             name="email"
-            value={user.email}
-            type="email"
-            onIonChange={handleChange}
-            required
+            disabled={loading}
+            ref={
+              register(validator("email", ["required", "pattern:email"])) as any
+            }
           />
         </IonItem>
         <IonItem className={styles.input}>
           <IonLabel position="floating">Contraseña</IonLabel>
           <IonInput
             name="password"
-            value={user.password}
             type="password"
-            onIonChange={handleChange}
-            required
+            disabled={loading}
+            ref={
+              register(
+                validator("password", [
+                  "required",
+                  "minLength:8",
+                  "pattern:password",
+                ])
+              ) as any
+            }
           />
         </IonItem>
         <IonItem className={styles.input}>
           <IonLabel position="floating">Confirmar contraseña</IonLabel>
           <IonInput
             name="confirmPassword"
-            value={user.confirmPassword}
             type="password"
-            onIonChange={handleChange}
-            required
+            disabled={loading}
+            ref={register(validator("confirmPassword", ["required"])) as any}
           />
         </IonItem>
         <div className={styles.container_btns}>
           <IonButton expand="block" color="primary" type="submit">
-            Registrarse
+            {loading ? (
+              <IonProgressBar type="indeterminate" color="light" />
+            ) : (
+              "Registrarse"
+            )}
           </IonButton>
           <IonButton
             expand="block"
@@ -101,6 +132,12 @@ const Register: React.FC = () => {
           </IonButton>
         </div>
       </form>
+      <IonToast
+        isOpen={showErrors}
+        onDidDismiss={() => setShowErrors(false)}
+        message={errors}
+        duration={3000}
+      />
     </Layout>
   );
 };
