@@ -1,8 +1,7 @@
 import { useState, useContext } from "react";
 
 // Utils
-import { login } from "../utils/services/API";
-// import emailValid from "../utils/validations/email";
+import { login, register } from "../utils/services/API";
 
 // Context
 import { DataContext } from "../context/AppContext";
@@ -15,20 +14,51 @@ const useAuth = () => {
   const [showErrors, setShowErrors] = useState<boolean>(false);
   const [gettingSession, setGettingSession] = useState<boolean>(true);
 
+  const setDataError = (errs: any) => {
+    setErrors(errs ? errs : "");
+    setShowErrors(errs ? true : false);
+  };
+
   const handleLogin = async (user: object) => {
     setLoading(true);
     setShowErrors(false);
     setErrors("");
 
-    await login(user)
-      .then((res: any) => setSessionUser(res))
-      .catch((errors: any) => {
-        setErrors(errors);
-        setShowErrors(true);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+    return new Promise(async (resolve, rejects) => {
+      await login(user)
+        .then((res: any) => {
+          setSessionUser(res);
+          resolve(true);
+        })
+        .catch((errors: any) => {
+          setDataError(errors);
+          rejects(false);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    });
+  };
+
+  const handleRegister = async (user: object) => {
+    setLoading(true);
+    setShowErrors(false);
+    setErrors("");
+
+    return new Promise(async (resolve, rejects) => {
+      await register(user)
+        .then((res: any) => {
+          setSessionUser(res);
+          resolve(true);
+        })
+        .catch((errors: any) => {
+          setDataError(errors);
+          rejects(false);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    });
   };
 
   const handleGetSession = async () => {
@@ -46,7 +76,9 @@ const useAuth = () => {
     showErrors,
     setSessionUser,
     setShowErrors,
+    setDataError,
     handleLogin,
+    handleRegister,
     handleGetSession,
   };
 };

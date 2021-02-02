@@ -20,7 +20,7 @@ export const login: any = (body: any): Promise<Response> => {
 
 export const register: any = (body: any): Promise<Response> => {
   return new Promise<any>(async (resolve, reject) => {
-    const response = await fetch(`/auth/register`, {
+    const response = await fetch(`${API_URL}/auth/register`, {
       method: "POST",
       body: JSON.stringify(body),
     });

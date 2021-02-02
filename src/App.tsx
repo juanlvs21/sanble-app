@@ -40,6 +40,7 @@ import PrivateRoute from "./components/route/Private";
 import NotFound from "./pages/404/NotFound";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
+import Welcome from "./pages/auth/Welcome";
 import Home from "./pages/home/Home";
 
 const App: React.FC = () => {
@@ -62,6 +63,7 @@ const App: React.FC = () => {
               {/* Auth */}
               <Route path="/auth/login" component={Login} exact />
               <Route path="/auth/register" component={Register} exact />
+              <Route path="/auth/welcome" component={Welcome} exact />
               {/* Home */}
               <PrivateRoute path="/">
                 <Home />
