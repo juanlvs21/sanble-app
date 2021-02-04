@@ -1,8 +1,5 @@
 import React, { createContext, useState } from "react";
 
-// Hooks
-import useApp from "../hooks/useApp";
-
 export const DataContext: any = createContext({
   darkMode: {
     toggle: null,
@@ -13,7 +10,6 @@ export const DataContext: any = createContext({
 });
 
 export const AppProvider = ({ children }: any) => {
-  const { isMobile } = useApp();
   const [darkMode, setDarkMode] = useState<boolean>(false);
   const [session, setSession] = useState<any>(null);
 

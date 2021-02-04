@@ -5,6 +5,7 @@ import { login, register, checkSession } from "../utils/services/API";
 
 // Context
 import { DataContext } from "../context/AppContext";
+import { setInterval } from "timers";
 
 const useAuth = () => {
   const { session, setSessionUser, getSessionStorage } = useContext(
@@ -78,6 +79,11 @@ const useAuth = () => {
     }
   };
 
+  const handleRefreshToken = async () => {
+    await handleGetSession();
+    setInterval(async () => await handleGetSession(), 600000);
+  };
+
   return {
     session,
     gettingSession,
@@ -90,6 +96,7 @@ const useAuth = () => {
     handleLogin,
     handleRegister,
     handleGetSession,
+    handleRefreshToken,
   };
 };
 
