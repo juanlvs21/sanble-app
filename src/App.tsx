@@ -47,14 +47,14 @@ import Home from "./pages/home/Home";
 const App: React.FC = () => {
   const { initDarkMode } = useDarkmode();
   const { isMobile } = useApp();
-  const { gettingSession, handleGetSession } = useAuth();
+  const { gettingSession, handleRefreshToken } = useAuth();
 
   useEffect(() => {
     initDarkMode();
   }, [initDarkMode]);
 
   useEffect(() => {
-    if (gettingSession) handleGetSession();
+    if (gettingSession) handleRefreshToken();
   }, []); // eslint-disable-line
 
   return (
