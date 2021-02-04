@@ -1,5 +1,8 @@
 import React, { createContext, useState } from "react";
 
+// Hooks
+import useApp from "../hooks/useApp";
+
 export const DataContext: any = createContext({
   darkMode: {
     toggle: null,
@@ -10,6 +13,7 @@ export const DataContext: any = createContext({
 });
 
 export const AppProvider = ({ children }: any) => {
+  const { isMobile } = useApp();
   const [darkMode, setDarkMode] = useState<boolean>(false);
   const [session, setSession] = useState<any>(null);
 
@@ -18,10 +22,22 @@ export const AppProvider = ({ children }: any) => {
     localStorage.setItem("darkMode", value ? "true" : "false");
   };
 
-  const setSessionUser = (data: any) => {
+  const setSessionUser = async (data: any) => {
     setSession(data);
     if (data) localStorage.setItem("session", btoa(JSON.stringify(data)));
     else localStorage.removeItem("session");
+  };
+
+  const getSessionStorage = async () => {
+    const sessionStorage: string = localStorage.getItem("session") || "";
+    if (sessionStorage) {
+      const data = JSON.parse(atob(sessionStorage));
+      setSession(data);
+      return data;
+    } else {
+      setSession(null);
+      return null;
+    }
   };
 
   return (
@@ -29,6 +45,7 @@ export const AppProvider = ({ children }: any) => {
       value={{
         session,
         setSessionUser,
+        getSessionStorage,
         darkMode,
         setDarkModeApp,
       }}

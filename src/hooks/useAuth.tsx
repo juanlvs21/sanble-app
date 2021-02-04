@@ -1,13 +1,15 @@
 import { useState, useContext } from "react";
 
 // Utils
-import { login, register } from "../utils/services/API";
+import { login, register, checkSession } from "../utils/services/API";
 
 // Context
 import { DataContext } from "../context/AppContext";
 
 const useAuth = () => {
-  const { session, setSessionUser } = useContext(DataContext);
+  const { session, setSessionUser, getSessionStorage } = useContext(
+    DataContext
+  );
 
   const [loading, setLoading] = useState<boolean>(false);
   const [errors, setErrors] = useState<string>("");
@@ -62,10 +64,18 @@ const useAuth = () => {
   };
 
   const handleGetSession = async () => {
-    setGettingSession(true);
-    await setTimeout(() => {
+    try {
+      const data = await getSessionStorage();
+
+      if (data) {
+        await checkSession(data?.meta?.token)
+          .then((res: any) => setSessionUser(res))
+          .catch(() => setSessionUser(null))
+          .finally(() => setGettingSession(false));
+      } else setGettingSession(false);
+    } catch (error) {
       setGettingSession(false);
-    }, 2000);
+    }
   };
 
   return {

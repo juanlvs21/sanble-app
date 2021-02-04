@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { IonApp, IonRouterOutlet, IonSplitPane } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
-import { Route } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
@@ -29,12 +29,13 @@ import "./theme/styles.css";
 import "./assets/fonts/Quicksand/Quicksand.css";
 
 /* Hooks */
+import useApp from "./hooks/useApp";
 import useAuth from "./hooks/useAuth";
 import useDarkmode from "./hooks/useDarkmode";
 
 /* Components */
 import PreloadScreen from "./components/preload/PreloadScreen";
-import PrivateRoute from "./components/route/Private";
+import Route from "./components/router/Route";
 
 /* Pages */
 import NotFound from "./pages/404/NotFound";
@@ -44,35 +45,46 @@ import Welcome from "./pages/auth/Welcome";
 import Home from "./pages/home/Home";
 
 const App: React.FC = () => {
-  const { darkMode, initDarkMode } = useDarkmode();
+  const { initDarkMode } = useDarkmode();
+  const { isMobile } = useApp();
   const { gettingSession, handleGetSession } = useAuth();
 
   useEffect(() => {
     initDarkMode();
+  }, [initDarkMode]);
+
+  useEffect(() => {
     if (gettingSession) handleGetSession();
-  }, [darkMode, initDarkMode, gettingSession, handleGetSession]);
+  }, []); // eslint-disable-line
 
   return (
     <IonApp>
-      {gettingSession ? (
-        <PreloadScreen />
-      ) : (
-        <IonReactRouter>
-          <IonSplitPane contentId="main">
-            <IonRouterOutlet id="main">
-              {/* Auth */}
-              <Route path="/auth/login" component={Login} exact />
-              <Route path="/auth/register" component={Register} exact />
-              <Route path="/auth/welcome" component={Welcome} exact />
-              {/* Home */}
-              <PrivateRoute path="/">
-                <Home />
-              </PrivateRoute>
-              <Route path="*" component={NotFound} exact />
-            </IonRouterOutlet>
-          </IonSplitPane>
-        </IonReactRouter>
-      )}
+      {gettingSession && !isMobile() && <PreloadScreen />}
+
+      <IonReactRouter>
+        <IonSplitPane contentId="main">
+          <IonRouterOutlet id="main">
+            {/* Auth */}
+            <Route path="/auth/login">
+              <Login />
+            </Route>
+            <Route path="/auth/register">
+              <Register />
+            </Route>
+            <Redirect path="/auth" to="/auth/login" exact />
+            <Route path="/auth/welcome" secured={true}>
+              <Welcome />
+            </Route>
+            {/* Home */}
+            <Route path="/" secured={true}>
+              <Home />
+            </Route>
+            <Route path="*">
+              <NotFound />
+            </Route>
+          </IonRouterOutlet>
+        </IonSplitPane>
+      </IonReactRouter>
     </IonApp>
   );
 };

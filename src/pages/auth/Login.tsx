@@ -22,11 +22,6 @@ import useAuth from "../../hooks/useAuth";
 // Utils
 import { validator, getErrorsMsg } from "../../utils/formValidator";
 
-interface IUser {
-  username: string;
-  password: string;
-}
-
 const Login: React.FC = () => {
   const history = useHistory();
 
@@ -91,6 +86,7 @@ const Login: React.FC = () => {
             color="primary"
             fill="outline"
             routerLink="/auth/register"
+            disabled={loading}
           >
             Registrarse
           </IonButton>

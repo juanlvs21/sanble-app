@@ -127,6 +127,7 @@ const Register: React.FC = () => {
             color="primary"
             fill="outline"
             routerLink="/auth/login"
+            disabled={loading}
           >
             Iniciar Sesión
           </IonButton>

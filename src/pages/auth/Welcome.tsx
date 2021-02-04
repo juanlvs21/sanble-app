@@ -1,13 +1,4 @@
 import React from "react";
-import {
-  IonItem,
-  IonLabel,
-  IonInput,
-  IonButton,
-  IonToast,
-  IonProgressBar,
-} from "@ionic/react";
-
 // Layouts
 import Layout from "../../layouts/Auth";
 
