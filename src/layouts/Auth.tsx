@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { IonPage, IonContent } from "@ionic/react";
 
 // Styles
@@ -11,6 +11,9 @@ import LogoHorizontal from "../assets/images/Logo_Horizontal_Light.png";
 // Components
 import ToggleDarkMode from "../components/darkMode/Toggle";
 
+// Hooks
+import useApp from "../hooks/useApp";
+
 interface ContainerProps {
   children: React.ReactNode;
   compact?: boolean;
@@ -20,6 +23,12 @@ const AuthLayout: React.FC<ContainerProps> = ({
   children,
   compact = false,
 }) => {
+  const { setColorStatusBar } = useApp();
+
+  useEffect(() => {
+    setColorStatusBar("#ff7315");
+  }, [setColorStatusBar]);
+
   return (
     <IonPage>
       <IonContent className={styles.ion_content}>
