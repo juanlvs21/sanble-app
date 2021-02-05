@@ -13,7 +13,7 @@ const NotFound: React.FC = () => {
       <img src={error} alt="" />
       <h1>Página no encontrada</h1>
 
-      <IonButton color="light" routerLink="/">
+      <IonButton fill="outline" color="light" routerLink="/">
         Ir al inicio
       </IonButton>
     </div>
