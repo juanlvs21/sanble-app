@@ -29,7 +29,6 @@ import "./theme/styles.css";
 import "./assets/fonts/Quicksand/Quicksand.css";
 
 /* Hooks */
-import useApp from "./hooks/useApp";
 import useAuth from "./hooks/useAuth";
 import useDarkmode from "./hooks/useDarkmode";
 
@@ -42,11 +41,11 @@ import NotFound from "./pages/404/NotFound";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 import Welcome from "./pages/auth/Welcome";
+import Activate from "./pages/activate/Activate";
 import Home from "./pages/home/Home";
 
 const App: React.FC = () => {
   const { initDarkMode } = useDarkmode();
-  const { isMobile } = useApp();
   const { gettingSession, handleRefreshToken } = useAuth();
 
   useEffect(() => {
@@ -59,7 +58,7 @@ const App: React.FC = () => {
 
   return (
     <IonApp>
-      {gettingSession && !isMobile() && <PreloadScreen />}
+      {gettingSession && <PreloadScreen />}
 
       <IonReactRouter>
         <IonSplitPane contentId="main">
@@ -71,15 +70,18 @@ const App: React.FC = () => {
             <Route path="/auth/register">
               <Register />
             </Route>
-            <Redirect path="/auth" to="/auth/login" exact />
             <Route path="/auth/welcome" secured={true}>
               <Welcome />
             </Route>
+            <Route path="/activate">
+              <Activate />
+            </Route>
+            <Redirect path="/auth" to="/auth/login" exact />
             {/* Home */}
             <Route path="/" secured={true}>
               <Home />
             </Route>
-            <Route path="*">
+            <Route path="*" notFound={true}>
               <NotFound />
             </Route>
           </IonRouterOutlet>
