@@ -1,17 +1,17 @@
-import React, { useContext } from "react";
+import React from "react";
 
 // Styles
 import styles from "./Toggle.module.css";
 
-// Context
-import { DataContext } from "../../context/AppContext";
+// Hooks
+import useDarkmode from "../../hooks/useDarkmode";
 
 interface ContainerProps {
   float?: boolean;
 }
 
 const Toggle: React.FC<ContainerProps> = ({ float = false }) => {
-  const { darkMode } = useContext(DataContext);
+  const { darkMode, toggleDarkMode } = useDarkmode();
 
   return (
     <div className={`${float && styles.float}`}>
@@ -19,8 +19,8 @@ const Toggle: React.FC<ContainerProps> = ({ float = false }) => {
         id="toggle"
         className={styles.toggle}
         type="checkbox"
-        checked={darkMode.toggle}
-        onChange={darkMode.toggleDarkMode}
+        checked={darkMode}
+        onChange={toggleDarkMode}
       />
     </div>
   );
