@@ -8,16 +8,20 @@ interface ContainerProps {
   children: React.ReactNode;
   path: string;
   secured?: boolean;
+  notFound?: boolean;
 }
 
 const RouteApp: React.FC<ContainerProps> = ({
   children,
   path,
   secured = false,
+  notFound = false,
 }) => {
   const { session } = useAuth();
 
-  if (secured) {
+  if (notFound) {
+    return <Route>{children}</Route>;
+  } else if (secured) {
     return (
       <Route
         exact
