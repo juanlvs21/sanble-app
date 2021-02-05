@@ -5,7 +5,6 @@ import { login, register, checkSession } from "../utils/services/API";
 
 // Context
 import { DataContext } from "../context/AppContext";
-import { setInterval } from "timers";
 
 const useAuth = () => {
   const { session, setSessionUser, getSessionStorage } = useContext(
