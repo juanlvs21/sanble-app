@@ -1,7 +1,7 @@
-import React, { useEffect, useContext } from "react";
+import React, { useEffect } from "react";
 import { IonApp, IonRouterOutlet, IonSplitPane } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
-import { Route, Redirect } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
@@ -28,28 +28,60 @@ import "./theme/styles.css";
 /* Style Font Family */
 import "./assets/fonts/Quicksand/Quicksand.css";
 
-/* Context */
-import { DataContext } from "./context/AppContext";
+/* Hooks */
+import useApp from "./hooks/useApp";
+import useAuth from "./hooks/useAuth";
+import useDarkmode from "./hooks/useDarkmode";
+
+/* Components */
+import PreloadScreen from "./components/preload/PreloadScreen";
+import Route from "./components/router/Route";
 
 /* Pages */
+import NotFound from "./pages/404/NotFound";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
+import Welcome from "./pages/auth/Welcome";
+import Home from "./pages/home/Home";
 
 const App: React.FC = () => {
-  const { darkMode } = useContext(DataContext);
+  const { initDarkMode } = useDarkmode();
+  const { isMobile } = useApp();
+  const { gettingSession, handleRefreshToken } = useAuth();
 
   useEffect(() => {
-    darkMode.initDarkMode();
-  }, [darkMode]);
+    initDarkMode();
+  }, [initDarkMode]);
+
+  useEffect(() => {
+    if (gettingSession) handleRefreshToken();
+  }, []); // eslint-disable-line
 
   return (
     <IonApp>
+      {gettingSession && !isMobile() && <PreloadScreen />}
+
       <IonReactRouter>
         <IonSplitPane contentId="main">
           <IonRouterOutlet id="main">
-            <Route path="/auth/login" component={Login} exact />
-            <Route path="/auth/register" component={Register} exact />
-            <Redirect from="/" to="/auth/login" exact />
+            {/* Auth */}
+            <Route path="/auth/login">
+              <Login />
+            </Route>
+            <Route path="/auth/register">
+              <Register />
+            </Route>
+            <Redirect path="/auth" to="/auth/login" exact />
+            <Route path="/auth/welcome" secured={true}>
+              <Welcome />
+            </Route>
+            {/* Home */}
+            <Route path="/" secured={true}>
+              <Home />
+            </Route>
+            <Route path="*">
+              <NotFound />
+            </Route>
           </IonRouterOutlet>
         </IonSplitPane>
       </IonReactRouter>
