@@ -6,39 +6,44 @@ export const DataContext: any = createContext({
     initDarkMode: null,
     toggleDarkMode: null,
   },
-  user: null,
-  access: null,
+  session: null,
 });
 
 export const AppProvider = ({ children }: any) => {
   const [darkMode, setDarkMode] = useState<boolean>(false);
+  const [session, setSession] = useState<any>(null);
 
-  const initDarkMode = () => {
-    const darkMode: any = localStorage.getItem("darkMode");
-    if (darkMode === "true" && !document.body.classList.contains("dark")) {
-      toggleDarkMode();
-    }
+  const setDarkModeApp = (value: boolean) => {
+    setDarkMode(value);
+    localStorage.setItem("darkMode", value ? "true" : "false");
   };
 
-  const toggleDarkMode = () => {
-    document.body.classList.toggle("dark");
-    if (document.body.classList.contains("dark")) {
-      localStorage.setItem("darkMode", "true");
-      setDarkMode(true);
+  const setSessionUser = async (data: any) => {
+    setSession(data);
+    if (data) localStorage.setItem("session", btoa(JSON.stringify(data)));
+    else localStorage.removeItem("session");
+  };
+
+  const getSessionStorage = async () => {
+    const sessionStorage: string = localStorage.getItem("session") || "";
+    if (sessionStorage) {
+      const data = JSON.parse(atob(sessionStorage));
+      setSession(data);
+      return data;
     } else {
-      localStorage.setItem("darkMode", "false");
-      setDarkMode(false);
+      setSession(null);
+      return null;
     }
   };
 
   return (
     <DataContext.Provider
       value={{
-        darkMode: {
-          toggle: darkMode,
-          initDarkMode,
-          toggleDarkMode,
-        },
+        session,
+        setSessionUser,
+        getSessionStorage,
+        darkMode,
+        setDarkModeApp,
       }}
     >
       {children}
