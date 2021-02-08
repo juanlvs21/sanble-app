@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { IonApp, IonRouterOutlet, IonSplitPane } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
-import { Redirect } from "react-router-dom";
+import { Redirect, Route } from "react-router-dom";
 
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
@@ -34,14 +34,13 @@ import useDarkmode from "./hooks/useDarkmode";
 
 /* Components */
 import PreloadScreen from "./components/preload/PreloadScreen";
-import Route from "./components/router/Route";
+import RouteSecure from "./components/router/RouteSecure";
 
 /* Pages */
 import NotFound from "./pages/404/NotFound";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 import Welcome from "./pages/auth/Welcome";
-import Activate from "./pages/activate/Activate";
 import Home from "./pages/home/Home";
 
 const App: React.FC = () => {
@@ -64,26 +63,15 @@ const App: React.FC = () => {
         <IonSplitPane contentId="main">
           <IonRouterOutlet id="main">
             {/* Auth */}
-            <Route path="/auth/login">
-              <Login />
-            </Route>
-            <Route path="/auth/register">
-              <Register />
-            </Route>
-            <Route path="/auth/welcome" secured={true}>
-              <Welcome />
-            </Route>
-            <Route path="/activate">
-              <Activate />
-            </Route>
             <Redirect path="/auth" to="/auth/login" exact />
+            <Route path="/auth/login" component={Login} exact />
+            <Route path="/auth/register" component={Register} exact />
+            <Route path="/auth/welcome" component={Welcome} exact />
             {/* Home */}
-            <Route path="/" secured={true}>
+            <RouteSecure path="/">
               <Home />
-            </Route>
-            <Route path="*" notFound={true}>
-              <NotFound />
-            </Route>
+            </RouteSecure>
+            <Route path="*" component={NotFound} />
           </IonRouterOutlet>
         </IonSplitPane>
       </IonReactRouter>

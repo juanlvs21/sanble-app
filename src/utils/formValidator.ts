@@ -1,8 +1,7 @@
 import formatMessageToasts from "./formatMessageToasts";
 
 const labels: any = {
-  username: "Usuario",
-  name: "Nombre",
+  displayName: "Nombre",
   email: "Correo electrónico",
   password: "Contraseña",
   confirmPassword: "Repetir contraseña",

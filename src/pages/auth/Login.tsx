@@ -36,7 +36,7 @@ const Login: React.FC = () => {
 
   const { register, handleSubmit, errors: errorsForm } = useForm({
     defaultValues: {
-      username: "",
+      email: "",
       password: "",
     },
   });
@@ -52,11 +52,11 @@ const Login: React.FC = () => {
     <Layout>
       <form onSubmit={handleSubmit(onSubmit)}>
         <IonItem className={styles.input}>
-          <IonLabel position="floating">Usuario</IonLabel>
+          <IonLabel position="floating">Correo electrónico</IonLabel>
           <IonInput
-            name="username"
+            name="email"
             disabled={loading}
-            ref={register(validator("username", ["required"])) as any}
+            ref={register(validator("email", ["required"])) as any}
           />
         </IonItem>
         <IonItem className={styles.input}>
