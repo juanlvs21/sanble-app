@@ -60,22 +60,3 @@ export const checkSession: any = (token: string): Promise<Response> => {
     }
   });
 };
-// Account
-export const validateAccount: any = (token: string): Promise<Response> => {
-  return new Promise<any>(async (resolve, reject) => {
-    try {
-      const response = await fetch(`${API_URL}/account/activate`, {
-        method: "POST",
-        body: JSON.stringify({ token }),
-      });
-
-      const { data } = await response.json();
-      if (!response.ok) {
-        reject(formatMessageToasts(data));
-      } else resolve(data);
-    } catch (error) {
-      console.log(error);
-      reject("Error desconocido");
-    }
-  });
-};

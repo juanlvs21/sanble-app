@@ -35,8 +35,7 @@ const Register: React.FC = () => {
 
   const { register, handleSubmit, errors: errorsForm } = useForm({
     defaultValues: {
-      username: "",
-      name: "",
+      displayName: "",
       email: "",
       password: "",
       confirmPassword: "",
@@ -57,24 +56,14 @@ const Register: React.FC = () => {
     <Layout compact={true}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <IonItem className={styles.input}>
-          <IonLabel position="floating">Usuario</IonLabel>
+          <IonLabel position="floating">Nombre</IonLabel>
           <IonInput
-            name="username"
+            name="displayName"
             disabled={loading}
             ref={
               register(
-                validator("username", ["required", "minLength:4"])
+                validator("displayName", ["required", "minLength:4"])
               ) as any
-            }
-          />
-        </IonItem>
-        <IonItem className={styles.input}>
-          <IonLabel position="floating">Nombre</IonLabel>
-          <IonInput
-            name="name"
-            disabled={loading}
-            ref={
-              register(validator("name", ["required", "minLength:4"])) as any
             }
           />
         </IonItem>
