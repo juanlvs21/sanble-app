@@ -9,3 +9,11 @@
 .container_btns ion-button {
   margin-top: 20px;
 }
+
+.welcome_container {
+  text-align: center;
+}
+
+.welcome_container ion-button {
+  margin-top: 30px;
+}

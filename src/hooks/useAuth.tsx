@@ -79,8 +79,11 @@ const useAuth = () => {
   };
 
   const handleRefreshToken = async () => {
-    await handleGetSession();
-    setInterval(async () => await handleGetSession(), 600000);
+    setTimeout(() => {
+      setGettingSession(false);
+    }, 3000);
+    // await handleGetSession();
+    // setInterval(async () => await handleGetSession(), 1200000);
   };
 
   return {
