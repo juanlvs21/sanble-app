@@ -45,14 +45,14 @@ import Home from "./pages/home/Home";
 
 const App: React.FC = () => {
   const { initDarkMode } = useDarkmode();
-  const { gettingSession, handleRefreshToken } = useAuth();
+  const { gettingSession, handleGetSession } = useAuth();
 
   useEffect(() => {
     initDarkMode();
   }, [initDarkMode]);
 
   useEffect(() => {
-    if (gettingSession) handleRefreshToken();
+    if (gettingSession) handleGetSession();
   }, []); // eslint-disable-line
 
   return (

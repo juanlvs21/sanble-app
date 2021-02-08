@@ -43,12 +43,14 @@ const Register: React.FC = () => {
   });
 
   useEffect(() => {
-    setDataError(getErrorsMsg(errorsForm));
+    if (Object.keys(errorsForm).length > 0) {
+      setDataError(getErrorsMsg(errorsForm));
+    }
   }, [errorsForm]); // eslint-disable-line
 
   const onSubmit = (data: any) => {
     if (data.password !== data.confirmPassword)
-      setDataError("La contraseña no coincide");
+      setDataError("La contraseña no coincide.");
     else handleRegister(data).then(() => history.replace("/auth/welcome"));
   };
 
