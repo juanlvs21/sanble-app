@@ -45,8 +45,8 @@ const Login: React.FC = () => {
     setDataError(getErrorsMsg(errorsForm));
   }, [errorsForm]); // eslint-disable-line
 
-  const onSubmit = (data: any) =>
-    handleLogin(data).then(() => history.replace("/"));
+  const onSubmit = (user: any) =>
+    handleLogin(user.email, user.password).then(() => history.replace("/"));
 
   return (
     <Layout>
