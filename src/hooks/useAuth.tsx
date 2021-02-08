@@ -1,10 +1,11 @@
 import { useState, useContext } from "react";
 
-// Utils
-import { login, register, checkSession } from "../utils/services/API";
-
 // Context
 import { DataContext } from "../context/AppContext";
+
+// Utils
+import { register } from "../utils/services/API";
+import { auth } from "../utils/firebase";
 
 const useAuth = () => {
   const { session, setSessionUser, getSessionStorage } = useContext(
@@ -21,24 +22,43 @@ const useAuth = () => {
     setShowErrors(errs ? true : false);
   };
 
-  const handleLogin = async (user: object) => {
+  const handleLogin = async (email: string, password: string) => {
     setLoading(true);
     setShowErrors(false);
     setErrors("");
 
     return new Promise(async (resolve, rejects) => {
-      await login(user)
-        .then((res: any) => {
-          setSessionUser(res);
+      await auth
+        .signInWithEmailAndPassword(email, password)
+        .then(({ user }: any) => {
+          setSessionUser({
+            user: {
+              uid: user.uid,
+              email: user.email,
+              emailVerified: user.emailVerified,
+              displayName: user.displayName,
+              photoURL: user.photoURL,
+              creationTime: user.metadata.creationTime,
+              lastSignInTime: user.metadata.lastSignInTime,
+            },
+            meta: {
+              refreshToken: user.refreshToken,
+            },
+          });
           resolve(true);
         })
-        .catch((errors: any) => {
-          setDataError(errors);
+        .catch((error) => {
+          console.error(error);
+          if (error.code === "auth/user-not-found")
+            setDataError("Correo electrónico no registrado.");
+          else if (error.code === "auth/invalid-email")
+            setDataError("Ingrese un correo electrónico válido.");
+          else if (error.code === "auth/wrong-password")
+            setDataError("La contraseña no es válida.");
+          else setDataError("Error desconocido.");
           rejects(false);
         })
-        .finally(() => {
-          setLoading(false);
-        });
+        .finally(() => setLoading(false));
     });
   };
 
@@ -66,14 +86,32 @@ const useAuth = () => {
   const handleGetSession = async () => {
     try {
       const data = await getSessionStorage();
+      if (data) setSessionUser(data);
 
-      if (data) {
-        await checkSession(data?.meta?.token)
-          .then((res: any) => setSessionUser(res))
-          .catch(() => setSessionUser(null))
-          .finally(() => setGettingSession(false));
-      } else setGettingSession(false);
+      await auth.onAuthStateChanged(function (user) {
+        if (user) {
+          setSessionUser({
+            user: {
+              uid: user.uid,
+              email: user.email,
+              emailVerified: user.emailVerified,
+              displayName: user.displayName,
+              photoURL: user.photoURL,
+              creationTime: user.metadata.creationTime,
+              lastSignInTime: user.metadata.lastSignInTime,
+            },
+            meta: {
+              refreshToken: user.refreshToken,
+            },
+          });
+          setGettingSession(false);
+        } else {
+          setSessionUser(null);
+          setGettingSession(false);
+        }
+      });
     } catch (error) {
+      console.error(error);
       setGettingSession(false);
     }
   };
