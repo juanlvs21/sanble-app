@@ -42,6 +42,8 @@ import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 import Welcome from "./pages/auth/Welcome";
 import Home from "./pages/home/Home";
+import RecoverPassword from "./pages/auth/recoverPassword/Recover";
+import RecoverPasswordSend from "./pages/auth/recoverPassword/Send";
 
 const App: React.FC = () => {
   const { initDarkMode } = useDarkmode();
@@ -67,6 +69,16 @@ const App: React.FC = () => {
             <Route path="/auth/login" component={Login} exact />
             <Route path="/auth/register" component={Register} exact />
             <Route path="/auth/welcome" component={Welcome} exact />
+            <Route
+              path="/auth/recoverPassword"
+              component={RecoverPassword}
+              exact
+            />
+            <Route
+              path="/auth/recoverPassword/send"
+              component={RecoverPasswordSend}
+              exact
+            />
             {/* Home */}
             <RouteSecure path="/">
               <Home />
