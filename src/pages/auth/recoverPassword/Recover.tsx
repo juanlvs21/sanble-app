@@ -8,23 +8,22 @@ import {
   IonProgressBar,
   useIonViewWillEnter,
 } from "@ionic/react";
-import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 // Layouts
-import Layout from "../../layouts/Auth";
+import Layout from "../../../layouts/Auth";
 
 // Styles
-import styles from "./Auth.module.css";
+import styles from "../Auth.module.css";
 
 // Hooks
-import useAuth from "../../hooks/useAuth";
+import useAuth from "../../../hooks/useAuth";
 
 // Utils
-import { validator, getErrorsMsg } from "../../utils/formValidator";
+import { validator, getErrorsMsg } from "../../../utils/formValidator";
 
-const Login: React.FC = () => {
+const RecoverPassword: React.FC = () => {
   const history = useHistory();
 
   const {
@@ -33,10 +32,15 @@ const Login: React.FC = () => {
     showErrors,
     setShowErrors,
     setDataError,
-    handleLogin,
+    handleRecoverPassword,
   } = useAuth();
 
-  const { register, handleSubmit, reset, errors: errorsForm } = useForm();
+  const { register, handleSubmit, reset, errors: errorsForm } = useForm({
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
 
   useEffect(() => {
     setDataError(getErrorsMsg(errorsForm));
@@ -45,16 +49,19 @@ const Login: React.FC = () => {
   useIonViewWillEnter(() => {
     reset({
       email: "",
-      password: "",
     });
   });
 
-  const onSubmit = (user: any) =>
-    handleLogin(user.email, user.password).then(() => history.replace("/"));
+  const onSubmit = (data: any) =>
+    handleRecoverPassword(data.email).then(() =>
+      history.replace("/auth/recoverPassword/send")
+    );
 
   return (
     <Layout>
       <div className={styles.center_container}>
+        <h1>Recuperar de Contraseña</h1>
+
         <form onSubmit={handleSubmit(onSubmit)}>
           <IonItem className={styles.input}>
             <IonLabel position="floating">Correo electrónico</IonLabel>
@@ -64,23 +71,6 @@ const Login: React.FC = () => {
               ref={register(validator("email", ["required"])) as any}
             />
           </IonItem>
-          <IonItem className={styles.input}>
-            <IonLabel position="floating">Contraseña</IonLabel>
-            <IonInput
-              name="password"
-              type="password"
-              disabled={loading}
-              ref={register(validator("password", ["required"])) as any}
-            />
-          </IonItem>
-
-          <Link
-            to="/auth/recoverPassword"
-            className={styles.forgotten_password}
-          >
-            ¿Has olvidado tu contraseña?
-          </Link>
-
           <div className={styles.container_btns}>
             {/* Trigger submit event when pressing enter on inputs */}
             <input type="submit" style={{ display: "none" }} />
@@ -93,29 +83,29 @@ const Login: React.FC = () => {
               {loading ? (
                 <IonProgressBar type="indeterminate" color="light" />
               ) : (
-                "Iniciar Sesión"
+                "Enviar"
               )}
             </IonButton>
             <IonButton
               expand="block"
               color="primary"
               fill="outline"
-              routerLink="/auth/register"
+              routerLink="/auth/login"
               disabled={loading}
             >
-              Registrarse
+              Iniciar Sesión
             </IonButton>
           </div>
         </form>
+        <IonToast
+          isOpen={showErrors}
+          onDidDismiss={() => setShowErrors(false)}
+          message={errors}
+          duration={3000}
+        />
       </div>
-      <IonToast
-        isOpen={showErrors}
-        onDidDismiss={() => setShowErrors(false)}
-        message={errors}
-        duration={3000}
-      />
     </Layout>
   );
 };
 
-export default Login;
+export default RecoverPassword;

@@ -2,22 +2,20 @@ import React from "react";
 import { IonButton } from "@ionic/react";
 
 // Layouts
-import Layout from "../../layouts/Auth";
+import Layout from "../../../layouts/Auth";
 
 // Styles
-import styles from "./Auth.module.css";
+import styles from "../Auth.module.css";
 
-const Welcome: React.FC = () => {
+const RecoverPasswordSend: React.FC = () => {
   return (
     <Layout compact={true}>
       <div className={styles.center_container}>
-        <h1>
-          ¡Gracias por unirte a <b>Sanble</b>!
-        </h1>
+        <h1>Recuperar de Contraseña</h1>
 
         <p>
-          Hemos enviado un mensaje de confirmación a tu dirección de correo
-          electrónico.
+          Hemos enviado un mensaje de recuperación de contraseña a tu dirección
+          de correo electrónico.
         </p>
 
         <IonButton
@@ -33,4 +31,4 @@ const Welcome: React.FC = () => {
   );
 };
 
-export default Welcome;
+export default RecoverPasswordSend;

@@ -6,6 +6,7 @@ import {
   IonButton,
   IonToast,
   IonProgressBar,
+  useIonViewWillEnter,
 } from "@ionic/react";
 import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
@@ -33,13 +34,15 @@ const Register: React.FC = () => {
     handleRegister,
   } = useAuth();
 
-  const { register, handleSubmit, errors: errorsForm } = useForm({
-    defaultValues: {
+  const { register, handleSubmit, reset, errors: errorsForm } = useForm();
+
+  useIonViewWillEnter(() => {
+    reset({
       displayName: "",
       email: "",
       password: "",
       confirmPassword: "",
-    },
+    });
   });
 
   useEffect(() => {
@@ -106,7 +109,14 @@ const Register: React.FC = () => {
           />
         </IonItem>
         <div className={styles.container_btns}>
-          <IonButton expand="block" color="primary" type="submit">
+          {/* Trigger submit event when pressing enter on inputs */}
+          <input type="submit" style={{ display: "none" }} />
+          <IonButton
+            expand="block"
+            color="primary"
+            type="submit"
+            disabled={loading}
+          >
             {loading ? (
               <IonProgressBar type="indeterminate" color="light" />
             ) : (
