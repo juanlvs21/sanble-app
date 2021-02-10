@@ -4,7 +4,7 @@ import { useState, useContext } from "react";
 import { DataContext } from "../context/AppContext";
 
 // Utils
-import { register } from "../utils/services/API";
+import { register, recoverPassword } from "../utils/services/API";
 import { auth } from "../utils/firebase";
 
 const useAuth = () => {
@@ -45,7 +45,7 @@ const useAuth = () => {
               refreshToken: user.refreshToken,
             },
           });
-          resolve(true);
+          resolve(session);
         })
         .catch((error) => {
           console.error(error);
@@ -56,7 +56,7 @@ const useAuth = () => {
           else if (error.code === "auth/wrong-password")
             setDataError("La contraseña no es válida.");
           else setDataError("Error desconocido.");
-          rejects(false);
+          rejects(errors);
         })
         .finally(() => setLoading(false));
     });
@@ -71,11 +71,29 @@ const useAuth = () => {
       await register(user)
         .then((res: any) => {
           setSessionUser(res);
-          resolve(true);
+          resolve(res);
         })
         .catch((errors: any) => {
           setDataError(errors);
-          rejects(false);
+          rejects(errors);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    });
+  };
+
+  const handleRecoverPassword = async (email: string) => {
+    setLoading(true);
+    setShowErrors(false);
+    setErrors("");
+
+    return new Promise(async (resolve, rejects) => {
+      await recoverPassword({ email })
+        .then((res: any) => resolve(res))
+        .catch((errors: any) => {
+          setDataError(errors);
+          rejects(errors);
         })
         .finally(() => {
           setLoading(false);
@@ -116,14 +134,6 @@ const useAuth = () => {
     }
   };
 
-  const handleRefreshToken = async () => {
-    setTimeout(() => {
-      setGettingSession(false);
-    }, 3000);
-    // await handleGetSession();
-    // setInterval(async () => await handleGetSession(), 1200000);
-  };
-
   return {
     session,
     gettingSession,
@@ -136,7 +146,7 @@ const useAuth = () => {
     handleLogin,
     handleRegister,
     handleGetSession,
-    handleRefreshToken,
+    handleRecoverPassword,
   };
 };
 
