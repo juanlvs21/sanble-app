@@ -6,3 +6,11 @@ ion-button {
 ion-card {
   border-radius: var(--sanble-border-radius);
 }
+
+ion-slides {
+  height: 100%;
+}
+
+ion-slides .swiper-pagination-bullet {
+  background: #3a3535;
+}
