@@ -102,6 +102,7 @@ const useAuth = () => {
   };
 
   const handleGetSession = async () => {
+    setGettingSession(false);
     try {
       const data = await getSessionStorage();
       if (data) setSessionUser(data);
@@ -130,6 +131,7 @@ const useAuth = () => {
       });
     } catch (error) {
       console.error(error);
+      setSessionUser(null);
       setGettingSession(false);
     }
   };
