@@ -12,6 +12,7 @@ export const DataContext: any = createContext({
 export const AppProvider = ({ children }: any) => {
   const [darkMode, setDarkMode] = useState<boolean>(false);
   const [session, setSession] = useState<any>(null);
+  const [firstWelcome, setFirstWelcome] = useState<boolean>(true);
 
   const setDarkModeApp = (value: boolean) => {
     setDarkMode(value);
@@ -22,6 +23,12 @@ export const AppProvider = ({ children }: any) => {
     setSession(data);
     if (data) localStorage.setItem("session", btoa(JSON.stringify(data)));
     else localStorage.removeItem("session");
+  };
+
+  const setWelcome = (welcome: boolean) => {
+    console.log("welcome", welcome);
+    setFirstWelcome(welcome);
+    localStorage.setItem("welcome", welcome.toString());
   };
 
   const getSessionStorage = async () => {
@@ -44,6 +51,8 @@ export const AppProvider = ({ children }: any) => {
         getSessionStorage,
         darkMode,
         setDarkModeApp,
+        firstWelcome,
+        setWelcome,
       }}
     >
       {children}

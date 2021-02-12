@@ -1,7 +1,13 @@
+import { useContext } from "react";
 import { isPlatform } from "@ionic/react";
 import { StatusBar } from "@ionic-native/status-bar";
 
+// Context
+import { DataContext } from "../context/AppContext";
+
 const useApp = () => {
+  const { firstWelcome, setWelcome } = useContext(DataContext);
+
   const isMobile = () => {
     if (!isPlatform("mobileweb") && !isPlatform("desktop")) return true;
     else return false;
@@ -15,10 +21,21 @@ const useApp = () => {
     if (isMobile()) StatusBar.overlaysWebView(overlays);
   };
 
+  const initWelcome = () => {
+    const welcome: any = localStorage.getItem("welcome");
+    if (!isMobile()) setWelcome(false);
+    else if (welcome === "true") setWelcome(true);
+    else if (welcome === "false") setWelcome(false);
+    else setWelcome(true);
+  };
+
   return {
     setColorStatusBar,
     setOverlays,
     isMobile,
+    initWelcome,
+    firstWelcome,
+    setWelcome,
   };
 };
 
