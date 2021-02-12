@@ -25,7 +25,7 @@ const SlidesContainer: React.FC = () => {
   useEffect(() => {
     setOverlays(true);
     return () => setOverlays(false);
-  }, []);
+  }, []); // eslint-disable-line
 
   const slides = [
     {
