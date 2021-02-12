@@ -71,13 +71,9 @@ const SlidesContainer: React.FC = () => {
 
   return (
     <IonContent>
-      <IonSlides
-        pager={true}
-        options={slideOpts}
-        onIonSlideDidChange={() => console.log("Change")}
-      >
+      <IonSlides pager={true} options={slideOpts}>
         {slides.map((data, i) => (
-          <Slide {...data} key={i} />
+          <Slide {...data} i={i} length={slides.length} key={i} />
         ))}
       </IonSlides>
     </IonContent>
