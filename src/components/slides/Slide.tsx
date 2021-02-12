@@ -1,5 +1,6 @@
 import React from "react";
-import { IonSlide, IonButton } from "@ionic/react";
+import { IonSlide, IonButton, IonIcon } from "@ionic/react";
+import { arrowBackOutline, arrowForwardOutline } from "ionicons/icons";
 
 // Styles
 import styles from "./Slides.module.css";
@@ -13,6 +14,8 @@ interface ContainerProps {
   description: string;
   image: any;
   end: boolean;
+  i: number;
+  length: number;
 }
 
 const Slide: React.FC<ContainerProps> = ({
@@ -21,6 +24,8 @@ const Slide: React.FC<ContainerProps> = ({
   description,
   image,
   end,
+  i,
+  length,
 }) => {
   const { setWelcome } = useApp();
 
@@ -48,6 +53,18 @@ const Slide: React.FC<ContainerProps> = ({
           <>
             <h1 className={styles.title}>{title}</h1>
             <p className={styles.description}>{description}</p>
+
+            <div className={styles.arrowsContainer}>
+              {i > 0 && (
+                <IonIcon icon={arrowBackOutline} className={styles.arrowLeft} />
+              )}
+              {i < length && (
+                <IonIcon
+                  icon={arrowForwardOutline}
+                  className={styles.arrowRight}
+                />
+              )}
+            </div>
           </>
         )}
       </div>
