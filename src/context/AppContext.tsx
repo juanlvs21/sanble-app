@@ -26,7 +26,6 @@ export const AppProvider = ({ children }: any) => {
   };
 
   const setWelcome = (welcome: boolean) => {
-    console.log("welcome", welcome);
     setFirstWelcome(welcome);
     localStorage.setItem("welcome", welcome.toString());
   };

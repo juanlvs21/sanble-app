@@ -8,7 +8,9 @@ interface ContainerProps {
 const MainLayout: React.FC<ContainerProps> = ({ children }) => {
   return (
     <IonPage>
-      <IonContent>{children}</IonContent>
+      <IonContent id="main-content">
+        <main style={{ padding: "10px 20px" }}>{children}</main>
+      </IonContent>
     </IonPage>
   );
 };

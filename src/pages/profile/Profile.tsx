@@ -3,12 +3,12 @@ import React from "react";
 // Layout
 import Layout from "../../layouts/Main";
 
-const Home: React.FC = () => {
+const Profile: React.FC = () => {
   return (
     <Layout>
-      <h1>Bienvenido</h1>
+      <h1>Profile</h1>
     </Layout>
   );
 };
 
-export default Home;
+export default Profile;
