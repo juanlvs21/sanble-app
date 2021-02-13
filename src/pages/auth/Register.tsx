@@ -157,17 +157,17 @@ const Register: React.FC = () => {
                 {isSubmitting ? (
                   <IonProgressBar type="indeterminate" color="light" />
                 ) : (
-                  "Iniciar Sesión"
+                  "Registrarse"
                 )}
               </IonButton>
               <IonButton
                 expand="block"
                 color="primary"
                 fill="outline"
-                routerLink="/auth/register"
+                routerLink="/auth/login"
                 disabled={isSubmitting}
               >
-                Registrarse
+                Iniciar Sesión
               </IonButton>
             </div>
           </form>
