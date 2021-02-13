@@ -24,8 +24,7 @@ const useAuth = () => {
 
   const handleLogin = async (email: string, password: string) => {
     setLoading(true);
-    setShowErrors(false);
-    setErrors("");
+    setDataError(null);
 
     return new Promise(async (resolve, rejects) => {
       await auth
@@ -64,8 +63,7 @@ const useAuth = () => {
 
   const handleRegister = async (user: object) => {
     setLoading(true);
-    setShowErrors(false);
-    setErrors("");
+    setDataError(null);
 
     return new Promise(async (resolve, rejects) => {
       await register(user)
@@ -85,8 +83,7 @@ const useAuth = () => {
 
   const handleRecoverPassword = async (email: string) => {
     setLoading(true);
-    setShowErrors(false);
-    setErrors("");
+    setDataError(null);
 
     return new Promise(async (resolve, rejects) => {
       await recoverPassword({ email })

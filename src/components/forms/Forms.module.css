@@ -1,0 +1,5 @@
+.error_formik {
+  font-size: 12px;
+  margin-left: 10px;
+  color: var(--ion-color-danger);
+}

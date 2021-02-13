@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import {
   IonItem,
   IonLabel,
@@ -6,104 +6,126 @@ import {
   IonButton,
   IonToast,
   IonProgressBar,
-  useIonViewWillEnter,
 } from "@ionic/react";
-import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
+import { Formik } from "formik";
+
+// Styles
+import styles from "../Auth.module.css";
 
 // Layouts
 import Layout from "../../../layouts/Auth";
 
-// Styles
-import styles from "../Auth.module.css";
+// Components
+import ErrorFormik from "../../../components/forms/ErrorFormik";
 
 // Hooks
 import useAuth from "../../../hooks/useAuth";
 
 // Utils
-import { validator, getErrorsMsg } from "../../../utils/formValidator";
+import validEmail from "../../../utils/validations/email";
+
+const initialValues = {
+  email: "",
+  password: "",
+};
 
 const RecoverPassword: React.FC = () => {
   const history = useHistory();
 
   const {
-    loading,
     errors,
     showErrors,
     setShowErrors,
-    setDataError,
     handleRecoverPassword,
   } = useAuth();
 
-  const { register, handleSubmit, reset, errors: errorsForm } = useForm({
-    defaultValues: {
-      email: "",
-      password: "",
-    },
-  });
-
-  useEffect(() => {
-    setDataError(getErrorsMsg(errorsForm));
-  }, [errorsForm]); // eslint-disable-line
-
-  useIonViewWillEnter(() => {
-    reset({
-      email: "",
-    });
-  });
-
-  const onSubmit = (data: any) =>
-    handleRecoverPassword(data.email).then(() =>
-      history.replace("/auth/recoverPassword/send")
-    );
+  const onSubmit = (values: any, { setSubmitting, resetForm }: any) => {
+    handleRecoverPassword(values.email)
+      .then(() => {
+        resetForm(initialValues);
+        history.replace("/auth/recoverPassword/send");
+      })
+      .finally(() => setSubmitting(false));
+  };
 
   return (
     <Layout>
-      <div className={styles.center_container}>
-        <h1>Recuperar de Contraseña</h1>
+      <h1 className={styles.title}>Recuperar de Contraseña</h1>
 
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <IonItem className={styles.input}>
-            <IonLabel position="floating">Correo electrónico</IonLabel>
-            <IonInput
-              name="email"
-              disabled={loading}
-              ref={register(validator("email", ["required"])) as any}
-            />
-          </IonItem>
-          <div className={styles.container_btns}>
-            {/* Trigger submit event when pressing enter on inputs */}
-            <input type="submit" style={{ display: "none" }} />
-            <IonButton
-              expand="block"
-              color="primary"
-              type="submit"
-              disabled={loading}
-            >
-              {loading ? (
-                <IonProgressBar type="indeterminate" color="light" />
-              ) : (
-                "Enviar"
-              )}
-            </IonButton>
-            <IonButton
-              expand="block"
-              color="primary"
-              fill="outline"
-              routerLink="/auth/login"
-              disabled={loading}
-            >
-              Iniciar Sesión
-            </IonButton>
-          </div>
-        </form>
-        <IonToast
-          isOpen={showErrors}
-          onDidDismiss={() => setShowErrors(false)}
-          message={errors}
-          duration={3000}
-        />
-      </div>
+      <Formik
+        initialValues={initialValues}
+        validate={(values) => {
+          const errors: any = {};
+
+          if (!values.email) errors.email = "Correo electrónico requerido";
+          else if (!validEmail(values.email))
+            errors.email = "Ingrese un correo electrónico válido";
+
+          return errors;
+        }}
+        onSubmit={onSubmit}
+      >
+        {({
+          values,
+          errors,
+          touched,
+          handleChange,
+          handleBlur,
+          handleSubmit,
+          isSubmitting,
+        }) => (
+          <form onSubmit={handleSubmit}>
+            <IonItem>
+              <IonLabel position="floating">Correo electrónico</IonLabel>
+              <IonInput
+                name="email"
+                disabled={isSubmitting}
+                onIonBlur={handleBlur}
+                onIonChange={handleChange}
+                value={values.email}
+              />
+            </IonItem>
+            <ErrorFormik error={errors.email} touched={touched.email} />
+
+            <div className={styles.container_btns}>
+              {/* Trigger submit event when pressing enter on inputs */}
+              <input
+                type="submit"
+                style={{ display: "none" }}
+                disabled={isSubmitting}
+              />
+              <IonButton
+                expand="block"
+                color="primary"
+                type="submit"
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? (
+                  <IonProgressBar type="indeterminate" color="light" />
+                ) : (
+                  "Enviar"
+                )}
+              </IonButton>
+              <IonButton
+                expand="block"
+                color="primary"
+                fill="outline"
+                routerLink="/auth/login"
+                disabled={isSubmitting}
+              >
+                Iniciar Sesión
+              </IonButton>
+            </div>
+          </form>
+        )}
+      </Formik>
+      <IonToast
+        isOpen={showErrors}
+        onDidDismiss={() => setShowErrors(false)}
+        message={errors}
+        duration={3000}
+      />
     </Layout>
   );
 };
