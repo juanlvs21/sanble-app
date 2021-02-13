@@ -1,5 +1,4 @@
 .background {
-  background-color: var(--ion-color-primary);
   width: 100%;
   height: 100vh;
   position: fixed;
@@ -9,6 +8,14 @@
   justify-content: center;
   align-items: center;
   z-index: 1000;
+}
+
+.background.withBg {
+  background-color: var(--ion-color-primary);
+}
+
+.background.unfilled {
+  background-color: rgba(0, 0, 0, 0.1);
 }
 
 .logo {

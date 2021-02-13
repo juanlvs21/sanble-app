@@ -107,7 +107,7 @@ const useAuth = () => {
       const data = await getSessionStorage();
       if (data) setSessionUser(data);
 
-      await auth.onAuthStateChanged(function (user) {
+      await auth.onAuthStateChanged((user) => {
         if (user) {
           setSessionUser({
             user: {
@@ -136,6 +136,15 @@ const useAuth = () => {
     }
   };
 
+  const handleLogout = async () => {
+    try {
+      await auth.signOut();
+    } catch (error) {
+      console.error(error);
+      setSessionUser(null);
+    }
+  };
+
   return {
     session,
     gettingSession,
@@ -149,6 +158,7 @@ const useAuth = () => {
     handleRegister,
     handleGetSession,
     handleRecoverPassword,
+    handleLogout,
   };
 };
 

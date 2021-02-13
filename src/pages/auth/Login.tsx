@@ -50,7 +50,7 @@ const Login: React.FC = () => {
   });
 
   const onSubmit = (user: any) =>
-    handleLogin(user.email, user.password).then(() => history.replace("/"));
+    handleLogin(user.email, user.password).then(() => history.replace("/home"));
 
   return (
     <Layout>
