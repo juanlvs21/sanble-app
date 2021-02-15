@@ -72,31 +72,25 @@ const Menu: React.FC<ContainerProps> = ({ setShowLoader }) => {
 
   return (
     <>
-      <IonMenu
-        side="start"
-        contentId="main-content"
-        hidden={session ? false : true}
-      >
+      <IonMenu side="start" contentId="content" hidden={session ? false : true}>
         <IonContent>
-          <IonList>
-            {appPages.map((appPage, index) => {
-              return (
-                <IonMenuToggle key={index} autoHide={false}>
-                  <IonItem
-                    className={
-                      location.pathname === appPage.url ? "selected" : ""
-                    }
-                    routerLink={appPage.url}
-                    routerDirection="none"
-                    lines="none"
-                    detail={false}
-                  >
-                    <IonIcon slot="start" icon={appPage.icon} />
-                    <IonLabel>{appPage.title}</IonLabel>
-                  </IonItem>
-                </IonMenuToggle>
-              );
-            })}
+          <IonList style={{ padding: 0 }}>
+            {appPages.map((appPage, i) => (
+              <IonMenuToggle key={i} autoHide={false}>
+                <IonItem
+                  className={
+                    location.pathname === appPage.url ? "selected" : ""
+                  }
+                  routerLink={appPage.url}
+                  routerDirection="none"
+                  lines="none"
+                  detail={false}
+                >
+                  <IonIcon slot="start" icon={appPage.icon} />
+                  <IonLabel>{appPage.title}</IonLabel>
+                </IonItem>
+              </IonMenuToggle>
+            ))}
             <IonMenuToggle autoHide={false}>
               <IonItem
                 button

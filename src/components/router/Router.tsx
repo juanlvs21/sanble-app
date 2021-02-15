@@ -30,10 +30,10 @@ const Router: React.FC = () => {
   return (
     <>
       <IonReactRouter>
-        <IonSplitPane contentId="main">
+        <IonSplitPane contentId="content">
           <Menu setShowLoader={setShowLoaderFullScreen} />
 
-          <IonRouterOutlet id="main">
+          <IonRouterOutlet id="content">
             {/* Auth */}
             <Redirect path="/auth" to="/auth/login" exact />
             <Route path="/auth/login" component={Login} exact />

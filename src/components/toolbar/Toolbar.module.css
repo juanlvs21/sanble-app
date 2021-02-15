@@ -1,0 +1,11 @@
+.toolbar {
+  --min-height: 48px;
+}
+
+.title {
+  text-align: center;
+}
+
+.logo {
+  width: 100px;
+}
