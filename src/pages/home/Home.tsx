@@ -3,9 +3,12 @@ import React from "react";
 // Layout
 import Layout from "../../layouts/Main";
 
+// Components
+import TabBar from "../../components/tabbars/TabBarHome";
+
 const Home: React.FC = () => {
   return (
-    <Layout>
+    <Layout tabBar={<TabBar />}>
       <h1>Bienvenido</h1>
     </Layout>
   );
