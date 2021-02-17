@@ -17,8 +17,12 @@ import {
 } from "ionicons/icons";
 import { useLocation } from "react-router-dom";
 
+//
+import styles from "./Menu.module.css";
+
 // Components
 import LogoutModal from "../logout/Modal";
+import ToggleDarkMode from "../darkMode/Toggle";
 
 // Hooks
 import useAuth from "../../hooks/useAuth";
@@ -74,35 +78,40 @@ const Menu: React.FC<ContainerProps> = ({ setShowLoader }) => {
     <>
       <IonMenu side="start" contentId="content" hidden={session ? false : true}>
         <IonContent>
-          <IonList style={{ padding: 0 }}>
-            {appPages.map((appPage, i) => (
-              <IonMenuToggle key={i} autoHide={false}>
+          <div className={styles.content}>
+            <IonList style={{ padding: 0 }}>
+              {appPages.map((appPage, i) => (
+                <IonMenuToggle key={i} autoHide={false}>
+                  <IonItem
+                    className={
+                      location.pathname === appPage.url ? "selected" : ""
+                    }
+                    routerLink={appPage.url}
+                    routerDirection="none"
+                    lines="none"
+                    detail={false}
+                  >
+                    <IonIcon slot="start" icon={appPage.icon} />
+                    <IonLabel>{appPage.title}</IonLabel>
+                  </IonItem>
+                </IonMenuToggle>
+              ))}
+              <IonMenuToggle autoHide={false}>
                 <IonItem
-                  className={
-                    location.pathname === appPage.url ? "selected" : ""
-                  }
-                  routerLink={appPage.url}
-                  routerDirection="none"
+                  button
                   lines="none"
                   detail={false}
+                  onClick={handleShowLogout}
                 >
-                  <IonIcon slot="start" icon={appPage.icon} />
-                  <IonLabel>{appPage.title}</IonLabel>
+                  <IonIcon slot="start" icon={exitOutline} />
+                  <IonLabel>Cerrar Sesión</IonLabel>
                 </IonItem>
               </IonMenuToggle>
-            ))}
-            <IonMenuToggle autoHide={false}>
-              <IonItem
-                button
-                lines="none"
-                detail={false}
-                onClick={handleShowLogout}
-              >
-                <IonIcon slot="start" icon={exitOutline} />
-                <IonLabel>Cerrar Sesión</IonLabel>
-              </IonItem>
-            </IonMenuToggle>
-          </IonList>
+            </IonList>
+            <div className={styles.toggle}>
+              <ToggleDarkMode activePrimary={true} />
+            </div>
+          </div>
         </IonContent>
       </IonMenu>
       <LogoutModal
