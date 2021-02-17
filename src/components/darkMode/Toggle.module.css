@@ -4,8 +4,15 @@
   top: 10px;
 }
 
-.toggle {
+.primary_color {
+  --color_darkmode_toggle: var(--ion-color-primary);
+}
+
+.white_color {
   --color_darkmode_toggle: #fff;
+}
+
+.toggle {
   --size: 2rem;
   appearance: none;
   outline: none;
