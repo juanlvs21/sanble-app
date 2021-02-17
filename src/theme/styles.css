@@ -32,3 +32,7 @@ ion-item.selected {
 ion-tab-button .selected {
   color: var(--ion-color-primary);
 }
+
+ion-toolbar {
+  --min-height: 48px;
+}

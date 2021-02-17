@@ -34,8 +34,7 @@ const Router: React.FC = () => {
       <IonReactRouter>
         <IonSplitPane contentId="content">
           <Menu setShowLoader={setShowLoaderFullScreen} />
-
-          <IonRouterOutlet id="content" mode="ios">
+          <IonRouterOutlet id="content">
             {/* Auth */}
             <Redirect path="/auth" to="/auth/login" exact />
             <Route path="/auth/login" component={Login} exact />
@@ -52,19 +51,18 @@ const Router: React.FC = () => {
               exact
             />
             {/* Home */}
-            <RouteSecure path="/home">
-              <Home />
-            </RouteSecure>
+            <Route path="/home" exact>
+              <RouteSecure component={Home} />
+            </Route>
             {/* Profile */}
-            <RouteSecure path="/profile">
-              <Profile />
-            </RouteSecure>
+            <Route path="/profile" exact>
+              <RouteSecure component={Profile} />
+            </Route>
             {/* Stands */}
-            <RouteSecure path="/stands">
-              <StandsList />
-            </RouteSecure>
+            <Route path="/stands" exact>
+              <RouteSecure component={StandsList} />
+            </Route>
             <Redirect path="/" to="/home" exact />
-            {/* <Route path="*" component={NotFound} /> */}
           </IonRouterOutlet>
         </IonSplitPane>
       </IonReactRouter>

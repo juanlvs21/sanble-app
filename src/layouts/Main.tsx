@@ -1,7 +1,6 @@
 import React from "react";
-import { IonPage, IonContent } from "@ionic/react";
+import { IonContent, IonHeader, IonPage } from "@ionic/react";
 
-// Components
 import Toolbar from "../components/toolbar/Toolbar";
 
 interface ContainerProps {
@@ -12,10 +11,11 @@ interface ContainerProps {
 const MainLayout: React.FC<ContainerProps> = ({ children, tabBar }) => {
   return (
     <IonPage>
-      <Toolbar />
-      <IonContent>
-        <main style={{ padding: "10px 20px" }}>{children}</main>
-      </IonContent>
+      <IonHeader>
+        <Toolbar />
+      </IonHeader>
+
+      <IonContent>{children}</IonContent>
       {tabBar}
     </IonPage>
   );

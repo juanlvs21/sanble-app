@@ -1,5 +1,4 @@
 import React from "react";
-import { IonButton } from "@ionic/react";
 
 // Layout
 import Layout from "../../layouts/Main";
@@ -10,15 +9,7 @@ import TabBar from "../../components/tabbars/TabBarHome";
 const Home: React.FC = () => {
   return (
     <Layout tabBar={<TabBar />}>
-      <h1>Bienvenido</h1>
-      <IonButton
-        expand="block"
-        color="primary"
-        fill="outline"
-        routerLink="/stands"
-      >
-        Stands
-      </IonButton>
+      <h1>Home</h1>
     </Layout>
   );
 };
