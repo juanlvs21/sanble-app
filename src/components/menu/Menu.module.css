@@ -1,0 +1,9 @@
+.content {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.toggle {
+  margin: auto auto 10px 10px;
+}
