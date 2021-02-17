@@ -1,35 +1,18 @@
 import React from "react";
-import { Route, Redirect } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 
 // Hooks
 import useAuth from "../../hooks/useAuth";
 
 interface ContainerProps {
-  children: React.ReactNode;
-  path: string;
+  component: React.FunctionComponent;
 }
 
-const RouteSecure: React.FC<ContainerProps> = ({ children, path }) => {
+const RouteSecure: React.FC<ContainerProps> = ({ component: Component }) => {
   const { session } = useAuth();
 
-  return (
-    <Route
-      exact
-      path={path}
-      render={({ location }) =>
-        session ? (
-          children
-        ) : (
-          <Redirect
-            to={{
-              pathname: "/auth/login",
-              state: { from: location },
-            }}
-          />
-        )
-      }
-    />
-  );
+  if (session) return <Component />;
+  else return <Redirect to="/auth/login" />;
 };
 
 export default RouteSecure;

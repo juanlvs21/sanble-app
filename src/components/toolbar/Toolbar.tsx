@@ -9,7 +9,7 @@ import {
 } from "@ionic/react";
 import { searchOutline } from "ionicons/icons";
 
-// Styles
+//  Styles
 import styles from "./Toolbar.module.css";
 
 // Image
