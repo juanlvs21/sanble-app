@@ -21,6 +21,8 @@ import RecoverPasswordSend from "../../pages/auth/recoverPassword/Send";
 import Home from "../../pages/home/Home";
 //Profile
 import Profile from "../../pages/profile/Profile";
+// Stands
+import StandsList from "../../pages/stands/List";
 
 const Router: React.FC = () => {
   const [showLoaderFullScreen, setShowLoaderFullScreen] = useState<boolean>(
@@ -33,7 +35,7 @@ const Router: React.FC = () => {
         <IonSplitPane contentId="content">
           <Menu setShowLoader={setShowLoaderFullScreen} />
 
-          <IonRouterOutlet id="content">
+          <IonRouterOutlet id="content" mode="ios">
             {/* Auth */}
             <Redirect path="/auth" to="/auth/login" exact />
             <Route path="/auth/login" component={Login} exact />
@@ -56,6 +58,10 @@ const Router: React.FC = () => {
             {/* Profile */}
             <RouteSecure path="/profile">
               <Profile />
+            </RouteSecure>
+            {/* Stands */}
+            <RouteSecure path="/stands">
+              <StandsList />
             </RouteSecure>
             <Redirect path="/" to="/home" exact />
             {/* <Route path="*" component={NotFound} /> */}
