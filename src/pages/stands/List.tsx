@@ -7,20 +7,20 @@ import Layout from "../../layouts/Main";
 // Components
 import TabBar from "../../components/tabbars/TabBarHome";
 
-const Home: React.FC = () => {
+const StandsList: React.FC = () => {
   return (
     <Layout tabBar={<TabBar />}>
-      <h1>Bienvenido</h1>
+      <h1>Stands List</h1>
       <IonButton
         expand="block"
         color="primary"
         fill="outline"
-        routerLink="/stands"
+        routerLink="/home"
       >
-        Stands
+        Home
       </IonButton>
     </Layout>
   );
 };
 
-export default Home;
+export default StandsList;

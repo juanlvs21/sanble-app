@@ -15,7 +15,7 @@ import {
   cogOutline,
   exitOutline,
 } from "ionicons/icons";
-import { useLocation } from "react-router-dom";
+import { useLocation, useHistory } from "react-router-dom";
 
 //
 import styles from "./Menu.module.css";
@@ -62,6 +62,7 @@ interface ContainerProps {
 
 const Menu: React.FC<ContainerProps> = ({ setShowLoader }) => {
   const location = useLocation();
+  const history = useHistory();
   const { session, handleLogout } = useAuth();
   const [showLogout, setShowLogout] = useState<boolean>(false);
 
@@ -71,7 +72,10 @@ const Menu: React.FC<ContainerProps> = ({ setShowLoader }) => {
 
   const handlerOkLogout = async () => {
     setShowLoader(true);
-    await handleLogout().finally(() => setShowLoader(false));
+    await handleLogout().finally(() => {
+      setShowLoader(false);
+      history.replace("/auth/login");
+    });
   };
 
   return (
