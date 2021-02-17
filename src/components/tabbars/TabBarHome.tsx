@@ -38,8 +38,9 @@ const TabBarHome: React.FC = () => {
     <IonTabBar slot="bottom">
       {appPages.map((appPage, i) => (
         <IonTabButton
-          href={appPage.url}
+          mode="ios"
           tab={appPage.tab}
+          href={appPage.url}
           key={i}
           className={location.pathname === appPage.url ? "selected" : ""}
         >
