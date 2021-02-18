@@ -3,14 +3,10 @@ import { useLocation } from "react-router-dom";
 import { IonTabBar, IonTabButton, IonIcon, IonLabel } from "@ionic/react";
 import { homeOutline, megaphoneOutline, cartOutline } from "ionicons/icons";
 
-interface AppPage {
-  url: string;
-  tab: string;
-  icon: string;
-  title: string;
-}
+// Interfaces
+import IPage from "../../interfaces/IPage";
 
-const appPages: AppPage[] = [
+const appPages: IPage[] = [
   {
     title: "Inicio",
     tab: "home",
@@ -24,7 +20,7 @@ const appPages: AppPage[] = [
     icon: megaphoneOutline,
   },
   {
-    title: "Stads",
+    title: "Stands",
     tab: "stands",
     url: "/stands",
     icon: cartOutline,

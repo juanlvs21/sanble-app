@@ -9,7 +9,7 @@ import Menu from "../menu/Menu";
 import LoaderScreen from "../loader/FullScreen";
 
 // --- Screens ---
-// import NotFound from "../../pages/404/NotFound";
+import NotFound from "../../pages/404/NotFound";
 // Auth
 import Login from "../../pages/auth/Login";
 import Register from "../../pages/auth/Register";
@@ -63,6 +63,7 @@ const Router: React.FC = () => {
               <RouteSecure component={StandsList} />
             </Route>
             <Redirect path="/" to="/home" exact />
+            <Route path="*" component={NotFound} />
           </IonRouterOutlet>
         </IonSplitPane>
       </IonReactRouter>

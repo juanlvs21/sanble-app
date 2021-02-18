@@ -27,13 +27,10 @@ import ToggleDarkMode from "../darkMode/Toggle";
 // Hooks
 import useAuth from "../../hooks/useAuth";
 
-interface AppPage {
-  url: string;
-  icon: string;
-  title: string;
-}
+// Interfaces
+import IPage from "../../interfaces/IPage";
 
-const appPages: AppPage[] = [
+const appPages: IPage[] = [
   {
     title: "Inicio",
     url: "/home",
