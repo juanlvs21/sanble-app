@@ -15,13 +15,13 @@ import NoImage from "../../assets/images/no-image.png";
 
 // Components
 import ImageSkeleton from "../skeleton/Image";
+import Rating from "../stars/Rating";
 
 interface ContainerProps {
   uuid: string;
   name: string;
   description: string;
   stars: number;
-  slogan?: string;
   url_photo?: string;
 }
 
@@ -30,7 +30,6 @@ const CardStand: React.FC<ContainerProps> = ({
   name,
   description,
   stars,
-  slogan,
   url_photo,
 }) => {
   const [loadingImg, setLoadingImg] = useState<boolean>(true);
@@ -49,12 +48,17 @@ const CardStand: React.FC<ContainerProps> = ({
           />
         </div>
         <div className={styles.content}>
-          <IonCardHeader>
+          <IonCardHeader className={styles.header}>
             <IonCardTitle>{name}</IonCardTitle>
-            <IonCardSubtitle>{slogan}</IonCardSubtitle>
+            <IonCardSubtitle className={styles.subtitle}>
+              <Rating stars={stars} />
+            </IonCardSubtitle>
           </IonCardHeader>
 
-          <IonCardContent>{description} </IonCardContent>
+          <IonCardContent>
+            {description}
+            <br />
+          </IonCardContent>
         </div>
       </div>
     </IonCard>
