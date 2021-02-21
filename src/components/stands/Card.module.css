@@ -26,6 +26,14 @@
   width: calc(100% - 200px);
 }
 
+.header {
+  padding-bottom: 0;
+}
+
+.subtitle {
+  margin-top: 0;
+}
+
 @media (max-width: 500px) {
   .container {
     flex-direction: column;
