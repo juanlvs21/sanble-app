@@ -25,6 +25,7 @@
     "@testing-library/react": "9.4.0",
     "@testing-library/user-event": "8.0.3",
     "cordova-plugin-statusbar": "2.4.3",
+    "dayjs": "1.10.4",
     "firebase": "8.2.6",
     "formik": "2.2.6",
     "ionicons": "5.0.0",
