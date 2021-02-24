@@ -11,6 +11,7 @@ const useStands = () => {
   const [errors, setErrors] = useState<string>("");
   const [showErrors, setShowErrors] = useState<boolean>(false);
   const [standsList, setStandsList] = useState<Array<IStands>>([]);
+  const [lastKey, setLastKey] = useState<string>("");
 
   const setDataError = (errs: any) => {
     setErrors(errs ? errs : "");
@@ -22,19 +23,47 @@ const useStands = () => {
     setDataError(null);
 
     try {
-      const standsRef = db.collection("stands");
-      const snapshot = await standsRef.get();
+      const snapshot = await db
+        .collection("stands")
+        .orderBy("creationTime", "desc")
+        .limit(5)
+        .get();
 
       if (snapshot.empty) setStandsList([]);
       else {
         const data: Array<any> = [];
         snapshot.forEach((doc) => data.push(doc.data()));
+        setLastKey(data[data.length - 1].creationTime);
         setStandsList(data);
       }
       setLoading(false);
     } catch (error) {
+      console.error(error);
       setDataError("Ha ocurrido un error al cargar los stands.");
       setLoading(false);
+    }
+  };
+
+  const handleGetNextList = async () => {
+    setDataError(null);
+
+    try {
+      const snapshot = await db
+        .collection("stands")
+        .orderBy("creationTime", "desc")
+        .startAfter(lastKey)
+        .limit(5)
+        .get();
+
+      if (!snapshot.empty) {
+        const data: Array<any> = [];
+        snapshot.forEach((doc) => data.push(doc.data()));
+        setLastKey(data[data.length - 1].creationTime);
+        setStandsList((list) => [...list, ...data]);
+      }
+    } catch (error) {
+      console.error(error);
+      setDataError("Ha ocurrido un error al cargar más stands.");
     }
   };
 
@@ -45,6 +74,7 @@ const useStands = () => {
     standsList,
     setShowErrors,
     handleGetList,
+    handleGetNextList,
   };
 };
 

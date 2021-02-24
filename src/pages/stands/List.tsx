@@ -1,5 +1,10 @@
 import React from "react";
-import { IonToast, useIonViewWillEnter } from "@ionic/react";
+import {
+  IonToast,
+  useIonViewDidEnter,
+  IonInfiniteScroll,
+  IonInfiniteScrollContent,
+} from "@ionic/react";
 import { RefresherEventDetail } from "@ionic/core";
 
 // Layout
@@ -21,15 +26,20 @@ const StandsList: React.FC = () => {
     loading,
     standsList,
     handleGetList,
+    handleGetNextList,
     showErrors,
     setShowErrors,
     errors,
   } = useStands();
 
-  useIonViewWillEnter(() => handleGetList());
+  useIonViewDidEnter(() => handleGetList());
 
   const handleRefresh = (event: CustomEvent<RefresherEventDetail>) => {
     handleGetList().then(() => event.detail.complete());
+  };
+
+  const handleNextData = (event: any) => {
+    handleGetNextList().then(() => event.target.complete());
   };
 
   return (
@@ -41,6 +51,13 @@ const StandsList: React.FC = () => {
       {standsList.map((stand: IStands) => (
         <Card key={stand.uuid} {...stand} />
       ))}
+
+      <IonInfiniteScroll onIonInfinite={handleNextData} disabled={loading}>
+        <IonInfiniteScrollContent
+          loadingSpinner="bubbles"
+          loadingText="Cargando..."
+        />
+      </IonInfiniteScroll>
 
       <IonToast
         isOpen={showErrors}
