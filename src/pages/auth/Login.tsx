@@ -19,6 +19,7 @@ import Layout from "../../layouts/Auth";
 
 // Components
 import ErrorFormik from "../../components/forms/ErrorFormik";
+import InputPassword from "../../components/forms/InputPassword";
 
 // Hooks
 import useAuth from "../../hooks/useAuth";
@@ -83,9 +84,8 @@ const Login: React.FC = () => {
 
             <IonItem>
               <IonLabel position="floating">Contraseña</IonLabel>
-              <IonInput
+              <InputPassword
                 name="password"
-                type="password"
                 disabled={isSubmitting}
                 onIonChange={handleChange}
                 onIonBlur={handleBlur}
