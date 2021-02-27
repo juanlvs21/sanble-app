@@ -4,13 +4,10 @@ import { IonButton } from "@ionic/react";
 // Layouts
 import Layout from "../../../layouts/Auth";
 
-// Styles
-import styles from "../Auth.module.css";
-
 const RecoverPasswordSend: React.FC = () => {
   return (
     <Layout compact={true}>
-      <div className={styles.center_container}>
+      <div className="text_center">
         <h1>Recuperar de Contraseña</h1>
 
         <p>

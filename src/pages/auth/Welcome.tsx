@@ -4,13 +4,10 @@ import { IonButton } from "@ionic/react";
 // Layouts
 import Layout from "../../layouts/Auth";
 
-// Styles
-import styles from "./Auth.module.css";
-
 const Welcome: React.FC = () => {
   return (
     <Layout compact={true}>
-      <div className={styles.center_container}>
+      <div className="text_center">
         <h1>
           ¡Gracias por unirte a <b>Sanble</b>!
         </h1>

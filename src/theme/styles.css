@@ -36,3 +36,7 @@ ion-tab-button .selected {
 ion-toolbar {
   --min-height: 48px;
 }
+
+.text_center {
+  text-align: center;
+}

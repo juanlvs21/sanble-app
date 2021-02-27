@@ -14,9 +14,11 @@ import NotFound from "../../pages/404/NotFound";
 import Login from "../../pages/auth/Login";
 import Register from "../../pages/auth/Register";
 import Welcome from "../../pages/auth/Welcome";
-// Recover Password
+// Auth Recover Password
 import RecoverPassword from "../../pages/auth/recoverPassword/Recover";
 import RecoverPasswordSend from "../../pages/auth/recoverPassword/Send";
+// Auth Account Management
+import AccountManagement from "../../pages/auth/Management";
 // Home
 import Home from "../../pages/home/Home";
 //Profile
@@ -50,6 +52,12 @@ const Router: React.FC = () => {
               component={RecoverPasswordSend}
               exact
             />
+            {/* Account */}
+            <Route
+              path="/auth/account/management"
+              component={AccountManagement}
+              exact
+            />
             {/* Home */}
             <Route path="/home" exact>
               <RouteSecure component={Home} />
@@ -63,6 +71,7 @@ const Router: React.FC = () => {
               <RouteSecure component={StandsList} />
             </Route>
             <Redirect path="/" to="/home" exact />
+            <Route path="/404" component={NotFound} exact />
             <Route path="*" component={NotFound} />
           </IonRouterOutlet>
         </IonSplitPane>

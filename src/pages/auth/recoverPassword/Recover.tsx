@@ -51,7 +51,7 @@ const RecoverPassword: React.FC = () => {
 
   return (
     <Layout>
-      <h1 className={styles.title}>Recuperar de Contraseña</h1>
+      <h1 className="text_center">Recuperar de Contraseña</h1>
 
       <Formik
         initialValues={initialValues}
