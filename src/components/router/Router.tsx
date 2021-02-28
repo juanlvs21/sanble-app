@@ -77,7 +77,7 @@ const Router: React.FC = () => {
             <Route path="/stands" exact>
               <RouteSecure component={StandsList} />
             </Route>
-            <Route path="/stands/:uuid" exact>
+            <Route path="/stand/:uuid" exact>
               <RouteSecure component={StandsDetails} />
             </Route>
             <Redirect path="/" to="/home" exact />

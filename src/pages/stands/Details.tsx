@@ -6,6 +6,7 @@ import {
   IonSegmentButton,
   IonLabel,
   useIonViewDidEnter,
+  useIonViewDidLeave,
 } from "@ionic/react";
 import { useParams } from "react-router-dom";
 import { RefresherEventDetail } from "@ionic/core";
@@ -21,6 +22,7 @@ import Layout from "../../layouts/Main";
 
 // Components
 import ImageSkeleton from "../../components/skeleton/Image";
+import DetailsSkeleton from "../../components/skeleton/stands/Details";
 import Rating from "../../components/stars/Rating";
 
 // Hooks
@@ -35,12 +37,14 @@ const StandDetails: React.FC = () => {
     showErrors,
     setShowErrors,
     handleGetDetails,
+    handleClearDetails,
   } = useStands();
 
   const [loadingImg, setLoadingImg] = useState<boolean>(true);
   const [segmentSelected, setSegmentSelected] = useState<string>("items");
 
-  useIonViewDidEnter(() => handleGetDetails(uuid));
+  useIonViewDidEnter(() => handleGetDetails(uuid), [uuid]);
+  useIonViewDidLeave(() => handleClearDetails(), [uuid]);
 
   const handleRefresh = (event: CustomEvent<RefresherEventDetail>) => {
     handleGetDetails(uuid).then(() => event.detail.complete());
@@ -48,50 +52,59 @@ const StandDetails: React.FC = () => {
 
   return (
     <Layout simpleToolbar={true} doRefresh={handleRefresh}>
-      {loadingImg && <ImageSkeleton className={styles.image_skeleton} />}
-      <div className={styles.details_image_bg} />
-      <img
-        className={styles.details_image}
-        src={standDetails?.url_photo ? standDetails?.url_photo : NoImage}
-        alt={standDetails?.name}
-        onLoad={() => setLoadingImg(false)}
-      />
+      {loadingImg && (
+        <ImageSkeleton className={styles.details_image_skeleton} />
+      )}
 
-      <div className={styles.details_name_and_stars}>
-        <h1>{standDetails?.name}</h1>
-        <Rating
-          stars={standDetails?.stars as number}
-          className={styles.details_stars}
-        />
-      </div>
+      {loading ? (
+        <DetailsSkeleton />
+      ) : (
+        <>
+          <div className={styles.details_image_bg} />
+          <img
+            className={styles.details_image}
+            src={standDetails?.url_photo ? standDetails?.url_photo : NoImage}
+            alt={standDetails?.name}
+            onLoad={() => setLoadingImg(false)}
+          />
 
-      <IonCard className={styles.details_card}>
-        <div>
-          <blockquote className={styles.details_slogan}>
-            {standDetails?.slogan}
-          </blockquote>
-          <p className={styles.details_description}>
-            {standDetails?.description}
-          </p>
-        </div>
+          <div className={styles.details_name_and_stars}>
+            <h1>{standDetails?.name}</h1>
+            <Rating
+              stars={standDetails?.stars as number}
+              className={styles.details_stars}
+            />
+          </div>
 
-        <IonSegment
-          value={segmentSelected}
-          onIonChange={({ detail }) =>
-            setSegmentSelected(detail.value as string)
-          }
-        >
-          <IonSegmentButton value="items">
-            <IonLabel>Artículos</IonLabel>
-          </IonSegmentButton>
-          <IonSegmentButton value="ads">
-            <IonLabel>Anuncios</IonLabel>
-          </IonSegmentButton>
-          <IonSegmentButton value="reviews">
-            <IonLabel>Opiniones</IonLabel>
-          </IonSegmentButton>
-        </IonSegment>
-      </IonCard>
+          <IonCard className={styles.details_card}>
+            <div>
+              <blockquote className={styles.details_slogan}>
+                {standDetails?.slogan}
+              </blockquote>
+              <p className={styles.details_description}>
+                {standDetails?.description}
+              </p>
+            </div>
+
+            <IonSegment
+              value={segmentSelected}
+              onIonChange={({ detail }) =>
+                setSegmentSelected(detail.value as string)
+              }
+            >
+              <IonSegmentButton value="items">
+                <IonLabel>Artículos</IonLabel>
+              </IonSegmentButton>
+              <IonSegmentButton value="ads">
+                <IonLabel>Anuncios</IonLabel>
+              </IonSegmentButton>
+              <IonSegmentButton value="reviews">
+                <IonLabel>Opiniones</IonLabel>
+              </IonSegmentButton>
+            </IonSegment>
+          </IonCard>
+        </>
+      )}
 
       <IonToast
         isOpen={showErrors}
