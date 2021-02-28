@@ -7,16 +7,21 @@ import { db } from "../utils/firebase";
 import IStands from "../interfaces/IStands";
 
 const useStands = () => {
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
   const [errors, setErrors] = useState<string>("");
   const [showErrors, setShowErrors] = useState<boolean>(false);
   const [standsList, setStandsList] = useState<Array<IStands>>([]);
   const [lastKey, setLastKey] = useState<string>("");
-  const [standDetails, setStandDetails] = useState<IStands>();
+  const [standDetails, setStandDetails] = useState<IStands | null>(null);
 
   const setDataError = (errs: any) => {
     setErrors(errs ? errs : "");
     setShowErrors(errs ? true : false);
+  };
+
+  const handleClearDetails = () => {
+    setLoading(true);
+    setStandDetails(null);
   };
 
   const handleGetList = async () => {
@@ -37,12 +42,11 @@ const useStands = () => {
         setLastKey(data[data.length - 1].creationTime);
         setStandsList(data);
       }
-      setLoading(false);
     } catch (error) {
       console.error(error);
       setDataError("Ha ocurrido un error al cargar los stands.");
-      setLoading(false);
     }
+    setLoading(false);
   };
 
   const handleGetNextList = async () => {
@@ -69,6 +73,7 @@ const useStands = () => {
   };
 
   const handleGetDetails = async (uuid: string) => {
+    setStandDetails(null);
     setLoading(true);
     setDataError(null);
 
@@ -80,6 +85,7 @@ const useStands = () => {
       console.error(error);
       setDataError("Ha ocurrido detalles de stand.");
     }
+    setLoading(false);
   };
 
   return {
@@ -89,6 +95,7 @@ const useStands = () => {
     standsList,
     standDetails,
     setShowErrors,
+    handleClearDetails,
     handleGetList,
     handleGetNextList,
     handleGetDetails,

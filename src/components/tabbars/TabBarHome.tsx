@@ -1,7 +1,7 @@
 import React from "react";
-import { useLocation } from "react-router-dom";
 import { IonTabBar, IonTabButton, IonIcon, IonLabel } from "@ionic/react";
 import { homeOutline, megaphoneOutline, cartOutline } from "ionicons/icons";
+import { useLocation } from "react-router-dom";
 
 // Interfaces
 import IPage from "../../interfaces/IPage";
@@ -34,11 +34,10 @@ const TabBarHome: React.FC = () => {
     <IonTabBar slot="bottom">
       {appPages.map((appPage, i) => (
         <IonTabButton
-          mode="ios"
+          className={location.pathname === appPage.url ? "selected" : ""}
           tab={appPage.tab}
           href={appPage.url}
           key={i}
-          className={location.pathname === appPage.url ? "selected" : ""}
         >
           <IonIcon icon={appPage.icon} />
           <IonLabel>{appPage.title}</IonLabel>

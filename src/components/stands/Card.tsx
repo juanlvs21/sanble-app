@@ -37,7 +37,7 @@ const CardStand: React.FC<ContainerProps> = ({
   return (
     <IonCard
       className={`${styles.card} animate__animated animate__fadeIn`}
-      routerLink={`/stands/${uuid}`}
+      routerLink={`/stand/${uuid}`}
     >
       <div className={styles.container}>
         <div>
