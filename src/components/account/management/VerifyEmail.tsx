@@ -1,13 +1,11 @@
 import React from "react";
-import { IonButton, IonIcon } from "@ionic/react";
-import {
-  checkmarkCircleOutline,
-  closeCircleOutline,
-  reloadCircleOutline,
-} from "ionicons/icons";
+import { IonButton } from "@ionic/react";
 
 // Styles
 import styles from "./Management.module.css";
+
+// Components
+import LoaderVerifyCode from "./LoaderVerifyCode";
 
 interface ContainerProps {
   loading: boolean;
@@ -16,16 +14,7 @@ interface ContainerProps {
 
 const VerifyEmail: React.FC<ContainerProps> = ({ loading, errors }) => (
   <div className="text_center">
-    {loading ? (
-      <IonIcon
-        icon={reloadCircleOutline}
-        className={`${styles.icon} ${styles.spin}`}
-      />
-    ) : !errors ? (
-      <IonIcon icon={checkmarkCircleOutline} className={styles.icon} />
-    ) : (
-      <IonIcon icon={closeCircleOutline} className={styles.icon} />
-    )}
+    <LoaderVerifyCode loading={loading} errors={errors} />
 
     <h1 className={styles.title}>
       {loading

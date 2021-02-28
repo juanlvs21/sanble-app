@@ -14,3 +14,12 @@
   font-size: 14px;
   margin-top: 15px;
 }
+
+.invalid_code {
+  background-color: var(--ion-color-danger);
+  margin-top: 20px;
+  padding: 10px;
+  border-radius: var(--sanble-border-radius);
+  color: #ffffff;
+  text-align: center;
+}

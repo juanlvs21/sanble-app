@@ -26,3 +26,7 @@
   transform: scale(1.1);
   transition: all 100ms ease-in-out;
 }
+
+.input_password_icon_disabled {
+  color: var(--ion-color-medium);
+}
