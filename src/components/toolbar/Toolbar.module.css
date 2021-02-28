@@ -8,4 +8,9 @@
 
 .logo {
   width: 100px;
+  margin-top: 5px;
+}
+
+.logo_spacing_simple {
+  margin-right: 50px;
 }

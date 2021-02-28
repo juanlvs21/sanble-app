@@ -12,6 +12,7 @@ const useStands = () => {
   const [showErrors, setShowErrors] = useState<boolean>(false);
   const [standsList, setStandsList] = useState<Array<IStands>>([]);
   const [lastKey, setLastKey] = useState<string>("");
+  const [standDetails, setStandDetails] = useState<IStands>();
 
   const setDataError = (errs: any) => {
     setErrors(errs ? errs : "");
@@ -67,14 +68,30 @@ const useStands = () => {
     }
   };
 
+  const handleGetDetails = async (uuid: string) => {
+    setLoading(true);
+    setDataError(null);
+
+    try {
+      const doc: any = await db.collection("stands").doc(uuid).get();
+      if (!doc.exists) setDataError("Stand no existe.");
+      else setStandDetails(doc.data());
+    } catch (error) {
+      console.error(error);
+      setDataError("Ha ocurrido detalles de stand.");
+    }
+  };
+
   return {
     loading,
     errors,
     showErrors,
     standsList,
+    standDetails,
     setShowErrors,
     handleGetList,
     handleGetNextList,
+    handleGetDetails,
   };
 };
 

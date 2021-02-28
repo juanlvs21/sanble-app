@@ -35,7 +35,10 @@ const CardStand: React.FC<ContainerProps> = ({
   const [loadingImg, setLoadingImg] = useState<boolean>(true);
 
   return (
-    <IonCard className={styles.card} href={`/stands/${uuid}`}>
+    <IonCard
+      className={`${styles.card} animate__animated animate__fadeIn`}
+      routerLink={`/stands/${uuid}`}
+    >
       <div className={styles.container}>
         <div>
           {loadingImg && <ImageSkeleton className={styles.image_skeleton} />}
