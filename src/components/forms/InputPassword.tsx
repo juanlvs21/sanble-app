@@ -36,7 +36,9 @@ const InputPassword: React.FC<ContainerProps> = ({
       />
       <IonIcon
         icon={showPass ? eyeOutline : eyeOffOutline}
-        className={styles.input_password_icon}
+        className={`${styles.input_password_icon} ${
+          disabled ? styles.input_password_icon_disabled : ""
+        }`}
         onClick={handleToggleShowPass}
       />
     </div>

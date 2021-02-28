@@ -17,6 +17,7 @@ import Welcome from "../../pages/auth/Welcome";
 // Auth Recover Password
 import RecoverPassword from "../../pages/auth/recoverPassword/Recover";
 import RecoverPasswordSend from "../../pages/auth/recoverPassword/Send";
+import RecoverPasswordChangeSuccess from "../../pages/auth/recoverPassword/ChangeSuccess";
 // Auth Account Management
 import AccountManagement from "../../pages/auth/Management";
 // Home
@@ -50,6 +51,11 @@ const Router: React.FC = () => {
             <Route
               path="/auth/recoverPassword/send"
               component={RecoverPasswordSend}
+              exact
+            />
+            <Route
+              path="/auth/recoverPassword/success"
+              component={RecoverPasswordChangeSuccess}
               exact
             />
             {/* Account */}

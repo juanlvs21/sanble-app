@@ -11,6 +11,10 @@
   margin-top: 20;
 }
 
+.container_btns ion-button {
+  margin-top: 20px;
+}
+
 .icon.spin {
   animation-name: spin;
   animation-duration: 2000ms;
