@@ -2,3 +2,7 @@
   color: var(--ion-color-warning);
   font-size: 20px;
 }
+
+.star {
+  margin: 0 2px;
+}
