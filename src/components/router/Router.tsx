@@ -26,6 +26,7 @@ import Home from "../../pages/home/Home";
 import Profile from "../../pages/profile/Profile";
 // Stands
 import StandsList from "../../pages/stands/List";
+import StandsDetails from "../../pages/stands/Details";
 
 const Router: React.FC = () => {
   const [showLoaderFullScreen, setShowLoaderFullScreen] = useState<boolean>(
@@ -75,6 +76,9 @@ const Router: React.FC = () => {
             {/* Stands */}
             <Route path="/stands" exact>
               <RouteSecure component={StandsList} />
+            </Route>
+            <Route path="/stands/:uuid" exact>
+              <RouteSecure component={StandsDetails} />
             </Route>
             <Redirect path="/" to="/home" exact />
             <Route path="/404" component={NotFound} exact />
