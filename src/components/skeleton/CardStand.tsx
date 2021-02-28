@@ -16,7 +16,7 @@ import Image from "./Image";
 
 const CardStandSkeleton: React.FC = () => {
   return (
-    <IonCard>
+    <IonCard className={styles.card}>
       <div className={styles.container}>
         <div>
           <Image className={styles.img} />

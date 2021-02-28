@@ -7,6 +7,9 @@ import {
 } from "@ionic/react";
 import { RefresherEventDetail } from "@ionic/core";
 
+// Stands
+import styles from "./Stands.module.css";
+
 // Layout
 import Layout from "../../layouts/Main";
 
@@ -44,13 +47,15 @@ const StandsList: React.FC = () => {
 
   return (
     <Layout tabBar={<TabBar />} doRefresh={handleRefresh}>
-      {loading &&
-        !standsList.length &&
-        [1, 2, 3].map((i) => <CardSkeleton key={i} />)}
+      <div className={styles.cards_container}>
+        {loading &&
+          !standsList.length &&
+          [1, 2, 3].map((i) => <CardSkeleton key={i} />)}
 
-      {standsList.map((stand: IStands) => (
-        <Card key={stand.uuid} {...stand} />
-      ))}
+        {standsList.map((stand: IStands) => (
+          <Card key={stand.uuid} {...stand} />
+        ))}
+      </div>
 
       <IonInfiniteScroll onIonInfinite={handleNextData} disabled={loading}>
         <IonInfiniteScrollContent
