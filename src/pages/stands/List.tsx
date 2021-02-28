@@ -16,7 +16,7 @@ import Layout from "../../layouts/Main";
 // Components
 import TabBar from "../../components/tabbars/TabBarHome";
 import Card from "../../components/stands/Card";
-import CardSkeleton from "../../components/skeleton/CardStand";
+import CardSkeleton from "../../components/skeleton/stands/Card";
 
 // Hooks
 import useStands from "../../hooks/useStands";

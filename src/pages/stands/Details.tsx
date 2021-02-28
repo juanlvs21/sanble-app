@@ -8,6 +8,7 @@ import {
   useIonViewDidEnter,
 } from "@ionic/react";
 import { useParams } from "react-router-dom";
+import { RefresherEventDetail } from "@ionic/core";
 
 // Styles
 import styles from "./Stands.module.css";
@@ -21,7 +22,6 @@ import Layout from "../../layouts/Main";
 // Components
 import ImageSkeleton from "../../components/skeleton/Image";
 import Rating from "../../components/stars/Rating";
-import ModalDetails from "../../components/stands/ModalDetails";
 
 // Hooks
 import useStands from "../../hooks/useStands";
@@ -42,8 +42,12 @@ const StandDetails: React.FC = () => {
 
   useIonViewDidEnter(() => handleGetDetails(uuid));
 
+  const handleRefresh = (event: CustomEvent<RefresherEventDetail>) => {
+    handleGetDetails(uuid).then(() => event.detail.complete());
+  };
+
   return (
-    <Layout simpleToolbar={true}>
+    <Layout simpleToolbar={true} doRefresh={handleRefresh}>
       {loadingImg && <ImageSkeleton className={styles.image_skeleton} />}
       <div className={styles.details_image_bg} />
       <img
