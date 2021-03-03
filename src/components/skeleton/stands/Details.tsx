@@ -12,17 +12,10 @@ const StandsDetailsSkeleton: React.FC = () => {
     <div className={styles.details_container}>
       <ImageSkeleton className={styles.details_img} />
 
-      <div className={styles.details_name_and_stars}>
-        <IonSkeletonText
-          animated
-          style={{ width: "50%", height: 25, zIndex: 10 }}
-        />
-      </div>
-
       <IonCard className={styles.details_card}>
         <IonSkeletonText
           animated
-          style={{ width: "100%", height: 20, margin: 20 }}
+          style={{ width: "95%", height: 20, margin: 20 }}
         />
 
         <div className={styles.details_description}>

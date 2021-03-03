@@ -13,6 +13,11 @@ const useApp = () => {
     else return false;
   };
 
+  const isMobileWeb = () => {
+    if (isPlatform("mobileweb")) return true;
+    else return false;
+  };
+
   const setColorStatusBar = (color: string) => {
     if (isMobile()) StatusBar.backgroundColorByHexString(color);
   };
@@ -33,6 +38,7 @@ const useApp = () => {
     setColorStatusBar,
     setOverlays,
     isMobile,
+    isMobileWeb,
     initWelcome,
     firstWelcome,
     setWelcome,

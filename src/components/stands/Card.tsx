@@ -25,7 +25,7 @@ interface ContainerProps {
   url_photo?: string;
 }
 
-const CardStand: React.FC<ContainerProps> = ({
+const StandCard: React.FC<ContainerProps> = ({
   uuid,
   name,
   description,
@@ -54,7 +54,7 @@ const CardStand: React.FC<ContainerProps> = ({
           <IonCardHeader className={styles.header}>
             <IonCardTitle>{name}</IonCardTitle>
             <IonCardSubtitle className={styles.subtitle}>
-              <Rating stars={stars} />
+              <Rating stars={Math.ceil(stars)} />
             </IonCardSubtitle>
           </IonCardHeader>
 
@@ -68,4 +68,4 @@ const CardStand: React.FC<ContainerProps> = ({
   );
 };
 
-export default CardStand;
+export default StandCard;
