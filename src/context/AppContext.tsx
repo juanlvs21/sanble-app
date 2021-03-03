@@ -7,12 +7,14 @@ export const DataContext: any = createContext({
     toggleDarkMode: null,
   },
   session: null,
+  usdValue: 0,
 });
 
 export const AppProvider = ({ children }: any) => {
   const [darkMode, setDarkMode] = useState<boolean>(false);
   const [session, setSession] = useState<any>(null);
   const [firstWelcome, setFirstWelcome] = useState<boolean>(true);
+  const [usdValue, setUsdValue] = useState<number>(0);
 
   const setDarkModeApp = (value: boolean) => {
     setDarkMode(value);
@@ -52,6 +54,8 @@ export const AppProvider = ({ children }: any) => {
         setDarkModeApp,
         firstWelcome,
         setWelcome,
+        usdValue,
+        setUsdValue,
       }}
     >
       {children}

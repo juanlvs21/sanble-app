@@ -30,6 +30,7 @@ import "./assets/fonts/Quicksand/Quicksand.css";
 import useAuth from "./hooks/useAuth";
 import useDarkmode from "./hooks/useDarkmode";
 import useApp from "./hooks/useApp";
+import useCurrency from "./hooks/useCurrency";
 
 /* Components */
 import LoaderScreen from "./components/loader/FullScreen";
@@ -40,6 +41,11 @@ const App: React.FC = () => {
   const { initDarkMode } = useDarkmode();
   const { gettingSession, handleGetSession, session } = useAuth();
   const { firstWelcome, initWelcome } = useApp();
+  const { hanldeGetUSD } = useCurrency();
+
+  useEffect(() => {
+    hanldeGetUSD();
+  }, [hanldeGetUSD]);
 
   useEffect(() => {
     initDarkMode();

@@ -31,14 +31,8 @@
   border-bottom-right-radius: var(--sanble-border-radius);
 }
 
-.details_name_and_stars {
-  display: flex;
-  justify-content: center;
-  margin-top: 60px;
-}
-
 .details_card {
-  margin-top: 107px;
+  margin-top: 200px;
   z-index: 10;
 }
 

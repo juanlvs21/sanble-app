@@ -24,6 +24,7 @@ import Layout from "../../layouts/Main";
 import ImageSkeleton from "../../components/skeleton/Image";
 import DetailsSkeleton from "../../components/skeleton/stands/Details";
 import Rating from "../../components/stars/Rating";
+import ItemsList from "../../components/stands/ItemsList";
 
 // Hooks
 import useStands from "../../hooks/useStands";
@@ -77,10 +78,12 @@ const StandDetails: React.FC = () => {
           </div>
 
           <IonCard className={styles.details_card}>
-            <div>
-              <blockquote className={styles.details_slogan}>
-                {standDetails?.slogan}
-              </blockquote>
+            <div className={styles.details_slogan_description}>
+              {standDetails?.slogan && (
+                <blockquote className={styles.details_slogan}>
+                  {standDetails?.slogan}
+                </blockquote>
+              )}
               <p className={styles.details_description}>
                 {standDetails?.description}
               </p>
@@ -95,13 +98,19 @@ const StandDetails: React.FC = () => {
               <IonSegmentButton value="items">
                 <IonLabel>Artículos</IonLabel>
               </IonSegmentButton>
+              <IonSegmentButton value="promotions">
+                <IonLabel>Promociones</IonLabel>
+              </IonSegmentButton>
               <IonSegmentButton value="ads">
                 <IonLabel>Anuncios</IonLabel>
               </IonSegmentButton>
-              <IonSegmentButton value="reviews">
-                <IonLabel>Opiniones</IonLabel>
-              </IonSegmentButton>
             </IonSegment>
+
+            {segmentSelected === "items" && (
+              <ItemsList items={standDetails?.items} />
+            )}
+
+            <IonLabel>Opiniones</IonLabel>
           </IonCard>
         </>
       )}
