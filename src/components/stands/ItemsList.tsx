@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { IonGrid, IonRow, IonCol } from "@ionic/react";
 
 // Style
@@ -8,7 +8,8 @@ import styles from "./Items.module.css";
 import NoImage from "../../assets/images/no-image.png";
 
 // Components
-import Rating from "../stars/Rating";
+import ItemModal from "./ItemModal";
+// import Rating from "../stars/Rating";
 
 // Hooks
 // import useCurrency from "../../hooks/useCurrency";
@@ -24,7 +25,17 @@ interface ContainerProps {
 }
 
 const StandItemsList: React.FC<ContainerProps> = ({ items }) => {
+  const [showModalItem, setShowModalItem] = useState<boolean>(false);
+  const [item, setItem] = useState<IItem>();
   // const { usdValue } = useCurrency();
+
+  const handleShowItem = (uuid: string) => {
+    const findItem = items?.find((itm) => itm.uuid === uuid);
+    if (findItem) {
+      setItem(findItem);
+      setShowModalItem(true);
+    }
+  };
 
   return (
     <IonGrid className={styles.items_container}>
@@ -44,11 +55,12 @@ const StandItemsList: React.FC<ContainerProps> = ({ items }) => {
                   item.url_photo ? item.url_photo : NoImage
                 })`,
               }}
+              onClick={() => handleShowItem(item.uuid)}
             >
               <div className={styles.items_gradient} />
               <div className={styles.items_card}>
                 <h2 className={styles.items_name}>{item.name}</h2>
-                <Rating stars={Math.ceil(item.stars / item.scorers)} />
+                {/* <Rating stars={Math.ceil(item.stars / item.scorers)} /> */}
                 <span className={styles.items_price}>
                   Bs. {formatCurrency(item.price)}
                 </span>
@@ -58,6 +70,12 @@ const StandItemsList: React.FC<ContainerProps> = ({ items }) => {
           </IonCol>
         ))}
       </IonRow>
+
+      <ItemModal
+        item={item}
+        showModal={showModalItem}
+        setShowModal={setShowModalItem}
+      />
     </IonGrid>
   );
 };

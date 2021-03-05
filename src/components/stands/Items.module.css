@@ -16,6 +16,7 @@
   position: relative;
   transform: scale(1);
   transition: all 200ms ease-in-out;
+  cursor: pointer;
 }
 
 .items_card_container:hover {
