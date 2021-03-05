@@ -25,6 +25,7 @@ import ImageSkeleton from "../../components/skeleton/Image";
 import DetailsSkeleton from "../../components/skeleton/stands/Details";
 import Rating from "../../components/stars/Rating";
 import ItemsList from "../../components/stands/ItemsList";
+import Reviews from "../../components/stands/Reviews";
 
 // Hooks
 import useStands from "../../hooks/useStands";
@@ -109,9 +110,9 @@ const StandDetails: React.FC = () => {
             {segmentSelected === "items" && (
               <ItemsList items={standDetails?.items} />
             )}
-
-            <IonLabel>Opiniones</IonLabel>
           </IonCard>
+
+          <Reviews />
         </>
       )}
 
