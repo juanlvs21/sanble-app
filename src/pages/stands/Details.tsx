@@ -25,7 +25,8 @@ import ImageSkeleton from "../../components/skeleton/Image";
 import DetailsSkeleton from "../../components/skeleton/stands/Details";
 import Rating from "../../components/stars/Rating";
 import ItemsList from "../../components/stands/ItemsList";
-import Reviews from "../../components/stands/Reviews";
+import PromotionsList from "../../components/stands/PromotionsList";
+// import Reviews from "../../components/stands/Reviews";
 
 // Hooks
 import useStands from "../../hooks/useStands";
@@ -45,7 +46,10 @@ const StandDetails: React.FC = () => {
   const [loadingImg, setLoadingImg] = useState<boolean>(true);
   const [segmentSelected, setSegmentSelected] = useState<string>("items");
 
-  useIonViewDidEnter(() => handleGetDetails(uuid), [uuid]);
+  useIonViewDidEnter(() => {
+    setSegmentSelected("items");
+    handleGetDetails(uuid);
+  }, [uuid]);
   useIonViewDidLeave(() => handleClearDetails(), [uuid]);
 
   const handleRefresh = (event: CustomEvent<RefresherEventDetail>) => {
@@ -110,9 +114,15 @@ const StandDetails: React.FC = () => {
             {segmentSelected === "items" && (
               <ItemsList items={standDetails?.items} />
             )}
+            {segmentSelected === "promotions" && (
+              <PromotionsList
+                items={standDetails?.items}
+                promotions={standDetails?.promotions}
+              />
+            )}
           </IonCard>
 
-          <Reviews />
+          {/* <Reviews /> */}
         </>
       )}
 

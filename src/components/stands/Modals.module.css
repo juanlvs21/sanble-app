@@ -13,6 +13,11 @@
   font-weight: 700;
 }
 
+.btn_close:hover {
+  --border-color: var(--ion-color-danger);
+  --color: var(--ion-color-danger);
+}
+
 .content {
   height: 100%;
   padding: 0 30px 10px 30px;
