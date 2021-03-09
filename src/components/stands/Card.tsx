@@ -25,7 +25,7 @@ interface ContainerProps {
   url_photo?: string;
 }
 
-const CardStand: React.FC<ContainerProps> = ({
+const StandCard: React.FC<ContainerProps> = ({
   uuid,
   name,
   description,
@@ -35,9 +35,12 @@ const CardStand: React.FC<ContainerProps> = ({
   const [loadingImg, setLoadingImg] = useState<boolean>(true);
 
   return (
-    <IonCard className={styles.card} href={`/stands/${uuid}`}>
+    <IonCard
+      className={`${styles.card} animate__animated animate__fadeIn`}
+      routerLink={`/stand/${uuid}`}
+    >
       <div className={styles.container}>
-        <div>
+        <div className={styles.image_container}>
           {loadingImg && <ImageSkeleton className={styles.image_skeleton} />}
 
           <img
@@ -45,13 +48,14 @@ const CardStand: React.FC<ContainerProps> = ({
             src={url_photo ? url_photo : NoImage}
             alt={name}
             onLoad={() => setLoadingImg(false)}
+            onAbort={()=> setLoadingImg(false)}
           />
         </div>
         <div className={styles.content}>
           <IonCardHeader className={styles.header}>
             <IonCardTitle>{name}</IonCardTitle>
             <IonCardSubtitle className={styles.subtitle}>
-              <Rating stars={stars} />
+              <Rating stars={Math.ceil(stars)} />
             </IonCardSubtitle>
           </IonCardHeader>
 
@@ -65,4 +69,4 @@ const CardStand: React.FC<ContainerProps> = ({
   );
 };
 
-export default CardStand;
+export default StandCard;

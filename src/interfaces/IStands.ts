@@ -7,6 +7,8 @@ export default interface IStands {
   url_photo: any;
   items: Array<IItem>;
   promotions: Array<IPromotion>;
+  uuid_user: string;
+  creationTime: string;
 }
 
 export interface IItem {

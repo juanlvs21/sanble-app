@@ -40,14 +40,13 @@ const Slide: React.FC<ContainerProps> = ({
           {end ? (
             <>
               <p className={styles.description}>{title}</p>
-              <h1 className={styles.title}>{description}</h1>
               <IonButton
                 expand="block"
                 color="dark"
                 className={styles.btn}
                 onClick={goLogin}
               >
-                Comenzar
+                {description}
               </IonButton>
             </>
           ) : (
