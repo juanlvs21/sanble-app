@@ -38,7 +38,9 @@ const StandItemsList: React.FC<ContainerProps> = ({ items }) => {
   };
 
   return (
-    <IonGrid className={styles.items_container}>
+    <IonGrid
+      className={`${styles.items_container} animate__animated animate__fadeIn`}
+    >
       <IonRow className={styles.items_row}>
         {items?.map((item: IItem) => (
           <IonCol
