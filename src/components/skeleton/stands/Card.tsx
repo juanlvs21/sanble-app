@@ -9,12 +9,12 @@ import {
 } from "@ionic/react";
 
 // Styles
-import styles from "./CardStand.module.css";
+import styles from "./Stands.module.css";
 
 // Component
-import Image from "./Image";
+import Image from "../Image";
 
-const CardStandSkeleton: React.FC = () => {
+const StandsCardSkeleton: React.FC = () => {
   return (
     <IonCard className={styles.card}>
       <div className={styles.container}>
@@ -42,4 +42,4 @@ const CardStandSkeleton: React.FC = () => {
   );
 };
 
-export default CardStandSkeleton;
+export default StandsCardSkeleton;

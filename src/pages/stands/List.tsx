@@ -7,7 +7,7 @@ import {
 } from "@ionic/react";
 import { RefresherEventDetail } from "@ionic/core";
 
-// Stands
+// Styles
 import styles from "./Stands.module.css";
 
 // Layout
@@ -16,7 +16,7 @@ import Layout from "../../layouts/Main";
 // Components
 import TabBar from "../../components/tabbars/TabBarHome";
 import Card from "../../components/stands/Card";
-import CardSkeleton from "../../components/skeleton/CardStand";
+import CardSkeleton from "../../components/skeleton/stands/Card";
 
 // Hooks
 import useStands from "../../hooks/useStands";
@@ -47,7 +47,7 @@ const StandsList: React.FC = () => {
 
   return (
     <Layout tabBar={<TabBar />} doRefresh={handleRefresh}>
-      <div className={styles.cards_container}>
+      <div className={styles.list_container}>
         {loading &&
           !standsList.length &&
           [1, 2, 3].map((i) => <CardSkeleton key={i} />)}

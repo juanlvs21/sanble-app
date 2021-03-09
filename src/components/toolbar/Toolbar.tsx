@@ -5,6 +5,7 @@ import {
   IonButtons,
   IonButton,
   IonMenuButton,
+  IonBackButton,
   IonIcon,
 } from "@ionic/react";
 import { searchOutline } from "ionicons/icons";
@@ -15,20 +16,36 @@ import styles from "./Toolbar.module.css";
 // Image
 import Logo from "../../assets/images/Logo_Horizontal_Light.png";
 
-const Toolbar: React.FC = () => {
+interface ContainerProps {
+  simple?: boolean;
+}
+
+const Toolbar: React.FC<ContainerProps> = ({ simple }) => {
   return (
     <IonToolbar color="primary" className={styles.toolbar}>
-      <IonButtons slot="start">
-        <IonMenuButton autoHide={true} />
-      </IonButtons>
+      {!simple ? (
+        <IonButtons slot="start">
+          <IonMenuButton autoHide={true} />
+        </IonButtons>
+      ) : (
+        <IonButtons slot="start">
+          <IonBackButton />
+        </IonButtons>
+      )}
       <IonTitle className={styles.title}>
-        <img className={styles.logo} src={Logo} alt="SANBLE" />
+        <img
+          className={`${styles.logo} ${simple && styles.logo_spacing_simple}`}
+          src={Logo}
+          alt="SANBLE"
+        />
       </IonTitle>
-      <IonButtons slot="end">
-        <IonButton>
-          <IonIcon slot="icon-only" icon={searchOutline} />
-        </IonButton>
-      </IonButtons>
+      {!simple && (
+        <IonButtons slot="end">
+          <IonButton>
+            <IonIcon slot="icon-only" icon={searchOutline} />
+          </IonButton>
+        </IonButtons>
+      )}
     </IonToolbar>
   );
 };
