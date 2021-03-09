@@ -40,7 +40,7 @@ const StandCard: React.FC<ContainerProps> = ({
       routerLink={`/stand/${uuid}`}
     >
       <div className={styles.container}>
-        <div>
+        <div className={styles.image_container}>
           {loadingImg && <ImageSkeleton className={styles.image_skeleton} />}
 
           <img
@@ -48,6 +48,7 @@ const StandCard: React.FC<ContainerProps> = ({
             src={url_photo ? url_photo : NoImage}
             alt={name}
             onLoad={() => setLoadingImg(false)}
+            onAbort={()=> setLoadingImg(false)}
           />
         </div>
         <div className={styles.content}>

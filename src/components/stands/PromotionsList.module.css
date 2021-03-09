@@ -1,0 +1,18 @@
+.item {
+  transition: all 200ms ease-in-out;
+  border-right: none;
+  border-left: none;
+}
+
+.item:hover {
+  cursor: pointer;
+  border-right: 1px solid var(--ion-color-primary);
+  border-left: 1px solid var(--ion-color-primary);
+  transition: all 200ms ease-in-out;
+}
+
+.icon {
+  font-size: 38px;
+  margin-right: 10px;
+  color: var(--ion-color-primary);
+}
