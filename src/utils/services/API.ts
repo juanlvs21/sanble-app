@@ -41,3 +41,23 @@ export const recoverPassword: any = (body: any): Promise<Response> => {
     }
   });
 };
+
+// Stands
+export const standRegister: any = (body: any): Promise<Response> => {
+  return new Promise<any>(async (resolve, reject) => {
+    try {
+      const response = await fetch(`${API_URL}/stands`, {
+        method: "POST",
+        body: JSON.stringify(body),
+      });
+      const { data } = await response.json();
+
+      if (!response.ok) {
+        reject(formatMessageToasts(data));
+      } else resolve(data);
+    } catch (error) {
+      console.log(error);
+      reject("Error desconocido");
+    }
+  });
+};
