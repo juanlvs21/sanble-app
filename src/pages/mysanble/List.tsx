@@ -26,6 +26,7 @@ import Layout from "../../layouts/Main";
 // Components
 import Card from "../../components/stands/Card";
 import CardSkeleton from "../../components/skeleton/stands/Card";
+import NewStandModal from "../../components/mysanble/NewStandModal";
 
 // Hooks
 import useStands from "../../hooks/useStands";
@@ -37,6 +38,7 @@ import { TQueryWhere } from "../../interfaces/IFirebase";
 
 const MySanbleList: React.FC = () => {
   const [segmentSelected, setSegmentSelected] = useState<string>("stands");
+  const [showModalNewStand, setShowNewStandModal] = useState<boolean>(false);
   const {
     session: { user },
   } = useAuth();
@@ -143,11 +145,16 @@ const MySanbleList: React.FC = () => {
           <IonFabButton>
             <IonIcon icon={megaphoneOutline} />
           </IonFabButton>
-          <IonFabButton>
+          <IonFabButton onClick={() => setShowNewStandModal(true)}>
             <IonIcon icon={cartOutline} />
           </IonFabButton>
         </IonFabList>
       </IonFab>
+
+      <NewStandModal
+        showModal={showModalNewStand}
+        setShowModal={setShowNewStandModal}
+      />
     </Layout>
   );
 };
