@@ -2,9 +2,11 @@ import { useState } from "react";
 
 // Utils
 import { db } from "../utils/firebase";
+import { standRegister } from "../utils/services/API";
 
 // Interfaces
 import IStands from "../interfaces/IStands";
+import { TQueryWhere } from "../interfaces/IFirebase";
 
 const useStands = () => {
   const [loading, setLoading] = useState<boolean>(true);
@@ -24,16 +26,23 @@ const useStands = () => {
     setStandDetails(null);
   };
 
-  const handleGetList = async () => {
+  const handleGetList = async (queryWhere: TQueryWhere = null) => {
     setLoading(true);
     setDataError(null);
 
     try {
-      const snapshot = await db
-        .collection("stands")
-        .orderBy("creationTime", "desc")
-        .limit(5)
-        .get();
+      const snapshot = queryWhere
+        ? await db
+            .collection("stands")
+            .orderBy("creationTime", "desc")
+            .limit(5)
+            .where(queryWhere.field, queryWhere.op, queryWhere.value)
+            .get()
+        : await db
+            .collection("stands")
+            .orderBy("creationTime", "desc")
+            .limit(5)
+            .get();
 
       if (snapshot.empty) setStandsList([]);
       else {
@@ -49,16 +58,24 @@ const useStands = () => {
     setLoading(false);
   };
 
-  const handleGetNextList = async () => {
+  const handleGetNextList = async (queryWhere: TQueryWhere = null) => {
     setDataError(null);
 
     try {
-      const snapshot = await db
-        .collection("stands")
-        .orderBy("creationTime", "desc")
-        .startAfter(lastKey)
-        .limit(5)
-        .get();
+      const snapshot = queryWhere
+        ? await db
+            .collection("stands")
+            .orderBy("creationTime", "desc")
+            .startAfter(lastKey)
+            .limit(5)
+            .where(queryWhere.field, queryWhere.op, queryWhere.value)
+            .get()
+        : await db
+            .collection("stands")
+            .orderBy("creationTime", "desc")
+            .startAfter(lastKey)
+            .limit(5)
+            .get();
 
       if (!snapshot.empty) {
         const data: Array<any> = [];
@@ -88,6 +105,25 @@ const useStands = () => {
     setLoading(false);
   };
 
+  const handleRegister = async (data: object) => {
+    setLoading(true);
+    setDataError(null);
+
+    return new Promise(async (resolve, rejects) => {
+      await standRegister(data)
+        .then((res: any) => {
+          resolve(res);
+        })
+        .catch((errors: any) => {
+          setDataError(errors);
+          rejects(errors);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    });
+  };
+
   return {
     loading,
     errors,
@@ -99,6 +135,7 @@ const useStands = () => {
     handleGetList,
     handleGetNextList,
     handleGetDetails,
+    handleRegister,
   };
 };
 
