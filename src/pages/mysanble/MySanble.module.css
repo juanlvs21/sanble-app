@@ -13,4 +13,5 @@
 .list_segment_label {
   display: flex;
   align-items: center;
+  margin: 0;
 }
