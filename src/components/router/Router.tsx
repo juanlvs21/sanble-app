@@ -24,6 +24,8 @@ import AccountManagement from "../../pages/auth/Management";
 import Home from "../../pages/home/Home";
 //Profile
 import Profile from "../../pages/profile/Profile";
+//My Sanble
+import MySanbleList from "../../pages/mysanble/List";
 // Stands
 import StandsList from "../../pages/stands/List";
 import StandsDetails from "../../pages/stands/Details";
@@ -73,6 +75,10 @@ const Router: React.FC = () => {
             <Route path="/profile" exact>
               <RouteSecure component={Profile} />
             </Route>
+            {/* My Sanble */}
+            <Route path="/my-sanble" exact>
+              <RouteSecure component={MySanbleList} />
+            </Route>
             {/* Stands */}
             <Route path="/stands" exact>
               <RouteSecure component={StandsList} />
@@ -82,7 +88,7 @@ const Router: React.FC = () => {
             </Route>
             <Redirect path="/" to="/home" exact />
             <Route path="/404" component={NotFound} exact />
-            <Route path="*" component={NotFound} />
+            <Route path="*" componentk={NotFound} />
           </IonRouterOutlet>
         </IonSplitPane>
       </IonReactRouter>
