@@ -8,6 +8,11 @@ import { DataContext } from "../context/AppContext";
 const useApp = () => {
   const { firstWelcome, setWelcome } = useContext(DataContext);
 
+  const isDesktop = () => {
+    if (isPlatform("desktop")) return true;
+    else return false;
+  };
+
   const isMobile = () => {
     if (!isPlatform("mobileweb") && !isPlatform("desktop")) return true;
     else return false;
@@ -37,6 +42,7 @@ const useApp = () => {
   return {
     setColorStatusBar,
     setOverlays,
+    isDesktop,
     isMobile,
     isMobileWeb,
     initWelcome,
