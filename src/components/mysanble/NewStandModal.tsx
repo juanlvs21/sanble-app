@@ -7,7 +7,7 @@ import {
   IonTextarea,
   IonButton,
   IonToast,
-  IonProgressBar,
+  IonSpinner,
 } from "@ionic/react";
 import { useHistory } from "react-router-dom";
 import { Formik } from "formik";
@@ -163,11 +163,7 @@ const MySanbleNewStandModal: React.FC<ContainerProps> = ({
                     type="submit"
                     disabled={isSubmitting}
                   >
-                    {isSubmitting ? (
-                      <IonProgressBar type="indeterminate" color="light" />
-                    ) : (
-                      "Guardar"
-                    )}
+                    {isSubmitting ? <IonSpinner name="dots" /> : "Guardar"}
                   </IonButton>
                 </div>
               </form>

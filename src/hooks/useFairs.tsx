@@ -2,19 +2,19 @@ import { useState } from "react";
 
 // Utils
 import { db } from "../utils/firebase";
-import { standRegister } from "../utils/services/API";
+// import { standRegister } from "../utils/services/API";
 
 // Interfaces
-import IStands from "../interfaces/IStands";
+import IFairs from "../interfaces/IFairs";
 import { TQueryWhere } from "../interfaces/IFirebase";
 
-const useStands = () => {
+const useFairs = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [errors, setErrors] = useState<string>("");
   const [showErrors, setShowErrors] = useState<boolean>(false);
-  const [standsList, setStandsList] = useState<Array<IStands>>([]);
+  const [fairsList, setFairsList] = useState<Array<IFairs>>([]);
   const [lastKey, setLastKey] = useState<string>("");
-  const [standDetails, setStandDetails] = useState<IStands | null>(null);
+  const [fairDetails, setFairDetails] = useState<IFairs | null>(null);
 
   const setDataError = (errs: any) => {
     setErrors(errs ? errs : "");
@@ -23,7 +23,7 @@ const useStands = () => {
 
   const handleClearDetails = () => {
     setLoading(true);
-    setStandDetails(null);
+    setFairDetails(null);
   };
 
   const handleGetList = async (queryWhere: TQueryWhere = null) => {
@@ -33,23 +33,23 @@ const useStands = () => {
     try {
       const snapshot = queryWhere
         ? await db
-            .collection("stands")
+            .collection("fairs")
             .orderBy("name", "asc")
             .limit(5)
             .where(queryWhere.field, queryWhere.op, queryWhere.value)
             .get()
-        : await db.collection("stands").orderBy("name", "asc").limit(5).get();
+        : await db.collection("fairs").orderBy("name", "asc").limit(5).get();
 
-      if (snapshot.empty) setStandsList([]);
+      if (snapshot.empty) setFairsList([]);
       else {
         const data: Array<any> = [];
         snapshot.forEach((doc) => data.push(doc.data()));
         setLastKey(data[data.length - 1].name);
-        setStandsList(data);
+        setFairsList(data);
       }
     } catch (error) {
       console.error(error);
-      setDataError("Ha ocurrido un error al cargar los stands.");
+      setDataError("Ha ocurrido un error al cargar las ferias.");
     }
     setLoading(false);
   };
@@ -60,14 +60,14 @@ const useStands = () => {
     try {
       const snapshot = queryWhere
         ? await db
-            .collection("stands")
+            .collection("fairs")
             .orderBy("name", "asc")
             .startAfter(lastKey)
             .limit(5)
             .where(queryWhere.field, queryWhere.op, queryWhere.value)
             .get()
         : await db
-            .collection("stands")
+            .collection("fairs")
             .orderBy("name", "asc")
             .startAfter(lastKey)
             .limit(5)
@@ -77,62 +77,62 @@ const useStands = () => {
         const data: Array<any> = [];
         snapshot.forEach((doc) => data.push(doc.data()));
         setLastKey(data[data.length - 1].name);
-        setStandsList((list) => [...list, ...data]);
+        setFairsList((list) => [...list, ...data]);
       }
     } catch (error) {
       console.error(error);
-      setDataError("Ha ocurrido un error al cargar más stands.");
+      setDataError("Ha ocurrido un error al cargar más ferias.");
     }
   };
 
-  const handleGetDetails = async (uuid: string) => {
-    setStandDetails(null);
-    setLoading(true);
-    setDataError(null);
+  // const handleGetDetails = async (uuid: string) => {
+  //   setFairDetails(null);
+  //   setLoading(true);
+  //   setDataError(null);
 
-    try {
-      const doc: any = await db.collection("stands").doc(uuid).get();
-      if (!doc.exists) setDataError("Stand no existe.");
-      else setStandDetails(doc.data());
-    } catch (error) {
-      console.error(error);
-      setDataError("Ha ocurrido detalles de stand.");
-    }
-    setLoading(false);
-  };
+  //   try {
+  //     const doc: any = await db.collection("fairs").doc(uuid).get();
+  //     if (!doc.exists) setDataError("Feria no existe.");
+  //     else setFairDetails(doc.data());
+  //   } catch (error) {
+  //     console.error(error);
+  //     setDataError("Ha ocurrido detalles de feria.");
+  //   }
+  //   setLoading(false);
+  // };
 
-  const handleRegister = async (data: object) => {
-    setLoading(true);
-    setDataError(null);
+  // const handleRegister = async (data: object) => {
+  //   setLoading(true);
+  //   setDataError(null);
 
-    return new Promise(async (resolve, rejects) => {
-      await standRegister(data)
-        .then((res: any) => {
-          resolve(res);
-        })
-        .catch((errors: any) => {
-          setDataError(errors);
-          rejects(errors);
-        })
-        .finally(() => {
-          setLoading(false);
-        });
-    });
-  };
+  //   return new Promise(async (resolve, rejects) => {
+  //     await standRegister(data)
+  //       .then((res: any) => {
+  //         resolve(res);
+  //       })
+  //       .catch((errors: any) => {
+  //         setDataError(errors);
+  //         rejects(errors);
+  //       })
+  //       .finally(() => {
+  //         setLoading(false);
+  //       });
+  //   });
+  // };
 
   return {
     loading,
     errors,
     showErrors,
-    standsList,
-    standDetails,
+    fairsList,
+    fairDetails,
     setShowErrors,
     handleClearDetails,
     handleGetList,
     handleGetNextList,
-    handleGetDetails,
-    handleRegister,
+    // handleGetDetails,
+    // handleRegister,
   };
 };
 
-export default useStands;
+export default useFairs;

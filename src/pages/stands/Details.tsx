@@ -72,6 +72,7 @@ const StandDetails: React.FC = () => {
             src={standDetails?.url_photo ? standDetails?.url_photo : NoImage}
             alt={standDetails?.name}
             onLoad={() => setLoadingImg(false)}
+            onError={() => setLoadingImg(false)}
           />
 
           <div className={styles.details_name_and_stars}>
