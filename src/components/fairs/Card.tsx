@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import {
   IonCard,
   IonCardHeader,
   IonCardSubtitle,
   IonCardTitle,
   IonCardContent,
+  IonIcon,
 } from "@ionic/react";
+import { checkmarkCircleOutline, closeCircleOutline } from "ionicons/icons";
 
 // Styles
 import styles from "./Card.module.css";
@@ -17,27 +19,41 @@ import NoImage from "../../assets/images/no-image.png";
 import ImageSkeleton from "../skeleton/Image";
 import Rating from "../stars/Rating";
 
+// Interfaces
+import { Photograph, TFairType } from "../../interfaces/IFairs";
+
+// Utils
+import { fairTypeSpanish } from "../../utils/fairType";
+
 interface ContainerProps {
   uuid: string;
   name: string;
   description: string;
   stars: number;
-  url_photo?: string;
+  approved: boolean;
+  type: TFairType;
+  photographs: Array<Photograph>;
 }
 
-const StandCard: React.FC<ContainerProps> = ({
+const FairCard: React.FC<ContainerProps> = ({
   uuid,
   name,
   description,
   stars,
-  url_photo,
+  approved,
+  type,
+  photographs,
 }) => {
   const [loadingImg, setLoadingImg] = useState<boolean>(true);
+  const cover = useMemo(
+    () => photographs.find((photo: Photograph) => photo.cover)?.url_photo,
+    [photographs]
+  );
 
   return (
     <IonCard
       className={`${styles.card} animate__animated animate__fadeIn`}
-      routerLink={`/stand/${uuid}`}
+      routerLink={`/fair/${uuid}`}
     >
       <div className={styles.container}>
         <div className={styles.image_container}>
@@ -45,17 +61,26 @@ const StandCard: React.FC<ContainerProps> = ({
 
           <img
             className={styles.image}
-            src={url_photo ? url_photo : NoImage}
+            src={cover ? `${cover}` : NoImage}
             alt={name}
             onLoad={() => setLoadingImg(false)}
             onError={() => setLoadingImg(false)}
           />
+
+          <div className={styles.container_icons}>
+            <Rating className={styles.stars} stars={Math.ceil(stars)} />
+
+            <IonIcon
+              icon={approved ? checkmarkCircleOutline : closeCircleOutline}
+              className={`${styles.iconStatus} ${approved && styles.approved}`}
+            />
+          </div>
         </div>
         <div className={styles.content}>
           <IonCardHeader className={styles.header}>
             <IonCardTitle>{name}</IonCardTitle>
             <IonCardSubtitle className={styles.subtitle}>
-              <Rating stars={Math.ceil(stars)} />
+              <span className={styles.type}>{fairTypeSpanish(type)}</span>
             </IonCardSubtitle>
           </IonCardHeader>
 
@@ -69,4 +94,4 @@ const StandCard: React.FC<ContainerProps> = ({
   );
 };
 
-export default StandCard;
+export default FairCard;

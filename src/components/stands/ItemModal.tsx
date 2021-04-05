@@ -55,6 +55,7 @@ const StandItemModal: React.FC<ContainerProps> = ({
             src={item?.url_photo ? item?.url_photo : NoImage}
             alt={item?.name}
             onLoad={() => setLoadingImg(false)}
+            onError={() => setLoadingImg(false)}
           />
         </div>
         <p className={styles.description}>{item?.description}</p>

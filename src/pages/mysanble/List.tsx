@@ -25,7 +25,7 @@ import Layout from "../../layouts/Main";
 
 // Components
 import Card from "../../components/stands/Card";
-import CardSkeleton from "../../components/skeleton/stands/Card";
+import CardSkeleton from "../../components/skeleton/general/Card";
 import NewStandModal from "../../components/mysanble/NewStandModal";
 
 // Hooks

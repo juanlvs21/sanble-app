@@ -9,7 +9,7 @@ import {
 } from "@ionic/react";
 
 // Styles
-import styles from "./Stands.module.css";
+import styles from "./General.module.css";
 
 // Component
 import Image from "../Image";
