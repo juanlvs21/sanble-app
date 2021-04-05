@@ -29,6 +29,8 @@ import MySanbleList from "../../pages/mysanble/List";
 // Stands
 import StandsList from "../../pages/stands/List";
 import StandsDetails from "../../pages/stands/Details";
+// Fairs
+import FairsList from "../../pages/fairs/List";
 
 const Router: React.FC = () => {
   const [showLoaderFullScreen, setShowLoaderFullScreen] = useState<boolean>(
@@ -61,7 +63,6 @@ const Router: React.FC = () => {
               component={RecoverPasswordChangeSuccess}
               exact
             />
-            {/* Account */}
             <Route
               path="/auth/account/management"
               component={AccountManagement}
@@ -86,9 +87,13 @@ const Router: React.FC = () => {
             <Route path="/stand/:uuid" exact>
               <RouteSecure component={StandsDetails} />
             </Route>
-            <Redirect path="/" to="/home" exact />
+            {/* Fairs */}
+            <Route path="/fairs" exact>
+              <RouteSecure component={FairsList} />
+            </Route>
             <Route path="/404" component={NotFound} exact />
             <Route path="*" componentk={NotFound} />
+            <Redirect path="/" to="/home" exact />
           </IonRouterOutlet>
         </IonSplitPane>
       </IonReactRouter>

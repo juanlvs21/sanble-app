@@ -5,7 +5,7 @@ import {
   IonInput,
   IonButton,
   IonToast,
-  IonProgressBar,
+  IonSpinner,
 } from "@ionic/react";
 import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -113,11 +113,7 @@ const Login: React.FC = () => {
                 type="submit"
                 disabled={isSubmitting}
               >
-                {isSubmitting ? (
-                  <IonProgressBar type="indeterminate" color="light" />
-                ) : (
-                  "Iniciar Sesión"
-                )}
+                {isSubmitting ? <IonSpinner name="dots" /> : "Iniciar Sesión"}
               </IonButton>
               <IonButton
                 expand="block"

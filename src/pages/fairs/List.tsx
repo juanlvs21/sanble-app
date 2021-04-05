@@ -8,32 +8,32 @@ import {
 import { RefresherEventDetail } from "@ionic/core";
 
 // Styles
-import styles from "./Stands.module.css";
+import styles from "./Fairs.module.css";
 
 // Layout
 import Layout from "../../layouts/Main";
 
 // Components
 import TabBar from "../../components/tabbars/TabBarHome";
-import Card from "../../components/stands/Card";
+import Card from "../../components/fairs/Card";
 import CardSkeleton from "../../components/skeleton/general/Card";
 
 // Hooks
-import useStands from "../../hooks/useStands";
+import useFairs from "../../hooks/useFairs";
 
 // Interfaces
-import IStands from "../../interfaces/IStands";
+import IFairs from "../../interfaces/IFairs";
 
-const StandsList: React.FC = () => {
+const FairsList: React.FC = () => {
   const {
     loading,
-    standsList,
+    fairsList,
     handleGetList,
     handleGetNextList,
     showErrors,
     setShowErrors,
     errors,
-  } = useStands();
+  } = useFairs();
 
   useIonViewDidEnter(() => handleGetList());
 
@@ -49,11 +49,11 @@ const StandsList: React.FC = () => {
     <Layout tabBar={<TabBar />} doRefresh={handleRefresh}>
       <div className={styles.list_container}>
         {loading &&
-          !standsList.length &&
+          !fairsList.length &&
           [1, 2, 3].map((i) => <CardSkeleton key={i} />)}
 
-        {standsList.map((stand: IStands) => (
-          <Card key={stand.uuid} {...stand} />
+        {fairsList.map((fair: IFairs) => (
+          <Card key={fair.uuid} {...fair} />
         ))}
       </div>
 
@@ -74,4 +74,4 @@ const StandsList: React.FC = () => {
   );
 };
 
-export default StandsList;
+export default FairsList;

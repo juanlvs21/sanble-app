@@ -5,7 +5,7 @@ import {
   IonInput,
   IonButton,
   IonToast,
-  IonProgressBar,
+  IonSpinner,
 } from "@ionic/react";
 import { useHistory } from "react-router-dom";
 import { Formik } from "formik";
@@ -153,11 +153,7 @@ const Register: React.FC = () => {
                 type="submit"
                 disabled={isSubmitting}
               >
-                {isSubmitting ? (
-                  <IonProgressBar type="indeterminate" color="light" />
-                ) : (
-                  "Registrarse"
-                )}
+                {isSubmitting ? <IonSpinner name="dots" /> : "Registrarse"}
               </IonButton>
               <IonButton
                 expand="block"
