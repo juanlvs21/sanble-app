@@ -1,7 +1,5 @@
 {
-  "name": "sanble-app",
-  "integrations": {
-    "capacitor": {}
-  },
-  "type": "react"
+  "name": "ionic-app-base",
+  "integrations": {},
+  "type": "vue"
 }
