@@ -16,7 +16,12 @@ import "./registerServiceWorker";
 // CSS
 import "vuesax/dist/vuesax.css";
 
-Vue.use(Vuesax);
+Vue.use(Vuesax, {
+  colors: {
+    primary: "#FF7315",
+    dark: "#3A3535",
+  },
+});
 
 Vue.config.productionTip = false;
 
