@@ -14,7 +14,10 @@
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "open:android": "cap open android",
-    "run:android": "cap run android"
+    "run:android": "cap run android",
+    "sync:web": "cap sync web",
+    "cap:sync": "cap sync",
+    "cap:serve": "cap serve"
   },
   "dependencies": {
     "@capacitor/android": "^3.2.5",
