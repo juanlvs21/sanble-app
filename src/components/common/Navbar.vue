@@ -2,11 +2,7 @@
   <nav class="sb__navbar">
     <vs-navbar color="dark" square text-white>
       <template #left>
-        <img
-          src="/assets/images/Logo_Horizontal_Light.png"
-          alt="Sanble"
-          height="30px"
-        />
+        <img src="/img/Logo_Horizontal_Light.png" alt="Sanble" height="30px" />
       </template>
       <template #right>
         <vs-button flat>Iniciar Sesión</vs-button>

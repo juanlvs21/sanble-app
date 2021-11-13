@@ -1,22 +1,37 @@
 <template>
   <div id="app">
-    <MainLayout>
-      <div id="nav">
-        <router-link to="/">Home</router-link> |
-        <router-link to="/about">About</router-link>
-      </div>
-      <router-view />
-    </MainLayout>
+    <router-view v-if="loggedIn" />
+    <Splash v-else />
   </div>
 </template>
 
 <script>
-import MainLayout from "@/components/layouts/MainLayout.vue";
+import { mapState, mapActions } from "vuex";
+
+import Splash from "@/components/common/Splash.vue";
 
 export default {
   name: "App",
   components: {
-    MainLayout,
+    Splash,
+  },
+  computed: {
+    ...mapState({
+      loggedIn: ({ auth }) => auth.loggedIn,
+    }),
+  },
+  methods: {
+    ...mapActions({
+      setLoggedIn: "auth/setLoggedInAction",
+    }),
+  },
+  created() {
+    this.setLoggedIn(false);
+  },
+  mounted() {
+    setTimeout(() => {
+      this.setLoggedIn(true);
+    }, 3000);
   },
 };
 </script>
