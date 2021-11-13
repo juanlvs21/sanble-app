@@ -1,5 +1,6 @@
 import Vue from "vue";
 import Vuesax from "vuesax";
+import "vuesax/dist/vuesax.css";
 
 // App
 import App from "./App.vue";
@@ -13,13 +14,13 @@ import store from "./store";
 // SW
 import "./registerServiceWorker";
 
-// CSS
-import "vuesax/dist/vuesax.css";
+// Helpers
+import { primary, dark } from "./helpers/colors";
 
 Vue.use(Vuesax, {
   colors: {
-    primary: "#FF7315",
-    dark: "#3A3535",
+    primary,
+    dark,
   },
 });
 
