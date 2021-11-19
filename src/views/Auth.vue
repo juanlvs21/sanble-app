@@ -50,6 +50,9 @@ export default {
 }
 .sb__auth .container {
   width: 100%;
+  height: 100vh;
+  overflow-x: hidden;
+  overflow-y: auto;
   background-image: url("/img/wave2.svg");
   background-repeat: no-repeat;
   background-size: contain;
@@ -101,7 +104,8 @@ export default {
 }
 @media (min-width: 768px) {
   .sb__auth {
-    margin: 20px;
+    padding: 20px;
+    background-color: var(--sb-primary);
   }
   .sb__auth .container {
     width: 700px;
@@ -110,6 +114,10 @@ export default {
     margin: auto;
     -webkit-box-shadow: 5px 5px 6px 0px rgba(0, 0, 0, 0.3);
     box-shadow: 5px 5px 6px 0px rgba(0, 0, 0, 0.3);
+    height: auto;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    background-color: #fff;
   }
   .sb__auth .logo-container {
     height: 150px;
