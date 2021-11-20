@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <router-view v-if="loggedIn" />
+    <router-view v-if="loggedIn || showWelcome" />
     <Splash v-else />
   </div>
 </template>
@@ -18,6 +18,7 @@ export default {
   computed: {
     ...mapState({
       loggedIn: ({ auth }) => auth.loggedIn,
+      showWelcome: ({ showWelcome }) => showWelcome,
     }),
   },
   methods: {
@@ -26,6 +27,7 @@ export default {
     }),
   },
   created() {
+    if (this.showWelcome) this.$router.replace({ name: "welcome" });
     this.setLoggedIn(false);
   },
   mounted() {
