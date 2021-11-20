@@ -14,7 +14,6 @@ const routes = [
     name: "auth",
     component: () => import(/* webpackChunkName: "auth" */ "@/views/Auth.vue"),
   },
-  // Auth
   {
     path: "/recover-password",
     name: "recover-password",
@@ -22,6 +21,19 @@ const routes = [
       import(
         /* webpackChunkName: "recover-password" */ "@/views/RecoverPassword.vue"
       ),
+  },
+  {
+    path: "/welcome",
+    name: "welcome",
+    component: () =>
+      import(/* webpackChunkName: "welcome" */ "@/views/Welcome.vue"),
+  },
+  // Dashboard
+  {
+    path: "/",
+    name: "dashboard",
+    component: () =>
+      import(/* webpackChunkName: "dashboard" */ "@/views/Dashboard.vue"),
   },
 ];
 

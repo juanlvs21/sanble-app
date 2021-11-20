@@ -10,9 +10,19 @@ import { vuexLocal } from "@/plugins/vuex-persist";
 import { authModule } from "@/store/modules/auth";
 
 export default new Vuex.Store({
-  // state: {},
-  // mutations: {},
-  // actions: {},
+  state: {
+    showWelcome: true,
+  },
+  mutations: {
+    setShowWelcomeMutation(state, showWelcome) {
+      state.showWelcome = showWelcome;
+    },
+  },
+  actions: {
+    setShowWelcomeAction({ commit }, payload) {
+      commit("setShowWelcomeMutation", payload);
+    },
+  },
   modules: {
     auth: authModule,
   },

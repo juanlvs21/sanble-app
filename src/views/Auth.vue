@@ -152,7 +152,6 @@ export default {
 }
 .sb__auth .sb__auth-form .btn {
   margin-top: 55px;
-  height: 45px;
 }
 .sb__auth .sb__auth-form .errors {
   margin-top: 30px;
@@ -160,15 +159,9 @@ export default {
 }
 .sb__auth .sb__auth-form .btn-google {
   margin-top: 10px;
-  height: 45px;
 }
 .sb__auth-form .input .vs-input {
   width: 100%;
   height: 45px;
-}
-.sb__auth .sb__auth-form .btn .vs-button__content,
-.sb__auth .sb__auth-form .btn-google .vs-button__content {
-  font-size: 18px;
-  font-weight: 500;
 }
 </style>
