@@ -37,8 +37,10 @@
         {{ textBtnSecondary }}
       </vs-button>
     </div>
-    <div class="sb__welcome-progress">
-      <div class="active" :style="{ width: progressBar }" />
+    <div class="sb__welcome-progress-container">
+      <div class="sb__welcome-progress">
+        <div class="active" :style="{ width: progressBar }" />
+      </div>
     </div>
   </section>
 </template>
@@ -111,22 +113,23 @@ section {
   background-size: cover;
   background-position: top;
   display: grid;
-  height: 100vh;
-  overflow-y: auto;
   flex-direction: column;
+  padding: 0 30px;
 }
 section .sb__welcome-btn-back {
-  display: flex;
-  padding: 20px;
+  position: absolute;
+  top: 20px;
+  left: 20px;
 }
 section .sb__welcome-content {
-  height: -webkit-fill-available;
+  height: calc(100vh - 140px);
+  overflow-y: auto;
+  overflow-x: hidden;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   text-align: center;
-  padding: 20px;
 }
 section .sb__welcome-content h1 {
   font-size: 24px;
@@ -140,17 +143,15 @@ section .sb__welcome-content p {
   padding: 0 20px;
 }
 section .sb__welcome-btn-container {
-  margin-top: auto;
-  display: flex;
-  flex-direction: column;
-  padding: 20px;
-  padding-top: 0;
+  height: 100px;
+}
+section .sb__welcome-progress-container {
+  height: 40px;
 }
 section .sb__welcome-progress {
   display: flex;
   height: 7px;
-  margin: 30px;
-  margin-top: 10px;
+  margin: 15px 0 0;
   border-radius: 20px;
   background-color: #ff86343d;
   position: relative;

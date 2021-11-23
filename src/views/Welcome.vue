@@ -65,7 +65,7 @@ export default {
           subTitle:
             "Crea tu propio Stand o incluso ¡Tu Feria! Y luego mira lo que la gente piensa de ellos",
           handleBtnPrimary: this.handleNext,
-          textBtnPrimary: "And now...",
+          textBtnPrimary: "Y ahora...",
           darkBtnPrimary: true,
           handleGoBack: this.handleBack,
         },
