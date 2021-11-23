@@ -1,7 +1,0 @@
-{
-  "name": "sanble-app",
-  "integrations": {
-    "capacitor": {}
-  },
-  "type": "react"
-}
