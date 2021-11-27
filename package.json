@@ -17,7 +17,8 @@
     "run:android": "cap run android",
     "sync:web": "cap sync web",
     "cap:sync": "cap sync",
-    "cap:serve": "cap serve"
+    "cap:serve": "cap serve",
+    "cordova-res:android": "cordova-res android --skip-config --copy"
   },
   "dependencies": {
     "@capacitor/android": "^3.2.5",
