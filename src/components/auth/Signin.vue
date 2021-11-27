@@ -31,6 +31,9 @@
     <router-link :to="{ name: 'recover-password' }" class="recover-password">
       Recuperar Contraseña
     </router-link>
+    <vs-button class="btn-google" block transparent @click="onSigninGoogle">
+      <i class="bx bxl-google"></i> Ingresa con Google
+    </vs-button>
   </div>
 </template>
 
@@ -75,6 +78,9 @@ export default {
             })
           );
         });
+    },
+    onSigninGoogle() {
+      return true;
     },
   },
 };
