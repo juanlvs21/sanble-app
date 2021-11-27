@@ -1,11 +1,24 @@
 <template>
   <div>
-    <WelcomeSlide
-      v-if="show"
-      v-bind="slides[active]"
-      :active="active"
-      :total="slides.length"
-    />
+    <div class="sb__welcome-btn-back">
+      <transition name="fade" mode="out-in">
+        <vs-button
+          v-if="this.active"
+          color="primary"
+          @click="handleBack"
+          circle
+          icon
+        >
+          <i class="bx bxs-chevron-left" />
+        </vs-button>
+      </transition>
+    </div>
+    <WelcomeSlide v-if="show" v-bind="slides[active]" />
+    <div class="sb__welcome-progress-container">
+      <div class="sb__welcome-progress">
+        <div class="active" :style="{ width: progressBar }" />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -44,7 +57,6 @@ export default {
           handleBtnPrimary: this.handleNext,
           textBtnPrimary: "Ver más",
           darkBtnPrimary: true,
-          handleGoBack: this.handleBack,
         },
         {
           bgImage: "/img/welcome/welcome-wave3.svg",
@@ -55,7 +67,6 @@ export default {
           handleBtnPrimary: this.handleNext,
           textBtnPrimary: "Ya casi",
           darkBtnPrimary: false,
-          handleGoBack: this.handleBack,
         },
         {
           bgImage: "/img/welcome/welcome-wave4.svg",
@@ -67,7 +78,6 @@ export default {
           handleBtnPrimary: this.handleNext,
           textBtnPrimary: "Y ahora...",
           darkBtnPrimary: true,
-          handleGoBack: this.handleBack,
         },
         {
           bgImage: "/img/welcome/welcome-wave5.svg",
@@ -78,10 +88,15 @@ export default {
           darkBtnPrimary: false,
           handleBtnSecondary: this.handleGoSkip,
           textBtnSecondary: "Quizás mas tarde",
-          handleGoBack: this.handleBack,
         },
       ],
     };
+  },
+  computed: {
+    progressBar() {
+      const progress = (100 / this.slides.length) * (this.active + 1);
+      return `${progress}%`;
+    },
   },
   methods: {
     ...mapActions({
@@ -98,8 +113,10 @@ export default {
       this.active += 1;
     },
     handleBack() {
-      this.effect();
-      this.active -= 1;
+      if (this.active !== 0) {
+        this.effect();
+        this.active -= 1;
+      }
     },
     handleGoAuth() {
       this.setShowWelcome(false);
@@ -112,3 +129,50 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.sb__welcome-btn-back {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+}
+.sb__welcome-progress-container {
+  width: 100%;
+  height: 40px;
+  display: block;
+  position: fixed;
+  bottom: 0;
+}
+.sb__welcome-progress {
+  display: flex;
+  height: 7px;
+  margin: 15px 30px 0;
+  border-radius: 20px;
+  background-color: #ff86343d;
+  position: relative;
+}
+.sb__welcome-progress .active {
+  height: 7px;
+  border-radius: 20px;
+  background-color: var(--sb-primary);
+  transition: all 300ms ease-in-out;
+}
+@media (min-width: 768px) {
+  .sb__welcome-progress-container {
+    display: flex;
+    justify-content: center;
+  }
+  .sb__welcome-btn-back,
+  .sb__welcome-progress {
+    width: 600px;
+    border-radius: 20px;
+  }
+}
+</style>
+
+<style>
+.sb__welcome-btn-back button {
+  height: 41px;
+  width: 41px;
+}
+</style>
