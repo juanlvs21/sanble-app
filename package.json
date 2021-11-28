@@ -4,9 +4,15 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "serve": "vite preview"
+    "serve": "vite preview",
+    "open:android": "cap open android",
+    "run:android": "cap run android",
+    "sync:web": "cap sync web",
+    "cap:sync": "cap sync",
+    "cap:serve": "cap serve"
   },
   "dependencies": {
+    "@capacitor/android": "^3.3.2",
     "@capacitor/cli": "^3.3.2",
     "@capacitor/core": "^3.3.2",
     "@emotion/react": "^11.7.0",
