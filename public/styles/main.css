@@ -28,14 +28,6 @@ body {
   background-color: var(--sb-primary);
 }
 
-a {
-  color: var(--sb-primary);
-  text-decoration: none;
-}
-
-/* Custom Vuesax */
-button.vs-button {
-  height: 45px;
-  font-size: 16px;
-  font-weight: 500;
+* {
+  font-family: Poppins, "Helvetica Neue", Arial, sans-serif;
 }
