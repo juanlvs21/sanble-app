@@ -4,10 +4,10 @@ import { styled } from "@mui/system";
 import { useFormik } from "formik";
 
 import { PasswordField } from "@/components/common/PasswordField";
-import { SigninSchema } from "@/helpers/validations/authSchema";
+import { SignupSchema } from "@/helpers/validations/authSchema";
 
 const Container = styled("div")`
-  background-image: url("/img/wave3.svg");
+  background-image: url("/img/wave4.svg");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: top right;
@@ -31,13 +31,13 @@ const Title = styled(Typography)`
 `;
 const TitleLine = styled("div")(
   ({ theme }) => `
-  width: 100px;
+  width: 87px;
   height: 7px;
   border-radius: 20px;
   background-color: ${theme.palette.primary.main};
   position: absolute;
   bottom: 10px;
-  left: 7px;
+  left: 104px;
   z-index: 0;
 `
 );
@@ -51,26 +51,43 @@ const Form = styled("form")`
   margin-top: 15px;
 `;
 
-export const SigninView: React.FC = () => {
+export const SignupView: React.FC = () => {
   const { values, handleChange, handleSubmit, isSubmitting } = useFormik({
     initialValues: {
+      name: "",
       email: "",
       password: "",
     },
     onSubmit: (values) => {
       alert(JSON.stringify(values, null, 2));
     },
-    validationSchema: SigninSchema,
+    validationSchema: SignupSchema,
   });
 
   return (
     <Container>
       <Title variant="h1">
-        <span>Ingresar</span>
+        <span>Crea tu Cuenta</span>
         <TitleLine />
       </Title>
-      <Subtitle variant="h3">Ingresa en la Plataforma de Sanble</Subtitle>
+      <Subtitle variant="h3">Unete a la Plataforma de Sanble</Subtitle>
       <Form onSubmit={handleSubmit}>
+        <TextField
+          placeholder="Nombre"
+          name="name"
+          onChange={handleChange}
+          value={values.email}
+          disabled={isSubmitting}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <PersonOutline color="primary" />
+              </InputAdornment>
+            ),
+          }}
+          sx={{ marginTop: 3 }}
+          fullWidth
+        />
         <TextField
           placeholder="Correo electrónico"
           name="email"
@@ -118,7 +135,7 @@ export const SigninView: React.FC = () => {
         Recuperar Contraseña
       </Button>
       <Button color="primary" variant="text" disabled={isSubmitting} fullWidth>
-        Ingresa con Google
+        Unirse con Google
       </Button>
     </Container>
   );
