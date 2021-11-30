@@ -1,6 +1,6 @@
 {
 	"appId": "app.vercel.sanble",
-	"appName": "sanble",
+	"appName": "Sanble",
 	"webDir": "dist",
 	"bundledWebRuntime": false
 }
