@@ -122,7 +122,7 @@ export const SignupView: React.FC = () => {
           sx={{ marginTop: 5 }}
           fullWidth
         >
-          Ingresar
+          Unirse
         </Button>
       </Form>
       <Button

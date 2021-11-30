@@ -65,7 +65,7 @@ const LogoContainer = styled("picture")(
     font-weight: 700;
     margin-left: 10px;
     color: ${theme.palette.primary.main};
-    font-family: ${theme.typography.fontFamily};
+    font-family: var(--sb-font-family);
 
     @media (min-width: 360px) {
       font-size: 45px;
