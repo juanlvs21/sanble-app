@@ -17,7 +17,7 @@ const Tab = styled(Link)(
   justify-content: center;
   align-items: center;
   text-decoration: none;
-  font-family: ${theme.typography.fontFamily};
+  font-family: var(--sb-font-family);
 
   &:hover {
     font-weight: 700;
