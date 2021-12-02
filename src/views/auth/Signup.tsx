@@ -12,9 +12,19 @@ const Container = styled("div")`
   background-size: cover;
   background-position: top right;
   padding: 20px 30px;
+  height: calc(100vh - 182px);
+  overflow-x: hidden;
+  overflow-y: auto;
 
   @media (min-width: 425) {
     padding: 40px 50px 20px;
+  }
+  @media (min-width: 360px) {
+    height: calc(100vh - 242px);
+  }
+  @media (min-width: 768px) {
+    height: auto;
+    overflow-y: hidden;
   }
 `;
 

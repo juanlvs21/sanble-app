@@ -12,8 +12,6 @@ const AuthView = styled("section")(
   @media (min-width: 768px) {
     background-color: ${theme.palette.primary.main};
     min-height: 100vh;
-    overflow-x: hidden;
-    overflow-y: auto;
   }
 `
 );
@@ -77,27 +75,27 @@ const LogoContainer = styled("picture")(
   }
 `
 );
-const Margin = styled("div")`
+const Padding = styled("div")`
   @media (min-width: 768px) {
-    margin: 20px;
+    padding: 20px;
   }
 `;
 
 export const AuthLayout: React.FC = () => (
   <>
     <AuthView>
-      <Margin>
+      <Padding>
         <Container>
           <LogoContainer>
             <img src="/img/logo.svg" alt="Sanble Logo" />
             <span>Sanble</span>
           </LogoContainer>
-          <section className="content-container">
+          <div>
             <AuthTabs />
             <Outlet />
-          </section>
+          </div>
         </Container>
-      </Margin>
+      </Padding>
     </AuthView>
   </>
 );
