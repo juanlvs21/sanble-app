@@ -1,7 +1,9 @@
+import { useEffect } from "react";
 import { Outlet } from "react-router-dom";
 import { styled } from "@mui/system";
 
 import { AuthTabs } from "@/components/auth/Tabs";
+import { useNative } from "@/hooks/useNative";
 
 const AuthView = styled("section")(
   ({ theme }) => `
@@ -81,21 +83,29 @@ const Padding = styled("div")`
   }
 `;
 
-export const AuthLayout: React.FC = () => (
-  <>
-    <AuthView>
-      <Padding>
-        <Container>
-          <LogoContainer>
-            <img src="/img/logo.svg" alt="Sanble Logo" />
-            <span>Sanble</span>
-          </LogoContainer>
-          <div>
-            <AuthTabs />
-            <Outlet />
-          </div>
-        </Container>
-      </Padding>
-    </AuthView>
-  </>
-);
+export const AuthLayout: React.FC = () => {
+  const { setBgStatusBar } = useNative();
+
+  useEffect(() => {
+    setBgStatusBar("#FFFFFF", "Light");
+  }, []);
+
+  return (
+    <>
+      <AuthView>
+        <Padding>
+          <Container>
+            <LogoContainer>
+              <img src="/img/logo.svg" alt="Sanble Logo" />
+              <span>Sanble</span>
+            </LogoContainer>
+            <div>
+              <AuthTabs />
+              <Outlet />
+            </div>
+          </Container>
+        </Padding>
+      </AuthView>
+    </>
+  );
+};

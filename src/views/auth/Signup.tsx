@@ -1,10 +1,13 @@
 import { Button, InputAdornment, TextField, Typography } from "@mui/material";
-import { PersonOutline } from "@mui/icons-material";
 import { styled } from "@mui/system";
 import { useFormik } from "formik";
+import { IoMailOutline } from "react-icons/io5";
+import { BsPerson } from "react-icons/bs";
+import { FcGoogle } from "react-icons/fc";
 
 import { PasswordField } from "@/components/common/PasswordField";
 import { SignupSchema } from "@/helpers/validations/authSchema";
+import { useAuth } from "@/hooks/useAuth";
 
 const Container = styled("div")`
   background-image: url("/img/wave4.svg");
@@ -62,15 +65,14 @@ const Form = styled("form")`
 `;
 
 export const SignupView: React.FC = () => {
-  const { values, handleChange, handleSubmit, isSubmitting } = useFormik({
+  const { handleSignup, loading } = useAuth();
+  const { values, handleChange, handleSubmit } = useFormik({
     initialValues: {
       name: "",
       email: "",
       password: "",
     },
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
-    },
+    onSubmit: (values) => handleSignup(values),
     validationSchema: SignupSchema,
   });
 
@@ -86,12 +88,12 @@ export const SignupView: React.FC = () => {
           placeholder="Nombre"
           name="name"
           onChange={handleChange}
-          value={values.email}
-          disabled={isSubmitting}
+          value={values.name}
+          disabled={loading}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
-                <PersonOutline color="primary" />
+                <BsPerson size={20} />
               </InputAdornment>
             ),
           }}
@@ -103,11 +105,11 @@ export const SignupView: React.FC = () => {
           name="email"
           onChange={handleChange}
           value={values.email}
-          disabled={isSubmitting}
+          disabled={loading}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
-                <PersonOutline color="primary" />
+                <IoMailOutline size={20} />
               </InputAdornment>
             ),
           }}
@@ -119,7 +121,7 @@ export const SignupView: React.FC = () => {
           name="password"
           onChange={handleChange}
           value={values.password}
-          disabled={isSubmitting}
+          disabled={loading}
           sx={{ marginTop: 3 }}
           fullWidth
         />
@@ -128,7 +130,7 @@ export const SignupView: React.FC = () => {
           color="primary"
           variant="contained"
           type="submit"
-          disabled={isSubmitting}
+          disabled={loading}
           sx={{ marginTop: 5 }}
           fullWidth
         >
@@ -138,14 +140,14 @@ export const SignupView: React.FC = () => {
       <Button
         color="primary"
         variant="text"
-        disabled={isSubmitting}
+        disabled={loading}
         sx={{ marginTop: 1 }}
         fullWidth
       >
         Recuperar Contraseña
       </Button>
-      <Button color="primary" variant="text" disabled={isSubmitting} fullWidth>
-        Unirse con Google
+      <Button color="primary" variant="text" disabled={loading} fullWidth>
+        <FcGoogle size={20} /> Unirse con Google
       </Button>
     </Container>
   );
