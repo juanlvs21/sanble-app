@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { IconButton, InputAdornment, TextField } from "@mui/material";
-import { Visibility, VisibilityOff, Key } from "@mui/icons-material";
 import { SxProps, Theme } from "@mui/system";
+import { VscKey } from "react-icons/vsc";
+import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 
 export type ComponentProps = {
   /**
@@ -64,7 +65,7 @@ export const PasswordField: React.FC<ComponentProps> = ({
       InputProps={{
         startAdornment: (
           <InputAdornment position="start">
-            <Key color="primary" />
+            <VscKey size={20} />
           </InputAdornment>
         ),
         endAdornment: (
@@ -75,9 +76,9 @@ export const PasswordField: React.FC<ComponentProps> = ({
               edge="end"
             >
               {showPassword ? (
-                <Visibility color="disabled" />
+                <AiOutlineEye size={20} />
               ) : (
-                <VisibilityOff color="disabled" />
+                <AiOutlineEyeInvisible size={20} />
               )}
             </IconButton>
           </InputAdornment>

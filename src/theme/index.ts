@@ -58,5 +58,12 @@ export const theme = (mode: PaletteMode = "light") =>
           },
         },
       },
+      MuiInputAdornment: {
+        styleOverrides: {
+          positionStart: {
+            color: "#FF7315",
+          },
+        },
+      },
     },
   });

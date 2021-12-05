@@ -1,7 +1,8 @@
 import { Button, InputAdornment, TextField, Typography } from "@mui/material";
-import { PersonOutline } from "@mui/icons-material";
 import { styled } from "@mui/system";
 import { useFormik } from "formik";
+import { IoMailOutline } from "react-icons/io5";
+import { FcGoogle } from "react-icons/fc";
 
 import { PasswordField } from "@/components/common/PasswordField";
 import { SigninSchema } from "@/helpers/validations/authSchema";
@@ -90,7 +91,7 @@ export const SigninView: React.FC = () => {
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
-                <PersonOutline color="primary" />
+                <IoMailOutline size={20} />
               </InputAdornment>
             ),
           }}
@@ -128,7 +129,7 @@ export const SigninView: React.FC = () => {
         Recuperar Contraseña
       </Button>
       <Button color="primary" variant="text" disabled={isSubmitting} fullWidth>
-        Ingresa con Google
+        <FcGoogle size={20} /> Ingresa con Google
       </Button>
     </Container>
   );
