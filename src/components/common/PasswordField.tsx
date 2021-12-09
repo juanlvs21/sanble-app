@@ -34,19 +34,26 @@ export type ComponentProps = {
    */
   fullWidth?: boolean;
   /**
+   * Input error
+   *
+   * @default false
+   */
+  error?: boolean;
+  /**
+   * Input helpertext
+   */
+  helperText?: string;
+  /**
    * System props styles
    */
   sx?: SxProps<Theme>;
 };
 
 export const PasswordField: React.FC<ComponentProps> = ({
-  value,
-  onChange,
-  name,
-  placeholder,
-  sx,
   disabled = false,
   fullWidth = false,
+  error = false,
+  ...props
 }) => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
@@ -54,14 +61,9 @@ export const PasswordField: React.FC<ComponentProps> = ({
 
   return (
     <TextField
-      placeholder={placeholder}
-      name={name}
-      disabled={disabled}
+      {...props}
       type={showPassword ? "text" : "password"}
-      value={value}
-      fullWidth={fullWidth}
-      onChange={onChange}
-      sx={sx}
+      error={error}
       InputProps={{
         startAdornment: (
           <InputAdornment position="start">

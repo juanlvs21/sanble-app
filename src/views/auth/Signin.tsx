@@ -5,7 +5,9 @@ import { IoMailOutline } from "react-icons/io5";
 import { FcGoogle } from "react-icons/fc";
 
 import { PasswordField } from "@/components/common/PasswordField";
+import { LoadingFullScreen } from "@/components/common/LoadingFullScreen";
 import { SigninSchema } from "@/helpers/validations/authSchema";
+import { useAuth } from "@/hooks/useAuth";
 
 const Container = styled("div")`
   background-image: url("/img/wave3.svg");
@@ -63,14 +65,13 @@ const Form = styled("form")`
 `;
 
 export const SigninView: React.FC = () => {
-  const { values, handleChange, handleSubmit, isSubmitting } = useFormik({
+  const { handleSignin, loading } = useAuth();
+  const { values, handleChange, handleSubmit, errors } = useFormik({
     initialValues: {
       email: "",
       password: "",
     },
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
-    },
+    onSubmit: (values) => handleSignin(values),
     validationSchema: SigninSchema,
   });
 
@@ -87,7 +88,7 @@ export const SigninView: React.FC = () => {
           name="email"
           onChange={handleChange}
           value={values.email}
-          disabled={isSubmitting}
+          disabled={loading}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
@@ -95,6 +96,8 @@ export const SigninView: React.FC = () => {
               </InputAdornment>
             ),
           }}
+          error={!!errors.email}
+          helperText={errors.email}
           sx={{ marginTop: 3 }}
           fullWidth
         />
@@ -103,7 +106,9 @@ export const SigninView: React.FC = () => {
           name="password"
           onChange={handleChange}
           value={values.password}
-          disabled={isSubmitting}
+          disabled={loading}
+          error={!!errors.password}
+          helperText={errors.password}
           sx={{ marginTop: 3 }}
           fullWidth
         />
@@ -112,7 +117,7 @@ export const SigninView: React.FC = () => {
           color="primary"
           variant="contained"
           type="submit"
-          disabled={isSubmitting}
+          disabled={loading}
           sx={{ marginTop: 5 }}
           fullWidth
         >
@@ -122,15 +127,17 @@ export const SigninView: React.FC = () => {
       <Button
         color="primary"
         variant="text"
-        disabled={isSubmitting}
+        disabled={loading}
         sx={{ marginTop: 1 }}
         fullWidth
       >
         Recuperar Contraseña
       </Button>
-      <Button color="primary" variant="text" disabled={isSubmitting} fullWidth>
+      <Button color="primary" variant="text" disabled={loading} fullWidth>
         <FcGoogle size={20} /> Ingresa con Google
       </Button>
+
+      <LoadingFullScreen loading={loading} />
     </Container>
   );
 };

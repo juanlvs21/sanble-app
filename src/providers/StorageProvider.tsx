@@ -1,7 +1,8 @@
 import { useEffect } from "react";
 
 import { Splash } from "@/components/common/Splash";
-import { useAppSelector } from "@/hooks/useStore";
+import { useApp } from "@/hooks/useApp";
+import { useAuth } from "@/hooks/useAuth";
 import { useStorage } from "@/hooks/useStorage";
 
 export type ComponentProps = {
@@ -12,12 +13,13 @@ export type ComponentProps = {
 };
 
 export const StorageProvider: React.FC<ComponentProps> = ({ children }) => {
-  const showSplash = useAppSelector(({ app }) => app.showSplash);
+  const { showSplash } = useApp();
+  const { gettingSession } = useAuth();
   const { getDataStore } = useStorage();
 
   useEffect(() => {
     getDataStore();
   }, []);
 
-  return showSplash ? <Splash /> : children;
+  return showSplash || gettingSession ? <Splash /> : children;
 };

@@ -14,5 +14,8 @@ export const SignupSchema = Yup.object().shape({
     .trim()
     .email("Correo electrónico inválido")
     .required("Correo electrónico obligatio"),
-  password: Yup.string().trim().required("Contraseña obligatoria"),
+  password: Yup.string()
+    .trim()
+    .required("Contraseña obligatoria")
+    .min(6, "Minimo 6 caracteres"),
 });

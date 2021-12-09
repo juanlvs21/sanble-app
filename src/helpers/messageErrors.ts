@@ -1,9 +1,9 @@
 export const messageErrors = (errors: any): string[] => {
-  const code = errors?.response?.code;
+  const codeCode = errors?.response?.status;
   let messages: string[] = [];
 
-  if (code === 422) {
-    messages = errors.response.data;
+  if (codeCode === 422) {
+    messages = errors.response.data.data;
   } else {
     messages = ["Error desconocído"];
   }
