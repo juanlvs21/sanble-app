@@ -1,6 +1,6 @@
 import { ThemeProvider as MuiThemeProvider } from "@mui/material";
 
-import { useAppSelector } from "@/hooks/useStore";
+import { useApp } from "@/hooks/useApp";
 import { theme } from "@/theme";
 
 export type ComponentProps = {
@@ -11,7 +11,7 @@ export type ComponentProps = {
 };
 
 export const ThemeProvider: React.FC<ComponentProps> = ({ children }) => {
-  const uiMode = useAppSelector((state) => state.app.uiMode);
+  const { uiMode } = useApp();
 
   return <MuiThemeProvider theme={theme(uiMode)}>{children}</MuiThemeProvider>;
 };

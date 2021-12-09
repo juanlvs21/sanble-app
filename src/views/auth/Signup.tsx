@@ -6,6 +6,7 @@ import { BsPerson } from "react-icons/bs";
 import { FcGoogle } from "react-icons/fc";
 
 import { PasswordField } from "@/components/common/PasswordField";
+import { LoadingFullScreen } from "@/components/common/LoadingFullScreen";
 import { SignupSchema } from "@/helpers/validations/authSchema";
 import { useAuth } from "@/hooks/useAuth";
 
@@ -66,7 +67,7 @@ const Form = styled("form")`
 
 export const SignupView: React.FC = () => {
   const { handleSignup, loading } = useAuth();
-  const { values, handleChange, handleSubmit } = useFormik({
+  const { values, handleChange, handleSubmit, errors } = useFormik({
     initialValues: {
       name: "",
       email: "",
@@ -97,6 +98,8 @@ export const SignupView: React.FC = () => {
               </InputAdornment>
             ),
           }}
+          error={!!errors.name}
+          helperText={errors.name}
           sx={{ marginTop: 3 }}
           fullWidth
         />
@@ -113,6 +116,8 @@ export const SignupView: React.FC = () => {
               </InputAdornment>
             ),
           }}
+          error={!!errors.email}
+          helperText={errors.email}
           sx={{ marginTop: 3 }}
           fullWidth
         />
@@ -122,6 +127,8 @@ export const SignupView: React.FC = () => {
           onChange={handleChange}
           value={values.password}
           disabled={loading}
+          error={!!errors.password}
+          helperText={errors.password}
           sx={{ marginTop: 3 }}
           fullWidth
         />
@@ -149,6 +156,8 @@ export const SignupView: React.FC = () => {
       <Button color="primary" variant="text" disabled={loading} fullWidth>
         <FcGoogle size={20} /> Unirse con Google
       </Button>
+
+      <LoadingFullScreen loading={loading} />
     </Container>
   );
 };
