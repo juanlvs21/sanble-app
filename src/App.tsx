@@ -1,10 +1,10 @@
 import { Router } from "@/router/Router";
 
 import { WelcomeView } from "@/views/auth/Welcome";
-import { useAppSelector } from "@/hooks/useStore";
+import { useApp } from "@/hooks/useApp";
 
 export const App: React.FC = () => {
-  const showWelcome = useAppSelector(({ app }) => app.showWelcome);
+  const { showWelcome } = useApp();
 
   return showWelcome ? <WelcomeView /> : <Router />;
 };

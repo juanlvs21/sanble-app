@@ -1,12 +1,15 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 
 import { AuthLayout } from "@/layouts/Auth";
+import { Landing } from "@/views/Landing";
+import { Home } from "@/views/Home";
 import { SigninView } from "@/views/auth/Signin";
 import { SignupView } from "@/views/auth/Signup";
 
 export const Router = () => (
   <Routes>
-    <Route path="/" element={<Navigate to="/auth/signin" replace />} />
+    <Route path="/" element={<Landing />} />
+    <Route path="/in" element={<Home />} />
     <Route path="/auth" element={<AuthLayout />}>
       <Route index element={<Navigate to="/auth/signin" replace />} />
       <Route path="signin" element={<SigninView />} />
