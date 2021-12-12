@@ -1,4 +1,5 @@
 import { styled } from "@mui/system";
+import { Link } from "react-router-dom";
 import {
   Divider,
   Drawer,
@@ -8,17 +9,26 @@ import {
   ListItemText,
   Toolbar,
 } from "@mui/material";
-import { BiMenu } from "react-icons/bi";
 
-const Sidebar = styled(Drawer)(({ theme }) => ({
-  "& .MuiDrawer-paper": {
-    backgroundColor: theme.palette.secondary.main,
-  },
+import { FiHome } from "react-icons/fi";
+import { MdStorefront } from "react-icons/md";
+import { BiShoppingBag } from "react-icons/bi";
+import { RiUserLine, RiRoadMapLine } from "react-icons/ri";
+
+const StyledToolbar = styled(Toolbar)({
+  display: "flex",
+  justifyContent: "center",
+});
+const StyledLink = styled(Link)(({ theme }) => ({
+  color: theme.palette.secondary.main,
 }));
+const Logo = styled("img")({
+  height: 25,
+});
 
 export const DrawerDesktop: React.FC = () => {
   return (
-    <Sidebar
+    <Drawer
       variant="permanent"
       sx={{
         display: { xs: "none", sm: "block" },
@@ -26,18 +36,52 @@ export const DrawerDesktop: React.FC = () => {
       }}
       open
     >
-      <Toolbar />
+      <StyledToolbar>
+        <Logo src="/img/logo_text.svg" alt="Sanble" />
+      </StyledToolbar>
       <Divider />
       <List>
-        {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
-          <ListItem button key={text}>
+        <StyledLink to="/in">
+          <ListItem button>
             <ListItemIcon>
-              <BiMenu />
+              <FiHome />
             </ListItemIcon>
-            <ListItemText primary={text} />
+            <ListItemText primary="Inicio" />
           </ListItem>
-        ))}
+        </StyledLink>
+        <StyledLink to="/in/near-you">
+          <ListItem button>
+            <ListItemIcon>
+              <RiRoadMapLine />
+            </ListItemIcon>
+            <ListItemText primary="Cerca de ti" />
+          </ListItem>
+        </StyledLink>
+        <StyledLink to="/in/fairs">
+          <ListItem button>
+            <ListItemIcon>
+              <MdStorefront />
+            </ListItemIcon>
+            <ListItemText primary="Ferias" />
+          </ListItem>
+        </StyledLink>
+        <StyledLink to="/in/stands">
+          <ListItem button>
+            <ListItemIcon>
+              <BiShoppingBag />
+            </ListItemIcon>
+            <ListItemText primary="Stands" />
+          </ListItem>
+        </StyledLink>
+        <StyledLink to="/in/profile">
+          <ListItem button>
+            <ListItemIcon>
+              <RiUserLine />
+            </ListItemIcon>
+            <ListItemText primary="Perfil" />
+          </ListItem>
+        </StyledLink>
       </List>
-    </Sidebar>
+    </Drawer>
   );
 };

@@ -1,5 +1,10 @@
 import { createTheme, PaletteMode } from "@mui/material";
 
+export const color = {
+  primary: "#FF7315",
+  secondary: "#3A3535",
+};
+
 export const theme = (mode: PaletteMode = "light") =>
   createTheme({
     typography: {
@@ -11,10 +16,10 @@ export const theme = (mode: PaletteMode = "light") =>
     palette: {
       mode,
       primary: {
-        main: "#FF7315",
+        main: color.primary,
       },
       secondary: {
-        main: "#3A3535",
+        main: color.secondary,
       },
     },
     components: {
@@ -61,7 +66,26 @@ export const theme = (mode: PaletteMode = "light") =>
       MuiInputAdornment: {
         styleOverrides: {
           positionStart: {
-            color: "#FF7315",
+            color: color.primary,
+          },
+        },
+      },
+      MuiBottomNavigation: {
+        styleOverrides: {
+          root: {
+            borderRadius: 20,
+            padding: 5,
+          },
+        },
+      },
+      MuiBottomNavigationAction: {
+        styleOverrides: {
+          root: {
+            "&.Mui-selected": {
+              background: color.secondary,
+              color: "#fff",
+              borderRadius: 20,
+            },
           },
         },
       },

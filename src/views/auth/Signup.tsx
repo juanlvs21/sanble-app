@@ -2,8 +2,8 @@ import { Button, InputAdornment, TextField, Typography } from "@mui/material";
 import { styled } from "@mui/system";
 import { useFormik } from "formik";
 import { IoMailOutline } from "react-icons/io5";
-import { BsPerson } from "react-icons/bs";
 import { FcGoogle } from "react-icons/fc";
+import { RiUserLine } from "react-icons/ri";
 
 import { PasswordField } from "@/components/common/PasswordField";
 import { LoadingFullScreen } from "@/components/common/LoadingFullScreen";
@@ -94,7 +94,7 @@ export const SignupView: React.FC = () => {
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
-                <BsPerson size={20} />
+                <RiUserLine size={20} />
               </InputAdornment>
             ),
           }}
