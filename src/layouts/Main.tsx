@@ -5,6 +5,7 @@ import { useMediaQuery } from "react-responsive";
 import { NavbarDesktop } from "@/components/common/NavbarDesktop";
 import { NavbarMobile } from "@/components/common/NavbarMobile";
 import { DrawerDesktop } from "@/components/common/DrawerDesktop";
+import { BottomNavigationMobile } from "@/components/common/BottomNavigationMobile";
 
 const Container = styled("div")`
   background-image: url("/img/wave5.svg");
@@ -40,6 +41,8 @@ export const MainLayout: React.FC = () => {
         <Main>
           <Outlet />
         </Main>
+
+        {!isDesktop && <BottomNavigationMobile />}
       </Container>
     </>
   );
