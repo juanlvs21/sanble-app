@@ -99,10 +99,10 @@ export const AuthLayout: React.FC = () => {
               <img src="/img/logo.svg" alt="Sanble Logo" />
               <span>Sanble</span>
             </LogoContainer>
-            <div>
+            <main>
               <AuthTabs />
               <Outlet />
-            </div>
+            </main>
           </Container>
         </Padding>
       </AuthView>
