@@ -5,7 +5,6 @@ import { Button } from "@mui/material";
 import { ChevronLeft } from "@mui/icons-material";
 
 import { WelcomeSlide } from "@/components/welcome/Slide";
-import { useAppDispatch } from "@/hooks/useStore";
 import { useApp } from "@/hooks/useApp";
 
 const BtnBackContainer = styled("div")`
@@ -54,7 +53,6 @@ const ProgressActive = styled(Box)(
 );
 
 export const WelcomeView: React.FC = () => {
-  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { handleSetShowWelcome } = useApp();
 

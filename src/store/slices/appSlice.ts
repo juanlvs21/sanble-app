@@ -8,6 +8,7 @@ export type IAppState = {
   showSplash: boolean;
   showWelcome: boolean;
   gettingSession: boolean;
+  loadingFullScreen: boolean;
 };
 
 const initialState: IAppState = {
@@ -15,6 +16,7 @@ const initialState: IAppState = {
   showSplash: true,
   showWelcome: true,
   gettingSession: true,
+  loadingFullScreen: false,
 };
 
 export const appSlice = createSlice({
@@ -31,9 +33,12 @@ export const appSlice = createSlice({
       setData("uiMode", action.payload);
       state.uiMode = action.payload;
     },
-    setShowWelcome: (state, action: PayloadAction<boolean>) => {
+    setShowWelcomeAction: (state, action: PayloadAction<boolean>) => {
       setData("showWelcome", action.payload);
       state.showWelcome = action.payload;
+    },
+    setLoadingFullScreenAction: (state, action: PayloadAction<boolean>) => {
+      state.loadingFullScreen = action.payload;
     },
   },
 });
@@ -41,8 +46,9 @@ export const appSlice = createSlice({
 export const {
   setUiModeAction,
   seGettingSessionAction,
-  setShowWelcome,
+  setShowWelcomeAction,
   setShowSplashAction,
+  setLoadingFullScreenAction,
 } = appSlice.actions;
 
 export default appSlice.reducer;

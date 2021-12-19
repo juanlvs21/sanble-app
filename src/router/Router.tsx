@@ -35,5 +35,5 @@ export const Router = () => (
     <Route path="*" element={<h1>NOT FOUND</h1>} />
   </Routes>
 );
-
+// https://stackblitz.com/github/remix-run/react-router/tree/main/examples/lazy-loading?file=src/App.tsx
 // https://ui.dev/react-router-code-splitting/

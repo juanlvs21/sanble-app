@@ -8,6 +8,7 @@ import { RiUserLine } from "react-icons/ri";
 import { PasswordField } from "@/components/common/PasswordField";
 import { LoadingFullScreen } from "@/components/common/LoadingFullScreen";
 import { SignupSchema } from "@/helpers/validations/authSchema";
+import { formikError } from "@/helpers/formikError";
 import { useAuth } from "@/hooks/useAuth";
 
 const Container = styled("div")`
@@ -66,16 +67,17 @@ const Form = styled("form")`
 `;
 
 export const SignupView: React.FC = () => {
-  const { handleSignup, loading } = useAuth();
-  const { values, handleChange, handleSubmit, errors } = useFormik({
-    initialValues: {
-      name: "",
-      email: "",
-      password: "",
-    },
-    onSubmit: (values) => handleSignup(values),
-    validationSchema: SignupSchema,
-  });
+  const { handleSignup } = useAuth();
+  const { values, handleChange, handleBlur, handleSubmit, errors, touched } =
+    useFormik({
+      initialValues: {
+        name: "",
+        email: "",
+        password: "",
+      },
+      onSubmit: (values) => handleSignup(values),
+      validationSchema: SignupSchema,
+    });
 
   return (
     <Container>
@@ -89,8 +91,8 @@ export const SignupView: React.FC = () => {
           placeholder="Nombre"
           name="name"
           onChange={handleChange}
+          onBlur={handleBlur}
           value={values.name}
-          disabled={loading}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
@@ -98,8 +100,8 @@ export const SignupView: React.FC = () => {
               </InputAdornment>
             ),
           }}
-          error={!!errors.name}
-          helperText={errors.name}
+          error={formikError(errors.name, touched.name).show}
+          helperText={formikError(errors.name, touched.name).msg}
           sx={{ marginTop: 3 }}
           fullWidth
         />
@@ -107,8 +109,8 @@ export const SignupView: React.FC = () => {
           placeholder="Correo electrónico"
           name="email"
           onChange={handleChange}
+          onBlur={handleBlur}
           value={values.email}
-          disabled={loading}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
@@ -116,8 +118,8 @@ export const SignupView: React.FC = () => {
               </InputAdornment>
             ),
           }}
-          error={!!errors.email}
-          helperText={errors.email}
+          error={formikError(errors.email, touched.email).show}
+          helperText={formikError(errors.email, touched.email).msg}
           sx={{ marginTop: 3 }}
           fullWidth
         />
@@ -125,10 +127,10 @@ export const SignupView: React.FC = () => {
           placeholder="Contraseña"
           name="password"
           onChange={handleChange}
+          onBlur={handleBlur}
           value={values.password}
-          disabled={loading}
-          error={!!errors.password}
-          helperText={errors.password}
+          error={formikError(errors.password, touched.password).show}
+          helperText={formikError(errors.password, touched.password).msg}
           sx={{ marginTop: 3 }}
           fullWidth
         />
@@ -137,27 +139,18 @@ export const SignupView: React.FC = () => {
           color="primary"
           variant="contained"
           type="submit"
-          disabled={loading}
           sx={{ marginTop: 5 }}
           fullWidth
         >
           Unirse
         </Button>
       </Form>
-      <Button
-        color="primary"
-        variant="text"
-        disabled={loading}
-        sx={{ marginTop: 1 }}
-        fullWidth
-      >
+      <Button color="primary" variant="text" sx={{ marginTop: 1 }} fullWidth>
         Recuperar Contraseña
       </Button>
-      <Button color="primary" variant="text" disabled={loading} fullWidth>
+      <Button color="primary" variant="text" fullWidth>
         <FcGoogle size={20} /> Unirse con Google
       </Button>
-
-      <LoadingFullScreen loading={loading} />
     </Container>
   );
 };

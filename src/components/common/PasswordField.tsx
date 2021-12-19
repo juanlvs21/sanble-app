@@ -1,5 +1,10 @@
 import { useState } from "react";
-import { IconButton, InputAdornment, TextField } from "@mui/material";
+import {
+  IconButton,
+  InputAdornment,
+  TextField,
+  InputBaseProps,
+} from "@mui/material";
 import { SxProps, Theme } from "@mui/system";
 import { VscKey } from "react-icons/vsc";
 import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
@@ -13,6 +18,10 @@ export type ComponentProps = {
    * Callback function event on change
    */
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
+  /**
+   * Callback function event on blur
+   */
+  onBlur?: InputBaseProps["onBlur"];
   /**
    * Input name
    */
@@ -64,6 +73,8 @@ export const PasswordField: React.FC<ComponentProps> = ({
       {...props}
       type={showPassword ? "text" : "password"}
       error={error}
+      fullWidth={fullWidth}
+      disabled={disabled}
       InputProps={{
         startAdornment: (
           <InputAdornment position="start">

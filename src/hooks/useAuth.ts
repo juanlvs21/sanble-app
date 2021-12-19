@@ -1,13 +1,19 @@
-import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
+import {
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
+  signOut,
+} from "firebase/auth";
 import { toast } from "react-toastify";
 
 import { useAppDispatch, useAppSelector } from "@/hooks/useStore";
 import { signupRequest } from "@/helpers/api";
 import { auth } from "@/helpers/firebase";
 import { messageErrors } from "@/helpers/messageErrors";
-import { seGettingSessionAction } from "@/store/slices/appSlice";
+import {
+  seGettingSessionAction,
+  setLoadingFullScreenAction,
+} from "@/store/slices/appSlice";
 import { setUserAction, setClearUserAction } from "@/store/slices/authSlice";
 import { TUser, TUserSignin, TUserSignup } from "@/types/TUser";
 
@@ -15,13 +21,13 @@ export const useAuth = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  const [loading, setLoading] = useState<boolean>(false);
 
   const userStore = useAppSelector(({ auth }) => auth.user);
+  const loggedStore = useAppSelector(({ auth }) => auth.logged);
   const gettingSession = useAppSelector(({ app }) => app.gettingSession);
 
   const handleSignup = async (userForm: TUserSignup) => {
-    setLoading(true);
+    dispatch(setLoadingFullScreenAction(true));
 
     try {
       await signupRequest(userForm);
@@ -42,8 +48,9 @@ export const useAuth = () => {
 
       dispatch(setUserAction(dispatchUser));
       navigate("/in");
+      dispatch(setLoadingFullScreenAction(false));
     } catch (error) {
-      setLoading(false);
+      dispatch(setLoadingFullScreenAction(false));
       messageErrors(error).map((err) => {
         toast(err, { type: "error" });
       });
@@ -51,7 +58,7 @@ export const useAuth = () => {
   };
 
   const handleSignin = async ({ email, password }: TUserSignin) => {
-    setLoading(true);
+    dispatch(setLoadingFullScreenAction(true));
 
     try {
       const { user } = await signInWithEmailAndPassword(auth, email, password);
@@ -67,8 +74,9 @@ export const useAuth = () => {
 
       dispatch(setUserAction(dispatchUser));
       navigate("/in");
+      dispatch(setLoadingFullScreenAction(false));
     } catch (error: any) {
-      setLoading(false);
+      dispatch(setLoadingFullScreenAction(false));
       if (
         ["auth/wrong-password", "auth/user-not-found"].includes(error?.code)
       ) {
@@ -84,45 +92,56 @@ export const useAuth = () => {
   };
 
   const handleGeSession = () => {
-    return new Promise((resolve) => {
-      dispatch(seGettingSessionAction(true));
+    console.info("Start getting session");
+    dispatch(seGettingSessionAction(true));
 
-      onAuthStateChanged(auth, (user) => {
-        if (user) {
-          const dispatchUser: TUser = {
-            displayName: user.displayName,
-            email: user.email,
-            emailVerified: user.emailVerified,
-            photoURL: user.photoURL,
-            providerId: user.providerId,
-            uid: user.uid,
-            phoneNumber: user.phoneNumber,
-          };
-          dispatch(setUserAction(dispatchUser));
-          dispatch(seGettingSessionAction(false));
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const dispatchUser: TUser = {
+          displayName: user.displayName,
+          email: user.email,
+          emailVerified: user.emailVerified,
+          photoURL: user.photoURL,
+          providerId: user.providerId,
+          uid: user.uid,
+          phoneNumber: user.phoneNumber,
+        };
+        dispatch(setUserAction(dispatchUser));
+        dispatch(seGettingSessionAction(false));
 
-          if (
-            ["/", "/auth", "/auth/signin", "/auth/signup"].includes(pathname)
-          ) {
-            navigate("/in");
-          }
-
-          resolve(user);
-        } else {
-          dispatch(setClearUserAction());
-          dispatch(seGettingSessionAction(false));
-          resolve("Sesion no iniciada");
+        if (["/", "/auth", "/auth/signin", "/auth/signup"].includes(pathname)) {
+          navigate("/in");
         }
-      });
+
+        console.info("Session successfully obtained");
+      } else {
+        dispatch(setClearUserAction());
+        dispatch(seGettingSessionAction(false));
+        console.info("Unauthorized");
+      }
+    });
+  };
+
+  const handleLogout = () => {
+    return new Promise(async (resolve) => {
+      dispatch(setLoadingFullScreenAction(true));
+      try {
+        await signOut(auth);
+      } finally {
+        dispatch(setClearUserAction());
+        dispatch(setLoadingFullScreenAction(false));
+        resolve("Logout success");
+      }
     });
   };
 
   return {
     gettingSession,
-    loading,
     handleSignup,
     handleSignin,
     handleGeSession,
+    handleLogout,
     user: userStore,
+    logged: loggedStore,
   };
 };

@@ -23,10 +23,15 @@ export const useNative = () => {
     await StatusBar.show();
   };
 
+  const setOverlayStatusBar = async (overlay: boolean) => {
+    await StatusBar.setOverlaysWebView({ overlay });
+  };
+
   return {
     isNative,
     setBgStatusBar,
     hideStatusBar,
     showStatusBar,
+    setOverlayStatusBar,
   };
 };
