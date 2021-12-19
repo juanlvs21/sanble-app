@@ -55,14 +55,11 @@ export const Carousel: React.FC<ComponentProps> = ({
         0: {
           items: 1,
         },
-        768: {
+        991: {
           items: 2,
         },
-        1024: {
+        1366: {
           items: 3,
-        },
-        1440: {
-          items: 4,
         },
       }}
     />

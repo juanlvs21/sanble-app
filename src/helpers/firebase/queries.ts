@@ -19,7 +19,7 @@ export const getRecentFairsDB = (): Promise<TFair[]> =>
         collection(db, "fairs"),
         where("date_time", "<", maxDate),
         limit(10),
-        orderBy("date_time", "desc")
+        orderBy("date_time", "asc")
       );
       const querySnapshot = await getDocs(q);
       querySnapshot.forEach((doc) => {
