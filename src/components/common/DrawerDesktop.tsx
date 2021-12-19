@@ -9,11 +9,12 @@ import {
   ListItemText,
   Toolbar,
 } from "@mui/material";
-
 import { FiHome } from "react-icons/fi";
 import { MdStorefront } from "react-icons/md";
 import { BiShoppingBag } from "react-icons/bi";
 import { RiUserLine, RiRoadMapLine } from "react-icons/ri";
+
+import { useAuth } from "@/hooks/useAuth";
 
 const StyledToolbar = styled(Toolbar)({
   display: "flex",
@@ -27,6 +28,8 @@ const Logo = styled("img")({
 });
 
 export const DrawerDesktop: React.FC = () => {
+  const { logged } = useAuth();
+
   return (
     <Drawer
       variant="permanent"
@@ -73,14 +76,16 @@ export const DrawerDesktop: React.FC = () => {
             <ListItemText primary="Stands" />
           </ListItem>
         </StyledLink>
-        <StyledLink to="/in/profile">
-          <ListItem button>
-            <ListItemIcon>
-              <RiUserLine />
-            </ListItemIcon>
-            <ListItemText primary="Perfil" />
-          </ListItem>
-        </StyledLink>
+        {logged && (
+          <StyledLink to="/in/profile">
+            <ListItem button>
+              <ListItemIcon>
+                <RiUserLine />
+              </ListItemIcon>
+              <ListItemText primary="Perfil" />
+            </ListItem>
+          </StyledLink>
+        )}
       </List>
     </Drawer>
   );

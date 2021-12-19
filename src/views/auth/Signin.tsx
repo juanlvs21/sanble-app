@@ -7,6 +7,7 @@ import { FcGoogle } from "react-icons/fc";
 import { PasswordField } from "@/components/common/PasswordField";
 import { LoadingFullScreen } from "@/components/common/LoadingFullScreen";
 import { SigninSchema } from "@/helpers/validations/authSchema";
+import { formikError } from "@/helpers/formikError";
 import { useAuth } from "@/hooks/useAuth";
 
 const Container = styled("div")`
@@ -65,15 +66,16 @@ const Form = styled("form")`
 `;
 
 export const SigninView: React.FC = () => {
-  const { handleSignin, loading } = useAuth();
-  const { values, handleChange, handleSubmit, errors } = useFormik({
-    initialValues: {
-      email: "",
-      password: "",
-    },
-    onSubmit: (values) => handleSignin(values),
-    validationSchema: SigninSchema,
-  });
+  const { handleSignin } = useAuth();
+  const { values, handleChange, handleBlur, handleSubmit, errors, touched } =
+    useFormik({
+      initialValues: {
+        email: "",
+        password: "",
+      },
+      onSubmit: (values) => handleSignin(values),
+      validationSchema: SigninSchema,
+    });
 
   return (
     <Container>
@@ -82,13 +84,13 @@ export const SigninView: React.FC = () => {
         <TitleLine />
       </Title>
       <Subtitle variant="h3">Ingresa en la Plataforma de Sanble</Subtitle>
-      <Form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit}>
         <TextField
           placeholder="Correo electrónico"
           name="email"
           onChange={handleChange}
+          onBlur={handleBlur}
           value={values.email}
-          disabled={loading}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
@@ -96,8 +98,8 @@ export const SigninView: React.FC = () => {
               </InputAdornment>
             ),
           }}
-          error={!!errors.email}
-          helperText={errors.email}
+          error={formikError(errors.email, touched.email).show}
+          helperText={formikError(errors.email, touched.email).msg}
           sx={{ marginTop: 3 }}
           fullWidth
         />
@@ -105,10 +107,10 @@ export const SigninView: React.FC = () => {
           placeholder="Contraseña"
           name="password"
           onChange={handleChange}
+          onBlur={handleBlur}
           value={values.password}
-          disabled={loading}
-          error={!!errors.password}
-          helperText={errors.password}
+          error={formikError(errors.password, touched.password).show}
+          helperText={formikError(errors.password, touched.password).msg}
           sx={{ marginTop: 3 }}
           fullWidth
         />
@@ -117,27 +119,18 @@ export const SigninView: React.FC = () => {
           color="primary"
           variant="contained"
           type="submit"
-          disabled={loading}
           sx={{ marginTop: 5 }}
           fullWidth
         >
           Ingresar
         </Button>
-      </Form>
-      <Button
-        color="primary"
-        variant="text"
-        disabled={loading}
-        sx={{ marginTop: 1 }}
-        fullWidth
-      >
+      </form>
+      <Button color="primary" variant="text" sx={{ marginTop: 1 }} fullWidth>
         Recuperar Contraseña
       </Button>
-      <Button color="primary" variant="text" disabled={loading} fullWidth>
+      <Button color="primary" variant="text" fullWidth>
         <FcGoogle size={20} /> Ingresa con Google
       </Button>
-
-      <LoadingFullScreen loading={loading} />
     </Container>
   );
 };

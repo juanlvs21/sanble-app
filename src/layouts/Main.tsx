@@ -6,6 +6,8 @@ import { NavbarDesktop } from "@/components/common/NavbarDesktop";
 import { NavbarMobile } from "@/components/common/NavbarMobile";
 import { DrawerDesktop } from "@/components/common/DrawerDesktop";
 import { BottomNavigationMobile } from "@/components/common/BottomNavigationMobile";
+import { LoadingFullScreen } from "@/components/common/LoadingFullScreen";
+import { useApp } from "@/hooks/useApp";
 
 const Container = styled("div")`
   background-image: url("/img/wave5.svg");
@@ -16,7 +18,7 @@ const Container = styled("div")`
   overflow-x: hidden;
   overflow-y: auto;
 
-  &.isDeskto {
+  &.isDesktop {
     flex-grow: 1;
     width: calc(100% - 240px);
     margin-left: 240px;
@@ -32,11 +34,12 @@ const Main = styled("main")`
 
 export const MainLayout: React.FC = () => {
   const isDesktop = useMediaQuery({ query: "(min-width: 768px)" });
+  const { loading } = useApp();
 
   return (
     <>
       {isDesktop && <DrawerDesktop />}
-      <Container className={isDesktop ? "isDeskto" : ""}>
+      <Container className={isDesktop ? "isDesktop" : ""}>
         {isDesktop ? <NavbarDesktop /> : <NavbarMobile />}
         <Main>
           <Outlet />
@@ -44,6 +47,8 @@ export const MainLayout: React.FC = () => {
 
         {!isDesktop && <BottomNavigationMobile />}
       </Container>
+
+      <LoadingFullScreen loading={loading} />
     </>
   );
 };

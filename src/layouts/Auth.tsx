@@ -1,9 +1,11 @@
-import { useEffect } from "react";
-import { Outlet } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import { styled } from "@mui/system";
+import { IconButton, Tooltip } from "@mui/material";
+import { FiHome } from "react-icons/fi";
 
+import { LoadingFullScreen } from "@/components/common/LoadingFullScreen";
 import { AuthTabs } from "@/components/auth/Tabs";
-import { useNative } from "@/hooks/useNative";
+import { useApp } from "@/hooks/useApp";
 
 const AuthView = styled("section")(
   ({ theme }) => `
@@ -83,15 +85,27 @@ const Padding = styled("div")`
   }
 `;
 
-export const AuthLayout: React.FC = () => {
-  const { setBgStatusBar } = useNative();
+const HomeBtn = styled(IconButton)({
+  position: "absolute",
+  top: 10,
+  left: 10,
+  zIndex: 100,
+  minWidth: 50,
+  height: 50,
+});
 
-  useEffect(() => {
-    setBgStatusBar("#FFFFFF", "Light");
-  }, []);
+export const AuthLayout: React.FC = () => {
+  const { loading } = useApp();
 
   return (
     <>
+      <Link to="/in">
+        <Tooltip title="Ir al inicio" placement="right">
+          <HomeBtn color="secondary">
+            <FiHome size={25} />
+          </HomeBtn>
+        </Tooltip>
+      </Link>
       <AuthView>
         <Padding>
           <Container>
@@ -106,6 +120,8 @@ export const AuthLayout: React.FC = () => {
           </Container>
         </Padding>
       </AuthView>
+
+      <LoadingFullScreen loading={loading} />
     </>
   );
 };

@@ -7,6 +7,8 @@ import { MdStorefront } from "react-icons/md";
 import { BiShoppingBag } from "react-icons/bi";
 import { RiUserLine, RiRoadMapLine } from "react-icons/ri";
 
+import { useAuth } from "@/hooks/useAuth";
+
 type TValueTab = "home" | "near-you" | "fairs" | "stands" | "profile";
 
 const NavigationContainer = styled("nav")({
@@ -26,6 +28,7 @@ const NavigationTab = styled(BottomNavigationAction)({
 
 export const BottomNavigationMobile = () => {
   const navigate = useNavigate();
+  const { logged } = useAuth();
   const [value, setValue] = useState<TValueTab>("home");
 
   const handleChange = (_: any, newValue: TValueTab) => {
@@ -41,7 +44,9 @@ export const BottomNavigationMobile = () => {
         <NavigationTab value="near-you" icon={<RiRoadMapLine size={25} />} />
         <NavigationTab value="fairs" icon={<MdStorefront size={25} />} />
         <NavigationTab value="stands" icon={<BiShoppingBag size={25} />} />
-        <NavigationTab value="profile" icon={<RiUserLine size={25} />} />
+        {logged && (
+          <NavigationTab value="profile" icon={<RiUserLine size={25} />} />
+        )}
       </BottomNavigation>
     </NavigationContainer>
   );
