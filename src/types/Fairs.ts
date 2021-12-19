@@ -27,7 +27,7 @@ export type TFair = {
   email?: string;
   phone?: string;
   // fair_date?: TFairDate;
-  fair_date?: number;
+  date_time?: number;
   lat?: string;
   lng?: string;
   address?: string;
