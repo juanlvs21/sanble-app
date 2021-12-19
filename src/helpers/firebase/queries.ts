@@ -1,0 +1,32 @@
+import {
+  collection,
+  query,
+  where,
+  limit,
+  orderBy,
+  getDocs,
+} from "firebase/firestore";
+
+import { db } from "./config";
+import { TFair } from "@/types/Fairs";
+
+export const getRecentFairsDB = (): Promise<TFair[]> =>
+  new Promise(async (resolve, reject) => {
+    try {
+      const data: TFair[] = [];
+      const maxDate = new Date().getTime() + 2419200000; // Current date + 4 weeks
+      const q = query(
+        collection(db, "fairs"),
+        where("date_time", "<", maxDate),
+        limit(10),
+        orderBy("date_time", "desc")
+      );
+      const querySnapshot = await getDocs(q);
+      querySnapshot.forEach((doc) => {
+        data.push(doc.data() as TFair);
+      });
+      resolve(data);
+    } catch (error) {
+      reject(error);
+    }
+  });

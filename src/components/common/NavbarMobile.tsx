@@ -1,6 +1,12 @@
+import { useState } from "react";
+import { Link } from "react-router-dom";
 import { Badge, IconButton } from "@mui/material";
 import { styled } from "@mui/system";
 import { BiBell } from "react-icons/bi";
+import { AiOutlineLogin } from "react-icons/ai";
+
+import { DialogLogout } from "@/components/common/DialogLogout";
+import { useAuth } from "@/hooks/useAuth";
 
 const Nav = styled("nav")({
   width: "100%",
@@ -26,18 +32,36 @@ const ButtonIcon = styled(IconButton)({
 });
 
 export const NavbarMobile: React.FC = () => {
+  const { logged } = useAuth();
+  const [openLogout, setOpenLogout] = useState<boolean>(false);
+
   return (
-    <Nav>
-      <NavSection>
-        <Logo src="/img/logo_text.svg" alt="Sanble" />
-      </NavSection>
-      <NavSection>
-        <ButtonIcon aria-label="Notificaciones">
-          <Badge color="primary" variant="dot">
-            <BiBell size={30} />
-          </Badge>
-        </ButtonIcon>
-      </NavSection>
-    </Nav>
+    <>
+      <Nav>
+        <NavSection>
+          <Logo src="/img/logo_text.svg" alt="Sanble" />
+        </NavSection>
+        <NavSection>
+          {logged ? (
+            <ButtonIcon
+              aria-label="Notificaciones"
+              onClick={() => setOpenLogout(true)}
+            >
+              <Badge color="primary" variant="dot">
+                <BiBell size={30} />
+              </Badge>
+            </ButtonIcon>
+          ) : (
+            <Link to="/auth/signin">
+              <ButtonIcon aria-label="Iniciar sesión">
+                <AiOutlineLogin size={30} />
+              </ButtonIcon>
+            </Link>
+          )}
+        </NavSection>
+      </Nav>
+
+      <DialogLogout open={openLogout} onClose={() => setOpenLogout(false)} />
+    </>
   );
 };

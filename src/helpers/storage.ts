@@ -1,6 +1,6 @@
 import { Storage } from "@capacitor/storage";
 
-type TKey = "uiMode" | "showWelcome" | "user";
+type TKey = "uiMode" | "showWelcome" | "user" | "logged";
 
 export const setData = async (key: TKey, value: any): Promise<any> => {
   await Storage.set({
