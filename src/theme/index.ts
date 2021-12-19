@@ -89,5 +89,15 @@ export const theme = (mode: PaletteMode = "light") =>
           },
         },
       },
+      MuiChip: {
+        variants: [
+          {
+            props: { variant: "filled" },
+            style: {
+              color: "#fff",
+            },
+          },
+        ],
+      },
     },
   });
