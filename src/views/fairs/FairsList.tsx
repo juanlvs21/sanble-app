@@ -1,7 +1,9 @@
+import { ViewContainer } from "@/components/common/ViewContainer";
+
 export const FairsList: React.FC = () => {
   return (
-    <div>
+    <ViewContainer title="Ferias">
       <h1>FairsList</h1>
-    </div>
+    </ViewContainer>
   );
 };

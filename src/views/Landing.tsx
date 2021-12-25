@@ -7,7 +7,7 @@ export const Landing: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    navigate("/auth/signin");
+    navigate("/in");
   }, []);
 
   return <Splash />;
