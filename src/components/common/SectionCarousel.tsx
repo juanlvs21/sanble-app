@@ -19,17 +19,34 @@ export type ComponentProps = {
   /**
    * items carousel
    */
-  items: any[];
+  items: React.ReactElement[];
+  /**
+   * skeleton carousel
+   */
+  renderSkeleton?: () => JSX.Element;
+  /**
+   * Loading (show array skeleton carusel)
+   *
+   * @default false
+   */
+  loading?: boolean;
 };
 
-export const SectionCarousel: React.FC<ComponentProps> = ({ title, items }) => {
+export const SectionCarousel: React.FC<ComponentProps> = ({
+  title,
+  items,
+  renderSkeleton,
+  loading = false,
+}) => {
   const isDesktop = useMediaQuery({ query: "(min-width: 768px)" });
 
   return (
     <section>
       <Title>{title}</Title>
       <Carousel
-        items={items}
+        items={
+          loading && renderSkeleton ? [1, 2, 3].map(renderSkeleton) : items
+        }
         disableButtonsControls={!isDesktop}
         disableDotsControls={isDesktop}
         autoPlayInterval={5000}

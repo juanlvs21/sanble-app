@@ -40,7 +40,9 @@ export const DrawerDesktop: React.FC = () => {
       open
     >
       <StyledToolbar>
-        <Logo src="/img/logo_text.svg" alt="Sanble" />
+        <Link to="/in">
+          <Logo src="/img/logo_text.svg" alt="Sanble" />
+        </Link>
       </StyledToolbar>
       <Divider />
       <List>
