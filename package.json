@@ -1,6 +1,7 @@
 {
   "name": "@sanble/app",
   "version": "0.0.1",
+  "license": "MIT",
   "scripts": {
     "dev": "vite --host 0.0.0.0",
     "build": "tsc && vite build",
