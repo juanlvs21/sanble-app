@@ -66,6 +66,7 @@ const ChipStyled = styled(Chip)({
   fontSize: 9,
   marginRight: 5,
   marginTop: 5,
+  cursor: "pointer",
   "@media (min-width: 425px)": {
     height: 24,
     fontSize: 11,

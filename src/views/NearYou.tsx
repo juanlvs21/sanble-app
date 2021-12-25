@@ -1,7 +1,9 @@
+import { ViewContainer } from "@/components/common/ViewContainer";
+
 export const NearYou: React.FC = () => {
   return (
-    <div>
+    <ViewContainer title="Cerca de ti">
       <h1>Near You</h1>
-    </div>
+    </ViewContainer>
   );
 };

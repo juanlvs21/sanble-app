@@ -1,7 +1,9 @@
+import { ViewContainer } from "@/components/common/ViewContainer";
+
 export const ProfileDetails: React.FC = () => {
   return (
-    <div>
+    <ViewContainer title="Perfil">
       <h1>Profile</h1>
-    </div>
+    </ViewContainer>
   );
 };

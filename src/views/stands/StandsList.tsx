@@ -1,7 +1,9 @@
+import { ViewContainer } from "@/components/common/ViewContainer";
+
 export const StandsList: React.FC = () => {
   return (
-    <div>
+    <ViewContainer title="Stands">
       <h1>StandsList</h1>
-    </div>
+    </ViewContainer>
   );
 };

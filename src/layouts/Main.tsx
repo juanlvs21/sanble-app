@@ -2,6 +2,7 @@ import { styled } from "@mui/system";
 import { Outlet } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
 
+import { Metadata } from "@/components/common/Metadata";
 import { NavbarDesktop } from "@/components/common/NavbarDesktop";
 import { NavbarMobile } from "@/components/common/NavbarMobile";
 import { DrawerDesktop } from "@/components/common/DrawerDesktop";
