@@ -1,103 +1,56 @@
-import { createTheme, PaletteMode } from "@mui/material";
+import {extendTheme} from 'native-base';
 
-export const color = {
-  primary: "#FF7315",
-  secondary: "#3A3535",
-};
+import {primary, secondary} from '../constants/Colors';
 
-export const theme = (mode: PaletteMode = "light") =>
-  createTheme({
-    typography: {
-      fontWeightRegular: 500,
-      fontWeightMedium: 600,
-      fontWeightBold: 700,
-      fontFamily: 'Poppins, "Helvetica Neue", Arial, sans-serif',
-    },
-    palette: {
-      mode,
-      primary: {
-        main: color.primary,
+export const theme = extendTheme({
+  fontConfig: {
+    Poppins: {
+      400: {
+        normal: 'Poppins-Regular',
       },
-      secondary: {
-        main: color.secondary,
+      500: {
+        normal: 'Poppins-Medium',
+      },
+      600: {
+        normal: 'Poppins-Bold',
       },
     },
-    components: {
-      MuiButton: {
-        styleOverrides: {
-          root: {
-            borderRadius: 20,
-            height: 45,
-            textTransform: "capitalize",
-          },
-        },
-        variants: [
-          {
-            props: { variant: "contained" },
-            style: {
-              color: "#fff",
-            },
-          },
-        ],
+  },
+  fonts: {
+    heading: 'Poppins',
+    body: 'Poppins',
+    mono: 'Poppins',
+  },
+  colors: {
+    primary,
+    secondary,
+  },
+  config: {
+    // Changing initialColorMode to 'light'
+    initialColorMode: 'light',
+  },
+  components: {
+    Button: {
+      // Can simply pass default props to change default behaviour of components.
+      baseStyle: {
+        rounded: 20,
       },
-      MuiInputBase: {
-        styleOverrides: {
-          root: {
-            height: 45,
-          },
-        },
-      },
-      MuiTextField: {
-        defaultProps: {
-          variant: "outlined",
-        },
-      },
-      MuiOutlinedInput: {
-        styleOverrides: {
-          root: {
-            backgroundColor: "rgba(244, 247, 248, 1)",
-            borderRadius: "20px !important",
-          },
-          notchedOutline: {
-            borderColor: "#fff",
-          },
-        },
-      },
-      MuiInputAdornment: {
-        styleOverrides: {
-          positionStart: {
-            color: color.primary,
-          },
-        },
-      },
-      MuiBottomNavigation: {
-        styleOverrides: {
-          root: {
-            borderRadius: 20,
-            padding: 5,
-          },
-        },
-      },
-      MuiBottomNavigationAction: {
-        styleOverrides: {
-          root: {
-            "&.Mui-selected": {
-              background: color.secondary,
-              color: "#fff",
-              borderRadius: 20,
-            },
-          },
-        },
-      },
-      MuiChip: {
-        variants: [
-          {
-            props: { variant: "filled" },
-            style: {
-              color: "#fff",
-            },
-          },
-        ],
+      defaultProps: {
+        colorScheme: 'primary',
       },
     },
-  });
+    Input: {
+      baseStyle: {
+        borderRadius: 20,
+        borderColor: 'transparent',
+        // backgroundColor: gray[500],
+        paddingLeft: 5,
+        paddingTop: 3,
+      },
+      defaultProps: {
+        variant: 'outline',
+        // placeholderTextColor: "#000",
+      },
+    },
+  },
+});

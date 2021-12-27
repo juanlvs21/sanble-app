@@ -1,28 +1,31 @@
-import { useState } from "react";
-import { toast } from "react-toastify";
+import {useState} from 'react';
+import {useToast} from 'native-base';
 
-import { getRecentFairsDB } from "@/helpers/firebase";
-import { useAppDispatch, useAppSelector } from "@/hooks/useStore";
-import { setFairsAction } from "@/store/slices/fairsSlice";
+import {setFairsAction} from '../store/slices/fairsSlice';
+import {useAppDispatch, useAppSelector} from './useStore';
 
 export const useFairs = () => {
+  const toast = useToast();
   const dispatch = useAppDispatch();
   const [loading, setLoading] = useState<boolean>(true);
 
-  const fairsStore = useAppSelector(({ fairs }) => fairs.list);
+  const fairsStore = useAppSelector(({fairs}) => fairs.list);
 
   const getRecentFairs = async () => {
     try {
-      const fairs = await getRecentFairsDB();
-      dispatch(setFairsAction(fairs));
+      // const fairs = await getRecentFairsDB();
+      dispatch(setFairsAction([]));
     } catch (error) {
-      toast("Error al cargar las próximas ferias", { type: "error" });
+      toast.show({
+        description: 'Error al cargar las próximas ferias',
+        status: 'error',
+      });
     }
   };
 
   const handleGetRecentFairs = async () => {
     setLoading(true);
-    await getRecentFairsDB();
+    await getRecentFairs();
     setLoading(false);
   };
 
