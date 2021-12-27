@@ -1,10 +1,6 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { PaletteMode } from "@mui/material";
-
-import { setData, getData } from "@/helpers/storage";
+import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 
 export type IAppState = {
-  uiMode: PaletteMode;
   showSplash: boolean;
   showWelcome: boolean;
   gettingSession: boolean;
@@ -12,7 +8,6 @@ export type IAppState = {
 };
 
 const initialState: IAppState = {
-  uiMode: "light",
   showSplash: true,
   showWelcome: true,
   gettingSession: true,
@@ -20,7 +15,7 @@ const initialState: IAppState = {
 };
 
 export const appSlice = createSlice({
-  name: "app",
+  name: 'app',
   initialState,
   reducers: {
     seGettingSessionAction: (state, action: PayloadAction<boolean>) => {
@@ -29,12 +24,7 @@ export const appSlice = createSlice({
     setShowSplashAction: (state, action: PayloadAction<boolean>) => {
       state.showSplash = action.payload;
     },
-    setUiModeAction: (state, action: PayloadAction<PaletteMode>) => {
-      setData("uiMode", action.payload);
-      state.uiMode = action.payload;
-    },
     setShowWelcomeAction: (state, action: PayloadAction<boolean>) => {
-      setData("showWelcome", action.payload);
       state.showWelcome = action.payload;
     },
     setLoadingFullScreenAction: (state, action: PayloadAction<boolean>) => {
@@ -44,7 +34,6 @@ export const appSlice = createSlice({
 });
 
 export const {
-  setUiModeAction,
   seGettingSessionAction,
   setShowWelcomeAction,
   setShowSplashAction,

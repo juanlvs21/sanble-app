@@ -1,50 +1,35 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 
-import { setData } from "@/helpers/storage";
-import { TUser } from "@/types/TUser";
+import {TUser} from '../../types/user';
 
 export type IAuthState = {
   logged: boolean;
-  user: TUser;
+  user: TUser | null;
 };
 
 const initialState: IAuthState = {
   logged: false,
-  user: {
-    displayName: "",
-    email: "",
-    emailVerified: false,
-    photoURL: "",
-    providerId: "",
-    uid: "",
-    phoneNumber: null,
-  },
+  user: null,
 };
 
 export const authSlice = createSlice({
-  name: "auth",
+  name: 'auth',
   initialState,
   reducers: {
-    setClearUserAction: (state) => {
-      setData("user", initialState.user);
+    setClearUserAction: state => {
       state.user = initialState.user;
-      setData("logged", false);
       state.logged = false;
     },
     setLoggedAction: (state, action: PayloadAction<boolean | null>) => {
-      setData("logged", action.payload);
       state.logged = action.payload ?? false;
     },
     setUserAction: (state, action: PayloadAction<TUser | null>) => {
-      setData("user", action.payload || initialState.user);
-      state.user = action.payload || initialState.user;
-      setData("logged", action.payload ? true : false);
-      state.logged = action.payload ? true : false;
+      state.user = action.payload;
     },
   },
 });
 
-export const { setClearUserAction, setUserAction, setLoggedAction } =
+export const {setClearUserAction, setUserAction, setLoggedAction} =
   authSlice.actions;
 
 export default authSlice.reducer;

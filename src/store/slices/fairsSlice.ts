@@ -1,7 +1,6 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { PaletteMode } from "@mui/material";
+import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 
-import { TFair } from "@/types/Fairs";
+import {TFair} from '../../types/fairs';
 
 export type IFairsState = {
   list: TFair[];
@@ -12,7 +11,7 @@ const initialState: IFairsState = {
 };
 
 export const fairsSlice = createSlice({
-  name: "fairs",
+  name: 'fairs',
   initialState,
   reducers: {
     setFairsAction: (state, action: PayloadAction<TFair[]>) => {
@@ -21,6 +20,6 @@ export const fairsSlice = createSlice({
   },
 });
 
-export const { setFairsAction } = fairsSlice.actions;
+export const {setFairsAction} = fairsSlice.actions;
 
 export default fairsSlice.reducer;
