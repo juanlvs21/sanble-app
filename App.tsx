@@ -9,10 +9,10 @@
  */
 
 import React from 'react';
+import {StatusBar} from 'react-native';
 import {NativeBaseProvider} from 'native-base';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {Provider} from 'react-redux';
-// import { StatusBar } from "expo-status-bar";
 
 import {Navigation} from './src/navigation';
 import {store} from './src/store';
@@ -27,10 +27,10 @@ export default function App() {
   } else {
     return (
       <SafeAreaProvider>
+        <StatusBar animated={true} backgroundColor="#fff" />
         <Provider store={store}>
           <NativeBaseProvider theme={theme}>
             <Navigation />
-            {/* <StatusBar /> */}
           </NativeBaseProvider>
         </Provider>
       </SafeAreaProvider>

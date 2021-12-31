@@ -1,6 +1,5 @@
-// import * as Font from "expo-font";
-// import * as SplashScreen from "expo-splash-screen";
 import {useEffect, useState} from 'react';
+// import SplashScreen from 'react-native-splash-screen';
 
 export const useCachedResources = () => {
   const [isLoadingComplete, setLoadingComplete] = useState<boolean>(false);
@@ -10,13 +9,8 @@ export const useCachedResources = () => {
     async function loadResourcesAndDataAsync() {
       try {
         // SplashScreen.preventAutoHideAsync();
+        // SplashScreen.show();
         // Load fonts
-        // await Font.loadAsync({
-        //   "poppins-regular": require("../assets/fonts/Poppins/Poppins-Regular.ttf"),
-        //   "poppins-medium": require("../assets/fonts/Poppins/Poppins-Medium.ttf"),
-        //   "poppins-bold": require("../assets/fonts/Poppins/Poppins-SemiBold.ttf"),
-        //   "quicksand-bold": require("../assets/fonts/Quicksand-Bold.ttf"),
-        // });
       } catch (e) {
         // We might want to provide this error information to an error reporting service
         console.warn(e);
