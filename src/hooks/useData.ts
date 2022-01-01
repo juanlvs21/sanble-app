@@ -21,7 +21,7 @@ export const useData = () => {
         console.warn(e);
       } finally {
         setLoadingComplete(true);
-        // SplashScreen.hideAsync();
+        // SplashScreen.hide();
       }
     }
 
