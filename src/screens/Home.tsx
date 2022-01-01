@@ -11,16 +11,21 @@ import {StandCard} from '@/components/stands/Card';
 import {PromotionCardType} from '@/components/products/CardType';
 import {productTypes} from '@/helpers/productTypes';
 import {useHome} from '@/hooks/useHome';
+import {useApp} from '@/hooks/useApp';
 import {TFair} from '@/types/fair';
 import {TStand} from '@/types/stand';
 import {TProductType} from '@/types/product';
 
 export const HomeScreen: React.FC = () => {
   const {handleRefresh, fairs, fairsLoading, stands, standsLoading} = useHome();
+  const {firstLoad} = useApp();
 
   useFocusEffect(
     useCallback(() => {
-      handleRefresh();
+      console.log({firstLoad});
+      if (firstLoad) {
+        handleRefresh();
+      }
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []),
   );

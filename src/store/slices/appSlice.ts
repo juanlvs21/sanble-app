@@ -1,14 +1,14 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 
 export type TAppState = {
-  showSplash: boolean;
+  firstLoad: boolean;
   showWelcome: boolean;
   gettingSession: boolean;
   loadingFullScreen: boolean;
 };
 
 const initialState: TAppState = {
-  showSplash: true,
+  firstLoad: true,
   showWelcome: true,
   gettingSession: true,
   loadingFullScreen: false,
@@ -18,11 +18,11 @@ export const appSlice = createSlice({
   name: 'app',
   initialState,
   reducers: {
+    setFirstLoadAction: (state, action: PayloadAction<boolean>) => {
+      state.firstLoad = action.payload;
+    },
     seGettingSessionAction: (state, action: PayloadAction<boolean>) => {
       state.gettingSession = action.payload;
-    },
-    setShowSplashAction: (state, action: PayloadAction<boolean>) => {
-      state.showSplash = action.payload;
     },
     setShowWelcomeAction: (state, action: PayloadAction<boolean>) => {
       state.showWelcome = action.payload;
@@ -34,9 +34,9 @@ export const appSlice = createSlice({
 });
 
 export const {
+  setFirstLoadAction,
   seGettingSessionAction,
   setShowWelcomeAction,
-  setShowSplashAction,
   setLoadingFullScreenAction,
 } = appSlice.actions;
 
