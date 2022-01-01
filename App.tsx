@@ -12,28 +12,23 @@ import React from 'react';
 import {StatusBar} from 'react-native';
 import {NativeBaseProvider} from 'native-base';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
-import {Provider} from 'react-redux';
 
-import {Navigation} from './src/navigation';
-import {store} from './src/store';
-import {theme} from './src/theme';
-import {useCachedResources} from './src/hooks/useCachedResources';
+import {AppProvider} from '@/context/app';
+import {DataProvider} from '@/providers/DataProvider';
+import {Navigation} from '@/navigation';
+import {theme} from '@/theme';
 
-export default function App() {
-  const isLoadingComplete = useCachedResources();
+const App: React.FC = () => (
+  <SafeAreaProvider>
+    <StatusBar animated={true} backgroundColor="#fff" />
+    <AppProvider>
+      <NativeBaseProvider theme={theme}>
+        <DataProvider>
+          <Navigation />
+        </DataProvider>
+      </NativeBaseProvider>
+    </AppProvider>
+  </SafeAreaProvider>
+);
 
-  if (!isLoadingComplete) {
-    return null;
-  } else {
-    return (
-      <SafeAreaProvider>
-        <StatusBar animated={true} backgroundColor="#fff" />
-        <Provider store={store}>
-          <NativeBaseProvider theme={theme}>
-            <Navigation />
-          </NativeBaseProvider>
-        </Provider>
-      </SafeAreaProvider>
-    );
-  }
-}
+export default App;
