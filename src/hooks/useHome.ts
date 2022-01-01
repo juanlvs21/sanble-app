@@ -8,8 +8,8 @@ export const useHome = () => {
   const {getBestStands, stands, loading: standsLoading} = useStands();
 
   const handleRefresh = async () => {
-    handlesetFirstLoad();
     await Promise.all([getRecentFairs(), getBestStands()]);
+    handlesetFirstLoad();
   };
 
   return {

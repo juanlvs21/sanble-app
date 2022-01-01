@@ -1,6 +1,6 @@
 import {TAction, TFairsReducer} from '@/types/context';
 
-import {fairsConstants} from '@/context/constants';
+import {fairsConstants} from '@/constants/context';
 
 export const initialFairsState: TFairsReducer = {
   list: [],

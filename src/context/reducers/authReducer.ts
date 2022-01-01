@@ -1,6 +1,6 @@
 import {TAction, TAuthReducer} from '@/types/context';
 
-import {authConstants} from '@/context/constants';
+import {authConstants} from '@/constants/context';
 
 export const initialAuthState: TAuthReducer = {
   user: null,

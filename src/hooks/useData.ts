@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react';
 // import SplashScreen from 'react-native-splash-screen';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+// import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const useData = () => {
   const [isLoadingComplete, setLoadingComplete] = useState<boolean>(false);
@@ -12,8 +12,7 @@ export const useData = () => {
         // SplashScreen.preventAutoHideAsync();
         // SplashScreen.show();
         // Load fonts
-        const x = await AsyncStorage.getItem('fairs');
-        console.log({x});
+        // const fairsStore = await AsyncStorage.getItem('fairs');
       } catch (e) {
         // We might want to provide this error information to an error reporting service
         console.warn(e);

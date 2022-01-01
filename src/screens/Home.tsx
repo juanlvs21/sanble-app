@@ -22,12 +22,11 @@ export const HomeScreen: React.FC = () => {
 
   useFocusEffect(
     useCallback(() => {
-      console.log({firstLoad});
       if (firstLoad) {
         handleRefresh();
       }
       // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []),
+    }, [firstLoad]),
   );
 
   // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -1,22 +1,23 @@
 import {useState} from 'react';
 import {useToast} from 'native-base';
 
-import {useAppDispatch, useAppSelector} from '@/hooks/useStore';
+import {useStateValue} from '@/context/app';
+import {standsConstants} from '@/constants/context';
 import {getBestStandsDB} from '@/helpers/queries/stands';
-import {setStandsAction} from '@/store/slices/standsSlice';
 
 export const useStands = () => {
   const toast = useToast();
-  const dispatch = useAppDispatch();
+  const [{stands: standsStore}, dispatch] = useStateValue();
   const [loading, setLoading] = useState<boolean>(true);
-
-  const standsStore = useAppSelector(({stands}) => stands.list);
 
   const getBestStands = async () => {
     setLoading(true);
     try {
       const stands = await getBestStandsDB();
-      dispatch(setStandsAction(stands));
+      dispatch({
+        type: standsConstants.SET_STANDSLIST,
+        payload: {list: stands},
+      });
     } catch (error) {
       toast.show({
         description: 'Error al cargar los mejores stands',
@@ -29,7 +30,7 @@ export const useStands = () => {
 
   return {
     loading,
-    stands: standsStore,
+    stands: standsStore.list,
     getBestStands,
   };
 };
