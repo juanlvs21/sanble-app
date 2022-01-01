@@ -11,7 +11,7 @@ import {MainTabBar} from '../components/common/MainTabBar';
 import {HomeScreen} from '../screens/Home';
 import {NearYouScreen} from '../screens/NearYou';
 import {FairsListScreen} from '../screens/fairs/List';
-import {StandsListScreen} from '../screens/stands/StandsList';
+import {StandsListScreen} from '../screens/stands/List';
 
 import {RootTabParamList} from '../types/navigator';
 
@@ -22,14 +22,14 @@ export const BottomTabNavigator: React.FC = () => {
 
   return (
     <BottomTab.Navigator
-      initialRouteName="home"
+      initialRouteName="Home"
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme].tint,
         header: props => <Navbar {...props} />,
       }}
       tabBar={props => <MainTabBar {...props} />}>
       <BottomTab.Screen
-        name="home"
+        name="Home"
         component={HomeScreen}
         options={{
           title: 'Inicio',
@@ -37,7 +37,7 @@ export const BottomTabNavigator: React.FC = () => {
         }}
       />
       <BottomTab.Screen
-        name="near-you"
+        name="NearYou"
         component={NearYouScreen}
         options={{
           title: 'Cerca de ti',
@@ -47,7 +47,7 @@ export const BottomTabNavigator: React.FC = () => {
         }}
       />
       <BottomTab.Screen
-        name="fairs"
+        name="Fairs"
         component={FairsListScreen}
         options={{
           title: 'Ferias',
@@ -57,7 +57,7 @@ export const BottomTabNavigator: React.FC = () => {
         }}
       />
       <BottomTab.Screen
-        name="stands"
+        name="Stands"
         component={StandsListScreen}
         options={{
           title: 'Stands',

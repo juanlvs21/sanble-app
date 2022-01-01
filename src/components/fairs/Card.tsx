@@ -29,7 +29,13 @@ type ComponentProps = {
 };
 
 export const FairCard: React.FC<ComponentProps> = ({
-  fair,
+  fair = {
+    uuid: '',
+    photographs: [],
+    name: '',
+    description: '',
+    date_time: '',
+  },
   loading,
   cardWidth = width * 0.7,
 }) => {
@@ -51,18 +57,18 @@ export const FairCard: React.FC<ComponentProps> = ({
   return (
     <TouchableOpacity
       style={styles.card}
-      onPress={() => navigation.navigate('FairDetails')}>
+      onPress={() => navigation.navigate('FairDetails', {id: fair.uuid})}>
       <Image
-        source={getFairCover(fair?.photographs)}
-        alt={fair?.name}
+        source={getFairCover(fair.photographs)}
+        alt={fair.name}
         style={styles.image}
       />
       <View style={[styles.content, {width: cardWidth - 50}]}>
         <Heading style={styles.title} fontWeight="semibold" numberOfLines={1}>
-          {fair?.name}
+          {fair.name}
         </Heading>
         <Text color={gray[800]} numberOfLines={2} style={styles.description}>
-          {fair?.description}
+          {fair.description}
         </Text>
         <View style={styles.badgeContainer}>
           <Badge>
@@ -72,7 +78,7 @@ export const FairCard: React.FC<ComponentProps> = ({
               color="#FFF"
               style={styles.badgeIcon}
             />
-            {' ' + dateFormat(fair?.date_time, 'DD MMM HH:mm a')}
+            {' ' + dateFormat(fair.date_time, 'DD MMM HH:mm a')}
           </Badge>
         </View>
       </View>
