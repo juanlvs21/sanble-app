@@ -14,7 +14,7 @@ import {TFair} from '../types/fair';
 import {TProductType} from '../types/product';
 
 export const HomeScreen: React.FC = () => {
-  const {handleRefresh, loading, fairs, fairsLoading} = useHome();
+  const {handleRefresh, fairs, fairsLoading} = useHome();
 
   useFocusEffect(
     useCallback(() => {
@@ -27,13 +27,22 @@ export const HomeScreen: React.FC = () => {
   const onRefresh = useCallback(() => handleRefresh(), []);
 
   const renderRefreshControl = (
-    <RefreshControl refreshing={loading} onRefresh={onRefresh} />
+    <RefreshControl refreshing={false} onRefresh={onRefresh} />
   );
 
   return (
     <MainLayout renderRefreshControl={renderRefreshControl}>
       <Search style={styles.search} />
       <Heading>Próximas Ferias</Heading>
+      <Carousel
+        items={fairs}
+        keyExtractor={(fair: TFair) => fair.uuid}
+        renderItem={(fair: TFair) => <FairCard fair={fair} />}
+        containerStyle={styles.carousel}
+        SkeletonElement={<FairCard loading />}
+        loading={fairsLoading}
+      />
+      <Heading>Mejores Stands</Heading>
       <Carousel
         items={fairs}
         keyExtractor={(fair: TFair) => fair.uuid}

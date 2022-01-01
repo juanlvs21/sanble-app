@@ -34,7 +34,7 @@ export const PromotionCardType: React.FC<ComponentProps> = ({type}) => {
   return (
     <TouchableOpacity
       style={styles.card}
-      onPress={() => navigation.navigate('PromotionList')}>
+      onPress={() => navigation.navigate('PromotionList', {type})}>
       <Image source={icon[type]} alt={text[type]} style={styles.icon} />
       <Text style={styles.text} fontWeight="semibold">
         {text[type]}
