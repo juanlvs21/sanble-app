@@ -3,12 +3,14 @@ import {configureStore, ThunkAction, Action} from '@reduxjs/toolkit';
 import app from '@/store/slices/appSlice';
 import auth from '@/store/slices/authSlice';
 import fairs from '@/store/slices/fairsSlice';
+import stands from '@/store/slices/standsSlice';
 
 export const store = configureStore({
   reducer: {
     app,
     auth,
     fairs,
+    stands,
   },
 });
 
