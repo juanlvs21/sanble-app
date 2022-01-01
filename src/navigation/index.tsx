@@ -8,6 +8,8 @@ import {
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 import {BottomTabNavigator} from './BottomNavigator';
+import {PromotionListScreen} from '../screens/promotions/List';
+import {FairDetailsScreen} from '../screens/fairs/Details';
 import ModalScreen from '../screens/ModalScreen';
 import NotFoundScreen from '../screens/NotFoundScreen';
 import {RootStackParamList} from '../types/navigator';
@@ -39,6 +41,16 @@ const RootNavigator: React.FC = () => (
     <Stack.Screen
       name="Root"
       component={BottomTabNavigator}
+      options={{headerShown: false}}
+    />
+    <Stack.Screen
+      name="PromotionList"
+      component={PromotionListScreen}
+      options={{headerShown: false}}
+    />
+    <Stack.Screen
+      name="FairDetails"
+      component={FairDetailsScreen}
       options={{headerShown: false}}
     />
     <Stack.Screen

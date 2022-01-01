@@ -2,7 +2,7 @@ import {useState} from 'react';
 import {useToast} from 'native-base';
 
 import {useAppDispatch, useAppSelector} from './useStore';
-import {getRecentFairsDB} from '../helpers/firebase/queries';
+import {getRecentFairsDB} from '../helpers/queries/fairs';
 import {setFairsAction} from '../store/slices/fairsSlice';
 
 export const useFairs = () => {
@@ -23,7 +23,7 @@ export const useFairs = () => {
         status: 'error',
       });
     } finally {
-      setLoading(true);
+      setLoading(false);
     }
   };
 
