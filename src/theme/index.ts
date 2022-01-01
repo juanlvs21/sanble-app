@@ -52,5 +52,17 @@ export const theme = extendTheme({
         // placeholderTextColor: "#000",
       },
     },
+    Badge: {
+      baseStyle: {
+        borderRadius: 20,
+        rounded: 20,
+        flexDirection: 'row',
+        alignItems: 'center',
+      },
+      defaultProps: {
+        colorScheme: 'primary',
+        variant: 'solid',
+      },
+    },
   },
 });

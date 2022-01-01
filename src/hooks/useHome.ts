@@ -4,7 +4,7 @@ import {useFairs} from './useFairs';
 
 export const useHome = () => {
   const [loading, setLoading] = useState<boolean>(true);
-  const {getRecentFairs, fairs} = useFairs();
+  const {getRecentFairs, fairs, loading: fairsLoading} = useFairs();
 
   const handleRefresh = async () => {
     setLoading(true);
@@ -16,5 +16,6 @@ export const useHome = () => {
     handleRefresh,
     loading,
     fairs,
+    fairsLoading,
   };
 };

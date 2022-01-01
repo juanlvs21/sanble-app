@@ -10,7 +10,7 @@ import {Navbar} from '../components/common/Navbar';
 import {MainTabBar} from '../components/common/MainTabBar';
 import {HomeScreen} from '../screens/Home';
 import {NearYouScreen} from '../screens/NearYou';
-import {FairsListScreen} from '../screens/fairs/FairsList';
+import {FairsListScreen} from '../screens/fairs/List';
 import {StandsListScreen} from '../screens/stands/StandsList';
 
 import {RootTabParamList} from '../types/navigator';

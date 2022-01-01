@@ -1,8 +1,8 @@
-import React, {useRef} from 'react';
-import SnapCarousel from 'react-native-snap-carousel';
+import React from 'react';
+import {Animated, View, StyleProp, StyleSheet, ViewStyle} from 'react-native';
+import {Spinner} from 'native-base';
 
 import {width} from '../../constants/Layout';
-import {TCarouselItem} from '../../types/carousel';
 
 type ComponentProps = {
   /**
@@ -10,9 +10,13 @@ type ComponentProps = {
    */
   items: any[];
   /**
-   * Render items function
+   * Key extractor function list
    */
-  renderItem: (data: TCarouselItem<any>) => React.ReactElement;
+  keyExtractor: (item: any, index?: number) => string;
+  /**
+   * Render item component carousel
+   */
+  renderItem: (data?: any) => React.ReactElement;
   /**
    * Loading (show array skeleton carusel)
    *
@@ -20,31 +24,103 @@ type ComponentProps = {
    */
   loading?: boolean;
   /**
-   * Width slider carousel
+   * Skeleton element loading (If loading=true)
+   *
+   * @default <Spinner size="lg" />
    */
-  sliderWidth?: number;
+  SkeletonElement?: React.ReactElement;
   /**
-   * Width item carousel
+   * Container Width
+   *
+   * @default width * 0.7
    */
-  itemWidth?: number;
+  containerWidth?: number;
+  /**
+   * Container Width
+   *
+   * @default  (width - width * 0.7) / 3
+   */
+  containerSpace?: number;
+  /**
+   * Styles flat list
+   */
+  containerStyle?: StyleProp<ViewStyle>;
 };
 
 export const Carousel: React.FC<ComponentProps> = ({
   items,
+  keyExtractor,
   renderItem,
-  sliderWidth = width,
-  itemWidth = width,
+  containerWidth = width * 0.7,
+  containerSpace = (width - width * 0.7) / 3,
+  containerStyle,
+  loading,
+  SkeletonElement = <Spinner size="lg" />,
 }) => {
-  const carouselRef = useRef(null);
+  // const scrollX = useRef(new Animated.Value(0)).current;
 
   return (
-    <SnapCarousel
-      layout={'default'}
-      ref={carouselRef}
-      data={items}
-      renderItem={renderItem}
-      sliderWidth={sliderWidth}
-      itemWidth={itemWidth}
-    />
+    <View style={styles.container}>
+      {loading ? (
+        <View style={containerStyle}>{SkeletonElement}</View>
+      ) : (
+        <Animated.FlatList
+          data={items}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          decelerationRate={0}
+          snapToInterval={containerWidth}
+          scrollEventThrottle={16}
+          contentContainerStyle={[
+            containerStyle,
+            {marginHorizontal: containerSpace},
+          ]}
+          keyExtractor={keyExtractor}
+          renderItem={({item, index}) => {
+            // const inputRange = [
+            //   (index - 1) * containerWidth,
+            //   index * containerWidth,
+            //   (index + 1) * containerWidth,
+            // ];
+
+            // const outputRange = [0, -30, 0];
+
+            // const scrollY = scrollX.interpolate({
+            //   inputRange,
+            //   outputRange,
+            // });
+
+            const marginRight =
+              index === items.length - 1 ? containerWidth * 0.2 : 0;
+
+            return (
+              <Animated.View
+                style={{
+                  width: containerWidth,
+                  marginRight,
+                  // transform: [{translateY: scrollY}],
+                }}>
+                {renderItem(item)}
+                {/* {index === items.length - 1 ? (
+        <View style={{width: containerWidth}} />
+      ) : null} */}
+              </Animated.View>
+            );
+          }}
+          // onScroll={Animated.event(
+          //   [{nativeEvent: {contentOffset: {x: scrollX}}}],
+          //   {useNativeDriver: true},
+          // )}
+        />
+      )}
+    </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
