@@ -1,5 +1,5 @@
 import {useStateValue} from '@/context/app';
-import {appConstants} from '@/constants/context';
+import {appConstants} from '@/constants/Context';
 
 export const useApp = () => {
   const [{app}, dispatch] = useStateValue();

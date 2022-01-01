@@ -1,6 +1,6 @@
 import {TAction, TStandsReducer} from '@/types/context';
 
-import {standsConstants} from '@/constants/context';
+import {standsConstants} from '@/constants/Context';
 
 export const initialStandsState: TStandsReducer = {
   list: [],
