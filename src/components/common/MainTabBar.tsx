@@ -1,74 +1,74 @@
 import React from 'react';
-import {TouchableOpacity, View, StyleSheet} from 'react-native';
+import {TouchableHighlight, View, StyleSheet} from 'react-native';
 import {BottomTabBarProps} from '@react-navigation/bottom-tabs';
 import Entypo from 'react-native-vector-icons/Entypo';
 
-import {secondary} from '@/constants/Colors';
+import {gray, secondary} from '@/constants/Colors';
 import {width} from '@/constants/Layout';
 
 export const MainTabBar: React.FC<BottomTabBarProps> = ({
   state,
   descriptors,
   navigation,
-}) => {
-  return (
-    <View style={styles.container}>
-      <View style={styles.tabBar}>
-        {state.routes.map((route, index) => {
-          const {options} = descriptors[route.key];
-          const {tabBarIcon} = options;
+}) => (
+  <View style={styles.container}>
+    <View style={styles.tabBar}>
+      {state.routes.map((route, index) => {
+        const {options} = descriptors[route.key];
+        const {tabBarIcon} = options;
 
-          const isFocused = state.index === index;
+        const isFocused = state.index === index;
 
-          const iconColor = isFocused ? 'white' : secondary[500];
+        const iconColor = isFocused ? 'white' : secondary[500];
 
-          const onPress = () => {
-            const event = navigation.emit({
-              type: 'tabPress',
-              target: route.key,
-              canPreventDefault: true,
-            });
+        const onPress = () => {
+          const event = navigation.emit({
+            type: 'tabPress',
+            target: route.key,
+            canPreventDefault: true,
+          });
 
-            if (!isFocused && !event.defaultPrevented) {
-              navigation.navigate(route.name);
-            }
-          };
+          if (!isFocused && !event.defaultPrevented) {
+            navigation.navigate(route.name);
+          }
+        };
 
-          const onLongPress = () => {
-            navigation.emit({
-              type: 'tabLongPress',
-              target: route.key,
-            });
-          };
+        const onLongPress = () => {
+          navigation.emit({
+            type: 'tabLongPress',
+            target: route.key,
+          });
+        };
 
-          return (
-            <TouchableOpacity
-              accessibilityRole="button"
-              accessibilityState={isFocused ? {selected: true} : {}}
-              accessibilityLabel={options.tabBarAccessibilityLabel}
-              testID={options.tabBarTestID}
-              onPress={onPress}
-              onLongPress={onLongPress}
-              style={[styles.tabContainer, isFocused && styles.tabSelected]}
-              key={index}>
-              <View style={styles.tabContent}>
-                {tabBarIcon ? (
-                  tabBarIcon({
-                    size: 25,
-                    color: iconColor,
-                    focused: isFocused,
-                  })
-                ) : (
-                  <Entypo name="circle" size={25} color={iconColor} />
-                )}
-              </View>
-            </TouchableOpacity>
-          );
-        })}
-      </View>
+        return (
+          <TouchableHighlight
+            accessibilityRole="button"
+            accessibilityState={isFocused ? {selected: true} : {}}
+            accessibilityLabel={options.tabBarAccessibilityLabel}
+            testID={options.tabBarTestID}
+            onPress={onPress}
+            onLongPress={onLongPress}
+            style={[styles.tabContainer, isFocused && styles.tabSelected]}
+            key={index}
+            activeOpacity={0.6}
+            underlayColor={gray[600]}>
+            <View style={styles.tabContent}>
+              {tabBarIcon ? (
+                tabBarIcon({
+                  size: 25,
+                  color: iconColor,
+                  focused: isFocused,
+                })
+              ) : (
+                <Entypo name="circle" size={25} color={iconColor} />
+              )}
+            </View>
+          </TouchableHighlight>
+        );
+      })}
     </View>
-  );
-};
+  </View>
+);
 
 const styles = StyleSheet.create({
   container: {
