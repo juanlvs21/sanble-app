@@ -1,23 +1,18 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
-
-import {useAppDispatch, useAppSelector} from '@/hooks/useStore';
-import {setFirstLoadAction} from '@/store/slices/appSlice';
+import {useStateValue} from '@/context/app';
+import {appConstants} from '@/constants/context';
 
 export const useApp = () => {
-  const firstLoadStore = useAppSelector(({app}) => app.firstLoad);
-  const dispatch = useAppDispatch();
+  const [{app}, dispatch] = useStateValue();
 
-  const handlesetFirstLoad = async () => {
-    dispatch(setFirstLoadAction(false));
-    try {
-      await AsyncStorage.setItem('firstLoad', JSON.stringify(false));
-    } catch (e) {
-      console.log({e});
-    }
+  const handlesetFirstLoad = () => {
+    dispatch({
+      type: appConstants.SET_FIRSTLOAD,
+      payload: {firstLoad: false},
+    });
   };
 
   return {
-    firstLoad: firstLoadStore,
+    firstLoad: app.firstLoad,
     handlesetFirstLoad,
   };
 };

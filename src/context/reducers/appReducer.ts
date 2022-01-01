@@ -1,6 +1,6 @@
 import {TAction, TAppReducer} from '@/types/context';
 
-import {appConstants} from '@/context/constants';
+import {appConstants} from '@/constants/context';
 
 export const initialAppState: TAppReducer = {
   firstLoad: true,
