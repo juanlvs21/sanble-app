@@ -24,6 +24,9 @@ export type RootStackParamList = {
   FairDetails: {
     id: string;
   };
+  StandDetails: {
+    id: string;
+  };
   PromotionList: {
     type: string;
   };

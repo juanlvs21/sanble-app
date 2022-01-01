@@ -1,5 +1,5 @@
 import React from 'react';
-import {TouchableOpacity, StyleSheet} from 'react-native';
+import {TouchableHighlight, StyleSheet} from 'react-native';
 import {View, Heading, Text, Image, Badge} from 'native-base';
 import {useNavigation} from '@react-navigation/native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -9,6 +9,7 @@ import {width} from '@/constants/Layout';
 import {Skeleton, SkeletonItem} from '@/components/common/Skeleton';
 import {getFairCover} from '@/helpers/getFairCover';
 import {dateFormat} from '@/helpers/dateFormat';
+import {mockFair} from '@/helpers/mockData';
 import {TFair} from '@/types/fair';
 
 type ComponentProps = {
@@ -29,13 +30,7 @@ type ComponentProps = {
 };
 
 export const FairCard: React.FC<ComponentProps> = ({
-  fair = {
-    uuid: '',
-    photographs: [],
-    name: '',
-    description: '',
-    date_time: '',
-  },
+  fair = mockFair,
   loading,
   cardWidth = width * 0.7,
 }) => {
@@ -55,34 +50,38 @@ export const FairCard: React.FC<ComponentProps> = ({
   }
 
   return (
-    <TouchableOpacity
+    <TouchableHighlight
       style={styles.card}
-      onPress={() => navigation.navigate('FairDetails', {id: fair.uuid})}>
-      <Image
-        source={getFairCover(fair.photographs)}
-        alt={fair.name}
-        style={styles.image}
-      />
-      <View style={[styles.content, {width: cardWidth - 50}]}>
-        <Heading style={styles.title} fontWeight="semibold" numberOfLines={1}>
-          {fair.name}
-        </Heading>
-        <Text color={gray[800]} numberOfLines={2} style={styles.description}>
-          {fair.description}
-        </Text>
-        <View style={styles.badgeContainer}>
-          <Badge>
-            <MaterialCommunityIcons
-              name="calendar-month-outline"
-              size={15}
-              color="#FFF"
-              style={styles.badgeIcon}
-            />
-            {' ' + dateFormat(fair.date_time, 'DD MMM HH:mm a')}
-          </Badge>
+      onPress={() => navigation.navigate('FairDetails', {id: fair.uuid})}
+      activeOpacity={0.6}
+      underlayColor={gray[600]}>
+      <>
+        <Image
+          source={getFairCover(fair.photographs)}
+          alt={fair.name}
+          style={styles.image}
+        />
+        <View style={[styles.content, {width: cardWidth - 50}]}>
+          <Heading style={styles.title} fontWeight="semibold" numberOfLines={1}>
+            {fair.name}
+          </Heading>
+          <Text color={gray[800]} numberOfLines={2} style={styles.description}>
+            {fair.description}
+          </Text>
+          <View style={styles.badgeContainer}>
+            <Badge>
+              <MaterialCommunityIcons
+                name="calendar-month-outline"
+                size={15}
+                color="#FFF"
+                style={styles.badgeIcon}
+              />
+              {' ' + dateFormat(fair.date_time, 'DD MMM HH:mm a')}
+            </Badge>
+          </View>
         </View>
-      </View>
-    </TouchableOpacity>
+      </>
+    </TouchableHighlight>
   );
 };
 

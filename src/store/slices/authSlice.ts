@@ -2,12 +2,12 @@ import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 
 import {TUser} from '@/types/user';
 
-export type IAuthState = {
+export type TAuthState = {
   logged: boolean;
   user: TUser | null;
 };
 
-const initialState: IAuthState = {
+const initialState: TAuthState = {
   logged: false,
   user: null,
 };

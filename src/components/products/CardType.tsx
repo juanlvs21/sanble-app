@@ -1,5 +1,5 @@
 import React from 'react';
-import {TouchableOpacity, StyleSheet} from 'react-native';
+import {TouchableHighlight, StyleSheet} from 'react-native';
 import {Text, Image} from 'native-base';
 import {useNavigation} from '@react-navigation/native';
 
@@ -32,14 +32,18 @@ export const PromotionCardType: React.FC<ComponentProps> = ({type}) => {
   const navigation = useNavigation();
 
   return (
-    <TouchableOpacity
+    <TouchableHighlight
       style={styles.card}
-      onPress={() => navigation.navigate('PromotionList', {type})}>
-      <Image source={icon[type]} alt={text[type]} style={styles.icon} />
-      <Text style={styles.text} fontWeight="semibold">
-        {text[type]}
-      </Text>
-    </TouchableOpacity>
+      onPress={() => navigation.navigate('PromotionList', {type})}
+      activeOpacity={0.6}
+      underlayColor={gray[600]}>
+      <>
+        <Image source={icon[type]} alt={text[type]} style={styles.icon} />
+        <Text style={styles.text} fontWeight="semibold">
+          {text[type]}
+        </Text>
+      </>
+    </TouchableHighlight>
   );
 };
 

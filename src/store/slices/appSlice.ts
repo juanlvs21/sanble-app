@@ -1,13 +1,13 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 
-export type IAppState = {
+export type TAppState = {
   showSplash: boolean;
   showWelcome: boolean;
   gettingSession: boolean;
   loadingFullScreen: boolean;
 };
 
-const initialState: IAppState = {
+const initialState: TAppState = {
   showSplash: true,
   showWelcome: true,
   gettingSession: true,

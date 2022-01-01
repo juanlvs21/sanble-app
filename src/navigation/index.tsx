@@ -11,6 +11,7 @@ import {BottomTabNavigator} from '@/navigation/BottomNavigator';
 
 import {PromotionListScreen} from '@/screens/promotions/List';
 import {FairDetailsScreen} from '@/screens/fairs/Details';
+import {StandDetailsScreen} from '@/screens/stands/Details';
 import ModalScreen from '@/screens/ModalScreen';
 import NotFoundScreen from '@/screens/NotFoundScreen';
 
@@ -46,13 +47,18 @@ const RootNavigator: React.FC = () => (
       options={{headerShown: false}}
     />
     <Stack.Screen
-      name="PromotionList"
-      component={PromotionListScreen}
+      name="FairDetails"
+      component={FairDetailsScreen}
       options={{headerShown: false}}
     />
     <Stack.Screen
-      name="FairDetails"
-      component={FairDetailsScreen}
+      name="StandDetails"
+      component={StandDetailsScreen}
+      options={{headerShown: false}}
+    />
+    <Stack.Screen
+      name="PromotionList"
+      component={PromotionListScreen}
       options={{headerShown: false}}
     />
     <Stack.Screen

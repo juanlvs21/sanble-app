@@ -13,11 +13,11 @@ export type TStand = {
   uuid: string;
   name: string;
   description: string;
-  slogan: string;
   stars: number;
-  url_photo: any;
+  url_photo?: string;
   products: TProduct[];
   promotions: TStandPromotion[];
   uuid_user: string;
-  creationTime: string;
+  slogan?: string;
+  creationTime?: string;
 };

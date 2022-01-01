@@ -7,14 +7,16 @@ import {MainLayout} from '@/layouts/MainLayout';
 import {Search} from '@/components/common/Search';
 import {Carousel} from '@/components/common/Carousel';
 import {FairCard} from '@/components/fairs/Card';
+import {StandCard} from '@/components/stands/Card';
 import {PromotionCardType} from '@/components/products/CardType';
 import {productTypes} from '@/helpers/productTypes';
 import {useHome} from '@/hooks/useHome';
 import {TFair} from '@/types/fair';
+import {TStand} from '@/types/stand';
 import {TProductType} from '@/types/product';
 
 export const HomeScreen: React.FC = () => {
-  const {handleRefresh, fairs, fairsLoading} = useHome();
+  const {handleRefresh, fairs, fairsLoading, stands, standsLoading} = useHome();
 
   useFocusEffect(
     useCallback(() => {
@@ -44,12 +46,12 @@ export const HomeScreen: React.FC = () => {
       />
       <Heading>Mejores Stands</Heading>
       <Carousel
-        items={fairs}
-        keyExtractor={(fair: TFair) => fair.uuid}
-        renderItem={(fair: TFair) => <FairCard fair={fair} />}
+        items={stands}
+        keyExtractor={(stand: TStand) => stand.uuid}
+        renderItem={(stand: TStand) => <StandCard stand={stand} />}
         containerStyle={styles.carousel}
-        SkeletonElement={<FairCard loading />}
-        loading={fairsLoading}
+        SkeletonElement={<StandCard loading />}
+        loading={standsLoading}
       />
       <Heading>Productos</Heading>
       <Carousel

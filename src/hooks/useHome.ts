@@ -1,21 +1,19 @@
-import {useState} from 'react';
-
 import {useFairs} from '@/hooks/useFairs';
+import {useStands} from '@/hooks/useStands';
 
 export const useHome = () => {
-  const [loading, setLoading] = useState<boolean>(true);
   const {getRecentFairs, fairs, loading: fairsLoading} = useFairs();
+  const {getBestStands, stands, loading: standsLoading} = useStands();
 
   const handleRefresh = async () => {
-    setLoading(true);
-    await Promise.all([getRecentFairs()]);
-    setLoading(false);
+    await Promise.all([getRecentFairs(), getBestStands()]);
   };
 
   return {
     handleRefresh,
-    loading,
     fairs,
     fairsLoading,
+    stands,
+    standsLoading,
   };
 };
