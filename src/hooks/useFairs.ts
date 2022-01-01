@@ -2,7 +2,7 @@ import {useState} from 'react';
 import {useToast} from 'native-base';
 
 import {useStateValue} from '@/context/app';
-import {fairsConstants} from '@/constants/context';
+import {fairsConstants} from '@/constants/Context';
 import {getRecentFairsDB} from '@/helpers/queries/fairs';
 
 export const useFairs = () => {
@@ -14,6 +14,7 @@ export const useFairs = () => {
     setLoading(true);
     try {
       const fairs = await getRecentFairsDB();
+
       dispatch({
         type: fairsConstants.SET_FAIRSLIST,
         payload: {list: fairs},

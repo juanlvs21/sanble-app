@@ -2,7 +2,7 @@ import {useState} from 'react';
 import {useToast} from 'native-base';
 
 import {useStateValue} from '@/context/app';
-import {standsConstants} from '@/constants/context';
+import {standsConstants} from '@/constants/Context';
 import {getBestStandsDB} from '@/helpers/queries/stands';
 
 export const useStands = () => {
