@@ -1,8 +1,9 @@
 import {useState} from 'react';
 import {useToast} from 'native-base';
 
-import {setFairsAction} from '../store/slices/fairsSlice';
 import {useAppDispatch, useAppSelector} from './useStore';
+import {getRecentFairsDB} from '../helpers/firebase/queries';
+import {setFairsAction} from '../store/slices/fairsSlice';
 
 export const useFairs = () => {
   const toast = useToast();
@@ -12,32 +13,23 @@ export const useFairs = () => {
   const fairsStore = useAppSelector(({fairs}) => fairs.list);
 
   const getRecentFairs = async () => {
+    setLoading(true);
     try {
-      // const fairs = await getRecentFairsDB();
-      dispatch(setFairsAction([]));
+      const fairs = await getRecentFairsDB();
+      dispatch(setFairsAction(fairs));
     } catch (error) {
       toast.show({
         description: 'Error al cargar las próximas ferias',
         status: 'error',
       });
+    } finally {
+      setLoading(true);
     }
-  };
-
-  const handleGetRecentFairs = async () => {
-    setLoading(true);
-    await getRecentFairs();
-    setLoading(false);
-  };
-
-  const handleRefresh = async () => {
-    await Promise.all([getRecentFairs()]);
   };
 
   return {
     loading,
     fairs: fairsStore,
     getRecentFairs,
-    handleGetRecentFairs,
-    handleRefresh,
   };
 };
