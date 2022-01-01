@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 import {ScrollView} from 'native-base';
 
-import {height, width} from '../constants/Layout';
+import {height, width} from '@/constants/Layout';
 
 type ComponentProps = {
   /**

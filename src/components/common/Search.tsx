@@ -3,7 +3,7 @@ import {StyleProp, ViewStyle} from 'react-native';
 import {Icon, View} from 'native-base';
 import Feather from 'react-native-vector-icons/Feather';
 
-import {InputField} from './Input';
+import {InputField} from '@/components/common/Input';
 
 type SearchProps = {
   /**

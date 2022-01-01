@@ -1,7 +1,7 @@
 import React from 'react';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 
-import {gray} from '../../constants/Colors';
+import {gray} from '@/constants/Colors';
 
 type ComponentProps = {
   /**

@@ -1,6 +1,6 @@
 import {useState} from 'react';
 
-import {useFairs} from './useFairs';
+import {useFairs} from '@/hooks/useFairs';
 
 export const useHome = () => {
   const [loading, setLoading] = useState<boolean>(true);

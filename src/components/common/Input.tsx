@@ -2,7 +2,7 @@ import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {IInputProps, Input} from 'native-base';
 
-import {gray} from '../../constants/Colors';
+import {gray} from '@/constants/Colors';
 
 export const InputField: React.FC<IInputProps> = props => {
   return (

@@ -2,7 +2,7 @@ import React from 'react';
 import {Animated, View, StyleProp, StyleSheet, ViewStyle} from 'react-native';
 import {Spinner} from 'native-base';
 
-import {width} from '../../constants/Layout';
+import {width} from '@/constants/Layout';
 
 type ComponentProps = {
   /**

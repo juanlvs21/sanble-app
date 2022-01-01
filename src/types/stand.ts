@@ -1,4 +1,4 @@
-import {TProduct} from './product';
+import {TProduct} from '@/types/product';
 
 export type TStandPromotion = {
   uuid: string;

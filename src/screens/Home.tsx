@@ -3,15 +3,15 @@ import {RefreshControl, StyleSheet} from 'react-native';
 import {useFocusEffect} from '@react-navigation/native';
 import {Heading} from 'native-base';
 
-import {MainLayout} from '../layouts/MainLayout';
-import {Search} from '../components/common/Search';
-import {Carousel} from '../components/common/Carousel';
-import {FairCard} from '../components/fairs/Card';
-import {PromotionCardType} from '../components/products/CardType';
-import {productTypes} from '../helpers/productTypes';
-import {useHome} from '../hooks/useHome';
-import {TFair} from '../types/fair';
-import {TProductType} from '../types/product';
+import {MainLayout} from '@/layouts/MainLayout';
+import {Search} from '@/components/common/Search';
+import {Carousel} from '@/components/common/Carousel';
+import {FairCard} from '@/components/fairs/Card';
+import {PromotionCardType} from '@/components/products/CardType';
+import {productTypes} from '@/helpers/productTypes';
+import {useHome} from '@/hooks/useHome';
+import {TFair} from '@/types/fair';
+import {TProductType} from '@/types/product';
 
 export const HomeScreen: React.FC = () => {
   const {handleRefresh, fairs, fairsLoading} = useHome();

@@ -4,7 +4,7 @@ import {BottomTabHeaderProps} from '@react-navigation/bottom-tabs';
 import {getHeaderTitle} from '@react-navigation/elements';
 import Feather from 'react-native-vector-icons/Feather';
 
-import {primary, gray} from '../../constants/Colors';
+import {primary, gray} from '@/constants/Colors';
 
 export const Navbar: React.FC<BottomTabHeaderProps> = ({
   //   navigation,

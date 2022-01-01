@@ -1,6 +1,6 @@
 import firestore from '@react-native-firebase/firestore';
 
-import {TFair} from '../../types/fair';
+import {TFair} from '@/types/fair';
 
 export const getRecentFairsDB = (): Promise<TFair[]> =>
   new Promise(async (resolve, reject) => {
