@@ -1,9 +1,9 @@
 import {useState} from 'react';
 import {useToast} from 'native-base';
 
-import {useAppDispatch, useAppSelector} from './useStore';
-import {getRecentFairsDB} from '../helpers/queries/fairs';
-import {setFairsAction} from '../store/slices/fairsSlice';
+import {useAppDispatch, useAppSelector} from '@/hooks/useStore';
+import {getRecentFairsDB} from '@/helpers/queries/fairs';
+import {setFairsAction} from '@/store/slices/fairsSlice';
 
 export const useFairs = () => {
   const toast = useToast();

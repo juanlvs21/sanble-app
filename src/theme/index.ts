@@ -1,6 +1,6 @@
 import {extendTheme} from 'native-base';
 
-import {primary, secondary} from '../constants/Colors';
+import {primary, secondary} from '@/constants/Colors';
 
 export const theme = extendTheme({
   fontConfig: {

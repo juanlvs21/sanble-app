@@ -4,12 +4,12 @@ import {View, Heading, Text, Image, Badge} from 'native-base';
 import {useNavigation} from '@react-navigation/native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import {gray} from '../../constants/Colors';
-import {width} from '../../constants/Layout';
-import {Skeleton, SkeletonItem} from '../common/Skeleton';
-import {getFairCover} from '../../helpers/getFairCover';
-import {dateFormat} from '../../helpers/dateFormat';
-import {TFair} from '../../types/fair';
+import {gray} from '@/constants/Colors';
+import {width} from '@/constants/Layout';
+import {Skeleton, SkeletonItem} from '@/components/common/Skeleton';
+import {getFairCover} from '@/helpers/getFairCover';
+import {dateFormat} from '@/helpers/dateFormat';
+import {TFair} from '@/types/fair';
 
 type ComponentProps = {
   /**

@@ -3,15 +3,15 @@ import {TouchableOpacity, StyleSheet} from 'react-native';
 import {Text, Image} from 'native-base';
 import {useNavigation} from '@react-navigation/native';
 
-import {gray} from '../../constants/Colors';
-import {TProductType} from '../../types/product';
+import {gray} from '@/constants/Colors';
+import {TProductType} from '@/types/product';
 
 const icon = {
-  drink: require('../../assets/images/products/drink.png'),
-  clothing: require('../../assets/images/products/clothing.png'),
-  candy: require('../../assets/images/products/candy.png'),
-  food: require('../../assets/images/products/candy.png'),
-  accessory: require('../../assets/images/products/candy.png'),
+  drink: require('@/assets/images/products/drink.png'),
+  clothing: require('@/assets/images/products/clothing.png'),
+  candy: require('@/assets/images/products/candy.png'),
+  food: require('@/assets/images/products/candy.png'),
+  accessory: require('@/assets/images/products/candy.png'),
 };
 const text = {
   drink: 'Bebidas',

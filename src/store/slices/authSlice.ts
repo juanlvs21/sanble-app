@@ -1,6 +1,6 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 
-import {TUser} from '../../types/user';
+import {TUser} from '@/types/user';
 
 export type IAuthState = {
   logged: boolean;

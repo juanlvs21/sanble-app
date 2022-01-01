@@ -1,6 +1,6 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 
-import {TFair} from '../../types/fair';
+import {TFair} from '@/types/fair';
 
 export type IFairsState = {
   list: TFair[];

@@ -3,8 +3,8 @@ import {TouchableOpacity, View, StyleSheet} from 'react-native';
 import {BottomTabBarProps} from '@react-navigation/bottom-tabs';
 import Entypo from 'react-native-vector-icons/Entypo';
 
-import {secondary} from '../../constants/Colors';
-import {width} from '../../constants/Layout';
+import {secondary} from '@/constants/Colors';
+import {width} from '@/constants/Layout';
 
 export const MainTabBar: React.FC<BottomTabBarProps> = ({
   state,

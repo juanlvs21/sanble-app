@@ -1,4 +1,4 @@
-import {EProductType, TProductType} from '../types/product';
+import {EProductType, TProductType} from '@/types/product';
 
 export const productTypes: TProductType[] = [
   EProductType.CANDY,

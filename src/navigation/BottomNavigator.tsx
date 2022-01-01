@@ -3,17 +3,17 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Feather from 'react-native-vector-icons/Feather';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import Colors from '../constants/Colors';
-import useColorScheme from '../hooks/useColorScheme';
+import Colors from '@/constants/Colors';
+import useColorScheme from '@/hooks/useColorScheme';
 
-import {Navbar} from '../components/common/Navbar';
-import {MainTabBar} from '../components/common/MainTabBar';
-import {HomeScreen} from '../screens/Home';
-import {NearYouScreen} from '../screens/NearYou';
-import {FairsListScreen} from '../screens/fairs/List';
-import {StandsListScreen} from '../screens/stands/List';
+import {Navbar} from '@/components/common/Navbar';
+import {MainTabBar} from '@/components/common/MainTabBar';
+import {HomeScreen} from '@/screens/Home';
+import {NearYouScreen} from '@/screens/NearYou';
+import {FairsListScreen} from '@/screens/fairs/List';
+import {StandsListScreen} from '@/screens/stands/List';
 
-import {RootTabParamList} from '../types/navigator';
+import {RootTabParamList} from '@/types/navigator';
 
 const BottomTab = createBottomTabNavigator<RootTabParamList>();
 

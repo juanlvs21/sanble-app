@@ -7,13 +7,15 @@ import {
 } from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
-import {BottomTabNavigator} from './BottomNavigator';
-import {PromotionListScreen} from '../screens/promotions/List';
-import {FairDetailsScreen} from '../screens/fairs/Details';
-import ModalScreen from '../screens/ModalScreen';
-import NotFoundScreen from '../screens/NotFoundScreen';
-import {RootStackParamList} from '../types/navigator';
-import LinkingConfiguration from './LinkingConfiguration';
+import {BottomTabNavigator} from '@/navigation/BottomNavigator';
+
+import {PromotionListScreen} from '@/screens/promotions/List';
+import {FairDetailsScreen} from '@/screens/fairs/Details';
+import ModalScreen from '@/screens/ModalScreen';
+import NotFoundScreen from '@/screens/NotFoundScreen';
+
+import LinkingConfiguration from '@/navigation/LinkingConfiguration';
+import {RootStackParamList} from '@/types/navigator';
 
 interface ComponentProps {
   /**
