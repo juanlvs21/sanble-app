@@ -62,7 +62,7 @@ export const StandCard: React.FC<ComponentProps> = ({
             styles.content,
             {width: cardWidth * 0.7, backgroundColor: underlayColor},
           ]}>
-          <Heading style={styles.title} fontWeight="semibold" numberOfLines={1}>
+          <Heading style={styles.title} numberOfLines={1}>
             {stand.name}
           </Heading>
           <Stars stars={stand.stars} style={styles.stars} />
@@ -100,6 +100,7 @@ const styles = StyleSheet.create({
   title: {
     flexWrap: 'wrap',
     fontSize: 15,
+    fontWeight: '600',
     marginTop: -4,
   },
   slogan: {
