@@ -62,7 +62,7 @@ export const FairCard: React.FC<ComponentProps> = ({
           style={styles.image}
         />
         <View style={[styles.content, {width: cardWidth - 50}]}>
-          <Heading style={styles.title} fontWeight="semibold" numberOfLines={1}>
+          <Heading style={styles.title} numberOfLines={1}>
             {fair.name}
           </Heading>
           <Text color={gray[800]} numberOfLines={2} style={styles.description}>
@@ -101,6 +101,7 @@ const styles = StyleSheet.create({
   title: {
     flexWrap: 'wrap',
     fontSize: 15,
+    fontWeight: '600',
     marginTop: -4,
   },
   description: {

@@ -15,6 +15,7 @@ import {SafeAreaProvider} from 'react-native-safe-area-context';
 
 import {AppProvider} from '@/context/app';
 import {DataProvider} from '@/providers/DataProvider';
+
 import {Navigation} from '@/navigation';
 import {theme} from '@/theme';
 

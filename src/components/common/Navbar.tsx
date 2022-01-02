@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontFamily: 'Quicksand-Bold',
-    fontWeight: '800',
+    fontWeight: '600',
     fontSize: 35,
     color: primary[500],
     marginHorizontal: 20,

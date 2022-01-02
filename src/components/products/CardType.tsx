@@ -39,9 +39,7 @@ export const PromotionCardType: React.FC<ComponentProps> = ({type}) => {
       underlayColor={gray[600]}>
       <>
         <Image source={icon[type]} alt={text[type]} style={styles.icon} />
-        <Text style={styles.text} fontWeight="semibold">
-          {text[type]}
-        </Text>
+        <Text style={styles.text}>{text[type]}</Text>
       </>
     </TouchableHighlight>
   );
@@ -62,5 +60,6 @@ const styles = StyleSheet.create({
   },
   text: {
     marginTop: 5,
+    fontWeight: '600',
   },
 });

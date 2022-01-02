@@ -1,6 +1,6 @@
-import React from 'react';
-import {Spinner} from 'native-base';
+import React, {useEffect} from 'react';
 
+import {Splash} from '@/components/common/Splash';
 import {useData} from '@/hooks/useData';
 
 type ComponentProps = {
@@ -11,7 +11,14 @@ type ComponentProps = {
 };
 
 export const DataProvider: React.FC<ComponentProps> = ({children}) => {
-  const {isLoadingComplete} = useData();
+  const {handleGetData, loading} = useData();
 
-  return isLoadingComplete ? children : <Spinner size="lg" />;
+  useEffect(() => {
+    setTimeout(() => {
+      handleGetData();
+    }, 5000);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  return <Splash loading={loading}>{children}</Splash>;
 };

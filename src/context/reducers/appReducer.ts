@@ -6,6 +6,7 @@ export const initialAppState: TAppReducer = {
   firstLoad: true,
   loadingFullScreen: false,
   showWelcome: false,
+  showSplash: true,
 };
 
 export const appReducer = (
@@ -13,6 +14,15 @@ export const appReducer = (
   action: TAction<TAppReducer>,
 ): TAppReducer => {
   switch (action.type) {
+    case appConstants.SET_SHOWSPLASH: {
+      const {showSplash} = action.payload;
+
+      return {
+        ...state,
+        showSplash,
+      };
+    }
+
     case appConstants.SET_FIRSTLOAD: {
       const {firstLoad} = action.payload;
 
