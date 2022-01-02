@@ -1,6 +1,5 @@
 import {useEffect, useState} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-// import SplashScreen from 'react-native-splash-screen';
 
 import {STORAGE_USER} from '@/constants/Storage';
 
@@ -11,8 +10,6 @@ export const useData = () => {
   useEffect(() => {
     async function loadResourcesAndDataAsync() {
       try {
-        // SplashScreen.preventAutoHideAsync();
-        // SplashScreen.show();
         // Load fonts
         const userSoore = await AsyncStorage.getItem(STORAGE_USER);
         console.log({userSoore});
@@ -21,7 +18,6 @@ export const useData = () => {
         console.warn(e);
       } finally {
         setLoadingComplete(true);
-        // SplashScreen.hide();
       }
     }
 
