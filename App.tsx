@@ -12,6 +12,9 @@ import React from 'react';
 // import {StatusBar} from 'react-native';
 import {NativeBaseProvider} from 'native-base';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
+import {MAPBOX_ACCESS_TOKEN} from '@env';
+
+console.log({MAPBOX_ACCESS_TOKEN});
 
 import {AppProvider} from '@/context/app';
 import {DataProvider} from '@/providers/DataProvider';
