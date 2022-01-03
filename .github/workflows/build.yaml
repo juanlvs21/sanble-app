@@ -27,7 +27,7 @@ jobs:
       - name: Generate bundle
         run: yarn bundle:android
       - name: Build APK
-        run: cd android && bash ./gradlew assembleDebug --stacktrace
+        run: cd android && bash ./gradlew assembleDebug --stacktrace && ../
       - name: Upload APK
         uses: actions/upload-artifact@v1
         with:

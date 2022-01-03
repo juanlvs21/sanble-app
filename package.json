@@ -6,6 +6,7 @@
     "email": "me@juanl.dev",
     "url": "https://juanl.dev"
   },
+  "license": "MIT",
   "scripts": {
     "android": "react-native run-android",
     "ios": "react-native run-ios",
