@@ -1,7 +1,6 @@
 import React, {useEffect} from 'react';
 import ConnectivityManager from 'react-native-connectivity-status';
 
-import {Splash} from '@/components/common/Splash';
 import {useData} from '@/hooks/useData';
 import {useMaps} from '@/hooks/useMaps';
 
@@ -13,7 +12,7 @@ type ComponentProps = {
 };
 
 export const DataProvider: React.FC<ComponentProps> = ({children}) => {
-  const {handleGetData, loading} = useData();
+  const {handleGetData} = useData();
   const {
     handleGetGPSEnabled,
     handleGetCurrentPosition,
@@ -22,9 +21,7 @@ export const DataProvider: React.FC<ComponentProps> = ({children}) => {
   } = useMaps();
 
   useEffect(() => {
-    setTimeout(() => {
-      handleGetData();
-    }, 5000);
+    handleGetData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -53,5 +50,5 @@ export const DataProvider: React.FC<ComponentProps> = ({children}) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [locationAvailable]);
 
-  return <Splash loading={loading}>{children}</Splash>;
+  return children;
 };
