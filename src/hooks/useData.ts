@@ -1,5 +1,6 @@
 import {useState} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import SplashScreen from 'react-native-splash-screen';
 
 import {STORAGE_USER} from '@/constants/Storage';
 
@@ -14,6 +15,7 @@ export const useData = () => {
     } catch (e) {
       console.warn(e);
     } finally {
+      SplashScreen.hide();
       setLoading(false);
     }
   };
