@@ -4,6 +4,7 @@ import {
   NativeScrollEvent,
   NativeSyntheticEvent,
   StyleSheet,
+  View,
 } from 'react-native';
 import {ScrollView} from 'native-base';
 
@@ -18,32 +19,53 @@ type ComponentProps = {
    * Infinite scroll
    */
   infiniteScroll?: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
+  /**
+   * If true, the layout will have a background image
+   *
+   * @default true
+   */
+  withImageBackground?: boolean;
+  /**
+   * Horizontal padding that will have the content (children)
+   *
+   * @default 20
+   */
+  contentPaddingHorizontal?: number;
 };
 
 export const MainLayout: React.FC<ComponentProps> = ({
   children,
   renderRefreshControl,
   infiniteScroll,
-}) => {
-  return (
+  withImageBackground = true,
+  contentPaddingHorizontal = 20,
+}) =>
+  withImageBackground ? (
     <ImageBackground
       source={require('../assets/images/wave-main.png')}
       resizeMode="cover"
-      style={styles.main}>
+      style={[styles.main, {paddingHorizontal: contentPaddingHorizontal}]}>
       <ScrollView
         refreshControl={renderRefreshControl}
         onScroll={infiniteScroll}>
         {children}
       </ScrollView>
     </ImageBackground>
+  ) : (
+    <View style={[styles.main, {paddingHorizontal: contentPaddingHorizontal}]}>
+      <ScrollView
+        refreshControl={renderRefreshControl}
+        onScroll={infiniteScroll}>
+        {children}
+      </ScrollView>
+    </View>
   );
-};
 
 const styles = StyleSheet.create({
   main: {
     width,
     height,
     backgroundColor: '#fff',
-    padding: 20,
+    paddingVertical: 20,
   },
 });
