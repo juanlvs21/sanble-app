@@ -5,6 +5,7 @@ import {getHeaderTitle} from '@react-navigation/elements';
 import Feather from 'react-native-vector-icons/Feather';
 
 import {primary, gray} from '@/constants/Colors';
+import {TRouteParamsNavbar} from '@/types/navigator';
 
 export const Navbar: React.FC<BottomTabHeaderProps> = ({
   //   navigation,
@@ -12,15 +13,25 @@ export const Navbar: React.FC<BottomTabHeaderProps> = ({
   options,
 }) => {
   const title = getHeaderTitle(options, route.name) || 'Sanble';
+  const {navbarMap}: TRouteParamsNavbar = route?.params || {};
 
   return (
     <View style={styles.navbar}>
       <Text style={styles.title}>{title}</Text>
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => console.log('Notifications')}>
-        <Feather name="bell" size={25} color="black" />
-      </TouchableOpacity>
+      {!navbarMap ? (
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => console.log('Notifications')}>
+          <Feather name="bell" size={25} color="black" />
+        </TouchableOpacity>
+      ) : null}
+      {navbarMap ? (
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => console.log('Search map')}>
+          <Feather name="search" size={25} color="black" />
+        </TouchableOpacity>
+      ) : null}
     </View>
   );
 };

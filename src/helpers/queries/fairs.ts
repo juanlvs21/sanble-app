@@ -2,7 +2,7 @@ import firestore from '@react-native-firebase/firestore';
 
 import {TFair} from '@/types/fair';
 
-export const getRecentFairsDB = (): Promise<TFair[]> =>
+export const geUpcomingFairsDB = (): Promise<TFair[]> =>
   new Promise(async (resolve, reject) => {
     try {
       const data: TFair[] = [];

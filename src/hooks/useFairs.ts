@@ -1,24 +1,23 @@
 import {useState} from 'react';
 import {useToast} from 'native-base';
 
-import {useStateValue} from '@/context/app';
-import {fairsConstants} from '@/constants/Context';
-import {getRecentFairsDB} from '@/helpers/queries/fairs';
+import {useAppSelector, useAppDispatch} from '@/hooks/useStore';
+import {setUpcomingFairsAction} from '@/store/slices/fairsSlice';
+import {geUpcomingFairsDB} from '@/helpers/queries/fairs';
 
 export const useFairs = () => {
   const toast = useToast();
-  const [{fairs: fairsStore}, dispatch] = useStateValue();
+  const dispatch = useAppDispatch();
+  const fairsListStore = useAppSelector(({fairs}) => fairs.list);
+  const fairsUpcomingStore = useAppSelector(({fairs}) => fairs.upcoming);
   const [loading, setLoading] = useState<boolean>(true);
 
-  const getRecentFairs = async () => {
+  const getUpcomingFairs = async () => {
     setLoading(true);
     try {
-      const fairs = await getRecentFairsDB();
+      const fairs = await geUpcomingFairsDB();
 
-      dispatch({
-        type: fairsConstants.SET_FAIRSLIST,
-        payload: {list: fairs},
-      });
+      dispatch(setUpcomingFairsAction(fairs));
     } catch (error) {
       toast.show({
         description: 'Error al cargar las próximas ferias',
@@ -31,7 +30,8 @@ export const useFairs = () => {
 
   return {
     loading,
-    fairs: fairsStore.list,
-    getRecentFairs,
+    fairsList: fairsListStore,
+    fairUpcoming: fairsUpcomingStore,
+    getUpcomingFairs,
   };
 };

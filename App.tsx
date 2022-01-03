@@ -11,12 +11,10 @@
 import React from 'react';
 // import {StatusBar} from 'react-native';
 import {NativeBaseProvider} from 'native-base';
+import {Provider} from 'react-redux';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
-import {MAPBOX_ACCESS_TOKEN} from '@env';
 
-console.log({MAPBOX_ACCESS_TOKEN});
-
-import {AppProvider} from '@/context/app';
+import {store} from '@/store';
 import {DataProvider} from '@/providers/DataProvider';
 
 import {Navigation} from '@/navigation';
@@ -25,13 +23,13 @@ import {theme} from '@/theme';
 const App: React.FC = () => (
   <SafeAreaProvider>
     {/* <StatusBar animated={true} backgroundColor="#fff" /> */}
-    <AppProvider>
+    <Provider store={store}>
       <NativeBaseProvider theme={theme}>
         <DataProvider>
           <Navigation />
         </DataProvider>
       </NativeBaseProvider>
-    </AppProvider>
+    </Provider>
   </SafeAreaProvider>
 );
 

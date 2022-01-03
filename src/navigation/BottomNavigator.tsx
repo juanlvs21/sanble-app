@@ -39,6 +39,7 @@ export const BottomTabNavigator: React.FC = () => {
       <BottomTab.Screen
         name="NearYou"
         component={NearYouScreen}
+        initialParams={{navbarMap: true}}
         options={{
           title: 'Cerca de ti',
           tabBarIcon: props => (

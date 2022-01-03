@@ -4,19 +4,19 @@ import {useApp} from '@/hooks/useApp';
 
 export const useHome = () => {
   const {handlesetFirstLoad} = useApp();
-  const {getRecentFairs, fairs, loading: fairsLoading} = useFairs();
-  const {getBestStands, stands, loading: standsLoading} = useStands();
+  const {getUpcomingFairs, fairUpcoming, loading: fairsLoading} = useFairs();
+  const {getBestStands, standsBests, loading: standsLoading} = useStands();
 
   const handleRefresh = async () => {
-    await Promise.all([getRecentFairs(), getBestStands()]);
+    await Promise.all([getUpcomingFairs(), getBestStands()]);
     handlesetFirstLoad();
   };
 
   return {
     handleRefresh,
-    fairs,
+    fairs: fairUpcoming,
     fairsLoading,
-    stands,
+    stands: standsBests,
     standsLoading,
   };
 };

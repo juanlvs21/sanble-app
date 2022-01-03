@@ -1,18 +1,16 @@
-import {useStateValue} from '@/context/app';
-import {appConstants} from '@/constants/Context';
+import {useAppSelector, useAppDispatch} from '@/hooks/useStore';
+import {setFirstLoadAction} from '@/store/slices/appSlice';
 
 export const useApp = () => {
-  const [{app}, dispatch] = useStateValue();
+  const dispatch = useAppDispatch();
+  const firstLoadStore = useAppSelector(({app}) => app.firstLoad);
 
   const handlesetFirstLoad = () => {
-    dispatch({
-      type: appConstants.SET_FIRSTLOAD,
-      payload: {firstLoad: false},
-    });
+    dispatch(setFirstLoadAction(false));
   };
 
   return {
-    firstLoad: app.firstLoad,
+    firstLoad: firstLoadStore,
     handlesetFirstLoad,
   };
 };

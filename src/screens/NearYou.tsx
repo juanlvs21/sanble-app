@@ -1,12 +1,12 @@
 import React from 'react';
-import {Heading} from 'native-base';
 
 import {MainLayout} from '@/layouts/MainLayout';
+import {Map} from '@/components/maps/Map';
 
 export const NearYouScreen: React.FC = () => {
   return (
-    <MainLayout>
-      <Heading>NearYou</Heading>
+    <MainLayout withImageBackground={false} contentPaddingHorizontal={0}>
+      <Map withUserCurrentPosition />
     </MainLayout>
   );
 };
