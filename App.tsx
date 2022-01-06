@@ -9,27 +9,28 @@
  */
 
 import React from 'react';
-// import {StatusBar} from 'react-native';
 import {NativeBaseProvider} from 'native-base';
-import {Provider} from 'react-redux';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 
-import {store} from '@/store';
+import {AppProvider} from '@/context/app';
 import {DataProvider} from '@/providers/DataProvider';
-
+import {MapsProvider} from '@/providers/MapsProvider';
 import {Navigation} from '@/navigation';
+
 import {theme} from '@/theme';
 
 const App: React.FC = () => (
   <SafeAreaProvider>
     {/* <StatusBar animated={true} backgroundColor="#fff" /> */}
-    <Provider store={store}>
+    <AppProvider>
       <NativeBaseProvider theme={theme}>
         <DataProvider>
-          <Navigation />
+          <MapsProvider>
+            <Navigation />
+          </MapsProvider>
         </DataProvider>
       </NativeBaseProvider>
-    </Provider>
+    </AppProvider>
   </SafeAreaProvider>
 );
 

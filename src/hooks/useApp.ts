@@ -1,16 +1,39 @@
-import {useAppSelector, useAppDispatch} from '@/hooks/useStore';
-import {setFirstLoadAction} from '@/store/slices/appSlice';
+import {useStorate} from '@/hooks/useStorate';
+import {useStateValue} from '@/context/app';
+import {appConstants} from '@/constants/Context';
 
 export const useApp = () => {
-  const dispatch = useAppDispatch();
-  const firstLoadStore = useAppSelector(({app}) => app.firstLoad);
+  const [{app}, dispatch] = useStateValue();
+  const {handleGetStorage, handleSetStorage} = useStorate();
 
-  const handlesetFirstLoad = () => {
-    dispatch(setFirstLoadAction(false));
+  const handleSetFirstLoad = () => {
+    dispatch({
+      type: appConstants.SET_FIRSTLOAD,
+      payload: {firstLoad: false},
+    });
+  };
+
+  const handleSetShowWelcome = async (value: boolean) => {
+    await handleSetStorage('show_welcome', value);
+    dispatch({
+      type: appConstants.SET_SHOWWELCOME,
+      payload: {showWelcome: value},
+    });
+  };
+
+  const handleGetShowWelcome = async () => {
+    const showWelcome = await handleGetStorage('show_welcome');
+    dispatch({
+      type: appConstants.SET_SHOWWELCOME,
+      payload: {showWelcome: showWelcome},
+    });
   };
 
   return {
-    firstLoad: firstLoadStore,
-    handlesetFirstLoad,
+    firstLoad: app.firstLoad,
+    handleSetFirstLoad,
+    showWelcome: app.showWelcome,
+    handleSetShowWelcome,
+    handleGetShowWelcome,
   };
 };

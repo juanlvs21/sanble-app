@@ -1,12 +1,12 @@
 import React from 'react';
 import {TouchableHighlight, View, StyleSheet} from 'react-native';
-import {BottomTabBarProps} from '@react-navigation/bottom-tabs';
+import {MaterialTopTabBarProps} from '@react-navigation/material-top-tabs';
 import Entypo from 'react-native-vector-icons/Entypo';
 
 import {gray, secondary} from '@/constants/Colors';
 import {width} from '@/constants/Layout';
 
-export const MainTabBar: React.FC<BottomTabBarProps> = ({
+export const MainTabBar: React.FC<MaterialTopTabBarProps> = ({
   state,
   descriptors,
   navigation,
@@ -55,7 +55,6 @@ export const MainTabBar: React.FC<BottomTabBarProps> = ({
             <View style={styles.tabContent}>
               {tabBarIcon ? (
                 tabBarIcon({
-                  size: 25,
                   color: iconColor,
                   focused: isFocused,
                 })

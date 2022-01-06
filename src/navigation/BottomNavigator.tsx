@@ -1,12 +1,12 @@
 import React from 'react';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import Feather from 'react-native-vector-icons/Feather';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import Colors from '@/constants/Colors';
 import useColorScheme from '@/hooks/useColorScheme';
 
-import {Navbar} from '@/components/common/Navbar';
+// import {Navbar} from '@/components/common/Navbar';
 import {MainTabBar} from '@/components/common/MainTabBar';
 import {HomeScreen} from '@/screens/Home';
 import {NearYouScreen} from '@/screens/NearYou';
@@ -15,58 +15,69 @@ import {StandsListScreen} from '@/screens/stands/List';
 
 import {RootTabParamList} from '@/types/navigator';
 
-const BottomTab = createBottomTabNavigator<RootTabParamList>();
+const Tab = createMaterialTopTabNavigator<RootTabParamList>();
 
 export const BottomTabNavigator: React.FC = () => {
   const colorScheme = useColorScheme();
 
   return (
-    <BottomTab.Navigator
+    <Tab.Navigator
       initialRouteName="Home"
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme].tint,
-        header: props => <Navbar {...props} />,
       }}
+      tabBarPosition="bottom"
       tabBar={props => <MainTabBar {...props} />}>
-      <BottomTab.Screen
+      <Tab.Screen
         name="Home"
         component={HomeScreen}
+        initialParams={{title: 'Inicio'}}
         options={{
-          title: 'Inicio',
-          tabBarIcon: props => <Feather name="home" {...props} />,
+          tabBarIcon: props => <Feather name="home" size={25} {...props} />,
         }}
       />
-      <BottomTab.Screen
+      <Tab.Screen
         name="NearYou"
         component={NearYouScreen}
-        initialParams={{navbarMap: true}}
+        initialParams={{navbarMap: true, title: 'Cerca de ti'}}
         options={{
-          title: 'Cerca de ti',
           tabBarIcon: props => (
-            <MaterialCommunityIcons name="map-search-outline" {...props} />
+            <MaterialCommunityIcons
+              name="map-search-outline"
+              size={25}
+              {...props}
+            />
           ),
         }}
       />
-      <BottomTab.Screen
+      <Tab.Screen
         name="Fairs"
         component={FairsListScreen}
+        initialParams={{title: 'Ferias'}}
         options={{
-          title: 'Ferias',
           tabBarIcon: props => (
-            <MaterialCommunityIcons name="storefront-outline" {...props} />
+            <MaterialCommunityIcons
+              name="storefront-outline"
+              size={25}
+              {...props}
+            />
           ),
         }}
       />
-      <BottomTab.Screen
+      <Tab.Screen
         name="Stands"
         component={StandsListScreen}
+        initialParams={{title: 'Stands'}}
         options={{
-          title: 'Stands',
           tabBarIcon: props => (
-            <MaterialCommunityIcons name="shopping-outline" {...props} />
+            <MaterialCommunityIcons
+              name="shopping-outline"
+              size={25}
+              {...props}
+            />
           ),
         }}
       />
-    </BottomTab.Navigator>
+    </Tab.Navigator>
   );
 };

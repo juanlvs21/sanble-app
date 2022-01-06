@@ -9,6 +9,7 @@ import {
 import {ScrollView} from 'native-base';
 
 import {height, width} from '@/constants/Layout';
+import {Navbar} from '@/components/common/Navbar';
 
 type ComponentProps = {
   /**
@@ -41,24 +42,31 @@ export const MainLayout: React.FC<ComponentProps> = ({
   contentPaddingHorizontal = 20,
 }) =>
   withImageBackground ? (
-    <ImageBackground
-      source={require('../assets/images/wave-main.png')}
-      resizeMode="cover"
-      style={[styles.main, {paddingHorizontal: contentPaddingHorizontal}]}>
-      <ScrollView
-        refreshControl={renderRefreshControl}
-        onScroll={infiniteScroll}>
-        {children}
-      </ScrollView>
-    </ImageBackground>
+    <>
+      <Navbar />
+      <ImageBackground
+        source={require('../assets/images/wave-main.png')}
+        resizeMode="cover"
+        style={[styles.main, {paddingHorizontal: contentPaddingHorizontal}]}>
+        <ScrollView
+          refreshControl={renderRefreshControl}
+          onScroll={infiniteScroll}>
+          {children}
+        </ScrollView>
+      </ImageBackground>
+    </>
   ) : (
-    <View style={[styles.main, {paddingHorizontal: contentPaddingHorizontal}]}>
-      <ScrollView
-        refreshControl={renderRefreshControl}
-        onScroll={infiniteScroll}>
-        {children}
-      </ScrollView>
-    </View>
+    <>
+      <Navbar />
+      <View
+        style={[styles.main, {paddingHorizontal: contentPaddingHorizontal}]}>
+        <ScrollView
+          refreshControl={renderRefreshControl}
+          onScroll={infiniteScroll}>
+          {children}
+        </ScrollView>
+      </View>
+    </>
   );
 
 const styles = StyleSheet.create({

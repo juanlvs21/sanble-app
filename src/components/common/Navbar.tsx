@@ -1,23 +1,25 @@
 import React from 'react';
 import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
-import {BottomTabHeaderProps} from '@react-navigation/bottom-tabs';
-import {getHeaderTitle} from '@react-navigation/elements';
+import {useRoute} from '@react-navigation/native';
 import Feather from 'react-native-vector-icons/Feather';
 
 import {primary, gray} from '@/constants/Colors';
 import {TRouteParamsNavbar} from '@/types/navigator';
 
-export const Navbar: React.FC<BottomTabHeaderProps> = ({
-  //   navigation,
-  route,
-  options,
-}) => {
-  const title = getHeaderTitle(options, route.name) || 'Sanble';
-  const {navbarMap}: TRouteParamsNavbar = route?.params || {};
+type ComponentProps = {
+  /**
+   * Title screen
+   */
+};
+
+export const Navbar: React.FC = () => {
+  const route = useRoute();
+  const {navbarMap, title}: TRouteParamsNavbar = route?.params || {};
+  const navbarTitle = title || 'Sanble';
 
   return (
     <View style={styles.navbar}>
-      <Text style={styles.title}>{title}</Text>
+      <Text style={styles.title}>{navbarTitle}</Text>
       {!navbarMap ? (
         <TouchableOpacity
           style={styles.button}

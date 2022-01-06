@@ -1,27 +1,21 @@
-import {useState} from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import SplashScreen from 'react-native-splash-screen';
 
-import {STORAGE_USER} from '@/constants/Storage';
+import {useApp} from '@/hooks/useApp';
 
 export const useData = () => {
-  const [loading, setLoading] = useState<boolean>(true);
+  const {handleGetShowWelcome} = useApp();
 
   const handleGetData = async () => {
-    setLoading(true);
     try {
-      const userStorage = await AsyncStorage.getItem(STORAGE_USER);
-      console.log({userStorage});
+      await handleGetShowWelcome();
     } catch (e) {
       console.warn(e);
     } finally {
       SplashScreen.hide();
-      setLoading(false);
     }
   };
 
   return {
-    loading,
     handleGetData,
   };
 };

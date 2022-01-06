@@ -1,22 +1,17 @@
 import Geolocation from 'react-native-geolocation-service';
 import ConnectivityManager from 'react-native-connectivity-status';
 
-import {useAppSelector, useAppDispatch} from '@/hooks/useStore';
-import {
-  setCurrentPositionAction,
-  setLocationAvailableAction,
-} from '@/store/slices/mapsSlice';
-import {TMapsCoordinates} from '@/types/maps';
+import {useStateValue} from '@/context/app';
+import {mapsConstants} from '@/constants/Context';
 
 export const useMaps = () => {
-  const dispatch = useAppDispatch();
-  const currentPositionStore = useAppSelector(({maps}) => maps.currentPosition);
-  const locationAvailableStore = useAppSelector(
-    ({maps}) => maps.locationAvailable,
-  );
+  const [{maps}, dispatch] = useStateValue();
 
   const handleSetLocationAvailable = (status: boolean) => {
-    dispatch(setLocationAvailableAction(status));
+    dispatch({
+      type: mapsConstants.SET_MAPSLOCATIONAVAILABLE,
+      payload: {locationAvailable: status},
+    });
   };
 
   const handleGetGPSEnabled = async () => {
@@ -31,7 +26,10 @@ export const useMaps = () => {
     // Function to get the current coordinates of the user. In case of not having the GPS active, it shows a notification to activate it.
     Geolocation.getCurrentPosition(
       ({coords}) => {
-        dispatch(setCurrentPositionAction(coords as TMapsCoordinates));
+        dispatch({
+          type: mapsConstants.SET_MAPSCURRENTPOSITION,
+          payload: {currentPosition: coords},
+        });
       },
       error => {
         console.log({getCurrentPositionError: error});
@@ -48,11 +46,11 @@ export const useMaps = () => {
     handleGetGPSEnabled,
     handleGetCurrentPosition,
     handleSetLocationAvailable,
-    currentPosition: currentPositionStore,
+    currentPosition: maps.currentPosition,
     currentCoordinate: [
-      currentPositionStore.longitude,
-      currentPositionStore.latitude,
+      maps.currentPosition.longitude,
+      maps.currentPosition.latitude,
     ],
-    locationAvailable: locationAvailableStore,
+    locationAvailable: maps.locationAvailable,
   };
 };
