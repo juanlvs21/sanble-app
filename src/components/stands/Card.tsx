@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {TouchableHighlight, StyleSheet, ColorValue} from 'react-native';
+import React from 'react';
+import {TouchableHighlight, StyleSheet} from 'react-native';
 import {View, Heading, Text, Image} from 'native-base';
 import {useNavigation} from '@react-navigation/native';
 
@@ -34,7 +34,6 @@ export const StandCard: React.FC<ComponentProps> = ({
   cardWidth = width * 0.7,
 }) => {
   const navigation = useNavigation();
-  const [underlayColor, setUnderlayColor] = useState<ColorValue>(gray[500]);
 
   if (loading) {
     return (
@@ -53,14 +52,14 @@ export const StandCard: React.FC<ComponentProps> = ({
     <TouchableHighlight
       style={styles.card}
       onPress={() => navigation.navigate('StandDetails', {id: stand.uuid})}
-      onShowUnderlay={() => setUnderlayColor(gray[600])}
-      onHideUnderlay={() => setUnderlayColor(gray[500])}
+      underlayColor={gray[600]}
       activeOpacity={0.6}>
       <>
         <View
           style={[
             styles.content,
-            {width: cardWidth * 0.7, backgroundColor: underlayColor},
+            {width: cardWidth * 0},
+            {width: cardWidth - 120},
           ]}>
           <Heading style={styles.title} numberOfLines={1}>
             {stand.name}
@@ -83,17 +82,19 @@ export const StandCard: React.FC<ComponentProps> = ({
 const styles = StyleSheet.create({
   card: {
     backgroundColor: gray[500],
-    height: 110,
     borderRadius: 20,
     flexDirection: 'row',
+    height: 110,
     margin: 5,
+  },
+  image: {
+    width: 110,
+    height: 110,
+    borderRadius: 15,
   },
   content: {
     paddingVertical: 10,
     paddingHorizontal: 15,
-    position: 'absolute',
-    zIndex: 10,
-    height: 110,
     borderRadius: 20,
     justifyContent: 'center',
   },
@@ -106,12 +107,6 @@ const styles = StyleSheet.create({
   slogan: {
     flexWrap: 'wrap',
     fontSize: 13,
-  },
-  image: {
-    width: 110,
-    height: 110,
-    borderRadius: 15,
-    marginLeft: 'auto',
   },
   stars: {
     marginTop: -2,

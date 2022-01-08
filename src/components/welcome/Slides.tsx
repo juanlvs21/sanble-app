@@ -4,9 +4,9 @@ import {View, Button} from 'native-base';
 
 import {width} from '@/constants/Layout';
 import {useApp} from '@/hooks/useApp';
-import {SwipeItem} from '@/components/welcome/SwipeItem';
-import {SwipeHelp} from '@/components/welcome/SwipeHelp';
-import {TWelcomeSwipe} from '@/types/welcome';
+import {WelcomeSlideItem} from '@/components/welcome/SlideItem';
+import {WelcomeSlideHelp} from '@/components/welcome/SlideHelp';
+import {TWelcomeSlides} from '@/types/welcome';
 import {primary} from '@/constants/Colors';
 
 type ComponentProps = {
@@ -16,11 +16,23 @@ type ComponentProps = {
   children: React.ReactElement;
 };
 
-export const WelcomeSwipe: React.FC<ComponentProps> = ({children}) => {
+export const WelcomeSlides: React.FC<ComponentProps> = ({children}) => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const {handleSetHideWelcome, hideWelcome} = useApp();
   const hideAnimation = useRef(new Animated.Value(0)).current;
-  const controllAnimation = useRef(new Animated.Value(0)).current;
+  const dots1Animation = useRef(new Animated.Value(1)).current;
+  const dots2Animation = useRef(new Animated.Value(0)).current;
+  const dots3Animation = useRef(new Animated.Value(0)).current;
+  const dots4Animation = useRef(new Animated.Value(0)).current;
+  const dots5Animation = useRef(new Animated.Value(0)).current;
+
+  const dotsAnimations = [
+    dots1Animation,
+    dots2Animation,
+    dots3Animation,
+    dots4Animation,
+    dots5Animation,
+  ];
 
   const onLater = () => {
     handleSetHideWelcome(true);
@@ -30,7 +42,7 @@ export const WelcomeSwipe: React.FC<ComponentProps> = ({children}) => {
     handleSetHideWelcome(true);
   };
 
-  const data: TWelcomeSwipe[] = [
+  const data: TWelcomeSlides[] = [
     {
       title: 'Bienvenido',
       description:
@@ -38,7 +50,7 @@ export const WelcomeSwipe: React.FC<ComponentProps> = ({children}) => {
       bg1: require('@/assets/images/welcome/wave_welcome_1_1.png'),
       bg2: require('@/assets/images/welcome/wave_welcome_1_2.png'),
       image: require('@/assets/images/welcome/illustration_welcome_1.png'),
-      buttons: <SwipeHelp text="Deliza para ver más" />,
+      buttons: <WelcomeSlideHelp text="Deliza para ver más" />,
     },
     {
       title: 'Disfruta lo mejor',
@@ -49,7 +61,7 @@ export const WelcomeSwipe: React.FC<ComponentProps> = ({children}) => {
       bg2: require('@/assets/images/welcome/wave_welcome_2_2.png'),
       bg2Top: 100,
       image: require('@/assets/images/welcome/illustration_welcome_2.png'),
-      buttons: <SwipeHelp text="Ver más" />,
+      buttons: <WelcomeSlideHelp text="Ver más" />,
     },
     {
       title: 'Encuéntralas',
@@ -58,7 +70,7 @@ export const WelcomeSwipe: React.FC<ComponentProps> = ({children}) => {
       bg1: require('@/assets/images/welcome/wave_welcome_3_1.png'),
       bg2: require('@/assets/images/welcome/wave_welcome_3_2.png'),
       image: require('@/assets/images/welcome/illustration_welcome_3.png'),
-      buttons: <SwipeHelp text="Ya casi" />,
+      buttons: <WelcomeSlideHelp text="Ya casi" />,
     },
     {
       title: '¡Emprende!',
@@ -67,7 +79,7 @@ export const WelcomeSwipe: React.FC<ComponentProps> = ({children}) => {
       bg1: require('@/assets/images/welcome/wave_welcome_4_1.png'),
       bg2: require('@/assets/images/welcome/wave_welcome_4_2.png'),
       image: require('@/assets/images/welcome/illustration_welcome_4.png'),
-      buttons: <SwipeHelp text="Y ahora..." />,
+      buttons: <WelcomeSlideHelp text="Y ahora..." />,
     },
     {
       title: '¿Bueno, qué estás esperando?',
@@ -104,10 +116,13 @@ export const WelcomeSwipe: React.FC<ComponentProps> = ({children}) => {
   }, [hideWelcome]);
 
   useEffect(() => {
-    Animated.timing(controllAnimation, {
-      toValue: (100 / data.length) * (currentIndex + 1),
-      useNativeDriver: true,
-    }).start();
+    dotsAnimations.map((animation, index) => {
+      Animated.timing(animation, {
+        toValue: currentIndex === index ? 1 : 0,
+        useNativeDriver: true,
+      }).start();
+    });
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentIndex]);
 
@@ -124,7 +139,10 @@ export const WelcomeSwipe: React.FC<ComponentProps> = ({children}) => {
           onMomentumScrollEnd={onScrollEnd}
           data={data}
           renderItem={({item, index}) => (
-            <SwipeItem item={{...item, index}} currentIndex={currentIndex} />
+            <WelcomeSlideItem
+              item={{...item, index}}
+              currentIndex={currentIndex}
+            />
           )}
           keyExtractor={(_, index) => `welcome-${index}`}
           bounces={false}
@@ -133,15 +151,21 @@ export const WelcomeSwipe: React.FC<ComponentProps> = ({children}) => {
           showsHorizontalScrollIndicator
           pagingEnabled
         />
-        <View style={styles.controllerContainer}>
-          <View style={styles.controllerBar}>
-            <Animated.View
-              style={[
-                styles.controllerBarActive,
-                // {width: `${controllAnimation}%`},
-              ]}
-            />
-          </View>
+        <View style={styles.dotsContainer}>
+          {dotsAnimations.map((animation, index) => (
+            <View key={index}>
+              <View style={styles.dots} />
+              <Animated.View
+                style={[
+                  styles.dots,
+                  styles.dotsActive,
+                  {
+                    transform: [{scale: animation}],
+                  },
+                ]}
+              />
+            </View>
+          ))}
         </View>
       </Animated.View>
       {children}
@@ -162,21 +186,23 @@ const styles = StyleSheet.create({
     width: '100%',
     marginTop: 10,
   },
-  controllerContainer: {
+  dotsContainer: {
     position: 'absolute',
     bottom: 30,
     paddingHorizontal: 20,
+    flexDirection: 'row',
+    justifyContent: 'center',
     width,
   },
-  controllerBar: {
-    backgroundColor: '#FFE2CE',
-    width: '100%',
-    height: 7,
-    borderRadius: 20,
-  },
-  controllerBarActive: {
+  dotsActive: {
     backgroundColor: primary[500],
-    height: 7,
-    borderRadius: 20,
+    marginTop: -20,
+  },
+  dots: {
+    backgroundColor: '#FFE2CE',
+    width: 15,
+    height: 15,
+    borderRadius: 15,
+    margin: 5,
   },
 });

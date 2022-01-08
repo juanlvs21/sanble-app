@@ -12,7 +12,7 @@ export type ComponentProps = {
   text: string;
 };
 
-export const SwipeHelp: React.FC<ComponentProps> = ({text}) => {
+export const WelcomeSlideHelp: React.FC<ComponentProps> = ({text}) => {
   return (
     <View style={styles.helpContainer}>
       <Text style={styles.helpText}>{text}</Text>

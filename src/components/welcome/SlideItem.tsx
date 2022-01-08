@@ -4,20 +4,23 @@ import {View} from 'native-base';
 
 import {width, height} from '@/constants/Layout';
 import {secondary} from '@/constants/Colors';
-import {TWelcomeSwipe} from '@/types/welcome';
+import {TWelcomeSlides} from '@/types/welcome';
 
 export type ComponentProps = {
   /**
    * Item swipe
    */
-  item: TWelcomeSwipe;
+  item: TWelcomeSlides;
   /**
    * Current index Flatlist
    */
   currentIndex: number;
 };
 
-export const SwipeItem: React.FC<ComponentProps> = ({item, currentIndex}) => {
+export const WelcomeSlideItem: React.FC<ComponentProps> = ({
+  item,
+  currentIndex,
+}) => {
   const bgUp2Animation = useRef(new Animated.Value(height)).current;
   const bgOpacity2Animation = useRef(new Animated.Value(0)).current;
   const imgScaleAnimation = useRef(new Animated.Value(0)).current;

@@ -37,7 +37,7 @@ export const useMaps = () => {
       {
         enableHighAccuracy: true,
         forceRequestLocation: true,
-        showLocationDialog: true,
+        showLocationDialog: false,
       },
     );
   };

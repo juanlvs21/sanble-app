@@ -1,4 +1,4 @@
-export type TWelcomeSwipe = {
+export type TWelcomeSlides = {
   index?: number;
   title: string;
   description?: string;

@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 
-import {WelcomeSwipe} from '@/components/welcome/Swipe';
+import {WelcomeSlides} from '@/components/welcome/Slides';
 import {useData} from '@/hooks/useData';
 // import {useApp} from '@/hooks/useApp';
 
@@ -21,5 +21,5 @@ export const DataProvider: React.FC<ComponentProps> = ({children}) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return <WelcomeSwipe>{children}</WelcomeSwipe>;
+  return <WelcomeSlides>{children}</WelcomeSlides>;
 };
