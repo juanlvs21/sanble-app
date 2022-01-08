@@ -4,7 +4,7 @@ import {Spinner} from 'native-base';
 
 import {width} from '@/constants/Layout';
 
-type ComponentProps = {
+export type ComponentProps = {
   /**
    * items carousel
    */

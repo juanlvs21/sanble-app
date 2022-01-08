@@ -12,7 +12,7 @@ import {dateFormat} from '@/helpers/dateFormat';
 import {mockFair} from '@/helpers/mockData';
 import {TFair} from '@/types/fair';
 
-type ComponentProps = {
+export type ComponentProps = {
   /**
    * Fair details
    */

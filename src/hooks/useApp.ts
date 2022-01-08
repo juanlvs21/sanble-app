@@ -13,27 +13,27 @@ export const useApp = () => {
     });
   };
 
-  const handleSetShowWelcome = async (value: boolean) => {
+  const handleSetHideWelcome = async (value: boolean) => {
     await handleSetStorage('show_welcome', value);
     dispatch({
-      type: appConstants.SET_SHOWWELCOME,
-      payload: {showWelcome: value},
+      type: appConstants.SET_SHOWHIDEWELCOME,
+      payload: {hideWelcome: value},
     });
   };
 
-  const handleGetShowWelcome = async () => {
-    const showWelcome = await handleGetStorage('show_welcome');
+  const handleGetHideWelcome = async () => {
+    const hideWelcome = await handleGetStorage('show_welcome');
     dispatch({
-      type: appConstants.SET_SHOWWELCOME,
-      payload: {showWelcome: showWelcome},
+      type: appConstants.SET_SHOWHIDEWELCOME,
+      payload: {hideWelcome},
     });
   };
 
   return {
     firstLoad: app.firstLoad,
     handleSetFirstLoad,
-    showWelcome: app.showWelcome,
-    handleSetShowWelcome,
-    handleGetShowWelcome,
+    hideWelcome: app.hideWelcome,
+    handleSetHideWelcome,
+    handleGetHideWelcome,
   };
 };

@@ -3,7 +3,7 @@ import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 
 import {gray} from '@/constants/Colors';
 
-type ComponentProps = {
+export type ComponentProps = {
   /**
    * Determines component's children.
    */

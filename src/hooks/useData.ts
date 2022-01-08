@@ -3,15 +3,17 @@ import SplashScreen from 'react-native-splash-screen';
 import {useApp} from '@/hooks/useApp';
 
 export const useData = () => {
-  const {handleGetShowWelcome} = useApp();
+  const {handleGetHideWelcome} = useApp();
 
   const handleGetData = async () => {
     try {
-      await handleGetShowWelcome();
+      await handleGetHideWelcome();
     } catch (e) {
       console.warn(e);
     } finally {
-      SplashScreen.hide();
+      setTimeout(() => {
+        SplashScreen.hide();
+      }, 1000);
     }
   };
 

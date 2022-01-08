@@ -5,7 +5,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 
 import {primary} from '@/constants/Colors';
 
-type ComponentProps = {
+export type ComponentProps = {
   /**
    * Number stars (min:0, max:5)
    */

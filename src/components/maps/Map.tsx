@@ -11,7 +11,7 @@ import {useMaps} from '@/hooks/useMaps';
 
 MapboxGL.setAccessToken(MAPBOX_ACCESS_TOKEN);
 
-type ComponentProps = {
+export type ComponentProps = {
   /**
    * If true, the map will have the user's GPS coordinates (If true, centerCoordinate will be ignored)
    *

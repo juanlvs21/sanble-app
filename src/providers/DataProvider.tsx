@@ -2,9 +2,9 @@ import React, {useEffect} from 'react';
 
 import {WelcomeSwipe} from '@/components/welcome/Swipe';
 import {useData} from '@/hooks/useData';
-import {useApp} from '@/hooks/useApp';
+// import {useApp} from '@/hooks/useApp';
 
-type ComponentProps = {
+export type ComponentProps = {
   /**
    * Children component
    */
@@ -13,12 +13,13 @@ type ComponentProps = {
 
 export const DataProvider: React.FC<ComponentProps> = ({children}) => {
   const {handleGetData} = useData();
-  const {showWelcome} = useApp();
+  // const {handleSetHideWelcome} = useApp();
 
   useEffect(() => {
+    // handleSetHideWelcome(false);
     handleGetData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return showWelcome ? <WelcomeSwipe /> : children;
+  return <WelcomeSwipe>{children}</WelcomeSwipe>;
 };

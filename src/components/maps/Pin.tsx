@@ -13,7 +13,7 @@ const color = {
   gray: gray[500],
 };
 
-type ComponentProps = {
+export type ComponentProps = {
   /**
    * Coordinate pin
    */

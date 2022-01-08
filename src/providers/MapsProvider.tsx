@@ -3,7 +3,7 @@ import ConnectivityManager from 'react-native-connectivity-status';
 
 import {useMaps} from '@/hooks/useMaps';
 
-type ComponentProps = {
+export type ComponentProps = {
   /**
    * Children component
    */

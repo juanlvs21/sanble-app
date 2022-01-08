@@ -5,7 +5,7 @@ import {appConstants} from '@/constants/Context';
 export const initialAppState: TAppReducer = {
   firstLoad: true,
   loadingFullScreen: false,
-  showWelcome: true,
+  hideWelcome: true,
 };
 
 export const appReducer = (
@@ -31,12 +31,12 @@ export const appReducer = (
       };
     }
 
-    case appConstants.SET_SHOWWELCOME: {
-      const {showWelcome} = action.payload;
+    case appConstants.SET_SHOWHIDEWELCOME: {
+      const {hideWelcome} = action.payload;
 
       return {
         ...state,
-        showWelcome,
+        hideWelcome,
       };
     }
 

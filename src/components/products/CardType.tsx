@@ -21,7 +21,7 @@ const text = {
   accessory: 'Accesorios',
 };
 
-type ComponentProps = {
+export type ComponentProps = {
   /**
    * Type product card
    */

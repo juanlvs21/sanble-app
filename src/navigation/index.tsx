@@ -18,14 +18,14 @@ import NotFoundScreen from '@/screens/NotFoundScreen';
 import LinkingConfiguration from '@/navigation/LinkingConfiguration';
 import {RootStackParamList} from '@/types/navigator';
 
-interface ComponentProps {
+export type ComponentProps = {
   /**
    * App color Scheme
    *
    * @default "light"
    */
   colorScheme?: ColorSchemeName;
-}
+};
 
 export const Navigation: React.FC<ComponentProps> = ({
   colorScheme = 'light',

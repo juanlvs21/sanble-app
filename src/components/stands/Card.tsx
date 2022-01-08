@@ -11,7 +11,7 @@ import {mockStand} from '@/helpers/mockData';
 import {TStand} from '@/types/stand';
 import {Stars} from '../common/Stars';
 
-type ComponentProps = {
+export type ComponentProps = {
   /**
    * Stand details
    */

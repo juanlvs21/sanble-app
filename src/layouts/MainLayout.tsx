@@ -11,7 +11,7 @@ import {ScrollView} from 'native-base';
 import {height, width} from '@/constants/Layout';
 import {Navbar} from '@/components/common/Navbar';
 
-type ComponentProps = {
+export type ComponentProps = {
   /**
    * Component refresh control
    */

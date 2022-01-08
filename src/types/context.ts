@@ -23,7 +23,7 @@ export type TContextProps = [TStateContext, Dispatch<TAction>];
 // Data reducers
 export type TAppReducer = {
   firstLoad: boolean;
-  showWelcome: boolean;
+  hideWelcome: boolean;
   loadingFullScreen: boolean;
 };
 

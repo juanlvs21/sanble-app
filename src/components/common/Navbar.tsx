@@ -6,12 +6,6 @@ import Feather from 'react-native-vector-icons/Feather';
 import {primary, gray} from '@/constants/Colors';
 import {TRouteParamsNavbar} from '@/types/navigator';
 
-type ComponentProps = {
-  /**
-   * Title screen
-   */
-};
-
 export const Navbar: React.FC = () => {
   const route = useRoute();
   const {navbarMap, title}: TRouteParamsNavbar = route?.params || {};
