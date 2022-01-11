@@ -9,7 +9,7 @@ import useColorScheme from '@/hooks/useColorScheme';
 // import {Navbar} from '@/components/common/Navbar';
 import {MainTabBar} from '@/components/common/MainTabBar';
 import {HomeScreen} from '@/screens/Home';
-import {NearYouScreen} from '@/screens/NearYou';
+// import {NearYouScreen} from '@/screens/NearYou';
 import {FairsListScreen} from '@/screens/fairs/List';
 import {StandsListScreen} from '@/screens/stands/List';
 
@@ -31,12 +31,12 @@ export const BottomTabNavigator: React.FC = () => {
       <Tab.Screen
         name="Home"
         component={HomeScreen}
-        initialParams={{title: 'Inicio'}}
+        initialParams={{title: 'Sanble'}}
         options={{
           tabBarIcon: props => <Feather name="home" size={25} {...props} />,
         }}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name="NearYou"
         component={NearYouScreen}
         initialParams={{navbarMap: true, title: 'Cerca de ti'}}
@@ -49,7 +49,7 @@ export const BottomTabNavigator: React.FC = () => {
             />
           ),
         }}
-      />
+      /> */}
       <Tab.Screen
         name="Fairs"
         component={FairsListScreen}

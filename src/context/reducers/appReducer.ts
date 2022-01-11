@@ -6,6 +6,7 @@ export const initialAppState: TAppReducer = {
   firstLoad: true,
   loadingFullScreen: false,
   hideWelcome: true,
+  showDrawer: false,
 };
 
 export const appReducer = (
@@ -37,6 +38,15 @@ export const appReducer = (
       return {
         ...state,
         hideWelcome,
+      };
+    }
+
+    case appConstants.SET_SHOWDRAWER: {
+      const {showDrawer} = action.payload;
+
+      return {
+        ...state,
+        showDrawer,
       };
     }
 

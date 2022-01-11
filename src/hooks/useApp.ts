@@ -29,11 +29,20 @@ export const useApp = () => {
     });
   };
 
+  const handleShowDrawer = (value?: boolean) => {
+    dispatch({
+      type: appConstants.SET_SHOWDRAWER,
+      payload: {showDrawer: value ? value : !app.showDrawer},
+    });
+  };
+
   return {
     firstLoad: app.firstLoad,
     handleSetFirstLoad,
     hideWelcome: app.hideWelcome,
     handleSetHideWelcome,
     handleGetHideWelcome,
+    showDrawer: app.showDrawer,
+    handleShowDrawer,
   };
 };

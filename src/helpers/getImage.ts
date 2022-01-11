@@ -1,4 +1,4 @@
-import {noImage, noAvatar} from '@/helpers/imagesDefault';
+import {noImage, noAvatar} from '@/helpers/images';
 
 export const getImage = (
   image: string | null | undefined,

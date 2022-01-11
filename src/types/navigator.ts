@@ -34,6 +34,11 @@ export type RootStackParamList = {
   PromotionList: {
     type: string;
   };
+  MySanble: undefined;
+  Favorites: undefined;
+  NearYou: undefined;
+  Profile: undefined;
+  Messages: undefined;
   NotFound: undefined;
 };
 

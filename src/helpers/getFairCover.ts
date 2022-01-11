@@ -1,4 +1,4 @@
-import {noImage} from '@/helpers/imagesDefault';
+import {noImage} from '@/helpers/images';
 import {TFairPhotograph} from '@/types/fair';
 
 export const getFairCover = (photograph: TFairPhotograph[] = []) => {

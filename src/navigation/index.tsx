@@ -8,13 +8,13 @@ import {
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 import {BottomTabNavigator} from '@/navigation/BottomNavigator';
-
+import {Drawer} from '@/components/common/Drawer';
 import {PromotionListScreen} from '@/screens/promotions/List';
 import {FairDetailsScreen} from '@/screens/fairs/Details';
 import {StandDetailsScreen} from '@/screens/stands/Details';
 import ModalScreen from '@/screens/ModalScreen';
 import NotFoundScreen from '@/screens/NotFoundScreen';
-
+import {Empty} from '@/screens/Empty';
 import LinkingConfiguration from '@/navigation/LinkingConfiguration';
 import {RootStackParamList} from '@/types/navigator';
 
@@ -37,13 +37,19 @@ export const Navigation: React.FC<ComponentProps> = ({
   </NavigationContainer>
 );
 
+export const DrawerBottomNavigator: React.FC = () => (
+  <Drawer>
+    <BottomTabNavigator />
+  </Drawer>
+);
+
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const RootNavigator: React.FC = () => (
   <Stack.Navigator>
     <Stack.Screen
       name="Root"
-      component={BottomTabNavigator}
+      component={DrawerBottomNavigator}
       options={{headerShown: false}}
     />
     <Stack.Screen
@@ -59,6 +65,31 @@ const RootNavigator: React.FC = () => (
     <Stack.Screen
       name="PromotionList"
       component={PromotionListScreen}
+      options={{headerShown: false}}
+    />
+    <Stack.Screen
+      name="MySanble"
+      component={Empty}
+      options={{headerShown: false}}
+    />
+    <Stack.Screen
+      name="Favorites"
+      component={Empty}
+      options={{headerShown: false}}
+    />
+    <Stack.Screen
+      name="NearYou"
+      component={Empty}
+      options={{headerShown: false}}
+    />
+    <Stack.Screen
+      name="Profile"
+      component={Empty}
+      options={{headerShown: false}}
+    />
+    <Stack.Screen
+      name="Messages"
+      component={Empty}
       options={{headerShown: false}}
     />
     <Stack.Screen

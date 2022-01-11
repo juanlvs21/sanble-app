@@ -5,7 +5,7 @@ import {Map} from '@/components/maps/Map';
 
 export const NearYouScreen: React.FC = () => {
   return (
-    <MainLayout withImageBackground={false} contentPaddingHorizontal={0}>
+    <MainLayout contentPaddingHorizontal={0}>
       <Map withUserCurrentPosition />
     </MainLayout>
   );

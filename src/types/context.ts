@@ -25,6 +25,7 @@ export type TAppReducer = {
   firstLoad: boolean;
   hideWelcome: boolean;
   loadingFullScreen: boolean;
+  showDrawer: boolean;
 };
 
 export type TAuthReducer = {

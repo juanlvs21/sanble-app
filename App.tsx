@@ -9,6 +9,7 @@
  */
 
 import React from 'react';
+import {StatusBar} from 'react-native';
 import {NativeBaseProvider} from 'native-base';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 
@@ -21,7 +22,7 @@ import {theme} from '@/theme';
 
 const App: React.FC = () => (
   <SafeAreaProvider>
-    {/* <StatusBar animated={true} backgroundColor="#fff" /> */}
+    <StatusBar animated={true} backgroundColor="#fff" />
     <AppProvider>
       <NativeBaseProvider theme={theme}>
         <DataProvider>

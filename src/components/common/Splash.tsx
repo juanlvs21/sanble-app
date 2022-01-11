@@ -4,7 +4,7 @@ import {Animated, Image, StyleSheet, Text, View} from 'react-native';
 import {width, height} from '@/constants/Layout';
 import {primary} from '@/constants/Colors';
 
-type ComponentProps = {
+export type ComponentProps = {
   /**
    * Children component
    */

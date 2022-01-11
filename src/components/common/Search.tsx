@@ -5,7 +5,7 @@ import Feather from 'react-native-vector-icons/Feather';
 
 import {InputField} from '@/components/common/Input';
 
-type SearchProps = {
+export type SearchProps = {
   /**
    * Style container
    */
