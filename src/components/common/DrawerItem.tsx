@@ -1,13 +1,8 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  GestureResponderEvent,
-  StyleSheet,
-} from 'react-native';
+import {Text, StyleSheet} from 'react-native';
+import {DrawerItem as DrawerItemBase} from '@react-navigation/drawer';
 
-import {primary} from '@/constants/Colors';
+// import {primary} from '@/constants/Colors';
 
 export type ComponentProps = {
   /**
@@ -17,53 +12,39 @@ export type ComponentProps = {
   /**
    * Drawer item icon
    */
-  icon: React.ReactElement;
+  icon: (props: {
+    focused: boolean;
+    size: number;
+    color: string;
+  }) => React.ReactElement;
   /**
    * Callback on press
    */
-  onPress: (event: GestureResponderEvent) => void;
+  onPress: () => void;
   /**
    * Drawer item active
    */
-  active?: boolean;
+  focused?: boolean;
 };
 
 export const DrawerItem: React.FC<ComponentProps> = ({
   label,
   icon,
   onPress,
-  active,
+  focused,
 }) => (
-  <TouchableOpacity onPress={onPress}>
-    <View style={[styles.item, active ? styles.itemActive : {}]}>
-      {icon}
-      <Text style={[styles.itemLabel, active ? styles.itemLabelActive : {}]}>
-        {label}
-      </Text>
-    </View>
-  </TouchableOpacity>
+  <DrawerItemBase
+    label={() => <Text style={styles.item}>{label}</Text>}
+    onPress={onPress}
+    icon={icon}
+    focused={focused}
+  />
 );
 
 const styles = StyleSheet.create({
   item: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderRadius: 20,
-    paddingVertical: 8,
-    paddingLeft: 20,
-    marginBottom: 5,
-    width: 180,
-  },
-  itemLabel: {
-    marginLeft: 15,
     color: '#FFF',
-    fontSize: 15,
     fontWeight: '700',
-  },
-  itemActive: {
-    backgroundColor: '#FFF',
-  },
-  itemLabelActive: {
-    color: primary[600],
+    fontSize: 15,
   },
 });

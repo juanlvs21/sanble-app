@@ -6,10 +6,8 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import Colors from '@/constants/Colors';
 import useColorScheme from '@/hooks/useColorScheme';
 
-// import {Navbar} from '@/components/common/Navbar';
 import {MainTabBar} from '@/components/common/MainTabBar';
 import {HomeScreen} from '@/screens/Home';
-// import {NearYouScreen} from '@/screens/NearYou';
 import {FairsListScreen} from '@/screens/fairs/List';
 import {StandsListScreen} from '@/screens/stands/List';
 
@@ -36,20 +34,6 @@ export const BottomTabNavigator: React.FC = () => {
           tabBarIcon: props => <Feather name="home" size={25} {...props} />,
         }}
       />
-      {/* <Tab.Screen
-        name="NearYou"
-        component={NearYouScreen}
-        initialParams={{navbarMap: true, title: 'Cerca de ti'}}
-        options={{
-          tabBarIcon: props => (
-            <MaterialCommunityIcons
-              name="map-search-outline"
-              size={25}
-              {...props}
-            />
-          ),
-        }}
-      /> */}
       <Tab.Screen
         name="Fairs"
         component={FairsListScreen}

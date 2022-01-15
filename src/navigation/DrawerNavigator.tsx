@@ -1,20 +1,20 @@
 import React from 'react';
 import {createDrawerNavigator} from '@react-navigation/drawer';
-
-import {BottomTabNavigator} from '@/navigation/BottomNavigator';
-import {Empty} from '@/screens/Empty';
+import {StackNavigatior} from '@/navigation/StackNavigatior';
+import {DrawerContent} from '@/components/common/DrawerContent';
+import {useAuth} from '@/hooks/useAuth';
 
 const Drawer = createDrawerNavigator();
 
 export const DrawerNavigator = () => {
+  const {user} = useAuth();
+
   return (
-    <Drawer.Navigator initialRouteName="HomeDrawer">
-      <Drawer.Screen name="HomeDrawer" component={BottomTabNavigator} />
-      <Drawer.Screen name="MySanble" component={Empty} />
-      <Drawer.Screen name="Favorites" component={Empty} />
-      <Drawer.Screen name="NearYou" component={Empty} />
-      <Drawer.Screen name="Messages" component={Empty} />
-      <Drawer.Screen name="Profile" component={Empty} />
+    <Drawer.Navigator
+      initialRouteName="Screens"
+      screenOptions={{headerShown: false, drawerType: 'slide'}}
+      drawerContent={props => <DrawerContent user={user} {...props} />}>
+      <Drawer.Screen name="Screens" component={StackNavigatior} />
     </Drawer.Navigator>
   );
 };
