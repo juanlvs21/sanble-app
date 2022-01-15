@@ -4,7 +4,6 @@ import {useRoute} from '@react-navigation/native';
 import Feather from 'react-native-vector-icons/Feather';
 
 import {primary, gray} from '@/constants/Colors';
-import {useApp} from '@/hooks/useApp';
 import {useAuth} from '@/hooks/useAuth';
 import {TRouteParamsNavbar} from '@/types/navigator';
 import {logo, noAvatar} from '@/helpers/images';
@@ -12,7 +11,6 @@ import {logo, noAvatar} from '@/helpers/images';
 export const Navbar: React.FC = () => {
   const route = useRoute();
   const {user} = useAuth();
-  const {handleShowDrawer} = useApp();
 
   const {navbarMap, title}: TRouteParamsNavbar = route?.params || {};
   const navbarTitle = title || 'Sanble';
@@ -20,7 +18,7 @@ export const Navbar: React.FC = () => {
   return (
     <View style={styles.navbar}>
       {/* <TouchableOpacity onPress={() => handleShowDrawer(true)}> */}
-      <TouchableOpacity onPress={() => handleShowDrawer()}>
+      <TouchableOpacity>
         <Image
           source={user ? noAvatar : logo}
           style={styles.avatar}

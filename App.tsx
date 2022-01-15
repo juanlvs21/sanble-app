@@ -12,6 +12,7 @@ import React from 'react';
 import {StatusBar} from 'react-native';
 import {NativeBaseProvider} from 'native-base';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
+import 'react-native-gesture-handler';
 
 import {AppProvider} from '@/context/app';
 import {DataProvider} from '@/providers/DataProvider';
