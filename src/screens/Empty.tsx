@@ -3,18 +3,17 @@ import {StyleSheet} from 'react-native';
 import {Text, View} from 'native-base';
 import {useRoute} from '@react-navigation/native';
 
-import {Navbar} from '@/components/common/Navbar';
+import {MainLayout} from '@/layouts/MainLayout';
 
 export const Empty: React.FC = () => {
   const {name} = useRoute();
 
   return (
-    <>
-      <Navbar />
+    <MainLayout>
       <View style={styles.container}>
         <Text>{name}</Text>
       </View>
-    </>
+    </MainLayout>
   );
 };
 

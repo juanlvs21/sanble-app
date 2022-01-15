@@ -1,26 +1,44 @@
 import React from 'react';
-import {View, Text, TouchableOpacity, Image, StyleSheet} from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Image,
+  Animated,
+  ViewStyle,
+  StyleSheet,
+  RegisteredStyle,
+} from 'react-native';
 import {useRoute, useNavigation} from '@react-navigation/native';
 import {DrawerActions} from '@react-navigation/native';
 import Feather from 'react-native-vector-icons/Feather';
 
 import {primary, gray} from '@/constants/Colors';
-// import {useApp} from '@/hooks/useApp';
 import {useAuth} from '@/hooks/useAuth';
 import {TRouteParamsNavbar} from '@/types/navigator';
 import {logo, noAvatar} from '@/helpers/images';
 
-export const Navbar: React.FC = () => {
+export type ComponentProps = {
+  /**
+   * Style Navbar container
+   */
+  style?:
+    | RegisteredStyle<ViewStyle>
+    | Animated.Value
+    | Animated.AnimatedInterpolation
+    | Animated.WithAnimatedObject<ViewStyle>;
+};
+
+export const Navbar: React.FC<ComponentProps> = ({style}) => {
   const route = useRoute();
   const navigation = useNavigation();
   const {user} = useAuth();
-  // const {handleShowDrawer} = useApp();
 
   const {navbarMap, title}: TRouteParamsNavbar = route?.params || {};
   const navbarTitle = title || 'Sanble';
 
   return (
-    <View style={styles.navbar}>
+    <Animated.View style={[styles.navbar, style]}>
       <TouchableOpacity
         onPress={() => navigation.dispatch(DrawerActions.openDrawer())}>
         <Image
@@ -46,7 +64,7 @@ export const Navbar: React.FC = () => {
           </TouchableOpacity>
         ) : null}
       </View>
-    </View>
+    </Animated.View>
   );
 };
 

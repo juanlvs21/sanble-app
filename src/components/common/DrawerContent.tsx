@@ -4,7 +4,6 @@ import {
   DrawerContentComponentProps,
   DrawerContentScrollView,
 } from '@react-navigation/drawer';
-import Animated from 'react-native-reanimated';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -19,7 +18,8 @@ import {TUser} from '@/types/user';
 
 export type ComponentProps = DrawerContentComponentProps & {user: TUser | null};
 
-export const DrawerContent: React.FC<ComponentProps> = ({user, ...props}) => {
+export const DrawerContent: React.FC<ComponentProps> = ({...props}) => {
+  const user = true;
   const avatar = user ? noAvatar : logoBigWhite;
   //   const isActive = (screen: TDrawerItemScreen) => name === screen;
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -30,11 +30,11 @@ export const DrawerContent: React.FC<ComponentProps> = ({user, ...props}) => {
     isActive(screen) ? logo : logoWhite;
 
   const onPress = (screen: TDrawerItemScreen) => {
+    console.log({screen});
     props.navigation.navigate(screen);
   };
 
   return (
-    // <Animated.View style={{transform: [{translateX}]}}>
     <DrawerContentScrollView
       {...props}
       contentContainerStyle={styles.drawerContent}>
@@ -163,7 +163,6 @@ export const DrawerContent: React.FC<ComponentProps> = ({user, ...props}) => {
         )}
       </View>
     </DrawerContentScrollView>
-    // </Animated.View>
   );
 };
 
