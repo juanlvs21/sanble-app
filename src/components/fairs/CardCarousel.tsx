@@ -6,7 +6,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 
 import {gray} from '@/constants/Colors';
 import {width} from '@/constants/Layout';
-import {Skeleton, SkeletonItem} from '@/components/common/Skeleton';
+import {Skeleton} from '@/components/common/Skeleton';
 import {getFairCover} from '@/helpers/getFairCover';
 import {dateFormat} from '@/helpers/dateFormat';
 import {mockFair} from '@/helpers/mockData';
@@ -29,7 +29,7 @@ export type ComponentProps = {
   loading?: boolean;
 };
 
-export const FairCard: React.FC<ComponentProps> = ({
+export const FairCardCarousel: React.FC<ComponentProps> = ({
   fair = mockFair,
   loading,
   cardWidth = width * 0.7,
@@ -38,14 +38,13 @@ export const FairCard: React.FC<ComponentProps> = ({
 
   if (loading) {
     return (
-      <Skeleton>
-        <SkeletonItem
-          width={cardWidth}
-          height={110}
-          borderRadius={20}
-          margin={5}
-        />
-      </Skeleton>
+      <Skeleton
+        width={cardWidth}
+        height={110}
+        borderRadius={20}
+        marginX={5}
+        marginBottom={2.5}
+      />
     );
   }
 

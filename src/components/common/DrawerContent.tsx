@@ -18,8 +18,7 @@ import {TUser} from '@/types/user';
 
 export type ComponentProps = DrawerContentComponentProps & {user: TUser | null};
 
-export const DrawerContent: React.FC<ComponentProps> = ({...props}) => {
-  const user = true;
+export const DrawerContent: React.FC<ComponentProps> = ({user, ...props}) => {
   const avatar = user ? noAvatar : logoBigWhite;
   //   const isActive = (screen: TDrawerItemScreen) => name === screen;
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -30,7 +29,6 @@ export const DrawerContent: React.FC<ComponentProps> = ({...props}) => {
     isActive(screen) ? logo : logoWhite;
 
   const onPress = (screen: TDrawerItemScreen) => {
-    console.log({screen});
     props.navigation.navigate(screen);
   };
 

@@ -26,16 +26,16 @@ export const secondary = {
   900: '#232020',
 };
 export const gray = {
-  50: '#fafbfc',
-  100: '#f8fafb',
-  200: '#f7f9fa',
-  300: '#f6f9f9',
-  400: '#f5f8f9',
-  500: '#f4f7f8',
-  600: '#dcdedf',
-  700: '#c3c6c6',
-  800: '#abadae',
-  900: '#929495 ',
+  50: '#fffff',
+  100: '#fefefe',
+  200: '#fdfdfd',
+  300: '#fcfcfc',
+  400: '#fbfbfb',
+  500: '#fafafa',
+  600: '#e1e1e1',
+  700: '#c8c8c8',
+  800: '#969696',
+  900: '#7d7d7d',
 };
 
 export default {

@@ -5,7 +5,7 @@ import {useNavigation} from '@react-navigation/native';
 
 import {gray} from '@/constants/Colors';
 import {width} from '@/constants/Layout';
-import {Skeleton, SkeletonItem} from '@/components/common/Skeleton';
+import {Skeleton} from '@/components/common/Skeleton';
 import {getImage} from '@/helpers/getImage';
 import {mockStand} from '@/helpers/mockData';
 import {TStand} from '@/types/stand';
@@ -37,14 +37,13 @@ export const StandCard: React.FC<ComponentProps> = ({
 
   if (loading) {
     return (
-      <Skeleton>
-        <SkeletonItem
-          width={cardWidth}
-          height={110}
-          borderRadius={20}
-          margin={5}
-        />
-      </Skeleton>
+      <Skeleton
+        width={cardWidth}
+        height={110}
+        borderRadius={20}
+        marginX={5}
+        marginBottom={2.5}
+      />
     );
   }
 

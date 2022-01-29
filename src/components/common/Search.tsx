@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleProp, ViewStyle} from 'react-native';
+import {StyleProp, StyleSheet, ViewStyle} from 'react-native';
 import {Icon, View} from 'native-base';
 import Feather from 'react-native-vector-icons/Feather';
 
@@ -10,11 +10,20 @@ export type SearchProps = {
    * Style container
    */
   style?: StyleProp<ViewStyle> | undefined;
+  /**
+   * Placeholder
+   *
+   * @default "Buscar..."
+   */
+  placeholder?: string;
 };
 
-export const Search: React.FC<SearchProps> = ({style}) => {
+export const Search: React.FC<SearchProps> = ({
+  style,
+  placeholder = 'Buscar...',
+}) => {
   return (
-    <View style={style}>
+    <View style={[style, styles.searchContainer]}>
       <InputField
         InputRightElement={
           <Icon
@@ -24,9 +33,15 @@ export const Search: React.FC<SearchProps> = ({style}) => {
             color="muted.500"
           />
         }
-        placeholder="Buscar Ferias, Stands, etc..."
+        placeholder={placeholder}
         isFullWidth
       />
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  searchContainer: {
+    marginBottom: 20,
+  },
+});

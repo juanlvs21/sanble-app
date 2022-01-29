@@ -3,7 +3,7 @@ import {useToast} from 'native-base';
 
 import {useStateValue} from '@/context/app';
 import {fairsConstants} from '@/constants/Context';
-import {geUpcomingFairsDB} from '@/helpers/queries/fairs';
+import {getUpcomingFairsDB, getListFairsDB} from '@/helpers/queries/fairs';
 
 export const useFairs = () => {
   const toast = useToast();
@@ -13,7 +13,7 @@ export const useFairs = () => {
   const getUpcomingFairs = async () => {
     setLoading(true);
     try {
-      const upcoming = await geUpcomingFairsDB();
+      const upcoming = await getUpcomingFairsDB();
       dispatch({
         type: fairsConstants.SET_FAIRSUPCOMING,
         payload: {upcoming},
@@ -28,10 +28,29 @@ export const useFairs = () => {
     }
   };
 
+  const getListFairs = async () => {
+    setLoading(true);
+    try {
+      const list = await getListFairsDB();
+      dispatch({
+        type: fairsConstants.SET_FAIRSLIST,
+        payload: {list},
+      });
+    } catch (error) {
+      toast.show({
+        description: 'Error al cargar el listado de ferias',
+        status: 'error',
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return {
     loading,
     fairsList: fairs.list,
     fairUpcoming: fairs.upcoming,
     getUpcomingFairs,
+    getListFairs,
   };
 };

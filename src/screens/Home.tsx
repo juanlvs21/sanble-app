@@ -6,7 +6,7 @@ import {Heading} from 'native-base';
 import {MainLayout} from '@/layouts/MainLayout';
 import {Search} from '@/components/common/Search';
 import {Carousel} from '@/components/common/Carousel';
-import {FairCard} from '@/components/fairs/Card';
+import {FairCardCarousel} from '@/components/fairs/CardCarousel';
 import {StandCard} from '@/components/stands/Card';
 import {PromotionCardType} from '@/components/products/CardType';
 import {productTypes} from '@/helpers/productTypes';
@@ -38,15 +38,16 @@ export const HomeScreen: React.FC = () => {
 
   return (
     <MainLayout renderRefreshControl={renderRefreshControl}>
-      <Search style={styles.search} />
+      <Search placeholder="Buscar Ferias, Stands, etc..." />
       <Heading>Próximas Ferias</Heading>
       <Carousel
         items={fairs}
         keyExtractor={(fair: TFair) => fair.uuid}
-        renderItem={(fair: TFair) => <FairCard fair={fair} />}
+        renderItem={(fair: TFair) => <FairCardCarousel fair={fair} />}
         containerStyle={styles.carousel}
-        SkeletonElement={<FairCard loading />}
+        SkeletonElement={<FairCardCarousel loading />}
         loading={fairsLoading}
+        emptyText="No hay ferias"
       />
       <Heading>Mejores Stands</Heading>
       <Carousel
@@ -56,6 +57,7 @@ export const HomeScreen: React.FC = () => {
         containerStyle={styles.carousel}
         SkeletonElement={<StandCard loading />}
         loading={standsLoading}
+        emptyText="No hay stands"
       />
       <Heading>Productos</Heading>
       <Carousel
@@ -65,15 +67,13 @@ export const HomeScreen: React.FC = () => {
         containerStyle={styles.carousel}
         containerWidth={180}
         containerSpace={(180 - 180 * 0.7) / 4}
+        emptyText="No hay productos"
       />
     </MainLayout>
   );
 };
 
 const styles = StyleSheet.create({
-  search: {
-    marginBottom: 20,
-  },
   carousel: {
     marginVertical: 10,
   },

@@ -1,6 +1,6 @@
 import React from 'react';
 import {Animated, View, StyleProp, StyleSheet, ViewStyle} from 'react-native';
-import {Spinner} from 'native-base';
+import {Spinner, Text} from 'native-base';
 
 import {width} from '@/constants/Layout';
 
@@ -45,6 +45,18 @@ export type ComponentProps = {
    * Styles flat list
    */
   containerStyle?: StyleProp<ViewStyle>;
+  /**
+   * Empty text
+   *
+   * @default "No hay elementos"
+   */
+  emptyText?: string;
+  /**
+   * Empty height
+   *
+   * @default 110
+   */
+  emptyHeight?: number;
 };
 
 export const Carousel: React.FC<ComponentProps> = ({
@@ -56,6 +68,8 @@ export const Carousel: React.FC<ComponentProps> = ({
   containerStyle,
   loading,
   SkeletonElement = <Spinner size="lg" />,
+  emptyText = 'No hay elementos',
+  emptyHeight = 110,
 }) => {
   // const scrollX = useRef(new Animated.Value(0)).current;
 
@@ -64,54 +78,62 @@ export const Carousel: React.FC<ComponentProps> = ({
       {loading ? (
         <View style={containerStyle}>{SkeletonElement}</View>
       ) : (
-        <Animated.FlatList
-          data={items}
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          decelerationRate={0}
-          snapToInterval={containerWidth}
-          scrollEventThrottle={16}
-          contentContainerStyle={[
-            containerStyle,
-            {marginHorizontal: containerSpace},
-          ]}
-          keyExtractor={keyExtractor}
-          renderItem={({item, index}) => {
-            // const inputRange = [
-            //   (index - 1) * containerWidth,
-            //   index * containerWidth,
-            //   (index + 1) * containerWidth,
-            // ];
+        <>
+          {!items.length && !loading ? (
+            <View style={[styles.emptyContainer, {height: emptyHeight}]}>
+              <Text>{emptyText}</Text>
+            </View>
+          ) : (
+            <Animated.FlatList
+              data={items}
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              decelerationRate={0}
+              snapToInterval={containerWidth}
+              scrollEventThrottle={16}
+              contentContainerStyle={[
+                containerStyle,
+                {marginHorizontal: containerSpace},
+              ]}
+              keyExtractor={keyExtractor}
+              renderItem={({item, index}) => {
+                // const inputRange = [
+                //   (index - 1) * containerWidth,
+                //   index * containerWidth,
+                //   (index + 1) * containerWidth,
+                // ];
 
-            // const outputRange = [0, -30, 0];
+                // const outputRange = [0, -30, 0];
 
-            // const scrollY = scrollX.interpolate({
-            //   inputRange,
-            //   outputRange,
-            // });
+                // const scrollY = scrollX.interpolate({
+                //   inputRange,
+                //   outputRange,
+                // });
 
-            const marginRight =
-              index === items.length - 1 ? containerWidth * 0.2 : 0;
+                const marginRight =
+                  index === items.length - 1 ? containerWidth * 0.2 : 0;
 
-            return (
-              <Animated.View
-                style={{
-                  width: containerWidth,
-                  marginRight,
-                  // transform: [{translateY: scrollY}],
-                }}>
-                {renderItem(item)}
-                {/* {index === items.length - 1 ? (
+                return (
+                  <Animated.View
+                    style={{
+                      width: containerWidth,
+                      marginRight,
+                      // transform: [{translateY: scrollY}],
+                    }}>
+                    {renderItem(item)}
+                    {/* {index === items.length - 1 ? (
         <View style={{width: containerWidth}} />
       ) : null} */}
-              </Animated.View>
-            );
-          }}
-          // onScroll={Animated.event(
-          //   [{nativeEvent: {contentOffset: {x: scrollX}}}],
-          //   {useNativeDriver: true},
-          // )}
-        />
+                  </Animated.View>
+                );
+              }}
+              // onScroll={Animated.event(
+              //   [{nativeEvent: {contentOffset: {x: scrollX}}}],
+              //   {useNativeDriver: true},
+              // )}
+            />
+          )}
+        </>
       )}
     </View>
   );
@@ -122,5 +144,9 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  emptyContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });

@@ -1,8 +1,9 @@
 import firestore from '@react-native-firebase/firestore';
 
 import {TFair} from '@/types/fair';
+import {fairTypeFriendly} from '@/helpers/fairType';
 
-export const geUpcomingFairsDB = (): Promise<TFair[]> =>
+export const getUpcomingFairsDB = (): Promise<TFair[]> =>
   new Promise(async (resolve, reject) => {
     try {
       const data: TFair[] = [];
@@ -17,6 +18,28 @@ export const geUpcomingFairsDB = (): Promise<TFair[]> =>
 
       querySnapshot.forEach(doc => {
         data.push(doc.data() as TFair);
+      });
+      resolve(data);
+    } catch (error) {
+      reject(error);
+    }
+  });
+
+export const getListFairsDB = (): Promise<TFair[]> =>
+  new Promise(async (resolve, reject) => {
+    try {
+      const data: TFair[] = [];
+
+      const querySnapshot = await firestore()
+        .collection('fairs')
+        .orderBy('stars', 'desc')
+        .get();
+
+      querySnapshot.forEach(doc => {
+        data.push({
+          ...doc.data(),
+          typeFriendly: fairTypeFriendly(doc.data().type),
+        } as TFair);
       });
       resolve(data);
     } catch (error) {

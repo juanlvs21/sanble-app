@@ -23,6 +23,8 @@ export type TFair = {
   name: string;
   description: string;
   uuid_user: string;
+  type: TFairType;
+  typeFriendly?: string;
   stars: number;
   email?: string;
   phone?: string;
