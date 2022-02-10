@@ -28,7 +28,7 @@ export type ComponentProps = {
   loading?: boolean;
 };
 
-export const StandCard: React.FC<ComponentProps> = ({
+export const StandCardCarousel: React.FC<ComponentProps> = ({
   stand = mockStand,
   loading,
   cardWidth = width * 0.7,

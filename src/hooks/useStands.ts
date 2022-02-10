@@ -3,7 +3,7 @@ import {useToast} from 'native-base';
 
 import {useStateValue} from '@/context/app';
 import {standsConstants} from '@/constants/Context';
-import {getBestStandsDB} from '@/helpers/queries/stands';
+import {getBestStandsDB, getListStandsDB} from '@/helpers/queries/stands';
 
 export const useStands = () => {
   const toast = useToast();
@@ -28,10 +28,29 @@ export const useStands = () => {
     }
   };
 
+  const getListStands = async () => {
+    setLoading(true);
+    try {
+      const list = await getListStandsDB();
+      dispatch({
+        type: standsConstants.SET_STANDSLIST,
+        payload: {list},
+      });
+    } catch (error) {
+      toast.show({
+        description: 'Error al cargar el listado de stands',
+        status: 'error',
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return {
     loading,
     standsList: stands.list,
     standsBests: stands.bests,
     getBestStands,
+    getListStands,
   };
 };

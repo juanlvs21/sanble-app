@@ -6,11 +6,11 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import {gray, secondary} from '@/constants/Colors';
 import {Skeleton} from '@/components/common/Skeleton';
 import {Stars} from '@/components/common/Stars';
+import {BtnFavorite} from '@/components/common/BtnFavorite';
 import {getFairCover} from '@/helpers/getFairCover';
 import {dateFormat} from '@/helpers/dateFormat';
 import {mockFair} from '@/helpers/mockData';
 import {TFair} from '@/types/fair';
-import {BtnFavorite} from '../common/BtnFavorite';
 
 export type ComponentProps = {
   /**
@@ -63,7 +63,7 @@ export const FairCardList: React.FC<ComponentProps> = ({
               size={15}
               color={secondary[900]}
             />
-            <Text> {dateFormat(fair.date_time, 'DD MMM')}</Text>
+            <Text>{dateFormat(fair.date_time, 'DD MMM')}</Text>
           </View>
           <BtnFavorite isFavorite={true} />
         </View>

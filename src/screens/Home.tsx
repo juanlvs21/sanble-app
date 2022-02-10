@@ -7,7 +7,7 @@ import {MainLayout} from '@/layouts/MainLayout';
 import {Search} from '@/components/common/Search';
 import {Carousel} from '@/components/common/Carousel';
 import {FairCardCarousel} from '@/components/fairs/CardCarousel';
-import {StandCard} from '@/components/stands/Card';
+import {StandCardCarousel} from '@/components/stands/CardCarousel';
 import {PromotionCardType} from '@/components/products/CardType';
 import {productTypes} from '@/helpers/productTypes';
 import {useHome} from '@/hooks/useHome';
@@ -53,9 +53,9 @@ export const HomeScreen: React.FC = () => {
       <Carousel
         items={stands}
         keyExtractor={(stand: TStand) => stand.uuid}
-        renderItem={(stand: TStand) => <StandCard stand={stand} />}
+        renderItem={(stand: TStand) => <StandCardCarousel stand={stand} />}
         containerStyle={styles.carousel}
-        SkeletonElement={<StandCard loading />}
+        SkeletonElement={<StandCardCarousel loading />}
         loading={standsLoading}
         emptyText="No hay stands"
       />
