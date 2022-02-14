@@ -29,7 +29,13 @@ export const DrawerContent: React.FC<ComponentProps> = ({user, ...props}) => {
     isActive(screen) ? logo : logoWhite;
 
   const onPress = (screen: TDrawerItemScreen) => {
-    props.navigation.navigate(screen);
+    if (screen === 'HomeBottomNav') {
+      props.navigation.navigate('HomeBottomNav', {
+        screen: 'Home',
+      });
+    } else {
+      props.navigation.navigate(screen);
+    }
   };
 
   return (
@@ -53,12 +59,12 @@ export const DrawerContent: React.FC<ComponentProps> = ({user, ...props}) => {
       <View style={styles.itemsContainer}>
         <DrawerItem
           label="Inicio"
-          onPress={() => onPress('Root')}
+          onPress={() => onPress('HomeBottomNav')}
           icon={() => (
             <MaterialCommunityIcons
               name="home-variant"
               size={30}
-              color={iconColor('Root')}
+              color={iconColor('HomeBottomNav')}
               style={styles.itemIcon}
             />
           )}

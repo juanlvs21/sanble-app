@@ -4,17 +4,15 @@
  */
 
 import {
-  CompositeScreenProps,
   NavigatorScreenParams,
   RouteProp,
   ParamListBase,
 } from '@react-navigation/native';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {MaterialTopTabScreenProps} from '@react-navigation/material-top-tabs';
 
 declare global {
   namespace ReactNavigation {
-    interface RootParamList extends RootStackParamList {}
+    interface RootParamList extends ScreensParamList {}
   }
 }
 
@@ -22,7 +20,7 @@ export type TBasicScreen = {
   title?: string;
 };
 
-export type RootStackParamList = {
+export type ScreensParamList = {
   Root: NavigatorScreenParams<RootTabParamList> | undefined;
   Modal: undefined;
   FairDetails: {
@@ -42,9 +40,6 @@ export type RootStackParamList = {
   NotFound: undefined;
 };
 
-export type RootStackScreenProps<Screen extends keyof RootStackParamList> =
-  NativeStackScreenProps<RootStackParamList, Screen>;
-
 export type RootTabParamList = {
   Home: TBasicScreen;
   NearYou: TBasicScreen & {
@@ -56,10 +51,7 @@ export type RootTabParamList = {
 };
 
 export type RootTabScreenProps<Screen extends keyof RootTabParamList> =
-  CompositeScreenProps<
-    MaterialTopTabScreenProps<RootTabParamList, Screen>,
-    NativeStackScreenProps<RootStackParamList>
-  >;
+  MaterialTopTabScreenProps<RootTabParamList, Screen>;
 
 export type TRoute<T> = RouteProp<{params: T} & ParamListBase, 'params'>;
 

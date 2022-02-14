@@ -42,21 +42,23 @@ export const MainLayout: React.FC<ComponentProps> = ({
   const translateYValue = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
-    Animated.timing(scaleValue, {
-      toValue: isOpen === 'open' ? 0.9 : 1,
-      duration: 200,
-      useNativeDriver: true,
-    }).start();
-    Animated.timing(borderRadiusValue, {
-      toValue: isOpen === 'open' ? 20 : 0,
-      duration: 200,
-      useNativeDriver: true,
-    }).start();
-    Animated.timing(translateYValue, {
-      toValue: isOpen === 'open' ? -20 : 0,
-      duration: 200,
-      useNativeDriver: true,
-    }).start();
+    Animated.parallel([
+      Animated.timing(scaleValue, {
+        toValue: isOpen === 'open' ? 0.9 : 1,
+        duration: 200,
+        useNativeDriver: true,
+      }),
+      Animated.timing(borderRadiusValue, {
+        toValue: isOpen === 'open' ? 20 : 0,
+        duration: 200,
+        useNativeDriver: true,
+      }),
+      Animated.timing(translateYValue, {
+        toValue: isOpen === 'open' ? -20 : 0,
+        duration: 200,
+        useNativeDriver: true,
+      }),
+    ]).start();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen]);
 

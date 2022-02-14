@@ -1,7 +1,8 @@
 import React from 'react';
-import {View, Text} from 'native-base';
+import {Text} from 'native-base';
 import {useRoute} from '@react-navigation/native';
 
+import {SimpleLayout} from '@/layouts/SimpleLayout';
 import {TRoute} from '@/types/navigator';
 
 export const StandDetailsScreen: React.FC = () => {
@@ -10,8 +11,8 @@ export const StandDetailsScreen: React.FC = () => {
   } = useRoute<TRoute<{id: string}>>();
 
   return (
-    <View>
+    <SimpleLayout>
       <Text>Detalles del stand: {id}</Text>
-    </View>
+    </SimpleLayout>
   );
 };

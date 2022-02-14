@@ -1,7 +1,8 @@
 import React from 'react';
-import {View, Text} from 'native-base';
+import {Text} from 'native-base';
 import {useRoute} from '@react-navigation/native';
 
+import {SimpleLayout} from '@/layouts/SimpleLayout';
 import {TRoute} from '@/types/navigator';
 import {TProductType} from '@/types/product';
 
@@ -11,8 +12,8 @@ export const PromotionListScreen: React.FC = () => {
   } = useRoute<TRoute<{type: TProductType}>>();
 
   return (
-    <View>
+    <SimpleLayout>
       <Text>Lista de promociones: {type}</Text>
-    </View>
+    </SimpleLayout>
   );
 };

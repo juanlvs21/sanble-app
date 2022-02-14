@@ -25,6 +25,7 @@ export const BottomTabNavigator: React.FC = () => {
         tabBarActiveTintColor: Colors[colorScheme].tint,
       }}
       tabBarPosition="bottom"
+      backBehavior="none"
       tabBar={props => <MainTabBar {...props} />}>
       <Tab.Screen
         name="Home"

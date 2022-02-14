@@ -1,5 +1,5 @@
 export type TDrawerItemScreen =
-  | 'Root'
+  | 'HomeBottomNav'
   | 'MySanble'
   | 'Favorites'
   | 'NearYou'
