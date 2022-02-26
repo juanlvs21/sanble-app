@@ -1,7 +1,0 @@
-ion-title {
-  background: red;
-}
-
-ion-button::part(native) {
-  border-radius: 30px;
-}

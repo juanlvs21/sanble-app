@@ -1,4 +1,6 @@
 import {
+  IonAvatar,
+  IonButton,
   // IonBadge,
   IonContent,
   IonHeader,
@@ -30,10 +32,6 @@ type ComponentProps = {
    */
   title?: string;
   /**
-   * Element on the start of the toolbar (Must have property slot="start")
-   */
-  headerStart?: React.ReactNode;
-  /**
    * Element on the end of the toolbar (Must have property slot="end")
    */
   headerEnd?: React.ReactNode;
@@ -46,7 +44,6 @@ type ComponentProps = {
 
 export const MainLayout: React.FC<ComponentProps> = ({
   title = "Sanble",
-  headerStart,
   headerEnd,
   children,
   doRefresh,
@@ -82,9 +79,16 @@ export const MainLayout: React.FC<ComponentProps> = ({
     <IonPage>
       <IonHeader className={styles.header}>
         <IonToolbar className={styles.toolbar}>
-          {headerStart}
+          <IonButton slot="start" className={styles.avatarBtn} fill="clear">
+            <IonAvatar className={styles.avatarImg}>
+              <img
+                src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y"
+                alt="example"
+              />
+            </IonAvatar>
+          </IonButton>
           <IonTitle>{title}</IonTitle>
-          {headerEnd}
+          {headerEnd || <div slot="end" className={styles.headerEndFake} />}
         </IonToolbar>
       </IonHeader>
 

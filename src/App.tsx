@@ -20,14 +20,17 @@ import "@ionic/react/css/display.css";
 import "./theme/variables.css";
 
 import { Router } from "./router";
+import { AppProvider } from "./context";
 
 setupIonicReact();
 
 const App: React.FC = () => {
   return (
-    <IonApp>
-      <Router />
-    </IonApp>
+    <AppProvider>
+      <IonApp>
+        <Router />
+      </IonApp>
+    </AppProvider>
   );
 };
 

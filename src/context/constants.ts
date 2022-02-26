@@ -1,0 +1,4 @@
+export const fairsConstants = {
+  SET_FAIRSLIST: "SET_FAIRSLIST",
+  SET_FAIRSUPCOMING: "SET_FAIRSUPCOMING",
+};
