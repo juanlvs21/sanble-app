@@ -1,0 +1,51 @@
+.header::after {
+  background-image: none;
+}
+
+.toolbar {
+  --background: transparent;
+  --padding-top: 40px;
+  --padding-bottom: 20px;
+  --padding-end: 20px;
+  --padding-start: 20px;
+}
+
+.toolbar ion-title {
+  padding: 0;
+  text-align: center;
+  font-family: Quicksand;
+  font-weight: 700;
+  font-size: 30px;
+}
+
+.content {
+  --padding-start: 20px;
+  --padding-end: 20px;
+}
+
+.content::part(background) {
+  background-image: url("/public/assets/images/bg1.svg");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.tabbarContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  position: absolute;
+  z-index: 10;
+  bottom: 0;
+  left: 0;
+  margin-bottom: 10px;
+}
+
+.tabbarContainer svg {
+  color: var(--ion-color-black);
+}
+
+.tabbar {
+  width: 90%;
+  border-radius: 20px;
+}

@@ -8,73 +8,69 @@
   },
   "license": "MIT",
   "scripts": {
-    "android": "react-native run-android",
-    "ios": "react-native run-ios",
-    "start": "react-native start",
-    "bundle:android": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res",
-    "generate:android": "cd android && ./gradlew assembleDebug && cd ../",
-    "test": "jest",
-    "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --transformIgnorePatterns 'node_modules/(?!(@ionic/react|@ionic/react-router|@ionic/core|@stencil/core|ionicons)/)'",
+    "eject": "react-scripts eject"
   },
   "dependencies": {
-    "@react-native-async-storage/async-storage": "^1.15.14",
-    "@react-native-firebase/app": "^14.2.0",
-    "@react-native-firebase/firestore": "^14.2.0",
-    "@react-native-mapbox-gl/maps": "^8.5.0",
-    "@react-native-masked-view/masked-view": "^0.2.6",
-    "@react-navigation/drawer": "^6.1.8",
-    "@react-navigation/material-top-tabs": "^6.0.6",
-    "@react-navigation/native": "^6.0.6",
-    "dayjs": "^1.10.7",
-    "native-base": "3.2.1",
-    "react": "17.0.1",
-    "react-native": "0.64.1",
-    "react-native-connectivity-status": "^1.5.2",
-    "react-native-dotenv": "^3.3.1",
-    "react-native-geolocation-service": "^5.3.0-beta.4",
-    "react-native-gesture-handler": "^1.9.0",
-    "react-native-linear-gradient": "^2.5.6",
-    "react-native-pager-view": "^5.4.9",
-    "react-native-reanimated": "2.3.0-beta.1",
-    "react-native-safe-area-context": "^3.3.2",
-    "react-native-screens": "^3.10.1",
-    "react-native-skeleton-placeholder": "^5.0.0",
-    "react-native-splash-screen": "^3.3.0",
-    "react-native-svg": "^12.1.1",
-    "react-native-tab-view": "^3.1.1",
-    "react-native-vector-icons": "^9.0.0",
-    "styled-components": "^5.3.3",
-    "styled-system": "^5.1.5"
+    "@capacitor/app": "1.1.0",
+    "@capacitor/core": "3.4.1",
+    "@capacitor/haptics": "1.1.4",
+    "@capacitor/keyboard": "1.2.2",
+    "@capacitor/status-bar": "1.0.8",
+    "@ionic/react": "^6.0.0",
+    "@ionic/react-router": "^6.0.0",
+    "@testing-library/jest-dom": "^5.11.9",
+    "@testing-library/react": "^11.2.5",
+    "@testing-library/user-event": "^12.6.3",
+    "ionicons": "^5.4.0",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-icons": "^4.3.1",
+    "react-router": "^5.2.0",
+    "react-router-dom": "^5.2.0",
+    "web-vitals": "^0.2.4",
+    "workbox-background-sync": "^5.1.4",
+    "workbox-broadcast-update": "^5.1.4",
+    "workbox-cacheable-response": "^5.1.4",
+    "workbox-core": "^5.1.4",
+    "workbox-expiration": "^5.1.4",
+    "workbox-google-analytics": "^5.1.4",
+    "workbox-navigation-preload": "^5.1.4",
+    "workbox-precaching": "^5.1.4",
+    "workbox-range-requests": "^5.1.4",
+    "workbox-routing": "^5.1.4",
+    "workbox-strategies": "^5.1.4",
+    "workbox-streams": "^5.1.4"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.9",
-    "@babel/runtime": "^7.12.5",
-    "@react-native-community/eslint-config": "^2.0.0",
-    "@types/jest": "^26.0.23",
-    "@types/react-native": "^0.64.5",
-    "@types/react-native-dotenv": "^0.2.0",
-    "@types/react-native-vector-icons": "^6.4.10",
-    "@types/react-test-renderer": "^16.9.2",
-    "babel-jest": "^26.6.3",
-    "babel-plugin-module-resolver": "^4.1.0",
-    "eslint": "^7.14.0",
-    "jest": "^26.6.3",
-    "metro-react-native-babel-preset": "^0.64.0",
-    "react-test-renderer": "17.0.1",
-    "typescript": "^3.8.3"
+    "@capacitor/cli": "3.4.1",
+    "@types/jest": "^26.0.20",
+    "@types/node": "^12.19.15",
+    "@types/react": "^16.14.3",
+    "@types/react-dom": "^16.9.10",
+    "@types/react-router": "^5.1.11",
+    "@types/react-router-dom": "^5.1.7",
+    "react-scripts": "^5.0.0",
+    "typescript": "^4.1.3"
   },
-  "resolutions": {
-    "@types/react": "^17"
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
   },
-  "jest": {
-    "preset": "react-native",
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js",
-      "jsx",
-      "json",
-      "node"
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
     ]
   }
 }
