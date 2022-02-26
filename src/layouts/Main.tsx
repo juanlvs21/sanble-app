@@ -1,14 +1,16 @@
 import {
   // IonBadge,
-  IonButtons,
   IonContent,
   IonHeader,
   // IonMenuButton,
   IonPage,
+  IonRefresher,
+  IonRefresherContent,
   IonTabBar,
   IonTabButton,
   IonTitle,
   IonToolbar,
+  RefresherEventDetail,
 } from "@ionic/react";
 import { useLocation, useHistory } from "react-router";
 import { FiHome } from "react-icons/fi";
@@ -35,6 +37,11 @@ type ComponentProps = {
    * Element on the end of the toolbar (Must have property slot="end")
    */
   headerEnd?: React.ReactNode;
+  /**
+   * (JSX attribute) LocalJSX.IonRefresher["onIonRefresh"]?: ((event: CustomEvent<RefresherEventDetail>) => void) | undefined
+   * Emitted when the user lets go of the content and has pulled down further than the pullMin or pulls the content down and exceeds the pullMax. Updates the refresher state to refreshing. The complete() method should be called when the async operation has completed.
+   */
+  doRefresh?: (event: CustomEvent<RefresherEventDetail>) => void;
 };
 
 export const MainLayout: React.FC<ComponentProps> = ({
@@ -42,6 +49,7 @@ export const MainLayout: React.FC<ComponentProps> = ({
   headerStart,
   headerEnd,
   children,
+  doRefresh,
 }) => {
   const { pathname } = useLocation();
   const { push } = useHistory();
@@ -81,6 +89,11 @@ export const MainLayout: React.FC<ComponentProps> = ({
       </IonHeader>
 
       <IonContent fullscreen className={styles.content}>
+        {doRefresh && (
+          <IonRefresher slot="fixed" onIonRefresh={doRefresh}>
+            <IonRefresherContent />
+          </IonRefresher>
+        )}
         {children}
       </IonContent>
 
