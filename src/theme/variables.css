@@ -3,6 +3,7 @@ http://ionicframework.com/docs/theming/ */
 
 /** Ionic CSS Variables **/
 :root {
+  --sanble-border-radius: 20px;
   --ion-font-family: Poppins, sans-serif;
 
   /** primary **/

@@ -1,0 +1,40 @@
+.noPadding {
+  padding: 0px;
+}
+
+.card {
+  border-radius: var(--sanble-border-radius);
+}
+
+.cardContent {
+  height: 100px;
+}
+
+img.image {
+  height: 100px;
+  object-fit: cover;
+  object-position: center;
+  border-top-left-radius: var(--sanble-border-radius);
+  border-bottom-left-radius: var(--sanble-border-radius);
+}
+
+.colContent {
+  text-align: left;
+  padding: 5px 10px;
+}
+
+.title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ion-color-black);
+  padding: 0;
+}
+
+p.description {
+  font-size: 12px;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+}

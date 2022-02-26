@@ -63,5 +63,5 @@
 
 .tabbar {
   width: 90%;
-  border-radius: 20px;
+  border-radius: var(--sanble-border-radius);
 }

@@ -3,6 +3,7 @@ import { BiBell } from "react-icons/bi";
 
 import styles from "./Home.module.css";
 import { MainLayout } from "../../layouts/Main";
+import { Carousel } from "../../components/common/Carousel";
 
 export const HomeSreen: React.FC = () => {
   const notificationsBtn = (
@@ -18,7 +19,7 @@ export const HomeSreen: React.FC = () => {
 
   return (
     <MainLayout headerEnd={notificationsBtn}>
-      <h1>Home</h1>
+      <Carousel />
     </MainLayout>
   );
 };
