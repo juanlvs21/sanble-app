@@ -10,8 +10,29 @@ import {
 import { FiCalendar, FiClock } from "react-icons/fi";
 
 import styles from "./CardCarousel.module.css";
+import { mockFair } from "@/utils/mockData";
+import { dateFormat } from "@/utils/dateFormat";
+import { TFair } from "@/types/TFairs";
 
-export const FairCardCarousel: React.FC = () => {
+type ComponentProps = {
+  /**
+   * Fair details
+   */
+  fair?: TFair;
+  /**
+   * Loading show skeleton card
+   */
+  loading?: boolean;
+};
+
+export const FairCardCarousel: React.FC<ComponentProps> = ({
+  fair = mockFair,
+  loading,
+}) => {
+  if (loading) {
+    return <p>Cargando</p>;
+  }
+
   return (
     <IonCard className={styles.card}>
       <IonCardContent className={`${styles.cardContent} ${styles.noPadding}`}>
@@ -25,19 +46,16 @@ export const FairCardCarousel: React.FC = () => {
               />
             </IonCol>
             <IonCol size="8" className={styles.colContent}>
-              <IonCardTitle className={styles.title}>Nombre feria</IonCardTitle>
-              <p className={styles.description}>
-                This is content, without any paragraph or header tags, within an
-                ion-cardContent element.
-              </p>
+              <IonCardTitle className={styles.title}>{fair.name}</IonCardTitle>
+              <p className={styles.description}>{fair.description}</p>
               <div className={styles.badgeContainer}>
-                <IonBadge color="primary">
-                  <FiCalendar size={14} className={styles.badge} />
-                  17ago
+                <IonBadge color="primary" className={styles.badge}>
+                  <FiCalendar size={14} className={styles.badgeIcon} />
+                  {dateFormat(fair.date_time, "DD MMM")}
                 </IonBadge>
-                <IonBadge color="primary">
-                  <FiClock size={14} className={styles.badge} />
-                  7:30pm
+                <IonBadge color="primary" className={styles.badge}>
+                  <FiClock size={14} className={styles.badgeIcon} />
+                  {dateFormat(fair.date_time, "HH:mm a")}
                 </IonBadge>
               </div>
             </IonCol>

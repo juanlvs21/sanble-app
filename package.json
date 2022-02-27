@@ -25,6 +25,7 @@
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.5",
     "@testing-library/user-event": "^12.6.3",
+    "dayjs": "^1.10.7",
     "firebase": "^9.6.7",
     "ionicons": "^5.4.0",
     "react": "^17.0.1",

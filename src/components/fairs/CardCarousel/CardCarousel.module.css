@@ -28,6 +28,11 @@ img.image {
   padding: 0;
   margin-top: 3px;
   margin-bottom: 2px;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
 }
 
 p.description {
@@ -41,9 +46,14 @@ p.description {
 
 .badgeContainer {
   display: flex;
+  margin-top: 5px;
 }
 
 .badge {
+  font-size: 10px;
+}
+
+.badgeIcon {
   margin-right: 3px;
   margin-bottom: 1px;
 }
