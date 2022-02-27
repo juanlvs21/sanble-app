@@ -13,6 +13,7 @@ import {
   IonTitle,
   IonToolbar,
   RefresherEventDetail,
+  ScrollDetail,
 } from "@ionic/react";
 import { useLocation, useHistory } from "react-router";
 import { FiHome } from "react-icons/fi";
@@ -75,6 +76,10 @@ export const MainLayout: React.FC<ComponentProps> = ({
     }>
   ) => push(event.detail.tab);
 
+  const handleScroll = (event: CustomEvent<ScrollDetail>) => {
+    console.log(event);
+  };
+
   return (
     <IonPage>
       <IonHeader className={styles.header}>
@@ -92,7 +97,11 @@ export const MainLayout: React.FC<ComponentProps> = ({
         </IonToolbar>
       </IonHeader>
 
-      <IonContent fullscreen className={styles.content}>
+      <IonContent
+        fullscreen
+        className={styles.content}
+        onIonScroll={handleScroll}
+      >
         {doRefresh && (
           <IonRefresher slot="fixed" onIonRefresh={doRefresh}>
             <IonRefresherContent />

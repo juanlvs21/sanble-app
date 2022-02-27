@@ -3,16 +3,7 @@ import { IonSlides, IonSlide } from "@ionic/react";
 import styles from "./Carousel.module.css";
 import { FairCardCarousel } from "../../fairs/CardCarousel";
 
-type ComponentProps = {
-  /**
-   * Height carousel
-   *
-   * @default 180
-   */
-  height?: number | string;
-};
-
-export const Carousel: React.FC<ComponentProps> = ({ height = 180 }) => {
+export const Carousel: React.FC = () => {
   const slideOpts = {
     initialSlide: 1,
     slidesPerView: 1.5,
