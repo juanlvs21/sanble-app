@@ -1,7 +1,7 @@
-import { TAction, TFairsReducer } from "../../types/TContext";
-import { TFair } from "../../types/TFairs";
+import { TAction, TFairsReducer } from "@/types/TContext";
+import { TFair } from "@/types/TFairs";
 
-import { fairsConstants } from "../constants";
+import { fairsConstants } from "@/context/constants";
 
 export const initialFairsState: TFairsReducer = {
   list: [],

@@ -2,9 +2,9 @@ import { Route } from "react-router-dom";
 import { IonRouterOutlet, IonSplitPane } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
 
-import { HomeSreen } from "../screens/Home";
-import { FairsList } from "../screens/fairs/List";
-import { StandsList } from "../screens/stands/List";
+import { HomeSreen } from "@/screens/Home";
+import { FairsList } from "@/screens/fairs/List";
+import { StandsList } from "@/screens/stands/List";
 
 export const Router: React.FC = () => {
   return (

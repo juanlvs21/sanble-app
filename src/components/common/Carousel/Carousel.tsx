@@ -1,7 +1,7 @@
 import { IonSlides, IonSlide } from "@ionic/react";
 
 import styles from "./Carousel.module.css";
-import { FairCardCarousel } from "../../fairs/CardCarousel";
+import { FairCardCarousel } from "@/components/fairs/CardCarousel";
 
 export const Carousel: React.FC = () => {
   const slideOpts = {

@@ -1,8 +1,8 @@
 import { createContext, useContext, useReducer } from "react";
 
 import { fairsReducer, initialFairsState } from "./reducers/fairsReducer";
-import { TContextProps } from "../types/TContext";
-import { TFairsReducer } from "../types/TContext";
+import { TContextProps } from "@/types/TContext";
+import { TFairsReducer } from "@/types/TContext";
 
 export const FairsContext = createContext<TContextProps<TFairsReducer>>([
   initialFairsState,
