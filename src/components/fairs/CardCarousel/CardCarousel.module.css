@@ -38,3 +38,8 @@ p.description {
   text-overflow: ellipsis;
   display: -webkit-box;
 }
+
+.badge {
+  margin-right: 3px;
+  margin-bottom: 1px;
+}

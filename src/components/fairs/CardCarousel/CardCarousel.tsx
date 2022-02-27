@@ -5,7 +5,9 @@ import {
   IonGrid,
   IonRow,
   IonTitle,
+  IonBadge,
 } from "@ionic/react";
+import { FiCalendar, FiClock } from "react-icons/fi";
 
 import styles from "./CardCarousel.module.css";
 
@@ -28,6 +30,16 @@ export const FairCardCarousel: React.FC = () => {
                 This is content, without any paragraph or header tags, within an
                 ion-cardContent element.
               </p>
+              <div style={{ display: "flex" }}>
+                <IonBadge color="primary">
+                  <FiCalendar size={14} className={styles.badge} />
+                  17ago
+                </IonBadge>
+                <IonBadge color="primary">
+                  <FiClock size={14} className={styles.badge} />
+                  7:30pm
+                </IonBadge>
+              </div>
             </IonCol>
           </IonRow>
         </IonGrid>
