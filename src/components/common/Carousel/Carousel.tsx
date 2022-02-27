@@ -1,9 +1,23 @@
 import { IonSlides, IonSlide } from "@ionic/react";
 
 import styles from "./Carousel.module.css";
-import { FairCardCarousel } from "@/components/fairs/CardCarousel";
 
-export const Carousel: React.FC = () => {
+type ComponentProps = {
+  /**
+   * Data
+   */
+  data: any[];
+  /**
+   * Unique primary key name
+   */
+  keyName: string;
+  /**
+   * Card Element
+   */
+  card: (data: any) => React.ReactElement;
+};
+
+export const Carousel: React.FC<ComponentProps> = ({ data, keyName, card }) => {
   const slideOpts = {
     initialSlide: 0,
     slidesPerView: 1.5,
@@ -15,15 +29,9 @@ export const Carousel: React.FC = () => {
 
   return (
     <IonSlides pager={true} options={slideOpts} className={styles.carousel}>
-      <IonSlide>
-        <FairCardCarousel />
-      </IonSlide>
-      <IonSlide>
-        <FairCardCarousel />
-      </IonSlide>
-      <IonSlide>
-        <FairCardCarousel />
-      </IonSlide>
+      {data.map((dat) => (
+        <IonSlide key={dat[keyName]}>{card(dat)}</IonSlide>
+      ))}
     </IonSlides>
   );
 };
