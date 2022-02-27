@@ -24,7 +24,7 @@ export const Carousel: React.FC<ComponentProps> = ({ data, keyName, card }) => {
     spaceBetween: 0,
     centeredSlides: true,
     speed: 400,
-    autoplay: true,
+    autoplay: false,
   };
 
   return (
