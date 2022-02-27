@@ -30,7 +30,7 @@ export const FairCardCarousel: React.FC = () => {
                 This is content, without any paragraph or header tags, within an
                 ion-cardContent element.
               </p>
-              <div style={{ display: "flex" }}>
+              <div className={styles.badgeContainer}>
                 <IonBadge color="primary">
                   <FiCalendar size={14} className={styles.badge} />
                   17ago

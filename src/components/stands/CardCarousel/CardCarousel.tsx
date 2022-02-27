@@ -5,11 +5,10 @@ import {
   IonGrid,
   IonRow,
   IonCardTitle,
-  IonBadge,
 } from "@ionic/react";
-import { FiCalendar, FiClock } from "react-icons/fi";
 
 import styles from "./CardCarousel.module.css";
+import { Stars } from "@/components/common/Stars";
 
 export const StandCardCarousel: React.FC = () => {
   return (
@@ -17,29 +16,20 @@ export const StandCardCarousel: React.FC = () => {
       <IonCardContent className={`${styles.cardContent} ${styles.noPadding}`}>
         <IonGrid className={styles.noPadding}>
           <IonRow>
-            <IonCol size="4" className={styles.noPadding}>
+            <IonCol size="8" className={styles.colContent}>
+              <IonCardTitle className={styles.title}>Nombre feria</IonCardTitle>
+              <Stars stars={3} />
+              <p className={styles.description}>
+                This is content, without any paragraph or header tags, within an
+                ion-cardContent element.
+              </p>
+            </IonCol>
+            <IonCol className={styles.noPadding}>
               <img
                 src="https://www.iica.int/sites/default/files/ckeditor-images/feriacomidas.JPG"
                 alt="Feria"
                 className={styles.image}
               />
-            </IonCol>
-            <IonCol size="8" className={styles.colContent}>
-              <IonCardTitle className={styles.title}>Nombre feria</IonCardTitle>
-              <p className={styles.description}>
-                This is content, without any paragraph or header tags, within an
-                ion-cardContent element.
-              </p>
-              <div style={{ display: "flex" }}>
-                <IonBadge color="primary">
-                  <FiCalendar size={14} className={styles.badge} />
-                  17ago
-                </IonBadge>
-                <IonBadge color="primary">
-                  <FiClock size={14} className={styles.badge} />
-                  7:30pm
-                </IonBadge>
-              </div>
             </IonCol>
           </IonRow>
         </IonGrid>

@@ -5,9 +5,10 @@ import styles from "./Home.module.css";
 import { MainLayout } from "@/layouts/Main";
 import { Carousel } from "@/components/common/Carousel";
 import { FairCardCarousel } from "@/components/fairs/CardCarousel";
-import { EFairType, TFair } from "@/types/TFairs";
+import { StandCardCarousel } from "@/components/stands/CardCarousel";
+import { EFairType } from "@/types/TFairs";
 
-const fairs: TFair[] = [
+const fairs = [
   {
     description: "Lorem ipsum",
     name: "Nombre de mi feria",
@@ -56,7 +57,7 @@ export const HomeSreen: React.FC = () => {
       <Carousel
         data={fairs}
         keyName="uuid"
-        card={(data) => <FairCardCarousel />}
+        card={(data) => <StandCardCarousel />}
       />
 
       <h3 className={styles.title}>Productos</h3>

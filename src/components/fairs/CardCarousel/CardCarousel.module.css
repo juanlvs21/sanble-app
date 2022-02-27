@@ -14,8 +14,6 @@ img.image {
   height: 100px;
   object-fit: cover;
   object-position: center;
-  border-top-left-radius: var(--sanble-border-radius);
-  border-bottom-left-radius: var(--sanble-border-radius);
 }
 
 .colContent {
@@ -39,6 +37,10 @@ p.description {
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
+}
+
+.badgeContainer {
+  display: flex;
 }
 
 .badge {
