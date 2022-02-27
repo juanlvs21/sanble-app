@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   IonAvatar,
   IonButton,
@@ -51,6 +52,7 @@ export const MainLayout: React.FC<ComponentProps> = ({
 }) => {
   const { pathname } = useLocation();
   const { push } = useHistory();
+  const [scrollTop, setScrollTop] = useState<number>(0);
 
   const tabs = [
     {
@@ -76,14 +78,15 @@ export const MainLayout: React.FC<ComponentProps> = ({
     }>
   ) => push(event.detail.tab);
 
-  const handleScroll = (event: CustomEvent<ScrollDetail>) => {
-    console.log(event);
-  };
+  const handleScroll = (event: CustomEvent<ScrollDetail>) =>
+    setScrollTop(event.detail.scrollTop);
 
   return (
     <IonPage>
       <IonHeader className={styles.header}>
-        <IonToolbar className={styles.toolbar}>
+        <IonToolbar
+          className={`${styles.toolbar} ${scrollTop > 25 ? styles.fill : ""}`}
+        >
           <IonButton slot="start" className={styles.avatarBtn} fill="clear">
             <IonAvatar className={styles.avatarImg}>
               <img
@@ -101,6 +104,7 @@ export const MainLayout: React.FC<ComponentProps> = ({
         fullscreen
         className={styles.content}
         onIonScroll={handleScroll}
+        scrollEvents
       >
         {doRefresh && (
           <IonRefresher slot="fixed" onIonRefresh={doRefresh}>

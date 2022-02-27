@@ -9,10 +9,11 @@
 .searchbar {
   padding-left: 0;
   padding-right: 0;
+  margin-bottom: 20px;
 }
 
 .title {
   font-size: 20px;
-  margin-top: 25px;
+  margin-top: 5px;
   color: var(--ion-color-black);
 }

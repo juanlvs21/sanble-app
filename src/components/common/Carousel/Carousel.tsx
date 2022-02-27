@@ -5,11 +5,12 @@ import { FairCardCarousel } from "../../fairs/CardCarousel";
 
 export const Carousel: React.FC = () => {
   const slideOpts = {
-    initialSlide: 1,
+    initialSlide: 0,
     slidesPerView: 1.5,
     spaceBetween: 0,
     centeredSlides: true,
     speed: 400,
+    autoplay: true,
   };
 
   return (
