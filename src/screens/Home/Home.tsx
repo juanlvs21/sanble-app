@@ -1,4 +1,4 @@
-import { IonButton } from "@ionic/react";
+import { IonButton, IonSearchbar } from "@ionic/react";
 import { BiBell } from "react-icons/bi";
 
 import styles from "./Home.module.css";
@@ -19,6 +19,21 @@ export const HomeSreen: React.FC = () => {
 
   return (
     <MainLayout headerEnd={notificationsBtn}>
+      <IonSearchbar
+        placeholder="Buscar Ferias, Stands, etc..."
+        className={styles.searchbar}
+      />
+
+      <h3 className={styles.title}>Próximas Ferias</h3>
+      <Carousel />
+
+      <h3 className={styles.title}>Mejores Stands</h3>
+      <Carousel />
+
+      <h3 className={styles.title}>Productos</h3>
+      <Carousel />
+
+      <h3 className={styles.title}>Promociones</h3>
       <Carousel />
     </MainLayout>
   );

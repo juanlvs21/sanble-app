@@ -4,7 +4,7 @@ import {
   IonCol,
   IonGrid,
   IonRow,
-  IonTitle,
+  IonCardTitle,
   IonBadge,
 } from "@ionic/react";
 import { FiCalendar, FiClock } from "react-icons/fi";
@@ -25,7 +25,7 @@ export const FairCardCarousel: React.FC = () => {
               />
             </IonCol>
             <IonCol size="8" className={styles.colContent}>
-              <IonTitle className={styles.title}>Nombre feria</IonTitle>
+              <IonCardTitle className={styles.title}>Nombre feria</IonCardTitle>
               <p className={styles.description}>
                 This is content, without any paragraph or header tags, within an
                 ion-cardContent element.

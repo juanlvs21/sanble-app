@@ -5,3 +5,14 @@
   padding: 0;
   box-shadow: none;
 }
+
+.searchbar {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.title {
+  font-size: 20px;
+  margin-top: 25px;
+  color: var(--ion-color-black);
+}

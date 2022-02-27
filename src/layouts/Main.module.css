@@ -35,8 +35,9 @@
 }
 
 .content {
-  --padding-start: 20px;
-  --padding-end: 20px;
+  --padding-start: 25px;
+  --padding-end: 25px;
+  --padding-bottom: 75px;
 }
 
 .content::part(background) {

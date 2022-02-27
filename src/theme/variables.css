@@ -267,3 +267,9 @@ ion-badge {
 ion-badge[color="primary"] {
   color: #fff;
 }
+
+ion-searchbar input.searchbar-input {
+  --border-radius: var(--sanble-border-radius);
+  --box-shadow: none;
+  --background: #fafafa;
+}
