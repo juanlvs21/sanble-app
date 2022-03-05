@@ -7,7 +7,7 @@ import {
   IonCardTitle,
   IonBadge,
 } from "@ionic/react";
-import { FiCalendar, FiClock } from "react-icons/fi";
+import { FiCalendar } from "react-icons/fi";
 
 import styles from "./CardCarousel.module.css";
 import { mockFair } from "@/utils/mockData";

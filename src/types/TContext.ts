@@ -1,6 +1,7 @@
 import { Dispatch } from "react";
 
 import { TFair } from "./TFairs";
+import { TStand } from "./TStands";
 
 export type TAction<T = any> = {
   type: string;
@@ -18,4 +19,9 @@ export type TContextProps<T> = [T, Dispatch<TAction>];
 export type TFairsReducer = {
   list: TFair[];
   upcoming: TFair[];
+};
+
+export type TStandsReducer = {
+  list: TStand[];
+  bests: TStand[];
 };

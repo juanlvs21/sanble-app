@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { IonButton, IonSearchbar, RefresherEventDetail } from "@ionic/react";
+import { IonButton, IonSearchbar } from "@ionic/react";
 import { BiBell } from "react-icons/bi";
 
 import styles from "./Home.module.css";
