@@ -11,7 +11,7 @@
 }
 
 img.image {
-  height: 100px;
+  height: 100px !important;
   object-fit: cover;
   object-position: center;
 }
@@ -23,6 +23,7 @@ img.image {
   z-index: 5;
   margin-right: -15px;
   background: #fff;
+  height: 100px;
 }
 
 .title {
@@ -46,4 +47,13 @@ p.slogan {
 .badge {
   margin-right: 3px;
   margin-bottom: 1px;
+}
+
+.skeletonImage {
+  position: absolute;
+  border-radius: 0 !important;
+}
+
+.skeletonText {
+  color: transparent;
 }

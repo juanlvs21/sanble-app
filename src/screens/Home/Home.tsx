@@ -54,7 +54,9 @@ export const HomeSreen: React.FC = () => {
       <Carousel
         data={stands}
         keyName="uuid"
-        card={(data: TStand) => <StandCardCarousel stand={data} />}
+        card={(data: TStand, loading) => (
+          <StandCardCarousel stand={data} loading={loading} />
+        )}
         loading={standsLoading}
       />
 
