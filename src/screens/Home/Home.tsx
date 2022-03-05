@@ -60,6 +60,13 @@ export const HomeSreen: React.FC = () => {
         loading={standsLoading}
       />
 
+      <h3 className={styles.title}>Promociones</h3>
+      <Carousel
+        data={[]}
+        keyName={(data) => data.uuid}
+        card={(data) => <FairCardCarousel />}
+      />
+
       <h3 className={styles.title}>Productos</h3>
       <Carousel
         data={productTypes}
@@ -68,13 +75,6 @@ export const HomeSreen: React.FC = () => {
         loading={false}
         slidesPerView={3}
         initialSlide={1}
-      />
-
-      <h3 className={styles.title}>Promociones</h3>
-      <Carousel
-        data={[]}
-        keyName={(data) => data.uuid}
-        card={(data) => <FairCardCarousel />}
       />
     </MainLayout>
   );

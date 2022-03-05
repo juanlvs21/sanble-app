@@ -1,13 +1,5 @@
 import { TProduct } from "@/types/TProduct";
-
-export type TStandPromotion = {
-  uuid: string;
-  title: string;
-  description: string;
-  is_active: boolean;
-  url_photo: string;
-  items: string[];
-};
+import { TPromotion } from "@/types/TPromotions";
 
 export type TStand = {
   uuid: string;
@@ -16,7 +8,7 @@ export type TStand = {
   stars: number;
   url_photo?: string;
   products: TProduct[];
-  promotions: TStandPromotion[];
+  promotions: TPromotion[];
   uuid_user: string;
   slogan?: string;
   creationTime?: string;

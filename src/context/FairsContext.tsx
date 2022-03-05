@@ -1,6 +1,9 @@
 import { createContext, useContext, useReducer } from "react";
 
-import { fairsReducer, initialFairsState } from "./reducers/fairsReducer";
+import {
+  fairsReducer,
+  initialFairsState,
+} from "@/context/reducers/fairsReducer";
 import { TContextProps } from "@/types/TContext";
 import { TFairsReducer } from "@/types/TContext";
 

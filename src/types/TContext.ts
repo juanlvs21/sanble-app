@@ -1,7 +1,7 @@
 import { Dispatch } from "react";
 
-import { TFair } from "./TFairs";
-import { TStand } from "./TStands";
+import { TFair } from "@/types/TFairs";
+import { TStand } from "@/types/TStands";
 
 export type TAction<T = any> = {
   type: string;

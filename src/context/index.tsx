@@ -1,6 +1,6 @@
 // Context
-import { FairsProvider } from "./FairsContext";
-import { StandsProvider } from "./StandsContext";
+import { FairsProvider } from "@/context/FairsContext";
+import { StandsProvider } from "@/context/StandsContext";
 
 export const AppProvider: React.FC = ({ children }) => (
   <FairsProvider>
