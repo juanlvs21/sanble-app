@@ -57,3 +57,12 @@ p.description {
   margin-right: 3px;
   margin-bottom: 1px;
 }
+
+.skeletonImage {
+  position: absolute;
+  border-radius: 0;
+}
+
+.skeletonText {
+  color: transparent;
+}

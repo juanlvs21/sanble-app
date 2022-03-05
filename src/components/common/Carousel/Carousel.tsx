@@ -14,10 +14,21 @@ type ComponentProps = {
   /**
    * Card Element
    */
-  card: (data: any) => React.ReactElement;
+  card: (data: any, loading?: boolean) => React.ReactElement;
+  /**
+   * Loading carousel
+   *
+   * @default false
+   */
+  loading?: boolean;
 };
 
-export const Carousel: React.FC<ComponentProps> = ({ data, keyName, card }) => {
+export const Carousel: React.FC<ComponentProps> = ({
+  data,
+  keyName,
+  card,
+  loading = false,
+}) => {
   const slideOpts = {
     initialSlide: 0,
     slidesPerView: 1.5,
@@ -30,7 +41,7 @@ export const Carousel: React.FC<ComponentProps> = ({ data, keyName, card }) => {
   return (
     <IonSlides pager={true} options={slideOpts} className={styles.carousel}>
       {data.map((dat) => (
-        <IonSlide key={dat[keyName]}>{card(dat)}</IonSlide>
+        <IonSlide key={dat[keyName]}>{card(dat, loading)}</IonSlide>
       ))}
     </IonSlides>
   );

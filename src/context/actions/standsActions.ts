@@ -7,7 +7,7 @@ import { TStand } from "@/types/TStands";
 // Constants
 import { standsConstants } from "@/context/constants";
 
-export const fairsActions = (dispatch: Dispatch<TAction>) => ({
+export const standsActions = (dispatch: Dispatch<TAction>) => ({
   setStandsList: (data: TStand[]) =>
     dispatch({
       type: standsConstants.SET_STANDSLIST,

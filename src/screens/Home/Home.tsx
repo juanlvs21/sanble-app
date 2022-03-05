@@ -12,32 +12,10 @@ import { useHome } from "@/hooks/useHome";
 import { TStand } from "@/types/TStands";
 import { TFair } from "@/types/TFairs";
 
-const stands: TStand[] = [
-  {
-    name: "Mojitos buenos",
-    description: "Lorem ipsum lorem ipsum",
-    slogan: "Lorem ipsum lorem ipsum",
-    products: [],
-    promotions: [],
-    stars: 3,
-    uuid: "34534-456-456-456",
-    uuid_user: "34234-234-234-234",
-  },
-  {
-    name: "Donas donitas",
-    description: "Lorem ipsum lorem ipsum",
-    slogan: "Lorem ipsum lorem ipsum",
-    products: [],
-    promotions: [],
-    stars: 3,
-    uuid: "34534-34543-456-sdf",
-    uuid_user: "34234-234-234-234",
-  },
-];
-
 export const HomeSreen: React.FC = () => {
   const active = useSreenActive("/");
-  const { fairs, handleRefresh } = useHome();
+  const { fairs, fairsLoading, stands, standsLoading, handleRefresh } =
+    useHome();
 
   useEffect(() => {
     if (active) handleRefresh();
@@ -66,7 +44,10 @@ export const HomeSreen: React.FC = () => {
       <Carousel
         data={fairs}
         keyName="uuid"
-        card={(data: TFair) => <FairCardCarousel fair={data} />}
+        card={(data: TFair, loading) => (
+          <FairCardCarousel fair={data} loading={loading} />
+        )}
+        loading={fairsLoading}
       />
 
       <h3 className={styles.title}>Mejores Stands</h3>
@@ -74,6 +55,7 @@ export const HomeSreen: React.FC = () => {
         data={stands}
         keyName="uuid"
         card={(data: TStand) => <StandCardCarousel stand={data} />}
+        loading={standsLoading}
       />
 
       <h3 className={styles.title}>Productos</h3>
