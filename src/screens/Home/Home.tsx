@@ -9,8 +9,8 @@ import { FairCardCarousel } from "@/components/fairs/CardCarousel";
 import { StandCardCarousel } from "@/components/stands/CardCarousel";
 import { useSreenActive } from "@/hooks/useSreenActive";
 import { useHome } from "@/hooks/useHome";
-import { TStand } from "@/types/TStands";
-import { TFair } from "@/types/TFairs";
+import { productTypes } from "@/utils/productData";
+import { ProductCardCarousel } from "@/components/products/CardCarousel";
 
 export const HomeSreen: React.FC = () => {
   const active = useSreenActive("/");
@@ -43,8 +43,8 @@ export const HomeSreen: React.FC = () => {
       <h3 className={styles.title}>Próximas Ferias</h3>
       <Carousel
         data={fairs}
-        keyName="uuid"
-        card={(data: TFair, loading) => (
+        keyName={(data) => data.uuid}
+        card={(data, loading) => (
           <FairCardCarousel fair={data} loading={loading} />
         )}
         loading={fairsLoading}
@@ -53,8 +53,8 @@ export const HomeSreen: React.FC = () => {
       <h3 className={styles.title}>Mejores Stands</h3>
       <Carousel
         data={stands}
-        keyName="uuid"
-        card={(data: TStand, loading) => (
+        keyName={(data) => data.uuid}
+        card={(data, loading) => (
           <StandCardCarousel stand={data} loading={loading} />
         )}
         loading={standsLoading}
@@ -62,15 +62,18 @@ export const HomeSreen: React.FC = () => {
 
       <h3 className={styles.title}>Productos</h3>
       <Carousel
-        data={[]}
-        keyName="uuid"
-        card={(data) => <FairCardCarousel />}
+        data={productTypes}
+        keyName={(data) => data}
+        card={(data) => <ProductCardCarousel type={data} />}
+        loading={false}
+        slidesPerView={3}
+        initialSlide={1}
       />
 
       <h3 className={styles.title}>Promociones</h3>
       <Carousel
         data={[]}
-        keyName="uuid"
+        keyName={(data) => data.uuid}
         card={(data) => <FairCardCarousel />}
       />
     </MainLayout>

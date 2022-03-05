@@ -1,5 +1,5 @@
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination } from "swiper";
+import { Pagination, SwiperOptions } from "swiper";
 
 import "swiper/css";
 import "swiper/css/pagination";
@@ -15,7 +15,7 @@ type ComponentProps = {
   /**
    * Unique primary key name
    */
-  keyName: string;
+  keyName: (data: any) => string;
   /**
    * Card Element
    */
@@ -26,29 +26,35 @@ type ComponentProps = {
    * @default false
    */
   loading?: boolean;
-};
+} & SwiperOptions;
 
 export const Carousel: React.FC<ComponentProps> = ({
   data,
   keyName,
   card,
   loading = false,
+  modules = [Pagination],
+  speed = 400,
+  initialSlide = 0,
+  slidesPerView = 1.5,
+  pagination = true,
+  centeredSlides = true,
 }) => (
   <Swiper
     className={styles.carousel}
-    modules={[Pagination]}
-    speed={400}
-    initialSlide={0}
-    slidesPerView={1.5}
-    pagination
-    centeredSlides
+    modules={modules}
+    speed={speed}
+    initialSlide={initialSlide}
+    slidesPerView={slidesPerView}
+    pagination={pagination}
+    centeredSlides={centeredSlides}
   >
     {loading
       ? [1, 2, 3].map((i) => (
           <SwiperSlide key={i}>{card(undefined, loading)}</SwiperSlide>
         ))
       : data.map((dat) => (
-          <SwiperSlide key={dat[keyName]}>{card(dat, loading)}</SwiperSlide>
+          <SwiperSlide key={keyName(dat)}>{card(dat, loading)}</SwiperSlide>
         ))}
 
     {}
