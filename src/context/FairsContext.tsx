@@ -29,4 +29,4 @@ export const FairsProvider: React.FC<TFairsContextProps> = ({
   );
 };
 
-export const useFairsContext = () => useContext(FairsContext);
+export const useFairsStateValue = () => useContext(FairsContext);

@@ -41,14 +41,14 @@ type ComponentProps = {
    * (JSX attribute) LocalJSX.IonRefresher["onIonRefresh"]?: ((event: CustomEvent<RefresherEventDetail>) => void) | undefined
    * Emitted when the user lets go of the content and has pulled down further than the pullMin or pulls the content down and exceeds the pullMax. Updates the refresher state to refreshing. The complete() method should be called when the async operation has completed.
    */
-  doRefresh?: (event: CustomEvent<RefresherEventDetail>) => void;
+  handleRefresh?: () => Promise<any>;
 };
 
 export const MainLayout: React.FC<ComponentProps> = ({
   title = "Sanble",
   headerEnd,
   children,
-  doRefresh,
+  handleRefresh,
 }) => {
   const { pathname } = useLocation();
   const { push } = useHistory();
@@ -81,6 +81,11 @@ export const MainLayout: React.FC<ComponentProps> = ({
   const handleScroll = (event: CustomEvent<ScrollDetail>) =>
     setScrollTop(event.detail.scrollTop);
 
+  const doRefresh = async (event: CustomEvent<RefresherEventDetail>) => {
+    if (handleRefresh) await handleRefresh();
+    event.detail.complete();
+  };
+
   return (
     <IonPage>
       <IonHeader className={styles.header}>
@@ -106,7 +111,7 @@ export const MainLayout: React.FC<ComponentProps> = ({
         onIonScroll={handleScroll}
         scrollEvents
       >
-        {doRefresh && (
+        {handleRefresh && (
           <IonRefresher slot="fixed" onIonRefresh={doRefresh}>
             <IonRefresherContent />
           </IonRefresher>

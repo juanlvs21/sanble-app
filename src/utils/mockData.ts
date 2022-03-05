@@ -1,4 +1,4 @@
-import { EFairType, TFair } from "@/types/TFairs";
+import { TFair } from "@/types/TFairs";
 import { TStand } from "@/types/TStands";
 
 export const mockFair: TFair = {
@@ -9,7 +9,7 @@ export const mockFair: TFair = {
   date_time: 0,
   stars: 0,
   uuid_user: "",
-  type: EFairType.ENTREPRENEURSHIP,
+  type: "entrepreneurship",
 };
 
 export const mockStand: TStand = {

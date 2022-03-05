@@ -1,9 +1,9 @@
-export enum EFairType {
-  ENTREPRENEURSHIP = "entrepreneurship",
-  GASTRONOMIC = "gastronomic",
-}
+// export enum EFairType {
+//   ENTREPRENEURSHIP = "entrepreneurship",
+//   GASTRONOMIC = "gastronomic",
+// }
 
-export type TFairType = EFairType.ENTREPRENEURSHIP | EFairType.GASTRONOMIC;
+export type TFairType = "entrepreneurship" | "gastronomic";
 
 // export type TFairDate = {
 //   date?: string;

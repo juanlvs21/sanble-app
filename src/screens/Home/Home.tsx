@@ -1,4 +1,5 @@
-import { IonButton, IonSearchbar } from "@ionic/react";
+import { useEffect } from "react";
+import { IonButton, IonSearchbar, RefresherEventDetail } from "@ionic/react";
 import { BiBell } from "react-icons/bi";
 
 import styles from "./Home.module.css";
@@ -6,29 +7,10 @@ import { MainLayout } from "@/layouts/Main";
 import { Carousel } from "@/components/common/Carousel";
 import { FairCardCarousel } from "@/components/fairs/CardCarousel";
 import { StandCardCarousel } from "@/components/stands/CardCarousel";
-import { EFairType, TFair } from "@/types/TFairs";
+import { useSreenActive } from "@/hooks/useSreenActive";
+import { useHome } from "@/hooks/useHome";
 import { TStand } from "@/types/TStands";
-
-const fairs: TFair[] = [
-  {
-    description: "Lorem ipsum",
-    name: "Nombre de mi feria",
-    stars: 3,
-    type: EFairType.ENTREPRENEURSHIP,
-    uuid: "23948234-23423847234-23",
-    uuid_user: "34234-234-234-234",
-    date_time: new Date().getTime(),
-  },
-  {
-    description: "Lorem ipsum 2",
-    name: "Esta es mi feria 2",
-    stars: 2,
-    type: EFairType.ENTREPRENEURSHIP,
-    uuid: "324-423423-234-654",
-    uuid_user: "34234-234-234-234",
-    date_time: new Date().getTime(),
-  },
-];
+import { TFair } from "@/types/TFairs";
 
 const stands: TStand[] = [
   {
@@ -54,6 +36,14 @@ const stands: TStand[] = [
 ];
 
 export const HomeSreen: React.FC = () => {
+  const active = useSreenActive("/");
+  const { fairs, handleRefresh } = useHome();
+
+  useEffect(() => {
+    if (active) handleRefresh();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [active]);
+
   const notificationsBtn = (
     <IonButton
       slot="end"
@@ -66,7 +56,7 @@ export const HomeSreen: React.FC = () => {
   );
 
   return (
-    <MainLayout headerEnd={notificationsBtn}>
+    <MainLayout headerEnd={notificationsBtn} handleRefresh={handleRefresh}>
       <IonSearchbar
         placeholder="Buscar Ferias, Stands, etc..."
         className={styles.searchbar}
@@ -88,14 +78,14 @@ export const HomeSreen: React.FC = () => {
 
       <h3 className={styles.title}>Productos</h3>
       <Carousel
-        data={fairs}
+        data={[]}
         keyName="uuid"
         card={(data) => <FairCardCarousel />}
       />
 
       <h3 className={styles.title}>Promociones</h3>
       <Carousel
-        data={fairs}
+        data={[]}
         keyName="uuid"
         card={(data) => <FairCardCarousel />}
       />
