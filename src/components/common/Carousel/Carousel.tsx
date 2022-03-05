@@ -1,4 +1,9 @@
-import { IonSlides, IonSlide } from "@ionic/react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Pagination } from "swiper";
+
+import "swiper/css";
+import "swiper/css/pagination";
+import "@ionic/react/css/ionic-swiper.css";
 
 import styles from "./Carousel.module.css";
 
@@ -28,21 +33,24 @@ export const Carousel: React.FC<ComponentProps> = ({
   keyName,
   card,
   loading = false,
-}) => {
-  const slideOpts = {
-    initialSlide: 0,
-    slidesPerView: 1.5,
-    spaceBetween: 0,
-    centeredSlides: true,
-    speed: 400,
-    autoplay: false,
-  };
+}) => (
+  <Swiper
+    className={styles.carousel}
+    modules={[Pagination]}
+    speed={400}
+    initialSlide={0}
+    slidesPerView={1.5}
+    pagination
+    centeredSlides
+  >
+    {loading
+      ? [1, 2, 3].map((i) => (
+          <SwiperSlide key={i}>{card(undefined, loading)}</SwiperSlide>
+        ))
+      : data.map((dat) => (
+          <SwiperSlide key={dat[keyName]}>{card(dat, loading)}</SwiperSlide>
+        ))}
 
-  return (
-    <IonSlides pager={true} options={slideOpts} className={styles.carousel}>
-      {data.map((dat) => (
-        <IonSlide key={dat[keyName]}>{card(dat, loading)}</IonSlide>
-      ))}
-    </IonSlides>
-  );
-};
+    {}
+  </Swiper>
+);
