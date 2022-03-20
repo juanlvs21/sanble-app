@@ -2,22 +2,25 @@ import { EFairType, TFair } from "@/types/TFairs";
 import { TStand } from "@/types/TStands";
 
 export const mockFair: TFair = {
-  uuid: "",
+  id: "",
   photographs: [],
+  address: "",
   name: "",
   description: "",
-  date_time: 0,
+  dateTime: "",
   stars: 0,
-  uuid_user: "",
+  userId: "",
   type: EFairType.ENTREPRENEURSHIP,
+  createdAt: "",
 };
 
 export const mockStand: TStand = {
-  uuid: "",
+  id: "",
   name: "",
   description: "",
   products: [],
   promotions: [],
   stars: 0,
-  uuid_user: "",
+  userId: "",
+  createdAt: "",
 };

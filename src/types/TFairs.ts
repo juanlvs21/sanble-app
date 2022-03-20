@@ -1,6 +1,6 @@
 export enum EFairType {
-  ENTREPRENEURSHIP = "entrepreneurship",
-  GASTRONOMIC = "gastronomic",
+  ENTREPRENEURSHIP = "ENTREPRENEURSHIP",
+  GASTRONOMIC = "GASTRONOMIC",
 }
 
 export type TFairType = EFairType.ENTREPRENEURSHIP | EFairType.GASTRONOMIC;
@@ -19,20 +19,19 @@ export type TFairPhotograph = {
 };
 
 export type TFair = {
-  uuid: string;
+  id: string;
   name: string;
   description: string;
-  uuid_user: string;
+  emailContact?: string;
+  phoneNumber?: string;
   type: TFairType;
   typeFriendly?: string;
   stars: number;
-  email?: string;
-  phone?: string;
-  // fair_date?: TFairDate;
-  date_time?: number;
+  dateTime?: string;
   lat?: string;
   lng?: string;
-  address?: string;
-  photographs?: TFairPhotograph[];
-  creationTime?: string;
+  address: string;
+  photographs: TFairPhotograph[];
+  createdAt: string;
+  userId: string;
 };

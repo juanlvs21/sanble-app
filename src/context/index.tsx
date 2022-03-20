@@ -1,9 +1,12 @@
+import { QueryClient, QueryClientProvider } from "react-query";
+
 // Context
-import { FairsProvider } from "@/context/FairsContext";
-import { StandsProvider } from "@/context/StandsContext";
+import { UserProvider } from "@/context/UserContext";
+
+const queryClient = new QueryClient();
 
 export const AppProvider: React.FC = ({ children }) => (
-  <FairsProvider>
-    <StandsProvider>{children}</StandsProvider>
-  </FairsProvider>
+  <QueryClientProvider client={queryClient}>
+    <UserProvider>{children}</UserProvider>
+  </QueryClientProvider>
 );

@@ -1,9 +1,3 @@
-export const fairsConstants = {
-  SET_FAIRSLIST: "SET_FAIRSLIST",
-  SET_FAIRSUPCOMING: "SET_FAIRSUPCOMING",
-};
-
-export const standsConstants = {
-  SET_STANDSLIST: "SET_STANDSLIST",
-  SET_STANDSBESTS: "SET_STANDSBESTS",
+export const userConstants = {
+  SET_USER: "SET_USER",
 };

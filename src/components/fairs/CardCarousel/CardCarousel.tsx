@@ -68,7 +68,7 @@ export const FairCardCarousel: React.FC<ComponentProps> = ({
                 <div className={styles.badgeContainer}>
                   <IonBadge color="primary" className={styles.badge}>
                     <FiCalendar size={15} className={styles.badgeIcon} />
-                    {dateFormat(fair.date_time, "DD MMM - HH:mm a")}
+                    {dateFormat(fair.dateTime, "DD MMM - HH:mm a")}
                   </IonBadge>
                 </div>
               </>

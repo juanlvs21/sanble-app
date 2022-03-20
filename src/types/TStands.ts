@@ -2,14 +2,14 @@ import { TProduct } from "@/types/TProduct";
 import { TPromotion } from "@/types/TPromotions";
 
 export type TStand = {
-  uuid: string;
+  id: string;
   name: string;
   description: string;
   stars: number;
-  url_photo?: string;
-  products: TProduct[];
-  promotions: TPromotion[];
-  uuid_user: string;
+  photoUrl?: string;
+  products?: TProduct[];
+  promotions?: TPromotion[];
   slogan?: string;
-  creationTime?: string;
+  userId: string;
+  createdAt: string;
 };

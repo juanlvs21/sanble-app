@@ -60,7 +60,7 @@ export const StandCardCarousel: React.FC<ComponentProps> = ({
               <Skeleton className={styles.skeletonImage} height="100%" />
             )}
             <img
-              src={getImage(stand.url_photo)}
+              src={getImage(stand.photoUrl)}
               alt={stand.name}
               className={styles.image}
             />

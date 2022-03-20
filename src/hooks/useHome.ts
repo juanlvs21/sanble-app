@@ -1,19 +1,41 @@
-import { useFairs } from "@/hooks/useFairs";
-import { useStands } from "@/hooks/useStands";
+import { useEffect } from "react";
+import { useIonToast } from "@ionic/react";
+import { useQuery } from "react-query";
+
+import { getFairsUpcomingRequest, getStandsBestRequest } from "@/services";
 
 export const useHome = () => {
-  const { getUpcomingFairs, fairsUpcoming, loading: fairsLoading } = useFairs();
-  const { getBestStands, standsBests, loading: standsLoading } = useStands();
+  const [present] = useIonToast();
+  const {
+    data: dataFairs,
+    error: errorFairs,
+    isLoading: isLoadingFairs,
+    refetch: refetchFairs,
+  } = useQuery("/fairs/upcoming", getFairsUpcomingRequest);
+  const {
+    data: dataStands,
+    error: errorStands,
+    isLoading: isLoadingStands,
+    refetch: refetchStands,
+  } = useQuery("/stands/best", getStandsBestRequest);
 
   const handleRefresh = async () => {
-    await Promise.all([getUpcomingFairs(), getBestStands()]);
+    await Promise.all([refetchFairs, refetchStands]);
   };
+
+  useEffect(() => {
+    if (errorFairs) present("Error al cargar las próximas ferias", 3000);
+  }, [errorFairs, present]);
+
+  useEffect(() => {
+    if (errorStands) present("Error al cargar los mejores stands", 3000);
+  }, [errorStands, present]);
 
   return {
     handleRefresh,
-    fairs: fairsUpcoming,
-    fairsLoading,
-    stands: standsBests,
-    standsLoading,
+    dataFairs: dataFairs || [],
+    isLoadingFairs,
+    dataStands: dataStands || [],
+    isLoadingStands,
   };
 };
