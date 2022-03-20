@@ -6,7 +6,7 @@ export type TStand = {
   name: string;
   description: string;
   stars: number;
-  photoUrl?: string;
+  photoUrl: string;
   products?: TProduct[];
   promotions?: TPromotion[];
   slogan?: string;

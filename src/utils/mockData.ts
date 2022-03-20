@@ -4,6 +4,7 @@ import { TStand } from "@/types/TStands";
 export const mockFair: TFair = {
   id: "",
   photographs: [],
+  photoUrl: "",
   address: "",
   name: "",
   description: "",
@@ -19,6 +20,7 @@ export const mockStand: TStand = {
   name: "",
   description: "",
   products: [],
+  photoUrl: "",
   promotions: [],
   stars: 0,
   userId: "",

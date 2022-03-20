@@ -11,7 +11,6 @@ import styles from "./CardCarousel.module.css";
 import { Stars } from "@/components/common/Stars";
 import { Skeleton } from "@/components/common/Skeleton";
 import { mockStand } from "@/utils/mockData";
-import { getImage } from "@/utils/getImage";
 import { TStand } from "@/types/TStands";
 
 type ComponentProps = {
@@ -60,7 +59,7 @@ export const StandCardCarousel: React.FC<ComponentProps> = ({
               <Skeleton className={styles.skeletonImage} height="100%" />
             )}
             <img
-              src={getImage(stand.photoUrl)}
+              src={stand.photoUrl}
               alt={stand.name}
               className={styles.image}
             />

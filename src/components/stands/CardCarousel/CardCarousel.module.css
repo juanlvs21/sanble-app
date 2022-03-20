@@ -33,6 +33,11 @@ img.image {
   padding: 0;
   margin-top: 3px;
   margin-bottom: 2px;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
 }
 
 p.slogan {

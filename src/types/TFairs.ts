@@ -23,7 +23,7 @@ export type TFair = {
   name: string;
   description: string;
   emailContact?: string;
-  phoneNumber?: string;
+  phoneContact?: string;
   type: TFairType;
   typeFriendly?: string;
   stars: number;
@@ -31,6 +31,7 @@ export type TFair = {
   lat?: string;
   lng?: string;
   address: string;
+  photoUrl: string;
   photographs: TFairPhotograph[];
   createdAt: string;
   userId: string;

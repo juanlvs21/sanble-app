@@ -13,7 +13,6 @@ import styles from "./CardCarousel.module.css";
 import { Skeleton } from "@/components/common/Skeleton";
 import { mockFair } from "@/utils/mockData";
 import { dateFormat } from "@/utils/dateFormat";
-import { getFairCover } from "@/utils/getFairCover";
 import { TFair } from "@/types/TFairs";
 
 type ComponentProps = {
@@ -39,11 +38,7 @@ export const FairCardCarousel: React.FC<ComponentProps> = ({
             {loading && (
               <Skeleton className={styles.skeletonImage} height="100%" />
             )}
-            <img
-              src={getFairCover(fair.photographs || [])}
-              alt="Feria"
-              className={styles.image}
-            />
+            <img src={fair.photoUrl} alt="Feria" className={styles.image} />
           </IonCol>
           <IonCol size="8" className={styles.colContent}>
             {loading ? (
