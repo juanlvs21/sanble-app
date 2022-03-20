@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { IonButton, IonSearchbar } from "@ionic/react";
 import { BiBell } from "react-icons/bi";
 
@@ -7,13 +6,11 @@ import { MainLayout } from "@/layouts/Main";
 import { Carousel } from "@/components/common/Carousel";
 import { FairCardCarousel } from "@/components/fairs/CardCarousel";
 import { StandCardCarousel } from "@/components/stands/CardCarousel";
-import { useSreenActive } from "@/hooks/useSreenActive";
 import { useHome } from "@/hooks/useHome";
 import { productTypes } from "@/utils/productData";
 import { ProductCardCarousel } from "@/components/products/CardCarousel";
 
 export const HomeSreen: React.FC = () => {
-  const active = useSreenActive("/");
   const {
     dataFairs,
     isLoadingFairs,
@@ -21,11 +18,6 @@ export const HomeSreen: React.FC = () => {
     isLoadingStands,
     handleRefresh,
   } = useHome();
-
-  useEffect(() => {
-    if (active) handleRefresh();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [active]);
 
   const notificationsBtn = (
     <IonButton
