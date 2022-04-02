@@ -18,6 +18,7 @@ import "@ionic/react/css/display.css";
 
 /* Theme variables */
 import "@/theme/variables.css";
+import "@/theme/global.css";
 
 import { Router } from "@/router";
 import { AppProvider } from "@/context";
@@ -27,7 +28,7 @@ setupIonicReact();
 const App: React.FC = () => {
   return (
     <AppProvider>
-      <IonApp>
+      <IonApp className="animate__animated animate__fadeIn">
         <Router />
       </IonApp>
     </AppProvider>

@@ -13,7 +13,7 @@ export type ComponentProps = {
 
 export const ProductCardCarousel: React.FC<ComponentProps> = ({ type }) => {
   return (
-    <IonCard className={styles.card}>
+    <IonCard className={`${styles.card} animate__animated animate__fadeIn`}>
       <img
         src={productIcon[type]}
         alt={productText[type]}

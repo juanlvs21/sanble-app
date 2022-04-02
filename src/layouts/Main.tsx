@@ -1,18 +1,13 @@
 import { useState } from "react";
 import {
-  IonAvatar,
-  IonButton,
   // IonBadge,
   IonContent,
-  IonHeader,
   // IonMenuButton,
   IonPage,
   IonRefresher,
   IonRefresherContent,
   IonTabBar,
   IonTabButton,
-  IonTitle,
-  IonToolbar,
   RefresherEventDetail,
   ScrollDetail,
 } from "@ionic/react";
@@ -21,6 +16,8 @@ import { FiHome } from "react-icons/fi";
 import { BiStore, BiShoppingBag } from "react-icons/bi";
 
 import styles from "./Main.module.css";
+
+import { Header } from "@/components/common/Header";
 
 type ComponentProps = {
   /**
@@ -53,6 +50,7 @@ export const MainLayout: React.FC<ComponentProps> = ({
   const { pathname } = useLocation();
   const { push } = useHistory();
   const [scrollTop, setScrollTop] = useState<number>(0);
+  const [showSidebar, setShowSidebar] = useState<boolean>(false);
 
   const tabs = [
     {
@@ -78,6 +76,11 @@ export const MainLayout: React.FC<ComponentProps> = ({
     }>
   ) => push(event.detail.tab);
 
+  const toggleSidebar = (show?: boolean) => {
+    console.log("TOOGLE");
+    setShowSidebar((state) => show ?? !state);
+  };
+
   const handleScroll = (event: CustomEvent<ScrollDetail>) =>
     setScrollTop(event.detail.scrollTop);
 
@@ -88,22 +91,12 @@ export const MainLayout: React.FC<ComponentProps> = ({
 
   return (
     <IonPage>
-      <IonHeader className={styles.header}>
-        <IonToolbar
-          className={`${styles.toolbar} ${scrollTop > 25 ? styles.fill : ""}`}
-        >
-          <IonButton slot="start" className={styles.avatarBtn} fill="clear">
-            <IonAvatar className={styles.avatarImg}>
-              <img
-                src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y"
-                alt="example"
-              />
-            </IonAvatar>
-          </IonButton>
-          <IonTitle>{title}</IonTitle>
-          {headerEnd || <div slot="end" className={styles.headerEndFake} />}
-        </IonToolbar>
-      </IonHeader>
+      <Header
+        title={title}
+        headerEnd={headerEnd}
+        scrollTop={scrollTop}
+        toggleSidebar={toggleSidebar}
+      />
 
       <IonContent
         fullscreen

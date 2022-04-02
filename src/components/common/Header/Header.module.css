@@ -1,0 +1,47 @@
+.toolbar {
+  --background: transparent;
+  --padding-top: 40px;
+  --padding-bottom: 20px;
+  --padding-end: 20px;
+  --padding-start: 20px;
+  position: fixed;
+  transition: all 400ms ease-in-out;
+}
+
+.toolbar.fill {
+  background: #fff !important;
+  margin-top: -30px !important;
+  transition: all 400ms ease-in-out;
+  --padding-bottom: 10px;
+}
+
+.toolbar ion-title {
+  padding: 0;
+  text-align: center;
+  font-family: Quicksand;
+  font-weight: 700;
+  font-size: 30px;
+}
+
+.avatarImg {
+  width: 10px;
+  height: 40px;
+}
+
+.avatarBtn::part(native) {
+  width: 40px;
+  height: 40px;
+  border-radius: 40px;
+  padding: 0;
+  box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.1);
+  -webkit-box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.1);
+}
+
+.header::after {
+  background-image: none;
+}
+
+.headerEndFake {
+  width: 40px;
+}

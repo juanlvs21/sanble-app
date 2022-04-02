@@ -28,7 +28,7 @@ export const StandCardCarousel: React.FC<ComponentProps> = ({
   stand = mockStand,
   loading,
 }) => (
-  <IonCard className={styles.card}>
+  <IonCard className={`${styles.card} animate__animated animate__fadeIn`}>
     <IonCardContent className={`${styles.cardContent} ${styles.noPadding}`}>
       <IonGrid className={styles.noPadding}>
         <IonRow>

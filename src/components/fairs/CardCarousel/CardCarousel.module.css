@@ -4,6 +4,7 @@
 
 .card {
   border-radius: var(--sanble-border-radius);
+  width: 100%;
 }
 
 .cardContent {
