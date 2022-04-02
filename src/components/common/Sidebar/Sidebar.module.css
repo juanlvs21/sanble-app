@@ -1,0 +1,52 @@
+.sidebar {
+  position: absolute;
+  width: 280px;
+  height: 100vh;
+  z-index: 10000;
+  overflow-y: auto;
+  padding: 40px;
+  left: -310px;
+  color: #fff;
+  background-color: var(--ion-color-primary);
+  transition: all 400ms ease-in-out;
+}
+
+.sidebar.show {
+  left: 0;
+  transition: all 400ms ease-in-out;
+}
+
+.closeSidebarBtn {
+  position: absolute;
+  top: 20px;
+  right: 0;
+}
+
+.closeSidebarBtn::part(native) {
+  padding: 0;
+}
+
+.userData {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.userData h1 {
+  font-weight: 800;
+}
+
+.userData p {
+  margin-top: 0;
+}
+
+.avatarImg {
+  width: 120px;
+  height: 120px;
+}
+
+.avatarImg img {
+  object-fit: cover;
+  object-position: center;
+}

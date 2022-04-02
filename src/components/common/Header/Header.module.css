@@ -24,8 +24,13 @@
 }
 
 .avatarImg {
-  width: 10px;
+  width: 40px;
   height: 40px;
+}
+
+.avatarImg img {
+  object-fit: cover;
+  object-position: center;
 }
 
 .avatarBtn::part(native) {

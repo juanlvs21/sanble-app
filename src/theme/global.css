@@ -33,6 +33,10 @@ ion-searchbar input.searchbar-input {
   --background: #fafafa;
 }
 
+.split-pane-main {
+  background-color: var(--ion-color-primary);
+}
+
 /* Animated */
 .animate__animated {
   -webkit-animation-duration: 1s;

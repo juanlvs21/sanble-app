@@ -18,6 +18,7 @@ import { BiStore, BiShoppingBag } from "react-icons/bi";
 import styles from "./Main.module.css";
 
 import { Header } from "@/components/common/Header";
+import { Sidebar } from "@/components/common/Sidebar";
 
 type ComponentProps = {
   /**
@@ -90,47 +91,61 @@ export const MainLayout: React.FC<ComponentProps> = ({
   };
 
   return (
-    <IonPage>
-      <Header
-        title={title}
-        headerEnd={headerEnd}
-        scrollTop={scrollTop}
-        toggleSidebar={toggleSidebar}
-      />
-
-      <IonContent
-        fullscreen
-        className={styles.content}
-        onIonScroll={handleScroll}
-        scrollEvents
+    <>
+      <Sidebar show={showSidebar} toggleSidebar={toggleSidebar} />
+      <IonPage
+        className={`${styles.pageMainLayout} ${
+          showSidebar ? styles.showSidebar : ""
+        }`}
       >
-        {handleRefresh && (
-          <IonRefresher slot="fixed" onIonRefresh={doRefresh}>
-            <IonRefresherContent />
-          </IonRefresher>
-        )}
-        {children}
-      </IonContent>
+        <Header
+          title={title}
+          headerEnd={headerEnd}
+          scrollTop={scrollTop}
+          toggleSidebar={toggleSidebar}
+        />
 
-      <div className={styles.tabbarContainer}>
-        <IonTabBar
-          slot="bottom"
-          className={styles.tabbar}
-          onIonTabsWillChange={handleTabWillChange}
+        <IonContent
+          fullscreen
+          className={styles.content}
+          onIonScroll={handleScroll}
+          scrollEvents
         >
-          {tabs.map((tab) => (
-            <IonTabButton
-              key={tab.tab}
-              tab={tab.tab}
-              href={tab.tab}
-              className={`${tab.active ? "active" : ""}`}
-            >
-              {tab.icon}
-              {/* <IonBadge>6</IonBadge> */}
-            </IonTabButton>
-          ))}
-        </IonTabBar>
-      </div>
-    </IonPage>
+          {handleRefresh && (
+            <IonRefresher slot="fixed" onIonRefresh={doRefresh}>
+              <IonRefresherContent />
+            </IonRefresher>
+          )}
+          {children}
+        </IonContent>
+
+        <div className={styles.tabbarContainer}>
+          <IonTabBar
+            slot="bottom"
+            className={styles.tabbar}
+            onIonTabsWillChange={handleTabWillChange}
+          >
+            {tabs.map((tab) => (
+              <IonTabButton
+                key={tab.tab}
+                tab={tab.tab}
+                href={tab.tab}
+                className={`${tab.active ? "active" : ""}`}
+              >
+                {tab.icon}
+                {/* <IonBadge>6</IonBadge> */}
+              </IonTabButton>
+            ))}
+          </IonTabBar>
+        </div>
+
+        {showSidebar && (
+          <div
+            className={`${styles.contentSidebarOpen} animate__animated animate__fadeIn`}
+            onClick={() => toggleSidebar(false)}
+          />
+        )}
+      </IonPage>
+    </>
   );
 };
