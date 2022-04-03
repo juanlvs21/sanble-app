@@ -11,9 +11,17 @@
     "start": "craco start",
     "build": "craco build",
     "test": "craco test --transformIgnorePatterns 'node_modules/(?!(@ionic/react|@ionic/react-router|@ionic/core|@stencil/core|ionicons)/)'",
-    "eject": "craco eject"
+    "ionic:build": "craco build",
+    "ionic:serve": "craco start",
+    "cap:build": "ionic capacitor build android",
+    "cap:copy": "ionic capacitor copy android",
+    "cap:sync": "ionic capacitor sync android",
+    "cap:open": "ionic capacitor open android",
+    "cap:run": "ionic capacitor run android",
+    "start:live": "ionic cap run android -l --external"
   },
   "dependencies": {
+    "@capacitor/android": "3.4.3",
     "@capacitor/app": "1.1.0",
     "@capacitor/core": "3.4.1",
     "@capacitor/haptics": "1.1.4",
