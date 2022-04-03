@@ -1,5 +1,7 @@
 import { MainLayout } from "@/layouts/Main";
 
-export const MyList: React.FC = () => {
-  return <MainLayout title="Mi Sanble">MyList</MainLayout>;
-};
+export const MyListScreen: React.FC = () => (
+  <MainLayout title="Mi Sanble">Mi Sanble</MainLayout>
+);
+
+export default MyListScreen;

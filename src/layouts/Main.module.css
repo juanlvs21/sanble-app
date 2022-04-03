@@ -11,6 +11,14 @@
   transition: all 400ms ease-in-out;
 }
 
+.pageMainLayoutContainer {
+  background-color: var(--ion-color-primary);
+  width: 100%;
+  height: 100%;
+  top: 0;
+  position: absolute;
+}
+
 .contentSidebarOpen {
   position: absolute;
   width: 100%;

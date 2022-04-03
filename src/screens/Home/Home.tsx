@@ -78,3 +78,5 @@ export const HomeSreen: React.FC = () => {
     </MainLayout>
   );
 };
+
+export default HomeSreen;

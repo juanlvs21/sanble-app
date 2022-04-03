@@ -7,8 +7,8 @@ import {
   IonItem,
   IonLabel,
 } from "@ionic/react";
-import { useHistory, useLocation } from "react-router";
 import { FaDoorClosed, FaHeart, FaMapMarkedAlt, FaUser } from "react-icons/fa";
+import { useHistory, useLocation } from "react-router";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import { MdMessage } from "react-icons/md";
 import { HiHome } from "react-icons/hi";
@@ -42,10 +42,10 @@ export const Sidebar: React.FC<ComponentProps> = ({
     () => [
       {
         label: "Inicio",
-        path: "/",
+        path: "/inicio",
         icon: <HiHome size={32} />,
         active:
-          pathname === "/" ||
+          pathname.includes("/inicio") ||
           pathname.includes("/ferias") ||
           pathname.includes("/stands") ||
           false,

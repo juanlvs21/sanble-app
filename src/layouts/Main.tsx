@@ -62,39 +62,41 @@ export const MainLayout: React.FC<ComponentProps> = ({
   return (
     <>
       <Sidebar show={showSidebar} toggleSidebar={toggleSidebar} />
-      <IonPage
-        className={`${styles.pageMainLayout} ${
-          showSidebar ? styles.showSidebar : ""
-        }`}
-      >
-        <Header
-          title={title}
-          headerEnd={headerEnd}
-          scrollTop={scrollTop}
-          toggleSidebar={toggleSidebar}
-        />
-
-        <IonContent
-          fullscreen
-          className={styles.content}
-          onIonScroll={handleScroll}
-          scrollEvents
+      <div className={styles.pageMainLayoutContainer}>
+        <IonPage
+          className={`${styles.pageMainLayout} ${
+            showSidebar ? styles.showSidebar : ""
+          }`}
         >
-          {handleRefresh && (
-            <IonRefresher slot="fixed" onIonRefresh={doRefresh}>
-              <IonRefresherContent />
-            </IonRefresher>
-          )}
-          {children}
-        </IonContent>
-
-        {showSidebar && (
-          <div
-            className={`${styles.contentSidebarOpen} animate__animated animate__fadeIn`}
-            onClick={() => toggleSidebar(false)}
+          <Header
+            title={title}
+            headerEnd={headerEnd}
+            scrollTop={scrollTop}
+            toggleSidebar={toggleSidebar}
           />
-        )}
-      </IonPage>
+
+          <IonContent
+            fullscreen
+            className={styles.content}
+            onIonScroll={handleScroll}
+            scrollEvents
+          >
+            {handleRefresh && (
+              <IonRefresher slot="fixed" onIonRefresh={doRefresh}>
+                <IonRefresherContent />
+              </IonRefresher>
+            )}
+            {children}
+          </IonContent>
+
+          {showSidebar && (
+            <div
+              className={`${styles.contentSidebarOpen} animate__animated animate__fadeIn`}
+              onClick={() => toggleSidebar(false)}
+            />
+          )}
+        </IonPage>
+      </div>
     </>
   );
 };

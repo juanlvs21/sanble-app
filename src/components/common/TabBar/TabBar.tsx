@@ -13,14 +13,13 @@ export const TabBar: React.FC = () => {
   const tabs = useMemo(
     () => [
       {
-        tab: "/",
+        tab: "/inicio",
         icon: (
           <FiHome
             size={28}
-            className={pathname === "/" ? styles.tabActive : ""}
+            className={pathname === "/inicio" ? styles.tabActive : ""}
           />
         ),
-        active: pathname === "/",
       },
       {
         tab: "/ferias",
@@ -30,7 +29,6 @@ export const TabBar: React.FC = () => {
             className={pathname === "/ferias" ? styles.tabActive : ""}
           />
         ),
-        active: pathname === "/ferias",
       },
       {
         tab: "/stands",
@@ -40,7 +38,6 @@ export const TabBar: React.FC = () => {
             className={pathname === "/stands" ? styles.tabActive : ""}
           />
         ),
-        active: pathname === "/stands",
       },
     ],
     [pathname]
