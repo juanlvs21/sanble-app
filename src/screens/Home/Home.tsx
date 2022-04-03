@@ -3,6 +3,7 @@ import { BiBell } from "react-icons/bi";
 
 import styles from "./Home.module.css";
 import { MainLayout } from "@/layouts/Main";
+import { TabBar } from "@/components/common/TabBar";
 import { Carousel } from "@/components/common/Carousel";
 import { FairCardCarousel } from "@/components/fairs/CardCarousel";
 import { StandCardCarousel } from "@/components/stands/CardCarousel";
@@ -72,6 +73,8 @@ export const HomeSreen: React.FC = () => {
         slidesPerView={3}
         initialSlide={1}
       />
+
+      <TabBar />
     </MainLayout>
   );
 };

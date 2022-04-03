@@ -31,24 +31,3 @@
   background-size: cover;
   background-repeat: no-repeat;
 }
-
-.tabbarContainer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  position: absolute;
-  z-index: 10;
-  bottom: 0;
-  left: 0;
-  margin-bottom: 10px;
-}
-
-.tabbarContainer svg {
-  color: var(--ion-color-black);
-}
-
-.tabbar {
-  width: 90%;
-  border-radius: var(--sanble-border-radius);
-}
