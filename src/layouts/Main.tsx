@@ -19,6 +19,8 @@ import styles from "./Main.module.css";
 
 import { Header } from "@/components/common/Header";
 import { Sidebar } from "@/components/common/Sidebar";
+import { useAppStateValue } from "@/context/AppContext";
+import { appActions } from "@/context/actions/appActions";
 
 type ComponentProps = {
   /**
@@ -50,8 +52,9 @@ export const MainLayout: React.FC<ComponentProps> = ({
 }) => {
   const { pathname } = useLocation();
   const { push } = useHistory();
+  const [{ showSidebar }, dispatch] = useAppStateValue();
+  const { setShowSidebar } = appActions(dispatch);
   const [scrollTop, setScrollTop] = useState<number>(0);
-  const [showSidebar, setShowSidebar] = useState<boolean>(false);
 
   const tabs = [
     {
@@ -78,7 +81,7 @@ export const MainLayout: React.FC<ComponentProps> = ({
   ) => push(event.detail.tab);
 
   const toggleSidebar = (show?: boolean) => {
-    setShowSidebar((state) => show ?? !state);
+    setShowSidebar(show ?? !showSidebar);
   };
 
   const handleScroll = (event: CustomEvent<ScrollDetail>) =>

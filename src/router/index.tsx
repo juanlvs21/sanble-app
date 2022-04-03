@@ -6,6 +6,7 @@ import { HomeSreen } from "@/screens/Home";
 import { FairsList } from "@/screens/fairs/List";
 import { StandsList } from "@/screens/stands/List";
 import { NearYou } from "@/screens/NearYou";
+import { MyList } from "@/screens/MySanble/MyList";
 
 export const Router: React.FC = () => {
   return (
@@ -23,6 +24,9 @@ export const Router: React.FC = () => {
           </Route>
           <Route path="/cerca" exact>
             <NearYou />
+          </Route>
+          <Route path="/mi-sanble" exact>
+            <MyList />
           </Route>
         </IonRouterOutlet>
       </IonSplitPane>

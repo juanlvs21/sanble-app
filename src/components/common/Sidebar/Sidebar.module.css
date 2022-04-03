@@ -65,6 +65,12 @@
   --inner-border-width: 0px;
   background-color: transparent;
   color: #fff;
+  border-radius: var(--sanble-border-radius);
+}
+
+.itemActive::part(native) {
+  background-color: #fff;
+  color: var(--ion-color-primary);
 }
 
 .itemIcon {

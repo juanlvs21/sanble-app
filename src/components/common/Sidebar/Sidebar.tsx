@@ -7,7 +7,7 @@ import {
   IonItem,
   IonLabel,
 } from "@ionic/react";
-import { useHistory } from "react-router";
+import { useHistory, useLocation } from "react-router";
 import { FaDoorClosed, FaHeart, FaMapMarkedAlt, FaUser } from "react-icons/fa";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import { MdMessage } from "react-icons/md";
@@ -31,6 +31,7 @@ export const Sidebar: React.FC<ComponentProps> = ({
   toggleSidebar = () => {},
 }) => {
   const { push } = useHistory();
+  const { pathname } = useLocation();
 
   const handleNavigate = (path: string) => {
     toggleSidebar(false);
@@ -43,35 +44,48 @@ export const Sidebar: React.FC<ComponentProps> = ({
         label: "Inicio",
         path: "/",
         icon: <HiHome size={32} />,
+        active:
+          pathname === "/" ||
+          pathname.includes("/ferias") ||
+          pathname.includes("/stands") ||
+          false,
       },
       {
         label: "Mi Sanble",
-        // path: "/mi",
-        path: "/ferias",
-        icon: <img src="/assets/icon/logoWhite.svg" alt="Sanble" />,
+        path: "/mi-sanble",
+        icon: pathname.includes("/mi-sanble") ? (
+          <img src="/assets/icon/logo.png" alt="Sanble" />
+        ) : (
+          <img src="/assets/icon/logoWhite.png" alt="Sanble" />
+        ),
+        active: pathname.includes("/mi-sanble"),
       },
       {
         label: "Cerca de ti",
         path: "/cerca",
         icon: <FaMapMarkedAlt size={32} />,
+        active: pathname.includes("/cerca"),
       },
       {
         label: "Favoritos",
         path: "/favoritos",
         icon: <FaHeart size={32} />,
+        active: pathname.includes("/favoritos"),
       },
       {
         label: "Mensajes",
         path: "/mensajes",
         icon: <MdMessage size={32} />,
+        active: pathname.includes("/mensajes"),
       },
       {
         label: "Perfil",
         path: "/perfil",
         icon: <FaUser size={32} />,
+        active: pathname.includes("/perfil"),
       },
     ],
-    []
+    [pathname]
   );
 
   return (
@@ -102,7 +116,7 @@ export const Sidebar: React.FC<ComponentProps> = ({
       <IonList className={styles.list}>
         {items.map((item) => (
           <IonItem
-            className={styles.item}
+            className={`${styles.item} ${item.active ? styles.itemActive : ""}`}
             onClick={() => handleNavigate(item.path)}
             key={item.path}
             button
