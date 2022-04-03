@@ -78,7 +78,6 @@ export const MainLayout: React.FC<ComponentProps> = ({
   ) => push(event.detail.tab);
 
   const toggleSidebar = (show?: boolean) => {
-    console.log("TOOGLE");
     setShowSidebar((state) => show ?? !state);
   };
 
