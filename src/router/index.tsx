@@ -5,6 +5,7 @@ import { IonReactRouter } from "@ionic/react-router";
 import { HomeSreen } from "@/screens/Home";
 import { FairsList } from "@/screens/fairs/List";
 import { StandsList } from "@/screens/stands/List";
+import { NearYou } from "@/screens/NearYou";
 
 export const Router: React.FC = () => {
   return (
@@ -19,6 +20,9 @@ export const Router: React.FC = () => {
           </Route>
           <Route path="/stands" exact>
             <StandsList />
+          </Route>
+          <Route path="/cerca" exact>
+            <NearYou />
           </Route>
         </IonRouterOutlet>
       </IonSplitPane>

@@ -11,6 +11,7 @@ import { useHistory } from "react-router";
 import { FaDoorClosed, FaHeart, FaMapMarkedAlt, FaUser } from "react-icons/fa";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import { MdMessage } from "react-icons/md";
+import { HiHome } from "react-icons/hi";
 
 import styles from "./Sidebar.module.css";
 
@@ -39,8 +40,14 @@ export const Sidebar: React.FC<ComponentProps> = ({
   const items = useMemo(
     () => [
       {
+        label: "Inicio",
+        path: "/",
+        icon: <HiHome size={32} />,
+      },
+      {
         label: "Mi Sanble",
-        path: "/mi",
+        // path: "/mi",
+        path: "/ferias",
         icon: <img src="/assets/icon/logoWhite.svg" alt="Sanble" />,
       },
       {
@@ -97,6 +104,7 @@ export const Sidebar: React.FC<ComponentProps> = ({
           <IonItem
             className={styles.item}
             onClick={() => handleNavigate(item.path)}
+            key={item.path}
             button
           >
             <IonAvatar slot="start" className={styles.itemIcon}>
