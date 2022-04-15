@@ -21,20 +21,20 @@ type ComponentProps = {
    */
   show: boolean;
   /**
-   * Callback to handle show Sidebar
+   * Callback to handle close Sidebar
    */
-  toggleSidebar?: (show?: boolean) => void;
+  onClose?: () => void;
 };
 
 export const Sidebar: React.FC<ComponentProps> = ({
   show,
-  toggleSidebar = () => {},
+  onClose = () => {},
 }) => {
   const { push } = useHistory();
   const { pathname } = useLocation();
 
   const handleNavigate = (path: string) => {
-    toggleSidebar(false);
+    onClose();
     push(path);
   };
 
@@ -95,7 +95,7 @@ export const Sidebar: React.FC<ComponentProps> = ({
         fill="clear"
         color="light"
         className={styles.closeSidebarBtn}
-        onClick={() => toggleSidebar(false)}
+        onClick={onClose}
       >
         <IoIosCloseCircleOutline size={32} />
       </IonButton>

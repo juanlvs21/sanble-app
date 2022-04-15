@@ -25,14 +25,12 @@ import { AppProvider } from "@/context";
 
 setupIonicReact();
 
-const App: React.FC = () => {
-  return (
-    <AppProvider>
-      <IonApp className="animate__animated animate__fadeIn">
-        <Router />
-      </IonApp>
-    </AppProvider>
-  );
-};
+const App: React.FC = () => (
+  <AppProvider>
+    <IonApp className="animate__animated animate__fadeIn">
+      <Router />
+    </IonApp>
+  </AppProvider>
+);
 
 export default App;

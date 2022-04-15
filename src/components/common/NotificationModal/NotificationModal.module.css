@@ -1,0 +1,54 @@
+.modal {
+    padding-top: 100px;
+}
+
+.modal::part(content){
+    border-top-left-radius: var(--sanble-border-radius);
+    border-top-right-radius: var(--sanble-border-radius);
+}
+
+.content::part(scroll){
+    overflow-y: hidden;
+}
+
+.header {
+    width: 100%;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid var(--sanble-gray-color);
+}
+
+.closeBtn {
+  position: absolute;
+  top: 15px;
+  right: 0px;
+}
+
+.list {
+    overflow-y: auto;
+    height: 100%;
+    padding-top:0;
+}
+
+.item::part(native) {
+    flex-direction: column;
+    align-items: flex-start;
+    padding-bottom: 10px;
+}
+
+.item .itemTitle {
+    font-size: 18px;
+    margin-bottom: 0;
+}
+
+.item .itemLabel {
+    font-size: 14px;
+    margin-top: 0;
+}
+
+.readNotification::part(native) {
+    background-color:#efefef;
+    padding: 0 20px;
+}

@@ -7,11 +7,15 @@ import { TabBar } from "@/components/common/TabBar";
 import { Carousel } from "@/components/common/Carousel";
 import { FairCardCarousel } from "@/components/fairs/CardCarousel";
 import { StandCardCarousel } from "@/components/stands/CardCarousel";
+import { ProductCardCarousel } from "@/components/products/CardCarousel";
 import { useHome } from "@/hooks/useHome";
 import { productTypes } from "@/utils/productData";
-import { ProductCardCarousel } from "@/components/products/CardCarousel";
+import { useAppStateValue } from "@/context/AppContext";
+import { appActions } from "@/context/actions/appActions";
 
 export const HomeSreen: React.FC = () => {
+  const [{ openNotifications }, dispatch] = useAppStateValue();
+  const { setOpenNotifications } = appActions(dispatch);
   const {
     dataFairs,
     isLoadingFairs,
@@ -20,12 +24,17 @@ export const HomeSreen: React.FC = () => {
     handleRefresh,
   } = useHome();
 
+  const toggleNotification = (isOpen?: boolean) => {
+    setOpenNotifications(isOpen ?? !openNotifications);
+  };
+
   const notificationsBtn = (
     <IonButton
       slot="end"
       fill="solid"
       color="light"
       className={styles.headerBtn}
+      onClick={() => toggleNotification(true)}
     >
       <BiBell size={28} />
     </IonButton>

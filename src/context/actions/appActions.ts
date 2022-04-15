@@ -9,4 +9,9 @@ export const appActions = (dispatch: Dispatch<TAction>) => ({
       type: appConstants.SHOW_SIDEBAR,
       payload: { showSidebar },
     }),
+  setOpenNotifications: (openNotifications: boolean) =>
+    dispatch({
+      type: appConstants.OPEN_NOTIFICATIONS,
+      payload: { openNotifications },
+    }),
 });

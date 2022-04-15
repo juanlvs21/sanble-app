@@ -20,9 +20,9 @@ type ComponentProps = {
    */
   headerEnd?: React.ReactNode;
   /**
-   * Callback to handle show Sidebar
+   * Callback to handle open Sidebar
    */
-  toggleSidebar?: (show?: boolean) => void;
+  onOpen?: () => void;
   /**
    * Scroll top
    *
@@ -33,7 +33,7 @@ type ComponentProps = {
 
 export const Header: React.FC<ComponentProps> = ({
   title = "Sanble",
-  toggleSidebar = () => {},
+  onOpen = () => {},
   scrollTop = 0,
   headerEnd,
 }) => (
@@ -45,7 +45,7 @@ export const Header: React.FC<ComponentProps> = ({
         slot="start"
         className={styles.avatarBtn}
         fill="clear"
-        onClick={() => toggleSidebar()}
+        onClick={onOpen}
       >
         <IonAvatar className={styles.avatarImg}>
           <img

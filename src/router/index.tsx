@@ -1,4 +1,4 @@
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useRef } from "react";
 import { Route } from "react-router-dom";
 import { Redirect, Switch } from "react-router";
 import { IonRouterOutlet, IonSplitPane } from "@ionic/react";
@@ -13,11 +13,13 @@ const NearYouScreen = lazy(() => import("@/screens/NearYou"));
 const MyListScreen = lazy(() => import("@/screens/MySanble/MyList"));
 
 export const Router: React.FC = () => {
+  const routerRef = useRef<HTMLIonRouterOutletElement | null>(null);
+
   return (
     <IonReactRouter>
       <Switch>
         <IonSplitPane contentId="main">
-          <IonRouterOutlet id="main">
+          <IonRouterOutlet id="main" ref={routerRef}>
             <Route exact path="/" render={() => <Redirect to="/inicio" />} />
             <Route
               exact

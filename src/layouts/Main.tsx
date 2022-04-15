@@ -12,6 +12,7 @@ import styles from "./Main.module.css";
 
 import { Header } from "@/components/common/Header";
 import { Sidebar } from "@/components/common/Sidebar";
+import { NotificationModal } from "@/components/common/NotificationModal";
 import { useAppStateValue } from "@/context/AppContext";
 import { appActions } from "@/context/actions/appActions";
 
@@ -43,8 +44,8 @@ export const MainLayout: React.FC<ComponentProps> = ({
   children,
   handleRefresh,
 }) => {
-  const [{ showSidebar }, dispatch] = useAppStateValue();
-  const { setShowSidebar } = appActions(dispatch);
+  const [{ showSidebar, openNotifications }, dispatch] = useAppStateValue();
+  const { setShowSidebar, setOpenNotifications } = appActions(dispatch);
   const [scrollTop, setScrollTop] = useState<number>(0);
 
   const toggleSidebar = (show?: boolean) => {
@@ -61,7 +62,7 @@ export const MainLayout: React.FC<ComponentProps> = ({
 
   return (
     <>
-      <Sidebar show={showSidebar} toggleSidebar={toggleSidebar} />
+      <Sidebar show={showSidebar} onClose={() => setShowSidebar(false)} />
       <div className={styles.pageMainLayoutContainer}>
         <IonPage
           className={`${styles.pageMainLayout} ${
@@ -72,7 +73,7 @@ export const MainLayout: React.FC<ComponentProps> = ({
             title={title}
             headerEnd={headerEnd}
             scrollTop={scrollTop}
-            toggleSidebar={toggleSidebar}
+            onOpen={() => setShowSidebar(true)}
           />
 
           <IonContent
@@ -88,6 +89,11 @@ export const MainLayout: React.FC<ComponentProps> = ({
             )}
             {children}
           </IonContent>
+
+          <NotificationModal
+            isOpen={openNotifications}
+            onClose={() => setOpenNotifications(false)}
+          />
 
           {showSidebar && (
             <div
