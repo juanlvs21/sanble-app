@@ -1,77 +1,50 @@
-import { lazy, Suspense, useRef } from "react";
-import { Route } from "react-router-dom";
-import { Redirect, Switch } from "react-router";
-import { IonRouterOutlet, IonSplitPane } from "@ionic/react";
-import { IonReactRouter } from "@ionic/react-router";
+import { Suspense, lazy } from "react";
+import { useRoutes, Navigate } from "react-router-dom";
 
-import { LoadingSuspense } from "@/components/common/LoadingSuspense";
+const AuthLayout = lazy(() => import("@/components/layouts/Auth"));
 
-const HomeSreen = lazy(() => import("@/screens/Home"));
-const FairsListScreen = lazy(() => import("@/screens/fairs/List"));
-const StandsListScreen = lazy(() => import("@/screens/stands/List"));
-const NearYouScreen = lazy(() => import("@/screens/NearYou"));
-const MyListScreen = lazy(() => import("@/screens/MySanble/MyList"));
+const SigninScreen = lazy(() => import("@/screens/auth/Signin"));
+const SignupScreen = lazy(() => import("@/screens/auth/Signup"));
 
-export const Router: React.FC = () => {
-  const routerRef = useRef<HTMLIonRouterOutletElement | null>(null);
+const Loading = <p>Loading...</p>;
 
-  return (
-    <IonReactRouter>
-      <Switch>
-        <IonSplitPane contentId="main">
-          <IonRouterOutlet id="main" ref={routerRef}>
-            <Route exact path="/" render={() => <Redirect to="/inicio" />} />
-            <Route
-              exact
-              path="/inicio"
-              render={() => (
-                <Suspense fallback={<LoadingSuspense />}>
-                  <HomeSreen />
-                </Suspense>
-              )}
-            />
-            <Route
-              exact
-              path="/ferias"
-              render={() => (
-                <Suspense fallback={<LoadingSuspense />}>
-                  <FairsListScreen />
-                </Suspense>
-              )}
-            />
-            <Route
-              exact
-              path="/stands"
-              render={() => (
-                <Suspense fallback={<LoadingSuspense />}>
-                  <StandsListScreen />
-                </Suspense>
-              )}
-            />
-            <Route
-              exact
-              path="/cerca"
-              render={() => (
-                <Suspense fallback={<LoadingSuspense />}>
-                  <NearYouScreen />
-                </Suspense>
-              )}
-            />
-            <Route
-              exact
-              path="/mi-sanble"
-              render={() => (
-                <Suspense fallback={<LoadingSuspense />}>
-                  <MyListScreen />
-                </Suspense>
-              )}
-            />
-            <Route>
-              <h1>404</h1>
-            </Route>
-          </IonRouterOutlet>
-        </IonSplitPane>
-      </Switch>
-    </IonReactRouter>
-  );
+export const Routes: React.FC = () => {
+  const elements = useRoutes([
+    {
+      path: "/",
+      element: <Navigate to="/app" replace />,
+    },
+    {
+      path: "/app",
+      element: <h1>App</h1>,
+    },
+    {
+      path: "/app/sesion",
+      element: <AuthLayout />,
+      children: [
+        {
+          index: true,
+          element: <Navigate to="/app/sesion/entrar" replace />,
+        },
+        {
+          path: "entrar",
+          element: (
+            <Suspense fallback={Loading}>
+              <SigninScreen />
+            </Suspense>
+          ),
+        },
+        {
+          path: "registrar",
+          element: (
+            <Suspense fallback={Loading}>
+              <SignupScreen />
+            </Suspense>
+          ),
+        },
+      ],
+    },
+  ]);
+
+  return elements;
 };

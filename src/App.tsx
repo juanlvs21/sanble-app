@@ -1,4 +1,5 @@
 import { IonApp, setupIonicReact } from "@ionic/react";
+import { BrowserRouter } from "react-router-dom";
 
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
@@ -20,17 +21,19 @@ import "@ionic/react/css/display.css";
 import "@/theme/variables.css";
 import "@/theme/global.css";
 
-import { Router } from "@/router";
-import { AppProvider } from "@/context";
+import { Routes } from "@/router";
+// import { AppProvider } from "@/context";
 
 setupIonicReact();
 
 const App: React.FC = () => (
-  <AppProvider>
-    <IonApp className="animate__animated animate__fadeIn">
-      <Router />
-    </IonApp>
-  </AppProvider>
+  // <AppProvider>
+  <IonApp className="animate__animated animate__fadeIn">
+    <BrowserRouter>
+      <Routes />
+    </BrowserRouter>
+  </IonApp>
+  // </AppProvider>
 );
 
 export default App;

@@ -1,7 +1,0 @@
-{
-  "name": "Sanble",
-  "integrations": {
-    "capacitor": {}
-  },
-  "type": "react"
-}
