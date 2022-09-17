@@ -2,7 +2,7 @@ import { useMatch, Link } from "react-router-dom";
 
 import styles from "./TabBar.module.css";
 
-const TabBar: React.FC = () => {
+export const TabBar: React.FC = () => {
   const matchSignin = useMatch("/app/sesion/entrar");
   const matchSignup = useMatch("/app/sesion/registrar");
 
@@ -40,5 +40,3 @@ const TabBar: React.FC = () => {
     </nav>
   );
 };
-
-export default TabBar;

@@ -1,7 +1,7 @@
 import { Suspense, lazy } from "react";
 import { useRoutes, Navigate } from "react-router-dom";
 
-const AuthLayout = lazy(() => import("@/components/layouts/Auth"));
+import AuthLayout from "@/components/layouts/Auth";
 
 const SigninScreen = lazy(() => import("@/screens/auth/Signin"));
 const SignupScreen = lazy(() => import("@/screens/auth/Signup"));

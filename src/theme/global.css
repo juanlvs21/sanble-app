@@ -69,3 +69,35 @@ ion-searchbar input.searchbar-input {
   -webkit-animation-name: fadeIn;
   animation-name: fadeIn;
 }
+
+/* --------- */
+
+.navFadeUp {
+  animation: 0.5s navFadeUp forwards;
+}
+
+.navFadeDown {
+  animation: 0.5s navFadeDown forwards;
+}
+
+@keyframes navFadeUp {
+  from {
+    opacity: 0;
+    transform: translate(0, 20px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(0px, 0px);
+  }
+}
+
+@keyframes navFadeDown {
+  from {
+    opacity: 1;
+    transform: translate(0px, 0px);
+  }
+  to {
+    transform: translate(0, 20px);
+    opacity: 0;
+  }
+}

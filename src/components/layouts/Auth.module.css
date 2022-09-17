@@ -1,7 +1,10 @@
+.layoutContainer {
+  height: 100vh;
+}
 .layoutContainer::part(background) {
   background-size: cover;
   background-repeat: no-repeat;
-  background-position: right;
+  background-position: right top;
   transition: all 400ms ease-in-out;
 }
 

@@ -2,7 +2,9 @@ import { IonContent, IonGrid, IonRow, IonCol } from "@ionic/react";
 import { Outlet, useLocation } from "react-router-dom";
 
 import styles from "./Auth.module.css";
-import TabBar from "@/components/modules/auth/TabBar";
+
+import { TabBar } from "@/components/modules/auth/TabBar";
+import { TransitionUpDown } from "@/components/modules/navigation/TransitionUpDown";
 
 const bgImage: Record<string, string> = {
   "/app/sesion/entrar": "signinRoute",
@@ -33,7 +35,10 @@ const AuthLayout: React.FC = () => {
         <IonRow>
           <TabBar />
         </IonRow>
-        <Outlet />
+
+        <TransitionUpDown>
+          <Outlet />
+        </TransitionUpDown>
       </IonGrid>
     </IonContent>
   );
