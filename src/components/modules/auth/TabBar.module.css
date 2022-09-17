@@ -3,6 +3,32 @@
   width: 100%;
 }
 
+.navUl {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: space-between;
+  height: 38px;
+}
+
+.navUl .navLi {
+  width: 100%;
+}
+
+.navLink {
+  display: block;
+  text-align: center;
+  text-decoration: none;
+  color: var(--ion-color-secondary);
+  transition: all 400ms ease-in-out;
+}
+
+.navLink.linkActive {
+  color: var(--ion-color-primary);
+  transition: all 400ms ease-in-out;
+}
+
 .barContainer {
   height: 7px;
   width: 100%;

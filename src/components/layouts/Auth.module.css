@@ -1,18 +1,38 @@
 .layoutContainer::part(background) {
-  background-image: url("/assets/images/auth/register-wave-1.svg");
-  background-size: contain;
+  background-size: cover;
   background-repeat: no-repeat;
-  background-position: bottom;
+  background-position: right;
+  transition: all 400ms ease-in-out;
+}
+
+.layoutContainer.signinRoute::part(background) {
+  background-image: url("/assets/images/auth/signin-wave-1.svg");
+  transition: all 1s ease-in-out;
+}
+
+.layoutContainer.signupRoute::part(background) {
+  background-image: url("/assets/images/auth/signup-wave-1.svg");
+  transition: all 1s ease-in-out;
 }
 
 .layoutGrid {
   height: 100%;
-  background-image: url("/assets/images/auth/register-wave-2.svg");
   background-size: contain;
   background-repeat: no-repeat;
-  background-position: bottom;
+  background-position: left bottom;
   padding: 0;
   margin: 0;
+  transition: all 1s ease-in-out;
+}
+
+.layoutGrid.signinRoute {
+  background-image: url("/assets/images/auth/signin-wave-2.svg");
+  transition: all 1s ease-in-out;
+}
+
+.layoutGrid.signupRoute {
+  background-image: url("/assets/images/auth/signup-wave-2.svg");
+  transition: all 1s ease-in-out;
 }
 
 .logoContainer {
@@ -25,4 +45,16 @@
 
 .logoImg {
   width: 250px;
+}
+
+@media (max-width: 470px) {
+  .layoutContainer.signinRoute::part(background) {
+    background-size: contain;
+    transition: all 1s ease-in-out;
+  }
+
+  .layoutContainer.signupRoute::part(background) {
+    background-size: contain;
+    transition: all 1s ease-in-out;
+  }
 }
