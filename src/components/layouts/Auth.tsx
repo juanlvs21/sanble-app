@@ -7,7 +7,7 @@ import { TabBar } from "@/components/modules/auth/TabBar";
 
 const bgImage: Record<string, string> = {
   "/app/sesion/entrar": "signinRoute",
-  "/app/sesion/registrar": "signupRoute",
+  "/app/sesion/registrarse": "signupRoute",
 };
 
 const getWavesClass = (pathname: string) => {

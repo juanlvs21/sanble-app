@@ -13,7 +13,11 @@ const NotFound: React.FC<ComponentProps> = ({ setDisplayLocation }) => {
     setDisplayLocation();
   }, []);
 
-  return <div>Página no encontrada</div>;
+  return (
+    <div className="animate__animated animate__fadeIn">
+      Página no encontrada
+    </div>
+  );
 };
 
 export default NotFound;

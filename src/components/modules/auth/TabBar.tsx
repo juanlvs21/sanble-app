@@ -5,14 +5,14 @@ import styles from "./TabBar.module.css";
 export const TabBar: React.FC = () => {
   const location = useLocation();
   const matchSignin = useMatch("/app/sesion/entrar");
-  const matchSignup = useMatch("/app/sesion/registrar");
+  const matchSignup = useMatch("/app/sesion/registrarse");
 
   return (
     <nav className={styles.tabBarContiner}>
       <ul className={styles.navUl}>
         <li className={styles.navLi}>
           <Link
-            to="/app/sesion/registrar"
+            to="/app/sesion/registrarse"
             className={`${styles.navLink} ${
               matchSignup ? styles.linkActive : ""
             }`}

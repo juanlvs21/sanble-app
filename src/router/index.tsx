@@ -2,13 +2,12 @@ import { Suspense, lazy } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 
 import AuthLayout from "@/components/layouts/Auth";
+import { LoadingSuspense } from "@/components/common/loaders/LoadingSuspense";
 import { useTransitionsScreen } from "@/hooks/useTransitionsScreen";
 
 const NotFoundScreen = lazy(() => import("@/screens/NotFound"));
 const SigninScreen = lazy(() => import("@/screens/auth/Signin"));
 const SignupScreen = lazy(() => import("@/screens/auth/Signup"));
-
-const Loading = <p>Loading...</p>;
 
 export const AppRoutes: React.FC = () => {
   const {
@@ -31,19 +30,22 @@ export const AppRoutes: React.FC = () => {
           />
         }
       >
-        <Route index element={<Navigate to="/app/sesion/entrar" replace />} />
+        <Route
+          index
+          element={<Navigate to="/app/sesion/registrarse" replace />}
+        />
         <Route
           path="entrar"
           element={
-            <Suspense fallback={Loading}>
+            <Suspense fallback={<LoadingSuspense />}>
               <SigninScreen />
             </Suspense>
           }
         />
         <Route
-          path="registrar"
+          path="registrarse"
           element={
-            <Suspense fallback={Loading}>
+            <Suspense fallback={<LoadingSuspense />}>
               <SignupScreen />
             </Suspense>
           }
@@ -52,7 +54,7 @@ export const AppRoutes: React.FC = () => {
       <Route
         path="*"
         element={
-          <Suspense fallback={Loading}>
+          <Suspense fallback={<LoadingSuspense />}>
             <NotFoundScreen setDisplayLocation={setDefaultLocation} />
           </Suspense>
         }

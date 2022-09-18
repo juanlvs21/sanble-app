@@ -7,7 +7,9 @@ import { InputPassword } from "@/components/common/forms/InputPassword";
 
 const Signin: React.FC = () => {
   return (
-    <IonGrid className={styles.authScreenContainer}>
+    <IonGrid
+      className={`animate__animated animate__fadeIn ${styles.authScreenContainer}`}
+    >
       <IonRow>
         <IonCol>
           <h1 className={styles.title}>Ingresar</h1>

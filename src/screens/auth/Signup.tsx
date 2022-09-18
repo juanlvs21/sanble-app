@@ -7,7 +7,9 @@ import { Input } from "@/components/common/forms/Input";
 
 const Signup: React.FC = () => {
   return (
-    <IonGrid className={styles.authScreenContainer}>
+    <IonGrid
+      className={`animate__animated animate__fadeIn ${styles.authScreenContainer}`}
+    >
       <IonRow>
         <IonCol>
           <h1 className={styles.title}>Crea tu Cuenta</h1>
