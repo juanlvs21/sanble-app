@@ -4,6 +4,7 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import AuthLayout from "@/components/layouts/Auth";
 import { useTransitionsScreen } from "@/hooks/useTransitionsScreen";
 
+const NotFoundScreen = lazy(() => import("@/screens/NotFound"));
 const SigninScreen = lazy(() => import("@/screens/auth/Signin"));
 const SignupScreen = lazy(() => import("@/screens/auth/Signup"));
 
@@ -11,8 +12,10 @@ const Loading = <p>Loading...</p>;
 
 export const AppRoutes: React.FC = () => {
   const {
+    setDefaultLocation,
     displayLocation,
-    auth: { onAnimationEndAuth, transitionStageAuth },
+    onAnimationEnd,
+    transitionStage,
   } = useTransitionsScreen();
 
   return (
@@ -23,8 +26,8 @@ export const AppRoutes: React.FC = () => {
         path="/app/sesion"
         element={
           <AuthLayout
-            onAnimationEnd={onAnimationEndAuth}
-            transitionStage={transitionStageAuth}
+            onAnimationEnd={onAnimationEnd}
+            transitionStage={transitionStage}
           />
         }
       >
@@ -46,6 +49,14 @@ export const AppRoutes: React.FC = () => {
           }
         />
       </Route>
+      <Route
+        path="*"
+        element={
+          <Suspense fallback={Loading}>
+            <NotFoundScreen setDisplayLocation={setDefaultLocation} />
+          </Suspense>
+        }
+      />
     </Routes>
   );
 };

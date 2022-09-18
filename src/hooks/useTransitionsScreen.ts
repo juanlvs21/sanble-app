@@ -1,32 +1,32 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 
-const authClassNameStart = "navFadeUpStart";
-const authClassNameEnd = "navFadeUpEnd";
+const classNameStart = "navFadeUpStart";
+const classNameEnd = "navFadeUpEnd";
 
 export const useTransitionsScreen = () => {
   const location = useLocation();
 
   const [displayLocation, setDisplayLocation] = useState(location);
-  const [transitionStageAuth, setTransitionStageAuth] =
-    useState(authClassNameStart);
+  const [transitionStage, setTransitionStage] = useState(classNameStart);
 
   useEffect(() => {
-    if (location !== displayLocation) setTransitionStageAuth(authClassNameEnd);
+    if (location !== displayLocation) setTransitionStage(classNameEnd);
   }, [location, displayLocation]);
 
-  const onAnimationEndAuth = () => {
-    if (transitionStageAuth === authClassNameEnd) {
-      setTransitionStageAuth(authClassNameStart);
+  const onAnimationEnd = () => {
+    if (transitionStage !== classNameStart) {
+      setTransitionStage(classNameStart);
       setDisplayLocation(location);
     }
   };
 
+  const setDefaultLocation = () => setDisplayLocation(location);
+
   return {
     displayLocation,
-    auth: {
-      onAnimationEndAuth,
-      transitionStageAuth,
-    },
+    transitionStage,
+    onAnimationEnd,
+    setDefaultLocation,
   };
 };

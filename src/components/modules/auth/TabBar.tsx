@@ -16,7 +16,7 @@ export const TabBar: React.FC = () => {
             className={`${styles.navLink} ${
               matchSignup ? styles.linkActive : ""
             }`}
-            // state={{ prevRoute: location }}
+            state={{ prevRoute: location.pathname }}
           >
             Registrarse
           </Link>
@@ -27,7 +27,7 @@ export const TabBar: React.FC = () => {
             className={`${styles.navLink} ${
               matchSignin ? styles.linkActive : ""
             }`}
-            // state={{ prevRoute: location }}
+            state={{ prevRoute: location.pathname }}
           >
             Ingresar
           </Link>
