@@ -1,13 +1,19 @@
 import { Suspense, lazy } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 
-import AuthLayout from "@/components/layouts/Auth";
+import { AuthLayout } from "@/components/layouts/Auth";
 import { LoadingSuspense } from "@/components/common/loaders/LoadingSuspense";
 import { useTransitionsScreen } from "@/hooks/useTransitionsScreen";
 
-const NotFoundScreen = lazy(() => import("@/screens/NotFound"));
-const SigninScreen = lazy(() => import("@/screens/auth/Signin"));
-const SignupScreen = lazy(() => import("@/screens/auth/Signup"));
+const NotFoundScreen = lazy(() =>
+  import("@/screens/NotFound").then(({ NotFound }) => ({ default: NotFound }))
+);
+const SigninScreen = lazy(() =>
+  import("@/screens/auth/Signin").then(({ Signin }) => ({ default: Signin }))
+);
+const SignupScreen = lazy(() =>
+  import("@/screens/auth/Signup").then(({ Signup }) => ({ default: Signup }))
+);
 
 export const AppRoutes: React.FC = () => {
   const {

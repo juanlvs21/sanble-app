@@ -26,7 +26,7 @@ type ComponentProps = {
   onAnimationEnd: () => void;
 };
 
-const AuthLayout: React.FC<ComponentProps> = ({
+export const AuthLayout: React.FC<ComponentProps> = ({
   onAnimationEnd,
   transitionStage,
 }) => (
@@ -49,5 +49,3 @@ const AuthLayout: React.FC<ComponentProps> = ({
     </div>
   </IonContent>
 );
-
-export default AuthLayout;

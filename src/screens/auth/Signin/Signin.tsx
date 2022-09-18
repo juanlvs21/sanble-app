@@ -1,24 +1,23 @@
 import { IonGrid, IonRow, IonCol, IonButton } from "@ionic/react";
-import { BiUser, BiEnvelope } from "react-icons/bi";
+import { BiEnvelope } from "react-icons/bi";
 
-import styles from "./Auth.module.css";
-import { InputPassword } from "@/components/common/forms/InputPassword";
+import styles from "../Auth.module.css";
 import { Input } from "@/components/common/forms/Input";
+import { InputPassword } from "@/components/common/forms/InputPassword";
 
-const Signup: React.FC = () => {
+export const Signin: React.FC = () => {
   return (
     <IonGrid
       className={`animate__animated animate__fadeIn ${styles.authScreenContainer}`}
     >
       <IonRow>
         <IonCol>
-          <h1 className={styles.title}>Crea tu Cuenta</h1>
-          <span className={styles.titleLineSignUp} />
-          <p className={styles.subtitle}>Únete a la Plataforma de Sanble</p>
+          <h1 className={styles.title}>Ingresar</h1>
+          <span className={styles.titleLineSignIn} />
+          <p className={styles.subtitle}>Ingresa en la Plataforma de Sanble</p>
         </IonCol>
       </IonRow>
       <IonRow className={styles.formContainer}>
-        <Input placeholder="Name" Icon={<BiUser />} />
         <Input
           placeholder="Correo electrónico"
           Icon={<BiEnvelope />}
@@ -26,11 +25,9 @@ const Signup: React.FC = () => {
         />
         <InputPassword />
         <IonButton expand="block" color="primary">
-          Unirse
+          Ingresar
         </IonButton>
       </IonRow>
     </IonGrid>
   );
 };
-
-export default Signup;

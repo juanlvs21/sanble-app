@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import type { Location } from "react-router-dom";
 
 type ComponentProps = {
   /**
@@ -8,7 +7,7 @@ type ComponentProps = {
   setDisplayLocation: () => void;
 };
 
-const NotFound: React.FC<ComponentProps> = ({ setDisplayLocation }) => {
+export const NotFound: React.FC<ComponentProps> = ({ setDisplayLocation }) => {
   useEffect(() => {
     setDisplayLocation();
   }, []);
@@ -19,5 +18,3 @@ const NotFound: React.FC<ComponentProps> = ({ setDisplayLocation }) => {
     </div>
   );
 };
-
-export default NotFound;

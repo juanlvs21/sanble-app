@@ -1,4 +1,4 @@
-import styles from "./Loaders.module.css";
+import styles from "../Loaders.module.css";
 
 export const Spinner: React.FC = () => (
   <span>
