@@ -4,14 +4,16 @@ http://ionicframework.com/docs/theming/ */
 /** Ionic CSS Variables **/
 :root {
   --sanble-border-radius: 20px;
-  --sanble-gray-color: #d1d1d1;
+  --sanble-gray-color-1: #d1d1d1;
+  --sanble-gray-color-2: #d6d6d6;
+
   --ion-font-family: Poppins, sans-serif;
   --ion-text-color: #232020;
 
   /** primary **/
   --ion-color-primary: #ff8634;
   --ion-color-primary-rgb: 255, 134, 52;
-  --ion-color-primary-contrast: #000000;
+  --ion-color-primary-contrast: #ffffff;
   --ion-color-primary-contrast-rgb: 0, 0, 0;
   --ion-color-primary-shade: #e0762e;
   --ion-color-primary-tint: #ff9248;

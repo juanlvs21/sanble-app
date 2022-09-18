@@ -32,7 +32,7 @@
 .barContainer {
   height: 7px;
   width: 100%;
-  background-color: #d6d6d6;
+  background-color: var(--sanble-gray-color-2);
 }
 
 .barFill {

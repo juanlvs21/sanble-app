@@ -6,8 +6,37 @@
   margin-bottom: 0;
   font-size: 24px;
   font-weight: 600;
+  position: relative;
+  z-index: 10;
 }
 
 .subtitle {
   margin-top: 5px;
+  font-weight: 500;
+}
+
+.formContainer {
+  margin-top: 10px;
+}
+
+.titleLineSignUp {
+  background-color: var(--ion-color-primary);
+  border-radius: var(--sanble-border-radius);
+  width: 92px;
+  height: 7px;
+  display: block;
+  position: absolute;
+  left: 105px;
+  top: 40px;
+}
+
+.titleLineSignIn {
+  background-color: var(--ion-color-primary);
+  border-radius: var(--sanble-border-radius);
+  width: 103px;
+  height: 7px;
+  display: block;
+  position: absolute;
+  left: 5px;
+  top: 40px;
 }

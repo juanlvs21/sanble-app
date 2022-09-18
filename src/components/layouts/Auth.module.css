@@ -4,7 +4,7 @@
 .layoutContainer::part(background) {
   background-size: cover;
   background-repeat: no-repeat;
-  background-position: right top;
+  background-position: center;
   transition: all 400ms ease-in-out;
 }
 
@@ -18,7 +18,7 @@
   transition: all 1s ease-in-out;
 }
 
-.layoutGrid {
+.layoutWave {
   height: 100%;
   background-size: contain;
   background-repeat: no-repeat;
@@ -28,12 +28,12 @@
   transition: all 1s ease-in-out;
 }
 
-.layoutGrid.signinRoute {
+.layoutWave.signinRoute {
   background-image: url("/assets/images/auth/signin-wave-2.svg");
   transition: all 1s ease-in-out;
 }
 
-.layoutGrid.signupRoute {
+.layoutWave.signupRoute {
   background-image: url("/assets/images/auth/signup-wave-2.svg");
   transition: all 1s ease-in-out;
 }

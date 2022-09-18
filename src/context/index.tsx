@@ -7,6 +7,9 @@ import { AppProvider as AppContextProvider } from "@/context/AppContext";
 const queryClient = new QueryClient();
 
 type ComponentProps = {
+  /**
+   * Children element
+   */
   children: React.ReactElement | React.ReactElement[];
 };
 

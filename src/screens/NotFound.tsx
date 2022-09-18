@@ -2,6 +2,9 @@ import { useEffect } from "react";
 import type { Location } from "react-router-dom";
 
 type ComponentProps = {
+  /**
+   * Function to set location in displayLocation
+   */
   setDisplayLocation: () => void;
 };
 

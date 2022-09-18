@@ -4,6 +4,9 @@ import { useAppContext } from "@/context/AppContext";
 import { appActions } from "@/context/actions/appActions";
 
 export type ComponentProps = {
+  /**
+   * Children element
+   */
   children: React.ReactElement | React.ReactElement[];
 };
 
