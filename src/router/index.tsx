@@ -1,7 +1,8 @@
-import { Suspense, lazy, useState, useEffect } from "react";
-import { Navigate, Route, Routes, useLocation } from "react-router-dom";
+import { Suspense, lazy } from "react";
+import { Navigate, Route, Routes } from "react-router-dom";
 
 import AuthLayout from "@/components/layouts/Auth";
+import { useTransitionsScreen } from "@/hooks/useTransitionsScreen";
 
 const SigninScreen = lazy(() => import("@/screens/auth/Signin"));
 const SignupScreen = lazy(() => import("@/screens/auth/Signup"));
@@ -9,21 +10,10 @@ const SignupScreen = lazy(() => import("@/screens/auth/Signup"));
 const Loading = <p>Loading...</p>;
 
 export const AppRoutes: React.FC = () => {
-  const location = useLocation();
-
-  const [displayLocation, setDisplayLocation] = useState(location);
-  const [transitionStage, setTransistionStage] = useState("navFadeUpStart");
-
-  useEffect(() => {
-    if (location !== displayLocation) setTransistionStage("navFadeUpEnd");
-  }, [location, displayLocation]);
-
-  const onAnimationEndAuth = () => {
-    if (transitionStage === "navFadeUpEnd") {
-      setTransistionStage("navFadeUpStart");
-      setDisplayLocation(location);
-    }
-  };
+  const {
+    displayLocation,
+    auth: { onAnimationEndAuth, transitionStageAuth },
+  } = useTransitionsScreen();
 
   return (
     <Routes location={displayLocation}>
@@ -33,8 +23,8 @@ export const AppRoutes: React.FC = () => {
         path="/app/sesion"
         element={
           <AuthLayout
-            transitionStage={transitionStage}
             onAnimationEnd={onAnimationEndAuth}
+            transitionStage={transitionStageAuth}
           />
         }
       >

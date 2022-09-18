@@ -17,13 +17,13 @@ const getWavesClass = (pathname: string) => {
 };
 
 type ComponentProps = {
-  transitionStage: string;
   onAnimationEnd: () => void;
+  transitionStage: string;
 };
 
 const AuthLayout: React.FC<ComponentProps> = ({
-  transitionStage,
   onAnimationEnd,
+  transitionStage,
 }) => (
   <IonContent
     className={`${styles.layoutContainer} ${getWavesClass(location.pathname)}`}
