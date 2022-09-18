@@ -1,0 +1,13 @@
+.authScreenContainer {
+  margin: 20px 30px;
+}
+
+.title {
+  margin-bottom: 0;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.subtitle {
+  margin-top: 5px;
+}

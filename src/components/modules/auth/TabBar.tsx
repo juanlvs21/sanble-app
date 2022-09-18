@@ -1,8 +1,9 @@
-import { useMatch, Link } from "react-router-dom";
+import { useMatch, Link, useLocation } from "react-router-dom";
 
 import styles from "./TabBar.module.css";
 
 export const TabBar: React.FC = () => {
+  const location = useLocation();
   const matchSignin = useMatch("/app/sesion/entrar");
   const matchSignup = useMatch("/app/sesion/registrar");
 
@@ -15,6 +16,7 @@ export const TabBar: React.FC = () => {
             className={`${styles.navLink} ${
               matchSignup ? styles.linkActive : ""
             }`}
+            // state={{ prevRoute: location }}
           >
             Registrarse
           </Link>
@@ -25,6 +27,7 @@ export const TabBar: React.FC = () => {
             className={`${styles.navLink} ${
               matchSignin ? styles.linkActive : ""
             }`}
+            // state={{ prevRoute: location }}
           >
             Ingresar
           </Link>

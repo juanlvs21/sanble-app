@@ -1,5 +1,5 @@
-import { Suspense, lazy } from "react";
-import { useRoutes, Navigate } from "react-router-dom";
+import { Suspense, lazy, useState, useEffect } from "react";
+import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 
 import AuthLayout from "@/components/layouts/Auth";
 
@@ -8,43 +8,54 @@ const SignupScreen = lazy(() => import("@/screens/auth/Signup"));
 
 const Loading = <p>Loading...</p>;
 
-export const Routes: React.FC = () => {
-  const elements = useRoutes([
-    {
-      path: "/",
-      element: <Navigate to="/app" replace />,
-    },
-    {
-      path: "/app",
-      element: <h1>App</h1>,
-    },
-    {
-      path: "/app/sesion",
-      element: <AuthLayout />,
-      children: [
-        {
-          index: true,
-          element: <Navigate to="/app/sesion/entrar" replace />,
-        },
-        {
-          path: "entrar",
-          element: (
+export const AppRoutes: React.FC = () => {
+  const location = useLocation();
+
+  const [displayLocation, setDisplayLocation] = useState(location);
+  const [transitionStage, setTransistionStage] = useState("navFadeUpStart");
+
+  useEffect(() => {
+    if (location !== displayLocation) setTransistionStage("navFadeUpEnd");
+  }, [location, displayLocation]);
+
+  const onAnimationEndAuth = () => {
+    if (transitionStage === "navFadeUpEnd") {
+      setTransistionStage("navFadeUpStart");
+      setDisplayLocation(location);
+    }
+  };
+
+  return (
+    <Routes location={displayLocation}>
+      <Route path="/" element={<Navigate to="/app" />} />
+      <Route path="/app" element={<h1>App</h1>} />
+      <Route
+        path="/app/sesion"
+        element={
+          <AuthLayout
+            transitionStage={transitionStage}
+            onAnimationEnd={onAnimationEndAuth}
+          />
+        }
+      >
+        <Route index element={<Navigate to="/app/sesion/entrar" replace />} />
+        <Route
+          path="entrar"
+          element={
             <Suspense fallback={Loading}>
               <SigninScreen />
             </Suspense>
-          ),
-        },
-        {
-          path: "registrar",
-          element: (
+          }
+        />
+        <Route
+          path="registrar"
+          element={
             <Suspense fallback={Loading}>
               <SignupScreen />
             </Suspense>
-          ),
-        },
-      ],
-    },
-  ]);
-
-  return elements;
+          }
+        />
+      </Route>
+    </Routes>
+  );
 };

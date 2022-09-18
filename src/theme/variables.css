@@ -6,6 +6,7 @@ http://ionicframework.com/docs/theming/ */
   --sanble-border-radius: 20px;
   --sanble-gray-color: #d1d1d1;
   --ion-font-family: Poppins, sans-serif;
+  --ion-text-color: #232020;
 
   /** primary **/
   --ion-color-primary: #ff8634;

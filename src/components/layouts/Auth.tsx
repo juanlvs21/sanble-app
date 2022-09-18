@@ -1,10 +1,10 @@
+import { useEffect, useState } from "react";
 import { IonContent, IonGrid, IonRow, IonCol } from "@ionic/react";
 import { Outlet, useLocation } from "react-router-dom";
 
 import styles from "./Auth.module.css";
 
 import { TabBar } from "@/components/modules/auth/TabBar";
-import { TransitionUpDown } from "@/components/modules/navigation/TransitionUpDown";
 
 const bgImage: Record<string, string> = {
   "/app/sesion/entrar": "signinRoute",
@@ -16,32 +16,35 @@ const getWavesClass = (pathname: string) => {
   return cssClassName ? styles[cssClassName] : "";
 };
 
-const AuthLayout: React.FC = () => {
-  const { pathname } = useLocation();
-
-  return (
-    <IonContent
-      className={`${styles.layoutContainer} ${getWavesClass(pathname)}`}
-    >
-      <IonGrid className={`${styles.layoutGrid} ${getWavesClass(pathname)}`}>
-        <IonRow>
-          <IonCol className={styles.logoContainer}>
-            <img
-              src="/assets/images/logo-full.png"
-              className={styles.logoImg}
-            />
-          </IonCol>
-        </IonRow>
-        <IonRow>
-          <TabBar />
-        </IonRow>
-
-        <TransitionUpDown>
-          <Outlet />
-        </TransitionUpDown>
-      </IonGrid>
-    </IonContent>
-  );
+type ComponentProps = {
+  transitionStage: string;
+  onAnimationEnd: () => void;
 };
+
+const AuthLayout: React.FC<ComponentProps> = ({
+  transitionStage,
+  onAnimationEnd,
+}) => (
+  <IonContent
+    className={`${styles.layoutContainer} ${getWavesClass(location.pathname)}`}
+  >
+    <IonGrid
+      className={`${styles.layoutGrid} ${getWavesClass(location.pathname)}`}
+    >
+      <IonRow>
+        <IonCol className={styles.logoContainer}>
+          <img src="/assets/images/logo-full.png" className={styles.logoImg} />
+        </IonCol>
+      </IonRow>
+      <IonRow>
+        <TabBar />
+      </IonRow>
+
+      <div className={transitionStage} onAnimationEnd={onAnimationEnd}>
+        <Outlet />
+      </div>
+    </IonGrid>
+  </IonContent>
+);
 
 export default AuthLayout;
