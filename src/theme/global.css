@@ -103,6 +103,8 @@ ion-item.inputItem .showPassBtn {
 
 ion-button.button-block {
   width: 100% !important;
+  color: #57bbc1;
+  color: #015871;
 }
 
 /* .split-pane-main {

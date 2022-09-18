@@ -2,6 +2,7 @@ import { useEffect } from "react";
 
 import { useAppContext } from "@/context/AppContext";
 import { appActions } from "@/context/actions/appActions";
+import { Splash } from "@/screens/Splash";
 
 export type ComponentProps = {
   /**
@@ -17,8 +18,8 @@ export const DataProvider: React.FC<ComponentProps> = ({ children }) => {
   useEffect(() => {
     setTimeout(() => {
       setReadyToUse(true);
-    }, 1000);
+    }, 3000);
   }, []);
 
-  return readyToUse ? <>{children}</> : <h1>Cargando...</h1>;
+  return readyToUse ? <>{children}</> : <Splash />;
 };
