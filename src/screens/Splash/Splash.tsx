@@ -1,7 +1,9 @@
 import styles from "./Splash.module.css";
 
 export const Splash: React.FC = () => (
-  <div className={styles.splashContainer}>
+  <div
+    className={`${styles.splashContainer} animate__animated animate__fadeIn`}
+  >
     <img src="/logo.svg" alt="Sanble" className={styles.splashLogo} />
     <h3 className={styles.splashSubtitle}>Bienvenido</h3>
     <h1 className={styles.splashTitle}>Sanble</h1>
