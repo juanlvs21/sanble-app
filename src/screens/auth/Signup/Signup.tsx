@@ -18,7 +18,7 @@ export const Signup: React.FC = () => {
         </IonCol>
       </IonRow>
       <IonRow className={styles.formContainer}>
-        <Input placeholder="Name" Icon={<BiUser />} />
+        <Input placeholder="Nombre" Icon={<BiUser />} />
         <Input
           placeholder="Correo electrónico"
           Icon={<BiEnvelope />}

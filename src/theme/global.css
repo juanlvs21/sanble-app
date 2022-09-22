@@ -51,6 +51,10 @@ ion-item.inputItem::part(native) {
   height: 50px;
 }
 
+ion-item.inputItem::part(native)::after {
+  background: transparent;
+}
+
 ion-item.inputItem ion-input {
   margin-top: -3px;
 }
