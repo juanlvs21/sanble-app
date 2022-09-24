@@ -2,7 +2,7 @@ import { useState } from "react";
 import { IonButton, IonInput, IonItem, IonNote } from "@ionic/react";
 import { HiOutlineKey, HiOutlineEye, HiOutlineEyeOff } from "react-icons/hi";
 
-import { TInput } from "@/types/TForm";
+import { TInput } from "@/types/TComponents";
 
 type ComponentProps = TInput & {
   helper?: string | React.ReactElement;

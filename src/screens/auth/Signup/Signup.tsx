@@ -1,27 +1,35 @@
-import { IonGrid, IonRow, IonCol, IonButton } from "@ionic/react";
+import { IonGrid, IonRow, IonCol } from "@ionic/react";
 import { useFormik } from "formik";
 import { BiUser, BiEnvelope } from "react-icons/bi";
 
 import styles from "../Auth.module.css";
-import { InputPassword } from "@/components/common/forms/InputPassword";
+import { Button } from "@/components/common/buttons/Button";
 import { Input } from "@/components/common/forms/Input";
-import { signUpSchema } from "@/utils/validator/auth";
-import { getErrorMessage } from "@/utils/getFormikErrorMsg";
+import { InputPassword } from "@/components/common/forms/InputPassword";
+import { signUpSchema } from "@/helpers/validator/auth";
+import { getErrorMessage } from "@/helpers/getFormikErrorMsg";
 import { TAuthSignupForm } from "@/types/TAuth";
+import { useAuth } from "@/hooks/useAuth";
 
 export const Signup: React.FC = () => {
-  const { handleSubmit, handleChange, handleBlur, values, touched, errors } =
-    useFormik<TAuthSignupForm>({
-      initialValues: {
-        name: "",
-        email: "",
-        password: "",
-      },
-      validationSchema: signUpSchema,
-      onSubmit: (values) => {
-        alert(JSON.stringify(values, null, 2));
-      },
-    });
+  const { handleSignup } = useAuth();
+  const {
+    handleSubmit,
+    handleChange,
+    handleBlur,
+    values,
+    touched,
+    errors,
+    isSubmitting,
+  } = useFormik<TAuthSignupForm>({
+    initialValues: {
+      name: "",
+      email: "",
+      password: "",
+    },
+    validationSchema: signUpSchema,
+    onSubmit: handleSignup,
+  });
 
   return (
     <IonGrid
@@ -35,13 +43,17 @@ export const Signup: React.FC = () => {
         </IonCol>
       </IonRow>
       <IonRow className={styles.formContainer}>
-        <form onSubmit={handleSubmit}>
+        <form
+          onSubmit={handleSubmit}
+          onKeyUp={(e) => e.key === "Enter" && handleSubmit()}
+        >
           <Input
             placeholder="Nombre"
             name="name"
             Icon={<BiUser />}
             onIonChange={handleChange}
             onIonBlur={handleBlur}
+            disabled={isSubmitting}
             value={values.name}
             helper={getErrorMessage("name", touched, errors)}
             helperIsError
@@ -52,8 +64,9 @@ export const Signup: React.FC = () => {
             name="email"
             Icon={<BiEnvelope />}
             onIonChange={handleChange}
-            value={values.email}
             onIonBlur={handleBlur}
+            disabled={isSubmitting}
+            value={values.email}
             helper={getErrorMessage("email", touched, errors)}
             helperIsError
           />
@@ -61,13 +74,19 @@ export const Signup: React.FC = () => {
             name="password"
             onIonChange={handleChange}
             onIonBlur={handleBlur}
+            disabled={isSubmitting}
             value={values.password}
             helper={getErrorMessage("password", touched, errors)}
             helperIsError
           />
-          <IonButton expand="block" color="primary" type="submit">
+          <Button
+            expand="block"
+            color="primary"
+            type="submit"
+            isLoading={isSubmitting}
+          >
             Unirse
-          </IonButton>
+          </Button>
         </form>
       </IonRow>
     </IonGrid>
