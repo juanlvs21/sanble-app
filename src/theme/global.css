@@ -107,10 +107,24 @@ ion-item.inputItem .showPassBtn {
   color: #cacaca;
 }
 
+ion-item.inputItem ion-note {
+  display: block;
+  padding-top: 0;
+}
+
 ion-button.button-block {
   width: 100% !important;
   color: #57bbc1;
   color: #015871;
+}
+
+ion-toast {
+  --background: #fff;
+  --box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+form {
+  width: 100%;
 }
 
 /* .split-pane-main {

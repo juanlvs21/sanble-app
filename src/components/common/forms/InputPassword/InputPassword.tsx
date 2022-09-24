@@ -1,13 +1,18 @@
 import { useState } from "react";
-import { IonButton, IonInput, IonItem } from "@ionic/react";
+import { IonButton, IonInput, IonItem, IonNote } from "@ionic/react";
 import { HiOutlineKey, HiOutlineEye, HiOutlineEyeOff } from "react-icons/hi";
 
 import { TInput } from "@/types/TForm";
 
-type ComponentProps = TInput;
+type ComponentProps = TInput & {
+  helper?: string | React.ReactElement;
+  helperIsError?: boolean;
+};
 
 export const InputPassword: React.FC<ComponentProps> = ({
   placeholder = "Contraseña",
+  helper,
+  helperIsError,
   ...rest
 }) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -37,6 +42,7 @@ export const InputPassword: React.FC<ComponentProps> = ({
           <HiOutlineEyeOff size={24} />
         )}
       </IonButton>
+      <IonNote slot={helperIsError ? "error" : "helper"}>{helper}</IonNote>
     </IonItem>
   );
 };
