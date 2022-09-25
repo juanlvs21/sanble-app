@@ -1,6 +1,7 @@
 import { IonCol, IonGrid, IonRow } from "@ionic/react";
 import { useFormik } from "formik";
 import { BiEnvelope } from "react-icons/bi";
+import { FcGoogle } from "react-icons/fc";
 
 import { Button } from "@/components/common/buttons/Button";
 import { Input } from "@/components/common/forms/Input";
@@ -14,7 +15,7 @@ import styles from "../Auth.module.css";
 
 export const Signin: React.FC = () => {
   useDocumentTitle("Iniciar Sesión");
-  const { handleSignin } = useAuth();
+  const { handleSignin, handleSigninGoogle } = useAuth();
   const {
     handleSubmit,
     handleChange,
@@ -74,10 +75,24 @@ export const Signin: React.FC = () => {
             color="primary"
             type="submit"
             isLoading={isSubmitting}
+            className={styles.btn}
           >
             Ingresar
           </Button>
         </form>
+        <Button
+          expand="block"
+          color="secondary"
+          fill="clear"
+          isLoading={isSubmitting}
+          className={styles.btn}
+          onClick={handleSigninGoogle}
+        >
+          <>
+            <FcGoogle size={20} className={styles.iconGoole} />
+            Ingresar con Google
+          </>
+        </Button>
       </IonRow>
     </IonGrid>
   );

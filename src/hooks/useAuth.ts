@@ -3,14 +3,15 @@ import { useNavigate } from "react-router-dom";
 
 import { authActions } from "@/context/actions/authActions";
 import { useAuthContext } from "@/context/AuthContext";
+import { unknownErrorExternalProviderMsg } from "@/helpers/constTexts";
+import { User } from "@/helpers/firebase";
 import {
   errorsFirebase,
   errorsMessageAPI,
 } from "@/helpers/formatErrorsRequests";
 import { formatUserDataFirebase } from "@/helpers/user";
-import { signinRequest, signUpRequest } from "@/services";
+import { signinGoogleRequest, signinRequest, signUpRequest } from "@/services";
 import { TAuthSigInForm, TAuthSignupForm } from "@/types/TAuth";
-import { User } from "@/helpers/firebase";
 
 export const useAuth = () => {
   const navigate = useNavigate();
@@ -58,10 +59,25 @@ export const useAuth = () => {
     }
   };
 
+  const handleSigninGoogle = async () => {
+    try {
+      const { user } = await signinGoogleRequest({ isWeb: true });
+      handleSetUser(user);
+      navigate("/app", { replace: true });
+    } catch (error) {
+      present({
+        message: unknownErrorExternalProviderMsg,
+        duration: 5000,
+        color: "danger",
+      });
+    }
+  };
+
   return {
     user,
+    handleSetUser,
     handleSignup,
     handleSignin,
-    handleSetUser,
+    handleSigninGoogle,
   };
 };

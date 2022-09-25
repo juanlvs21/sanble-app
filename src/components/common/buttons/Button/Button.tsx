@@ -4,7 +4,7 @@ import { TButton } from "@/types/TComponents";
 import { Spinner } from "@/components/common/loaders/Spinner";
 
 type ComponentProps = TButton & {
-  children: React.ReactElement | string;
+  children: React.ReactElement | React.ReactElement[] | string;
   isLoading?: boolean;
 };
 

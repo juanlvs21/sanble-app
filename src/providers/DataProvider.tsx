@@ -1,10 +1,10 @@
 import { useEffect } from "react";
 
-import { Splash } from "@/screens/Splash";
-import { useLocation, useNavigate } from "react-router-dom";
 import { useApp } from "@/hooks/useApp";
-import { getSessionRequest } from "@/services";
 import { useAuth } from "@/hooks/useAuth";
+import { Splash } from "@/screens/Splash";
+import { getSessionRequest } from "@/services";
+import { useLocation, useMatch, useNavigate } from "react-router-dom";
 
 export type ComponentProps = {
   /**
@@ -16,10 +16,15 @@ export type ComponentProps = {
 export const DataProvider: React.FC<ComponentProps> = ({ children }) => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  const { readyToUse, handleSetReady } = useApp();
+  const { readyToUse, handleSetReady, handleLoadData } = useApp();
   const { handleSetUser } = useAuth();
 
+  const matchSignin = useMatch("/app/sesion/entrar");
+  const matchSignup = useMatch("/app/sesion/registrarse");
+
   useEffect(() => {
+    handleLoadData();
+
     if (pathname === "/") {
       handleSetReady(true);
     } else {
@@ -28,7 +33,8 @@ export const DataProvider: React.FC<ComponentProps> = ({ children }) => {
           handleSetUser(user);
         } else {
           handleSetUser(null);
-          navigate("/app/sesion/entrar", { replace: true });
+          if (!matchSignin && !matchSignup)
+            navigate("/app/sesion/entrar", { replace: true });
         }
         handleSetReady(true);
       });
