@@ -5,10 +5,12 @@ type formatData422 = {
   location: string;
 };
 
+const unknownErrorMsg = "Lo sentimos, ha ocurrido un error desconocido";
+
 const getStatusCode = (response: any) =>
   response.status || response.data?.statusCode;
 
-export const errorsMessage = (error: any) => {
+export const errorsMessageAPI = (error: any) => {
   let messageArray: string[] = [];
 
   if (error?.response) {
@@ -28,5 +30,25 @@ export const errorsMessage = (error: any) => {
     .reverse()
     .filter((v, i, a) => a.map((e) => e).indexOf(v) === i);
 
-  return `<ul>${messageArray.join(" ")}</ul>`;
+  if (messageArray.length > 0) {
+    return `<ul>${messageArray.join(" ")}</ul>`;
+  } else {
+    return unknownErrorMsg;
+  }
+};
+
+export const errorsFirebase = (error: any) => {
+  let message = unknownErrorMsg;
+
+  if (
+    error?.code === "auth/user-not-found" ||
+    error?.code === "auth/wrong-password"
+  ) {
+    message = "Correo electrónico o contraseña incorrectos";
+  }
+  if (error?.code === "auth/invalid-email") {
+    message = "Ingrese un correo electrónico válido";
+  }
+
+  return message;
 };

@@ -1,12 +1,16 @@
-import { Suspense, lazy } from "react";
+import { lazy, Suspense } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 
-import { AuthLayout } from "@/components/layouts/Auth";
 import { LoadingSuspense } from "@/components/common/loaders/LoadingSuspense";
+import { AuthLayout } from "@/components/layouts/Auth";
+import { MainLayout } from "@/components/layouts/Main";
 import { useTransitionsScreen } from "@/hooks/useTransitionsScreen";
 
 const NotFoundScreen = lazy(() =>
   import("@/screens/NotFound").then(({ NotFound }) => ({ default: NotFound }))
+);
+const LandingScreen = lazy(() =>
+  import("@/screens/Landing").then(({ Landing }) => ({ default: Landing }))
 );
 const SigninScreen = lazy(() =>
   import("@/screens/auth/Signin").then(({ Signin }) => ({ default: Signin }))
@@ -25,8 +29,18 @@ export const AppRoutes: React.FC = () => {
 
   return (
     <Routes location={displayLocation}>
-      <Route path="/" element={<Navigate to="/app" />} />
-      <Route path="/app" element={<h1>App</h1>} />
+      <Route path="/" element={<LandingScreen />} />
+      <Route
+        path="/app"
+        element={
+          <MainLayout
+            onAnimationEnd={onAnimationEnd}
+            transitionStage={transitionStage}
+          />
+        }
+      >
+        <Route index element={<h1>App</h1>} />
+      </Route>
       <Route
         path="/app/sesion"
         element={

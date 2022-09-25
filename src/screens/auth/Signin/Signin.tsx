@@ -1,16 +1,18 @@
-import { IonGrid, IonRow, IonCol, IonButton } from "@ionic/react";
+import { IonCol, IonGrid, IonRow } from "@ionic/react";
 import { useFormik } from "formik";
 import { BiEnvelope } from "react-icons/bi";
 
-import styles from "../Auth.module.css";
 import { Button } from "@/components/common/buttons/Button";
 import { Input } from "@/components/common/forms/Input";
 import { InputPassword } from "@/components/common/forms/InputPassword";
-import { signInSchema } from "@/helpers/validator/auth";
 import { getErrorMessage } from "@/helpers/getFormikErrorMsg";
+import { signInSchema } from "@/helpers/validator/auth";
+import { useAuth } from "@/hooks/useAuth";
 import { TAuthSigInForm } from "@/types/TAuth";
+import styles from "../Auth.module.css";
 
 export const Signin: React.FC = () => {
+  const { handleSignin } = useAuth();
   const {
     handleSubmit,
     handleChange,
@@ -25,9 +27,7 @@ export const Signin: React.FC = () => {
       password: "",
     },
     validationSchema: signInSchema,
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
-    },
+    onSubmit: handleSignin,
   });
   return (
     <IonGrid

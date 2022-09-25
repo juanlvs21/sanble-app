@@ -1,15 +1,15 @@
-import { IonGrid, IonRow, IonCol } from "@ionic/react";
+import { IonCol, IonGrid, IonRow } from "@ionic/react";
 import { useFormik } from "formik";
-import { BiUser, BiEnvelope } from "react-icons/bi";
+import { BiEnvelope, BiUser } from "react-icons/bi";
 
-import styles from "../Auth.module.css";
 import { Button } from "@/components/common/buttons/Button";
 import { Input } from "@/components/common/forms/Input";
 import { InputPassword } from "@/components/common/forms/InputPassword";
-import { signUpSchema } from "@/helpers/validator/auth";
 import { getErrorMessage } from "@/helpers/getFormikErrorMsg";
-import { TAuthSignupForm } from "@/types/TAuth";
+import { signUpSchema } from "@/helpers/validator/auth";
 import { useAuth } from "@/hooks/useAuth";
+import { TAuthSignupForm } from "@/types/TAuth";
+import styles from "../Auth.module.css";
 
 export const Signup: React.FC = () => {
   const { handleSignup } = useAuth();
