@@ -12,7 +12,7 @@ import {
 import { TAuthSignupForm, TAuthSigInForm } from "@/types/TAuth";
 
 type TAuthParamsSigninGoogle = {
-  isWeb: boolean;
+  isDesktop: boolean;
 };
 
 export const signUpRequest = (user: TAuthSignupForm) =>
@@ -26,7 +26,7 @@ export const signinGoogleRequest = async (params?: TAuthParamsSigninGoogle) => {
   auth.useDeviceLanguage();
   const provider = new GoogleAuthProvider();
 
-  return params?.isWeb
+  return params?.isDesktop
     ? signInWithPopup(auth, provider)
     : signInWithRedirect(auth, provider);
 };

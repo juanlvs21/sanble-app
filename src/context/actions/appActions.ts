@@ -19,4 +19,9 @@ export const appActions = (dispatch: Dispatch<TAction>) => ({
       type: appConstants.OPEN_NOTIFICATIONS,
       payload: { openNotifications },
     }),
+  setIsDesktop: (isDesktop: boolean) =>
+    dispatch({
+      type: appConstants.SET_IS_DESKTOP,
+      payload: { isDesktop },
+    }),
 });

@@ -1,7 +1,7 @@
 import { TAction } from "@/types/TContext";
 import { TAuth } from "@/types/TAuth";
 
-import { userConstants } from "@/context/constants";
+import { authConstants } from "@/context/constants";
 
 export const initialUserState: TAuth = {
   user: null,
@@ -9,7 +9,7 @@ export const initialUserState: TAuth = {
 
 export const authReducer = (state: TAuth, action: TAction<TAuth>): TAuth => {
   switch (action.type) {
-    case userConstants.SET_USER: {
+    case authConstants.SET_USER: {
       const user = action.payload?.user || null;
 
       return {

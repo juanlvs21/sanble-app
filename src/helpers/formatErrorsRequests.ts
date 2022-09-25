@@ -49,6 +49,9 @@ export const errorsFirebase = (error: any) => {
   if (error?.code === "auth/invalid-email") {
     message = "Ingrese un correo electrónico válido";
   }
+  if (error?.code === "auth/popup-closed-by-user") {
+    message = "La ventana emergente de autenticación fue cerrada";
+  }
 
   return message;
 };

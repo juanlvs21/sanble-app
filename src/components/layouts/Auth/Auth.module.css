@@ -1,21 +1,25 @@
-.layoutContainer::part(background) {
+.layoutContent::part(background) {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
   transition: all 400ms ease-in-out;
 }
 
-.layoutContainer.signinRoute::part(background) {
+.layoutContent.isDesktopContent {
+  display: flex;
+}
+
+.layoutContent.signinRoute::part(background) {
   background-image: url("/assets/images/auth/signin-wave-1.svg");
   transition: all 1s ease-in-out;
 }
 
-.layoutContainer.signupRoute::part(background) {
+.layoutContent.signupRoute::part(background) {
   background-image: url("/assets/images/auth/signup-wave-1.svg");
   transition: all 1s ease-in-out;
 }
 
-.layoutWave {
+.layoutContainer {
   background-size: contain;
   background-repeat: no-repeat;
   background-position: bottom;
@@ -25,12 +29,21 @@
   transition: all 1s ease-in-out;
 }
 
-.layoutWave.signinRoute {
+.layoutContainer.isDesktopContainer {
+  max-width: 768px;
+  margin: 20px auto;
+  height: calc(100% - 40px);
+  border-radius: var(--sanble-border-radius);
+  -webkit-box-shadow: 0px 0px 30px 5px rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 0px 30px 5px rgba(0, 0, 0, 0.3);
+}
+
+.layoutContainer.signinRoute {
   background-image: url("/assets/images/auth/signin-wave-2.svg");
   transition: all 1s ease-in-out;
 }
 
-.layoutWave.signupRoute {
+.layoutContainer.signupRoute {
   background-image: url("/assets/images/auth/signup-wave-2.svg");
   transition: all 1s ease-in-out;
 }
@@ -48,7 +61,7 @@
 }
 
 @media (max-height: 620px) {
-  .layoutWave {
+  .layoutContainer {
     background-size: cover;
     transition: all 1s ease-in-out;
   }

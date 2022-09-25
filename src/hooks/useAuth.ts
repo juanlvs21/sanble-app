@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 
 import { authActions } from "@/context/actions/authActions";
 import { useAuthContext } from "@/context/AuthContext";
-import { unknownErrorExternalProviderMsg } from "@/helpers/constTexts";
 import { User } from "@/helpers/firebase";
 import {
   errorsFirebase,
@@ -12,10 +11,12 @@ import {
 import { formatUserDataFirebase } from "@/helpers/user";
 import { signinGoogleRequest, signinRequest, signUpRequest } from "@/services";
 import { TAuthSigInForm, TAuthSignupForm } from "@/types/TAuth";
+import { useApp } from "./useApp";
 
 export const useAuth = () => {
   const navigate = useNavigate();
   const [present] = useIonToast();
+  const { isDesktop } = useApp();
   const [{ user }, dispatch] = useAuthContext();
   const { setUser } = authActions(dispatch);
 
@@ -61,12 +62,12 @@ export const useAuth = () => {
 
   const handleSigninGoogle = async () => {
     try {
-      const { user } = await signinGoogleRequest({ isWeb: true });
+      const { user } = await signinGoogleRequest({ isDesktop });
       handleSetUser(user);
       navigate("/app", { replace: true });
     } catch (error) {
       present({
-        message: unknownErrorExternalProviderMsg,
+        message: errorsFirebase(error),
         duration: 5000,
         color: "danger",
       });

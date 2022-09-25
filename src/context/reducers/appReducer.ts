@@ -7,6 +7,7 @@ export const initialAppState: TApp = {
   readyToUse: false,
   showSidebar: false,
   openNotifications: false,
+  isDesktop: false,
 };
 
 export const appReducer = (state: TApp, action: TAction<TApp>): TApp => {
@@ -36,6 +37,14 @@ export const appReducer = (state: TApp, action: TAction<TApp>): TApp => {
       return {
         ...state,
         openNotifications,
+      };
+    }
+    case appConstants.SET_IS_DESKTOP: {
+      const isDesktop = action.payload?.isDesktop ?? false;
+
+      return {
+        ...state,
+        isDesktop,
       };
     }
 

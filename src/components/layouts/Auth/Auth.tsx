@@ -4,6 +4,7 @@ import { Outlet } from "react-router-dom";
 import styles from "./Auth.module.css";
 
 import { TabBar } from "@/components/modules/auth/TabBar";
+import { useApp } from "@/hooks/useApp";
 
 const bgImage: Record<string, string> = {
   "/app/sesion/entrar": "signinRoute",
@@ -29,23 +30,36 @@ type ComponentProps = {
 export const AuthLayout: React.FC<ComponentProps> = ({
   onAnimationEnd,
   transitionStage,
-}) => (
-  <IonContent
-    className={`${styles.layoutContainer} ${getWavesClass(location.pathname)}`}
-  >
-    <div className={`${styles.layoutWave} ${getWavesClass(location.pathname)}`}>
-      <div>
-        <IonCol className={styles.logoContainer}>
-          <img src="/assets/images/logo-full.png" className={styles.logoImg} />
-        </IonCol>
-      </div>
-      <div>
-        <TabBar />
-      </div>
+}) => {
+  const { isDesktop } = useApp();
 
-      <main className={transitionStage} onAnimationEnd={onAnimationEnd}>
-        <Outlet />
-      </main>
-    </div>
-  </IonContent>
-);
+  return (
+    <IonContent
+      className={`${styles.layoutContent} ${getWavesClass(location.pathname)} ${
+        isDesktop ? styles.isDesktopContent : ""
+      }`}
+    >
+      <div
+        className={`${styles.layoutContainer} ${getWavesClass(
+          location.pathname
+        )} ${isDesktop ? styles.isDesktopContainer : ""}`}
+      >
+        <div>
+          <IonCol className={styles.logoContainer}>
+            <img
+              src="/assets/images/logo-full.png"
+              className={styles.logoImg}
+            />
+          </IonCol>
+        </div>
+        <div>
+          <TabBar />
+        </div>
+
+        <main className={transitionStage} onAnimationEnd={onAnimationEnd}>
+          <Outlet />
+        </main>
+      </div>
+    </IonContent>
+  );
+};
