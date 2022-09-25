@@ -8,7 +8,9 @@ export const Landing: React.FC = () => {
   useDocumentTitle("¡Bienvenido! 🎉");
 
   return (
-    <main className={styles.landingContainer}>
+    <main
+      className={`${styles.landingContainer} animate__animated animate__fadeIn`}
+    >
       <img
         src="/assets/images/logo-full-white.png"
         alt="Sanble"
