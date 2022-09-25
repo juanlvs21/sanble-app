@@ -50,10 +50,7 @@ export const AppRoutes: React.FC = () => {
           />
         }
       >
-        <Route
-          index
-          element={<Navigate to="/app/sesion/registrarse" replace />}
-        />
+        <Route index element={<Navigate to="/app/sesion/entrar" replace />} />
         <Route
           path="entrar"
           element={

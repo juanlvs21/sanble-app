@@ -21,3 +21,7 @@ export type TUser = {
   providerData: UserInfo[];
   providerId: string;
 };
+
+export type TAuth = {
+  user: TUser | null;
+};

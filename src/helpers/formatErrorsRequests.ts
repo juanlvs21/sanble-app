@@ -1,11 +1,11 @@
+import { unknownErrorMsg } from "./constTexts";
+
 type formatData422 = {
   value: string;
   msg: string;
   param: string;
   location: string;
 };
-
-const unknownErrorMsg = "Lo sentimos, ha ocurrido un error desconocido";
 
 const getStatusCode = (response: any) =>
   response.status || response.data?.statusCode;

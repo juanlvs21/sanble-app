@@ -12,17 +12,6 @@ export const TabBar: React.FC = () => {
       <ul className={styles.navUl}>
         <li className={styles.navLi}>
           <Link
-            to="/app/sesion/registrarse"
-            className={`${styles.navLink} ${
-              matchSignup ? styles.linkActive : ""
-            }`}
-            state={{ prevRoute: location.pathname }}
-          >
-            Registrarse
-          </Link>
-        </li>
-        <li className={styles.navLi}>
-          <Link
             to="/app/sesion/entrar"
             className={`${styles.navLink} ${
               matchSignin ? styles.linkActive : ""
@@ -32,11 +21,22 @@ export const TabBar: React.FC = () => {
             Ingresar
           </Link>
         </li>
+        <li className={styles.navLi}>
+          <Link
+            to="/app/sesion/registrarse"
+            className={`${styles.navLink} ${
+              matchSignup ? styles.linkActive : ""
+            }`}
+            state={{ prevRoute: location.pathname }}
+          >
+            Registrarse
+          </Link>
+        </li>
       </ul>
       <div className={styles.barContainer}>
         <div
           className={`${styles.barFill} ${
-            matchSignin ? styles.barFillRight : ""
+            matchSignup ? styles.barFillRight : ""
           }`}
         />
       </div>

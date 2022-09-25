@@ -1,5 +1,11 @@
 import { api } from "@/services";
-import { auth, signInWithEmailAndPassword } from "@/helpers/firebase";
+import {
+  auth,
+  NextOrObserver,
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+  User,
+} from "@/helpers/firebase";
 import { TAuthSignupForm, TAuthSigInForm } from "@/types/TAuth";
 
 export const signUpRequest = (user: TAuthSignupForm) =>
@@ -8,3 +14,6 @@ export const signUpRequest = (user: TAuthSignupForm) =>
 export const signinRequest = async ({ email, password }: TAuthSigInForm) => {
   return signInWithEmailAndPassword(auth, email, password);
 };
+
+export const getSessionRequest = (nextOrObserver: NextOrObserver<User>) =>
+  onAuthStateChanged(auth, nextOrObserver);

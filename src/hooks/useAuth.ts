@@ -1,8 +1,8 @@
 import { useIonToast } from "@ionic/react";
 import { useNavigate } from "react-router-dom";
 
-import { userActions } from "@/context/actions/userActions";
-import { useUserContext } from "@/context/UserContext";
+import { authActions } from "@/context/actions/authActions";
+import { useAuthContext } from "@/context/AuthContext";
 import {
   errorsFirebase,
   errorsMessageAPI,
@@ -10,17 +10,22 @@ import {
 import { formatUserDataFirebase } from "@/helpers/user";
 import { signinRequest, signUpRequest } from "@/services";
 import { TAuthSigInForm, TAuthSignupForm } from "@/types/TAuth";
+import { User } from "@/helpers/firebase";
 
 export const useAuth = () => {
   const navigate = useNavigate();
   const [present] = useIonToast();
-  const [, dispatch] = useUserContext();
-  const { setUser } = userActions(dispatch);
+  const [{ user }, dispatch] = useAuthContext();
+  const { setUser } = authActions(dispatch);
+
+  const handleSetUser = (user: User | null) => {
+    const userFormat = formatUserDataFirebase(user);
+    setUser(userFormat);
+  };
 
   const signinAndRedirect = async (userForm: TAuthSigInForm) => {
-    const res = await signinRequest(userForm);
-    const user = formatUserDataFirebase(res);
-    setUser(user);
+    const { user } = await signinRequest(userForm);
+    handleSetUser(user);
     navigate("/app", { replace: true });
   };
 
@@ -54,7 +59,9 @@ export const useAuth = () => {
   };
 
   return {
+    user,
     handleSignup,
     handleSignin,
+    handleSetUser,
   };
 };

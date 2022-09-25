@@ -4,10 +4,10 @@ import { userConstants } from "@/context/constants";
 import { TAction } from "@/types/TContext";
 import { TUser } from "@/types/TAuth";
 
-export const userActions = (dispatch: Dispatch<TAction>) => ({
-  setUser: (data: TUser) =>
+export const authActions = (dispatch: Dispatch<TAction>) => ({
+  setUser: (user: TUser | null) =>
     dispatch({
       type: userConstants.SET_USER,
-      payload: data,
+      payload: { user },
     }),
 });

@@ -1,9 +1,10 @@
 import { useEffect } from "react";
 
-import { useAppContext } from "@/context/AppContext";
-import { appActions } from "@/context/actions/appActions";
 import { Splash } from "@/screens/Splash";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useApp } from "@/hooks/useApp";
+import { getSessionRequest } from "@/services";
+import { useAuth } from "@/hooks/useAuth";
 
 export type ComponentProps = {
   /**
@@ -13,17 +14,24 @@ export type ComponentProps = {
 };
 
 export const DataProvider: React.FC<ComponentProps> = ({ children }) => {
+  const navigate = useNavigate();
   const { pathname } = useLocation();
-  const [{ readyToUse }, dispatch] = useAppContext();
-  const { setReadyToUse } = appActions(dispatch);
+  const { readyToUse, handleSetReady } = useApp();
+  const { handleSetUser } = useAuth();
 
   useEffect(() => {
     if (pathname === "/") {
-      setReadyToUse(true);
+      handleSetReady(true);
     } else {
-      setTimeout(() => {
-        setReadyToUse(true);
-      }, 3000);
+      getSessionRequest(async (user) => {
+        if (user) {
+          handleSetUser(user);
+        } else {
+          handleSetUser(null);
+          navigate("/app/sesion/entrar", { replace: true });
+        }
+        handleSetReady(true);
+      });
     }
   }, []);
 
