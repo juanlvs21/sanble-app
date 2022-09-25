@@ -1,5 +1,7 @@
 import { useEffect } from "react";
 
+import { useDocumentTitle } from "@/hooks/useDocumentTitle";
+
 type ComponentProps = {
   /**
    * Function to set location in displayLocation
@@ -8,6 +10,8 @@ type ComponentProps = {
 };
 
 export const NotFound: React.FC<ComponentProps> = ({ setDisplayLocation }) => {
+  useDocumentTitle("¡Ups! Página no encontrada 😢");
+
   useEffect(() => {
     setDisplayLocation();
   }, []);

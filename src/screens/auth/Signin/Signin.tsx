@@ -8,10 +8,12 @@ import { InputPassword } from "@/components/common/forms/InputPassword";
 import { getErrorMessage } from "@/helpers/getFormikErrorMsg";
 import { signInSchema } from "@/helpers/validator/auth";
 import { useAuth } from "@/hooks/useAuth";
+import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 import { TAuthSigInForm } from "@/types/TAuth";
 import styles from "../Auth.module.css";
 
 export const Signin: React.FC = () => {
+  useDocumentTitle("Iniciar Sesión");
   const { handleSignin } = useAuth();
   const {
     handleSubmit,
@@ -29,6 +31,7 @@ export const Signin: React.FC = () => {
     validationSchema: signInSchema,
     onSubmit: handleSignin,
   });
+
   return (
     <IonGrid
       className={`animate__animated animate__fadeIn ${styles.authScreenContainer}`}

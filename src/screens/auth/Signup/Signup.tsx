@@ -8,10 +8,12 @@ import { InputPassword } from "@/components/common/forms/InputPassword";
 import { getErrorMessage } from "@/helpers/getFormikErrorMsg";
 import { signUpSchema } from "@/helpers/validator/auth";
 import { useAuth } from "@/hooks/useAuth";
+import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 import { TAuthSignupForm } from "@/types/TAuth";
 import styles from "../Auth.module.css";
 
 export const Signup: React.FC = () => {
+  useDocumentTitle("Registrarse");
   const { handleSignup } = useAuth();
   const {
     handleSubmit,

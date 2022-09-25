@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { useAppContext } from "@/context/AppContext";
 import { appActions } from "@/context/actions/appActions";
 import { Splash } from "@/screens/Splash";
+import { useLocation } from "react-router-dom";
 
 export type ComponentProps = {
   /**
@@ -12,13 +13,18 @@ export type ComponentProps = {
 };
 
 export const DataProvider: React.FC<ComponentProps> = ({ children }) => {
+  const { pathname } = useLocation();
   const [{ readyToUse }, dispatch] = useAppContext();
   const { setReadyToUse } = appActions(dispatch);
 
   useEffect(() => {
-    setTimeout(() => {
+    if (pathname === "/") {
       setReadyToUse(true);
-    }, 3000);
+    } else {
+      setTimeout(() => {
+        setReadyToUse(true);
+      }, 3000);
+    }
   }, []);
 
   return readyToUse ? <>{children}</> : <Splash />;

@@ -1,11 +1,11 @@
-import { Link } from "react-router-dom";
-
 import { Button } from "@/components/common/buttons/Button";
+import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 import { useLanding } from "@/hooks/useLanding";
 import styles from "./Landing.module.css";
 
 export const Landing: React.FC = () => {
   const { handleGetDownloadAppLink } = useLanding();
+  useDocumentTitle("¡Bienvenido! 🎉");
 
   return (
     <main className={styles.landingContainer}>
@@ -19,11 +19,11 @@ export const Landing: React.FC = () => {
       </h1>
 
       <div className={styles.btnContainer}>
-        <Link to="/app">
+        <a href="/app">
           <Button color="secondary" className={styles.btn}>
             Ir a la aplicación
           </Button>
-        </Link>
+        </a>
 
         <Button
           onClick={handleGetDownloadAppLink}
