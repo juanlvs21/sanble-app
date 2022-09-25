@@ -1,3 +1,5 @@
+import { DOMAttributes } from "react";
+
 export interface InputChangeEventDetail {
   value: string | undefined | null;
 }
@@ -11,8 +13,15 @@ export interface IonButtonCustomEvent<T> extends CustomEvent<T> {
   detail: T;
   target: HTMLIonButtonElement;
 }
+export interface IonicReactProps {
+  class?: string;
+  className?: string;
+  style?: {
+    [key: string]: any;
+  };
+}
 
-export type TInput = {
+export type TInput = IonicReactProps & {
   /**
    * Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user. Available options: `"off"`, `"none"`, `"on"`, `"sentences"`, `"words"`, `"characters"`.
    */
@@ -230,86 +239,91 @@ export type TInput = {
   value?: string | number | null;
 };
 
-export type TButton = {
-  /**
-   * The type of button.
-   */
-  buttonType?: string;
-  /**
-   * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
-   */
-  color?:
-    | "primary"
-    | "secondary"
-    | "tertiary"
-    | "success"
-    | "warning"
-    | "danger"
-    | "light"
-    | "medium"
-    | "dark";
-  /**
-   * If `true`, the user cannot interact with the button.
-   */
-  disabled?: boolean;
-  /**
-   * This attribute instructs browsers to download a URL instead of navigating to it, so the user will be prompted to save it as a local file. If the attribute has a value, it is used as the pre-filled file name in the Save prompt (the user can still change the file name if they want).
-   */
-  download?: string | undefined;
-  /**
-   * Set to `"block"` for a full-width button or to `"full"` for a full-width button without left and right borders.
-   */
-  expand?: "full" | "block";
-  /**
-   * Set to `"clear"` for a transparent button, to `"outline"` for a transparent button with a border, or to `"solid"`. The default style is `"solid"` except inside of a toolbar, where the default is `"clear"`.
-   */
-  fill?: "clear" | "outline" | "solid" | "default";
-  /**
-   * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
-   */
-  href?: string | undefined;
-  /**
-   * The mode determines which platform styles to use.
-   */
-  mode?: "ios" | "md";
-  /**
-   * Emitted when the button loses focus.
-   */
-  onIonBlur?: (event: IonButtonCustomEvent<void>) => void;
-  /**
-   * Emitted when the button has focus.
-   */
-  onIonFocus?: (event: IonButtonCustomEvent<void>) => void;
-  /**
-   * Specifies the relationship of the target object to the link object. The value is a space-separated list of [link types](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types).
-   */
-  rel?: string | undefined;
-  /**
-   * When using a router, it specifies the transition animation when navigating to another page using `href`.
-   */
-  routerAnimation?: any | undefined;
-  /**
-   * When using a router, it specifies the transition direction when navigating to another page using `href`.
-   */
-  routerDirection?: "forward" | "back" | "root";
-  /**
-   * The button shape.
-   */
-  shape?: "round";
-  /**
-   * The button size.
-   */
-  size?: "small" | "default" | "large";
-  /**
-   * If `true`, activates a button with a heavier font weight.
-   */
-  strong?: boolean;
-  /**
-   * Specifies where to display the linked URL. Only applies when an `href` is provided. Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
-   */
-  target?: string | undefined;
-  /**
-   * The type of the button.
-   */
-  type?: "submit" | "reset" | "button";
-};
+export type TButton<T = any> = IonicReactProps &
+  DOMAttributes<T> & {
+    /**
+     * Router path to navigate
+     */
+    routerLink?: string | undefined;
+    /**
+     * The type of button.
+     */
+    buttonType?: string;
+    /**
+     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
+     */
+    color?:
+      | "primary"
+      | "secondary"
+      | "tertiary"
+      | "success"
+      | "warning"
+      | "danger"
+      | "light"
+      | "medium"
+      | "dark";
+    /**
+     * If `true`, the user cannot interact with the button.
+     */
+    disabled?: boolean;
+    /**
+     * This attribute instructs browsers to download a URL instead of navigating to it, so the user will be prompted to save it as a local file. If the attribute has a value, it is used as the pre-filled file name in the Save prompt (the user can still change the file name if they want).
+     */
+    download?: string | undefined;
+    /**
+     * Set to `"block"` for a full-width button or to `"full"` for a full-width button without left and right borders.
+     */
+    expand?: "full" | "block";
+    /**
+     * Set to `"clear"` for a transparent button, to `"outline"` for a transparent button with a border, or to `"solid"`. The default style is `"solid"` except inside of a toolbar, where the default is `"clear"`.
+     */
+    fill?: "clear" | "outline" | "solid" | "default";
+    /**
+     * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
+     */
+    href?: string | undefined;
+    /**
+     * The mode determines which platform styles to use.
+     */
+    mode?: "ios" | "md";
+    /**
+     * Emitted when the button loses focus.
+     */
+    onIonBlur?: (event: IonButtonCustomEvent<void>) => void;
+    /**
+     * Emitted when the button has focus.
+     */
+    onIonFocus?: (event: IonButtonCustomEvent<void>) => void;
+    /**
+     * Specifies the relationship of the target object to the link object. The value is a space-separated list of [link types](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types).
+     */
+    rel?: string | undefined;
+    /**
+     * When using a router, it specifies the transition animation when navigating to another page using `href`.
+     */
+    routerAnimation?: any | undefined;
+    /**
+     * When using a router, it specifies the transition direction when navigating to another page using `href`.
+     */
+    routerDirection?: "forward" | "back" | "root";
+    /**
+     * The button shape.
+     */
+    shape?: "round";
+    /**
+     * The button size.
+     */
+    size?: "small" | "default" | "large";
+    /**
+     * If `true`, activates a button with a heavier font weight.
+     */
+    strong?: boolean;
+    /**
+     * Specifies where to display the linked URL. Only applies when an `href` is provided. Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
+     */
+    target?: string | undefined;
+    /**
+     * The type of the button.
+     */
+    type?: "submit" | "reset" | "button";
+  };

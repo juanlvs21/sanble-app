@@ -1,0 +1,43 @@
+.landingContainer {
+  background-image: url(/assets/images/landing/landing-wave.svg);
+  background-repeat: no-repeat;
+  background-position: bottom center;
+  background-size: cover;
+  padding-top: 50px;
+  text-align: center;
+}
+
+.landingContainer .logo {
+  width: 250px;
+}
+
+.landingContainer .phrase {
+  font-size: 2rem;
+  color: #fff;
+  line-height: 1.3em;
+  width: 400px;
+  margin: 20px auto 40px auto;
+}
+
+.landingContainer .btnContainer {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.landingContainer .btnContainer .btn {
+  width: 200px;
+  margin: 8px;
+}
+
+.landingContainer .previewImg {
+  width: 600px;
+  margin: 20px;
+}
+
+@media (max-width: 425px) {
+  .landingContainer .phrase {
+    width: 100%;
+  }
+}
