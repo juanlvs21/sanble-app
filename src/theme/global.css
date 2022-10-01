@@ -6,6 +6,10 @@
   user-select: auto !important;
 } */
 
+a {
+  text-decoration: none;
+}
+
 ion-badge {
   display: flex;
   align-items: center;

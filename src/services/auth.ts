@@ -8,12 +8,15 @@ import {
   signInWithRedirect,
   signInWithPopup,
   User,
+  signOut,
 } from "@/helpers/firebase";
 import { TAuthSignupForm, TAuthSigInForm } from "@/types/TAuth";
 
 // type TAuthParamsSigninGoogle = {
 //   isDesktop: boolean;
 // };
+
+export const signOutRequest = () => signOut(auth);
 
 export const signUpRequest = (user: TAuthSignupForm) =>
   api.post("/auth/signup", user);

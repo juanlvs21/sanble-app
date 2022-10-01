@@ -10,7 +10,7 @@ import { useMemo } from "react";
 import { FaDoorClosed, FaHeart, FaMapMarkedAlt, FaUser } from "react-icons/fa";
 import { HiHome } from "react-icons/hi";
 import { IoIosCloseCircleOutline } from "react-icons/io";
-import { useLocation, useMatch, useNavigate } from "react-router-dom";
+import { NavLink, useLocation, useMatch, useNavigate } from "react-router-dom";
 
 import { useApp } from "@/hooks/useApp";
 import { useAuth } from "@/hooks/useAuth";
@@ -104,22 +104,22 @@ export const Sidebar: React.FC = () => {
       <section className={styles.sidebarListContainer}>
         <IonList className={styles.sidebarList}>
           {items.map((item) => (
-            <IonItem
-              className={`${styles.sidebarItem} ${
-                item.active ? styles.sidebarItemActive : ""
-              }`}
-              onClick={() => handleNavigate(item.path)}
-              key={item.path}
-              detail={false}
-              button
-            >
-              <IonAvatar slot="start" className={styles.sidebarItemIcon}>
-                {item.icon}
-              </IonAvatar>
-              <IonLabel className={styles.sidebarItemLabel}>
-                {item.label}
-              </IonLabel>
-            </IonItem>
+            <NavLink to={item.path} key={item.path}>
+              <IonItem
+                className={`${styles.sidebarItem} ${
+                  item.active ? styles.sidebarItemActive : ""
+                }`}
+                detail={false}
+                button
+              >
+                <IonAvatar slot="start" className={styles.sidebarItemIcon}>
+                  {item.icon}
+                </IonAvatar>
+                <IonLabel className={styles.sidebarItemLabel}>
+                  {item.label}
+                </IonLabel>
+              </IonItem>
+            </NavLink>
           ))}
           <IonItem
             className={`${styles.sidebarItem} ${styles.sidebarItemLogout}`}
