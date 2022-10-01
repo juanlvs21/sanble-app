@@ -3,8 +3,8 @@ import { appActions } from "@/context/actions/appActions";
 import { useAppContext } from "@/context/AppContext";
 
 export const useApp = () => {
-  const [{ readyToUse, isDesktop }, dispatch] = useAppContext();
-  const { setReadyToUse, setIsDesktop } = appActions(dispatch);
+  const [{ readyToUse, isDesktop, showSidebar }, dispatch] = useAppContext();
+  const { setReadyToUse, setIsDesktop, setShowSidebar } = appActions(dispatch);
 
   const handleSetReady = (ready: boolean) => setReadyToUse(ready);
 
@@ -15,10 +15,17 @@ export const useApp = () => {
     }
   };
 
+  const handleShowSidebar = (show?: boolean) => {
+    if (show === undefined) setShowSidebar(!showSidebar);
+    else setShowSidebar(show);
+  };
+
   return {
     readyToUse,
     isDesktop,
+    showSidebar,
     handleSetReady,
     handleLoadData,
+    handleShowSidebar,
   };
 };

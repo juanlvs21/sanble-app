@@ -12,7 +12,6 @@ export const useTransitionsScreen = () => {
 
   useEffect(() => {
     if (location !== displayLocation) setTransitionStage(classNameEnd);
-    console.log({ location, displayLocation });
   }, [location, displayLocation]);
 
   const onAnimationEnd = () => {

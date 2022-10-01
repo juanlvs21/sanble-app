@@ -18,6 +18,9 @@ const SigninScreen = lazy(() =>
 const SignupScreen = lazy(() =>
   import("@/screens/auth/Signup").then(({ Signup }) => ({ default: Signup }))
 );
+const HomeScreen = lazy(() =>
+  import("@/screens/home/Home").then(({ Home }) => ({ default: Home }))
+);
 
 export const AppRoutes: React.FC = () => {
   const {
@@ -47,7 +50,14 @@ export const AppRoutes: React.FC = () => {
           />
         }
       >
-        <Route index element={<h1>App</h1>} />
+        <Route
+          index
+          element={
+            <Suspense fallback={<LoadingSuspense />}>
+              <HomeScreen />
+            </Suspense>
+          }
+        />
       </Route>
       <Route
         path="/app/sesion"

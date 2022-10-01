@@ -1,0 +1,162 @@
+.sidebar {
+  width: 300px;
+  height: 100vh;
+  background-color: var(--ion-color-primary);
+  position: absolute;
+  top: 0;
+  left: -300px;
+  z-index: 1000;
+  padding: 50px 0;
+  transition: all 400ms ease-in-out;
+}
+
+.sidebar.showSidebar {
+  left: 0;
+  transition: all 400ms ease-in-out;
+}
+
+.btnCloseSidebar {
+  border-radius: 30px;
+  position: absolute;
+  top: 25px;
+  color: #fff;
+  width: 30px;
+  height: 30px;
+  left: 150px;
+  transition: all 400ms ease-in-out;
+}
+
+.sidebar.showSidebar .btnCloseSidebar {
+  left: 250px;
+  transition: all 400ms ease-in-out;
+}
+
+.btnCloseSidebar::part(native) {
+  padding: 0px;
+}
+
+.sidebarUserContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  height: 170px;
+}
+
+.sidebarUserContainer img {
+  width: 100px;
+  height: 100px;
+  border-radius: 100px;
+  margin-bottom: 20px;
+  object-fit: contain;
+  object-position: center;
+}
+
+.sidebarUserContainer h4 {
+  margin: 0;
+  font-size: 24px;
+  height: 24px;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 0 5px;
+  text-align: center;
+}
+
+.sidebarUserContainer span {
+  font-size: 14px;
+}
+
+.sidebarListContainer {
+  height: calc(100vh - 270px);
+  overflow-y: auto;
+  direction: rtl;
+  margin-top: 30px;
+}
+
+.sidebarList {
+  display: flex;
+  flex-direction: column;
+  background-color: transparent;
+  direction: ltr;
+  margin: 20px;
+  height: calc(100% - 40px);
+}
+
+.sidebarItem::part(native) {
+  --inner-border-width: 0px;
+  background-color: transparent;
+  color: #fff;
+  border-radius: var(--sanble-border-radius);
+}
+
+.sidebarItemActive::part(native) {
+  background-color: #fff;
+  color: var(--ion-color-primary);
+}
+
+.sidebarItemIcon {
+  display: flex;
+  justify-content: center;
+  margin-top: 5px;
+}
+
+.sidebarItemIcon img {
+  height: 30px;
+  object-fit: contain;
+  object-position: center;
+  margin-top: 2px;
+}
+
+.sidebarItemLabel {
+  font-size: 14px !important;
+}
+
+.sidebarItemLogout {
+  margin-top: auto;
+  margin-bottom: 10px;
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    width: 200px;
+    left: -200px;
+  }
+
+  .sidebar.showSidebar .btnCloseSidebar {
+    left: 155px;
+    transition: all 400ms ease-in-out;
+  }
+
+  .sidebarUserContainer h4 {
+    margin: 0;
+  }
+
+  .sidebarUserContainer h4 {
+    margin: 0;
+    font-size: 20px;
+  }
+
+  .sidebarUserContainer span {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 11px;
+  }
+
+  .sidebarItem::part(native) {
+    padding-left: 8px;
+  }
+}
+
+@media (max-height: 600px) {
+  .sidebar {
+    overflow: auto;
+  }
+  .sidebarListContainer,
+  .sidebarList {
+    height: auto;
+  }
+}

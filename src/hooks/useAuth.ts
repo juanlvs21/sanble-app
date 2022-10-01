@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import { authActions } from "@/context/actions/authActions";
 import { useAuthContext } from "@/context/AuthContext";
+import { defaultAvatar } from "@/helpers/defaultImage";
 import { User } from "@/helpers/firebase";
 import {
   errorsFirebase,
@@ -74,8 +75,11 @@ export const useAuth = () => {
     }
   };
 
+  const getUser = () =>
+    user ? { ...user, photoURL: user.photoURL || defaultAvatar } : null;
+
   return {
-    user,
+    user: getUser(),
     handleSetUser,
     handleSignup,
     handleSignin,
