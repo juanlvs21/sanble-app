@@ -10,7 +10,12 @@ import {
   errorsMessageAPI,
 } from "@/helpers/formatErrorsRequests";
 import { formatUserDataFirebase } from "@/helpers/user";
-import { signinGoogleRequest, signinRequest, signUpRequest } from "@/services";
+import {
+  signinGoogleRequest,
+  signinRequest,
+  signOutRequest,
+  signUpRequest,
+} from "@/services";
 import { TAuthSigInForm, TAuthSignupForm } from "@/types/TAuth";
 
 export const useAuth = () => {
@@ -18,6 +23,10 @@ export const useAuth = () => {
   const [present] = useIonToast();
   const [{ user }, dispatch] = useAuthContext();
   const { setUser } = authActions(dispatch);
+
+  const handleGetUser = user
+    ? { ...user, photoURL: user.photoURL || defaultAvatar }
+    : null;
 
   const handleSetUser = (user: User | null) => {
     const userFormat = formatUserDataFirebase(user);
@@ -73,14 +82,21 @@ export const useAuth = () => {
     }
   };
 
-  const getUser = () =>
-    user ? { ...user, photoURL: user.photoURL || defaultAvatar } : null;
+  const handleSignOut = async () => {
+    try {
+      await signOutRequest();
+    } finally {
+      handleSetUser(null);
+      navigate("/app/sesion/entrar", { replace: true });
+    }
+  };
 
   return {
-    user: getUser(),
+    user: handleGetUser,
     handleSetUser,
     handleSignup,
     handleSignin,
     handleSigninGoogle,
+    handleSignOut,
   };
 };

@@ -41,7 +41,7 @@
 }
 
 .navFadeUpEnd {
-  animation: 500ms navFadeUpEnd forwards;
+  animation: 200ms navFadeUpEnd forwards;
 }
 
 @keyframes navFadeUpStart {

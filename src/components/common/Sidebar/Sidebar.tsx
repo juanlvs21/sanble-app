@@ -5,22 +5,23 @@ import {
   IonLabel,
   IonList,
   IonText,
+  useIonAlert,
 } from "@ionic/react";
 import { useMemo } from "react";
 import { FaDoorClosed, FaHeart, FaMapMarkedAlt, FaUser } from "react-icons/fa";
 import { HiHome } from "react-icons/hi";
 import { IoIosCloseCircleOutline } from "react-icons/io";
-import { Link, useLocation, useMatch, useNavigate } from "react-router-dom";
+import { Link, useLocation, useMatch } from "react-router-dom";
 
 import { useApp } from "@/hooks/useApp";
 import { useAuth } from "@/hooks/useAuth";
 import styles from "./Sidebar.module.css";
 
 export const Sidebar: React.FC = () => {
-  const navigate = useNavigate();
   const { pathname } = useLocation();
+  const [presentAlert] = useIonAlert();
   const { showSidebar, handleShowSidebar } = useApp();
-  const { user } = useAuth();
+  const { user, handleSignOut } = useAuth();
 
   const matchHome = useMatch("/app");
   const matchFavorites = useMatch("/app/favoritos");
@@ -76,7 +77,21 @@ export const Sidebar: React.FC = () => {
     [pathname]
   );
 
-  const handleNavigate = (path: string) => navigate(path);
+  const handleClickSignOut = () =>
+    presentAlert({
+      header: "Salir de Sanble",
+      buttons: [
+        {
+          text: "Cancelar",
+          role: "cancel",
+        },
+        {
+          text: "Salir",
+          role: "confirm",
+          handler: handleSignOut,
+        },
+      ],
+    });
 
   return (
     <nav
@@ -123,7 +138,7 @@ export const Sidebar: React.FC = () => {
           ))}
           <IonItem
             className={`${styles.sidebarItem} ${styles.sidebarItemLogout}`}
-            onClick={() => alert("Sessión cerrada")}
+            onClick={handleClickSignOut}
             detail={false}
             button
           >

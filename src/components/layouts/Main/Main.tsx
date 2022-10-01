@@ -32,15 +32,15 @@ export const MainLayout: React.FC<ComponentProps> = ({
     <IonContent
       className={`${styles.mainContent} ${
         showSidebar ? styles.showSidebar : ""
-      } ${transitionStage}`}
-      onAnimationEnd={onAnimationEnd}
+      }`}
     >
       <div>
         <Sidebar />
         <main
           className={`${styles.mainContainer} ${
             showSidebar ? styles.showSidebar : ""
-          }`}
+          } ${transitionStage}`}
+          onAnimationEnd={onAnimationEnd}
         >
           <div
             className={`${styles.mainOverlay} ${
