@@ -25,20 +25,16 @@ export const DataProvider: React.FC<ComponentProps> = ({ children }) => {
   useEffect(() => {
     handleLoadData();
 
-    if (pathname === "/") {
+    getSessionRequest(async (user) => {
+      if (user) {
+        handleSetUser(user);
+      } else {
+        handleSetUser(null);
+        if (!matchSignin && !matchSignup)
+          navigate("/app/sesion/entrar", { replace: true });
+      }
       handleSetReady(true);
-    } else {
-      getSessionRequest(async (user) => {
-        if (user) {
-          handleSetUser(user);
-        } else {
-          handleSetUser(null);
-          if (!matchSignin && !matchSignup)
-            navigate("/app/sesion/entrar", { replace: true });
-        }
-        handleSetReady(true);
-      });
-    }
+    });
   }, []);
 
   return readyToUse ? <>{children}</> : <Splash />;

@@ -29,7 +29,15 @@ export const AppRoutes: React.FC = () => {
 
   return (
     <Routes location={displayLocation}>
-      <Route path="/" element={<LandingScreen />} />
+      <Route
+        path="/"
+        element={
+          <LandingScreen
+            onAnimationEnd={onAnimationEnd}
+            transitionStage={transitionStage}
+          />
+        }
+      />
       <Route
         path="/app"
         element={
