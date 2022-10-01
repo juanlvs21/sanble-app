@@ -10,7 +10,7 @@ import { useMemo } from "react";
 import { FaDoorClosed, FaHeart, FaMapMarkedAlt, FaUser } from "react-icons/fa";
 import { HiHome } from "react-icons/hi";
 import { IoIosCloseCircleOutline } from "react-icons/io";
-import { NavLink, useLocation, useMatch, useNavigate } from "react-router-dom";
+import { Link, useLocation, useMatch, useNavigate } from "react-router-dom";
 
 import { useApp } from "@/hooks/useApp";
 import { useAuth } from "@/hooks/useAuth";
@@ -104,7 +104,7 @@ export const Sidebar: React.FC = () => {
       <section className={styles.sidebarListContainer}>
         <IonList className={styles.sidebarList}>
           {items.map((item) => (
-            <NavLink to={item.path} key={item.path}>
+            <Link to={item.path} key={item.path}>
               <IonItem
                 className={`${styles.sidebarItem} ${
                   item.active ? styles.sidebarItemActive : ""
@@ -119,7 +119,7 @@ export const Sidebar: React.FC = () => {
                   {item.label}
                 </IonLabel>
               </IonItem>
-            </NavLink>
+            </Link>
           ))}
           <IonItem
             className={`${styles.sidebarItem} ${styles.sidebarItemLogout}`}
