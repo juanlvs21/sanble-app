@@ -12,12 +12,10 @@ import {
 import { formatUserDataFirebase } from "@/helpers/user";
 import { signinGoogleRequest, signinRequest, signUpRequest } from "@/services";
 import { TAuthSigInForm, TAuthSignupForm } from "@/types/TAuth";
-import { useApp } from "./useApp";
 
 export const useAuth = () => {
   const navigate = useNavigate();
   const [present] = useIonToast();
-  const { isDesktop } = useApp();
   const [{ user }, dispatch] = useAuthContext();
   const { setUser } = authActions(dispatch);
 
@@ -63,7 +61,7 @@ export const useAuth = () => {
 
   const handleSigninGoogle = async () => {
     try {
-      const { user } = await signinGoogleRequest({ isDesktop });
+      const { user } = await signinGoogleRequest();
       handleSetUser(user);
       navigate("/app", { replace: true });
     } catch (error) {

@@ -76,10 +76,7 @@ export const Sidebar: React.FC = () => {
     [pathname]
   );
 
-  const handleNavigate = (path: string) => {
-    handleShowSidebar(false);
-    navigate(path);
-  };
+  const handleNavigate = (path: string) => navigate(path);
 
   return (
     <nav

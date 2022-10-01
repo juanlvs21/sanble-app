@@ -8,6 +8,9 @@ export const Home: React.FC = () => {
   return (
     <div>
       <h1>App</h1>
+      <button onClick={() => handleShowSidebar()}>
+        {showSidebar ? "Hidden" : "Show"}
+      </button>
       <p>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum
         blandit venenatis orci et imperdiet. Nunc lacus turpis, lobortis id
@@ -17,9 +20,6 @@ export const Home: React.FC = () => {
         Pellentesque nec sapien odio. Curabitur maximus purus at massa
         ullamcorper blandit.
       </p>
-      <button onClick={() => handleShowSidebar()}>
-        {showSidebar ? "Hidden" : "Show"}
-      </button>
       <p>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum
         blandit venenatis orci et imperdiet. Nunc lacus turpis, lobortis id

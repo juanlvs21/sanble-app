@@ -37,11 +37,11 @@
 
 /* navFadeUp  */
 .navFadeUpStart {
-  animation: 0.5s navFadeUpStart forwards;
+  animation: 500ms navFadeUpStart forwards;
 }
 
 .navFadeUpEnd {
-  animation: 0.5s navFadeUpEnd forwards;
+  animation: 500ms navFadeUpEnd forwards;
 }
 
 @keyframes navFadeUpStart {

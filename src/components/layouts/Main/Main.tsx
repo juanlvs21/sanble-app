@@ -1,6 +1,6 @@
 import { IonContent } from "@ionic/react";
 import { useEffect } from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 
 import { Sidebar } from "@/components/common/Sidebar";
 import { useApp } from "@/hooks/useApp";
@@ -21,30 +21,35 @@ export const MainLayout: React.FC<ComponentProps> = ({
   onAnimationEnd,
   transitionStage,
 }) => {
+  const location = useLocation();
   const { showSidebar, handleShowSidebar } = useApp();
 
   useEffect(() => {
     handleShowSidebar(false);
-  }, []);
+  }, [location]);
 
   return (
-    <IonContent className={styles.mainContent}>
+    <IonContent
+      className={`${styles.mainContent} ${
+        showSidebar ? styles.showSidebar : ""
+      } ${transitionStage}`}
+      onAnimationEnd={onAnimationEnd}
+    >
       <div>
         <Sidebar />
         <main
           className={`${styles.mainContainer} ${
             showSidebar ? styles.showSidebar : ""
-          } ${transitionStage}`}
-          onAnimationEnd={onAnimationEnd}
+          }`}
         >
+          <div
+            className={`${styles.mainOverlay} ${
+              showSidebar ? styles.showSidebar : ""
+            }`}
+            onClick={() => handleShowSidebar(false)}
+          />
           <Outlet />
         </main>
-        <div
-          className={`${styles.mainOverlay} ${
-            showSidebar ? styles.showSidebar : ""
-          }`}
-          onClick={() => handleShowSidebar(false)}
-        />
       </div>
     </IonContent>
   );
