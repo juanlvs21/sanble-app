@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { authActions } from "@/context/actions/authActions";
 import { useAuthContext } from "@/context/AuthContext";
 import { defaultAvatar } from "@/helpers/defaultImage";
-import { User } from "@/helpers/firebase";
+import { getAdditionalUserInfo, User } from "@/helpers/firebase";
 import {
   errorsFirebase,
   errorsMessageAPI,
@@ -15,6 +15,7 @@ import {
   signinRequest,
   signOutRequest,
   signUpRequest,
+  signUpRequestExternal,
 } from "@/services";
 import { TAuthSigInForm, TAuthSignupForm } from "@/types/TAuth";
 
@@ -70,9 +71,17 @@ export const useAuth = () => {
 
   const handleSigninGoogle = async () => {
     try {
-      const { user } = await signinGoogleRequest();
-      handleSetUser(user);
-      navigate("/app", { replace: true });
+      const res = await signinGoogleRequest();
+      const { user } = res;
+      try {
+        const additionalUserInfo = getAdditionalUserInfo(res);
+        if (additionalUserInfo?.isNewUser) {
+          await signUpRequestExternal({ email: user.email || "" });
+        }
+      } finally {
+        handleSetUser(user);
+        navigate("/app", { replace: true });
+      }
     } catch (error) {
       present({
         message: errorsFirebase(error),

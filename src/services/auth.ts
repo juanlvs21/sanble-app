@@ -10,7 +10,11 @@ import {
   User,
   signOut,
 } from "@/helpers/firebase";
-import { TAuthSignupForm, TAuthSigInForm } from "@/types/TAuth";
+import {
+  TAuthSignupForm,
+  TAuthSigInForm,
+  TAuthSignupExternal,
+} from "@/types/TAuth";
 
 // type TAuthParamsSigninGoogle = {
 //   isDesktop: boolean;
@@ -20,6 +24,9 @@ export const signOutRequest = () => signOut(auth);
 
 export const signUpRequest = (user: TAuthSignupForm) =>
   api.post("/auth/signup", user);
+
+export const signUpRequestExternal = (user: TAuthSignupExternal) =>
+  api.post("/auth/signup/external", user);
 
 export const signinRequest = async ({ email, password }: TAuthSigInForm) => {
   return signInWithEmailAndPassword(auth, email, password);

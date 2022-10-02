@@ -37,5 +37,3 @@ export const appCheck = initializeAppCheck(app, {
   provider: new ReCaptchaV3Provider(RECAPTCHA_KEY),
   isTokenAutoRefreshEnabled: true,
 });
-
-console.log({ appCheck });

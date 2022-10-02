@@ -6,6 +6,10 @@ export type TAuthSignupForm = {
   password: string;
 };
 
+export type TAuthSignupExternal = {
+  email: string;
+};
+
 export type TAuthSigInForm = {
   email: string;
   password: string;
