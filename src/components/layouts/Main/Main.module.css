@@ -1,6 +1,6 @@
 .mainContent::part(background) {
   background-color: #fff;
-  transition: all 1s ease-in-out;
+  transition: all 500ms ease-in-out;
 }
 
 .mainContent.showSidebar::part(background) {
@@ -8,15 +8,19 @@
   transition: all 200ms ease-in-out;
 }
 
+.mainContent::part(scroll) {
+  overflow: hidden;
+}
+
 .mainContainer {
   height: 100%;
   width: 100%;
   background: white;
-  padding: 15px 30px;
   position: absolute;
   top: 0;
   left: 0;
-  overflow: auto;
+  overflow: hidden;
+  /* overflow: auto; */
   transition: all 400ms ease-in-out;
   z-index: 50;
 }

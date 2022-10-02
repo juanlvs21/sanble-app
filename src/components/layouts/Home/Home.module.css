@@ -1,0 +1,9 @@
+.homeContainer {
+  background-image: url("/assets/images/home/home-wave.svg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: bottom;
+  height: 100%;
+  padding: 15px 30px;
+  overflow-y: scroll;
+}

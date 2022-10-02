@@ -1,0 +1,52 @@
+.homeBarContainer {
+  position: fixed;
+  bottom: 10px;
+  left: 0;
+  padding: 0 20px 10px 20px;
+  width: 100%;
+}
+
+.homeBarList {
+  display: flex;
+  justify-content: space-evenly;
+  border-radius: var(--sanble-border-radius);
+  opacity: 1;
+  transition: opacity 500s ease-in-out;
+}
+
+.homeBarList.homeBarHidden {
+  opacity: 0;
+  transition: opacity 500ms ease-in-out;
+}
+
+.homeBarList a {
+  width: 100%;
+  border-radius: var(--sanble-border-radius);
+}
+
+.homeBarItem::part(native) {
+  --inner-border-width: 0px;
+  --padding-end: 0;
+  --ion-safe-area-right: 0;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  border-radius: var(--sanble-border-radius);
+  background-color: #fff;
+  transition: all 300ms ease-in-out;
+}
+
+.homeBarItem.homeBarItemActive::part(native) {
+  background-color: var(--ion-color-secondary);
+  color: #fff;
+  transition: all 300ms ease-in-out;
+}
+
+.homeBarItemIcon {
+  margin: auto;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

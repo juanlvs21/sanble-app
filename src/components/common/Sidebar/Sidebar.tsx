@@ -9,7 +9,7 @@ import {
 } from "@ionic/react";
 import { useMemo } from "react";
 import { FaDoorClosed, FaHeart, FaMapMarkedAlt, FaUser } from "react-icons/fa";
-import { HiHome } from "react-icons/hi";
+import { FiHome } from "react-icons/fi";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import { Link, useLocation, useMatch } from "react-router-dom";
 
@@ -35,7 +35,7 @@ export const Sidebar: React.FC = () => {
       {
         label: "Inicio",
         path: "/app",
-        icon: <HiHome size={28} />,
+        icon: <FiHome size={28} />,
         active: matchHome,
       },
       {

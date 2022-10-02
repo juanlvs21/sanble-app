@@ -9,17 +9,19 @@ import styles from "./Main.module.css";
 type ComponentProps = {
   /**
    * CSS transition className
+   *
+   * @default ""
    */
-  transitionStage: string;
+  transitionStage?: string;
   /**
    * Function to set transitionStage
    */
-  onAnimationEnd: () => void;
+  onAnimationEnd?: () => void;
 };
 
 export const MainLayout: React.FC<ComponentProps> = ({
+  transitionStage = "",
   onAnimationEnd,
-  transitionStage,
 }) => {
   const location = useLocation();
   const { showSidebar, handleShowSidebar } = useApp();

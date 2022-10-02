@@ -4,6 +4,7 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import { LoadingSuspense } from "@/components/common/loaders/LoadingSuspense";
 import { AuthLayout } from "@/components/layouts/Auth";
 import { MainLayout } from "@/components/layouts/Main";
+import { HomeLayout } from "@/components/layouts/Home";
 import { useTransitionsScreen } from "@/hooks/useTransitionsScreen";
 
 const NotFoundScreen = lazy(() =>
@@ -46,6 +47,51 @@ export const AppRoutes: React.FC = () => {
           />
         }
       />
+
+      <Route path="/app" element={<MainLayout />}>
+        <Route
+          path=""
+          element={
+            <HomeLayout
+              onAnimationEnd={onAnimationEnd}
+              transitionStage={transitionStage}
+            />
+          }
+        >
+          <Route
+            index
+            element={
+              <Suspense fallback={<LoadingSuspense />}>
+                <HomeScreen />
+              </Suspense>
+            }
+          />
+          <Route
+            path="ferias"
+            element={
+              <Suspense fallback={<LoadingSuspense />}>
+                <FavoritesListScreen />
+              </Suspense>
+            }
+          />
+          <Route
+            path="stands"
+            element={
+              <Suspense fallback={<LoadingSuspense />}>
+                <FavoritesListScreen />
+              </Suspense>
+            }
+          />
+          <Route
+            path="productos"
+            element={
+              <Suspense fallback={<LoadingSuspense />}>
+                <FavoritesListScreen />
+              </Suspense>
+            }
+          />
+        </Route>
+      </Route>
       <Route
         path="/app"
         element={
@@ -55,14 +101,6 @@ export const AppRoutes: React.FC = () => {
           />
         }
       >
-        <Route
-          index
-          element={
-            <Suspense fallback={<LoadingSuspense />}>
-              <HomeScreen />
-            </Suspense>
-          }
-        />
         <Route
           path="favoritos"
           element={
