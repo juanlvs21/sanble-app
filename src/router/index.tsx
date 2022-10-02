@@ -71,6 +71,30 @@ export const AppRoutes: React.FC = () => {
             </Suspense>
           }
         />
+        <Route
+          path="misanble"
+          element={
+            <Suspense fallback={<LoadingSuspense />}>
+              <FavoritesListScreen />
+            </Suspense>
+          }
+        />
+        <Route
+          path="cerca"
+          element={
+            <Suspense fallback={<LoadingSuspense />}>
+              <FavoritesListScreen />
+            </Suspense>
+          }
+        />
+        <Route
+          path="perfil"
+          element={
+            <Suspense fallback={<LoadingSuspense />}>
+              <FavoritesListScreen />
+            </Suspense>
+          }
+        />
       </Route>
       <Route
         path="/app/sesion"
