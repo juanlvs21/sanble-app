@@ -1,7 +1,12 @@
+import { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 
 import { BottomBar } from "@/components/modules/home/BottomBar";
 import styles from "./Home.module.css";
+import {
+  navFadeUpStart,
+  navFadeUpEnd,
+} from "@/helpers/constTransitionsClasses";
 
 type ComponentProps = {
   /**
@@ -18,16 +23,26 @@ export const HomeLayout: React.FC<ComponentProps> = ({
   transitionStage,
   onAnimationEnd,
 }) => {
+  const [transitionStageLayout, setTransitionStageLayout] =
+    useState(navFadeUpEnd);
+
+  useEffect(() => {
+    setTransitionStageLayout(navFadeUpStart);
+
+    return () => {
+      setTransitionStageLayout(navFadeUpEnd);
+    };
+  }, []);
+
   return (
-    <>
+    <div className={`${styles.homeContainer} ${transitionStageLayout}`}>
       <section
-        className={`${styles.homeContainer} ${transitionStage}`}
+        className={`${styles.homeContent} ${transitionStage}`}
         onAnimationEnd={onAnimationEnd}
       >
-        <h1>Home</h1>
         <Outlet />
       </section>
       <BottomBar />
-    </>
+    </div>
   );
 };

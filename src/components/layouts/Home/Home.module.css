@@ -2,8 +2,12 @@
   background-image: url("/assets/images/home/home-wave.svg");
   background-size: cover;
   background-repeat: no-repeat;
-  background-position: bottom;
+  background-position: right;
+  height: 100%;
+}
+
+.homeContent {
+  overflow-y: scroll;
   height: 100%;
   padding: 15px 30px;
-  overflow-y: scroll;
 }

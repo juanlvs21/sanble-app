@@ -6,15 +6,13 @@ import { HiOutlineShoppingBag } from "react-icons/hi";
 import { MdOutlineStorefront } from "react-icons/md";
 import { Link, useLocation, useMatch } from "react-router-dom";
 
+import { navFadeEnd, navFadeStart } from "@/helpers/constTransitionsClasses";
 import { useApp } from "@/hooks/useApp";
 import styles from "./BottomBar.module.css";
 
-const classNameStart = "navFadeStart";
-const classNameEnd = "navFadeEnd";
-
 export const BottomBar: React.FC = () => {
   const { pathname } = useLocation();
-  const [transitionStage, setTransitionStage] = useState(classNameEnd);
+  const [transitionStage, setTransitionStage] = useState(navFadeEnd);
   const { showSidebar } = useApp();
 
   const matchHome = useMatch("/app");
@@ -49,10 +47,10 @@ export const BottomBar: React.FC = () => {
   );
 
   useEffect(() => {
-    setTransitionStage(classNameStart);
+    setTransitionStage(navFadeStart);
 
     return () => {
-      setTransitionStage(classNameEnd);
+      setTransitionStage(navFadeEnd);
     };
   }, []);
 

@@ -1,11 +1,11 @@
 .mainContent::part(background) {
   background-color: #fff;
-  transition: all 500ms ease-in-out;
+  transition: all 400ms ease-in-out;
 }
 
 .mainContent.showSidebar::part(background) {
   background-color: var(--ion-color-primary);
-  transition: all 200ms ease-in-out;
+  transition: all 300ms ease-in-out;
 }
 
 .mainContent::part(scroll) {
