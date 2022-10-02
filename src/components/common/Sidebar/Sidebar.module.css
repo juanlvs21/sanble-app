@@ -50,7 +50,7 @@
   height: 100px;
   border-radius: 100px;
   margin-bottom: 20px;
-  object-fit: contain;
+  object-fit: cover;
   object-position: center;
 }
 

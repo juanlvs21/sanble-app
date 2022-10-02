@@ -2,6 +2,7 @@ import { FirebaseOptions, initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getFirestore } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
+import { initializeAppCheck, ReCaptchaV3Provider } from "firebase/app-check";
 
 export * from "firebase/auth";
 
@@ -14,6 +15,7 @@ import {
   FIREBASE_PROJECT_ID,
   FIREBASE_STORAGE_BUCKET,
   //   FIREBASE_DATABASE_URL,
+  RECAPTCHA_KEY,
 } from "@/helpers/config/env";
 
 const firebaseConfig: FirebaseOptions = {
@@ -31,3 +33,9 @@ export const app = initializeApp(firebaseConfig);
 export const analytics = getAnalytics(app);
 export const db = getFirestore(app);
 export const auth = getAuth(app);
+export const appCheck = initializeAppCheck(app, {
+  provider: new ReCaptchaV3Provider(RECAPTCHA_KEY),
+  isTokenAutoRefreshEnabled: true,
+});
+
+console.log({ appCheck });
