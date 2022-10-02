@@ -1,6 +1,6 @@
 .sidebar {
   width: 300px;
-  height: 100vh;
+  height: 100%;
   background-color: var(--ion-color-primary);
   position: absolute;
   top: 0;
@@ -71,7 +71,7 @@
 }
 
 .sidebarListContainer {
-  height: calc(100vh - 270px);
+  height: calc(100% - 170px);
   overflow-y: auto;
   direction: rtl;
   margin-top: 30px;
