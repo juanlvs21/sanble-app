@@ -2,11 +2,11 @@ import { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 
 import { BottomBar } from "@/components/modules/home/BottomBar";
-import styles from "./Home.module.css";
 import {
-  navFadeUpStart,
   navFadeUpEnd,
+  navFadeUpStart,
 } from "@/helpers/constTransitionsClasses";
+import styles from "./Home.module.css";
 
 type ComponentProps = {
   /**

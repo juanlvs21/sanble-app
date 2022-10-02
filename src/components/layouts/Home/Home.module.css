@@ -8,6 +8,15 @@
 
 .homeContent {
   overflow-y: scroll;
+  padding: 15px 30px 80px;
   height: 100%;
-  padding: 15px 30px;
+  transition: all 500s ease-in-out;
+}
+
+@media (min-width: 768px) {
+  .homeContent {
+    height: calc(100% - 72px);
+    padding: 15px 30px;
+    transition: all 500s ease-in-out;
+  }
 }

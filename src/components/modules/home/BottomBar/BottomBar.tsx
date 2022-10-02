@@ -24,22 +24,22 @@ export const BottomBar: React.FC = () => {
     () => [
       {
         path: "/app",
-        icon: <FiHome size={24} />,
+        icon: <FiHome size={26} />,
         active: matchHome,
       },
       {
         path: "/app/ferias",
-        icon: <BiStoreAlt size={24} />,
+        icon: <BiStoreAlt size={26} />,
         active: matchFairsList,
       },
       {
         path: "/app/stands",
-        icon: <MdOutlineStorefront size={24} />,
+        icon: <MdOutlineStorefront size={26} />,
         active: matchStandsList,
       },
       {
         path: "/app/productos",
-        icon: <HiOutlineShoppingBag size={24} />,
+        icon: <HiOutlineShoppingBag size={26} />,
         active: matchProductsList,
       },
     ],

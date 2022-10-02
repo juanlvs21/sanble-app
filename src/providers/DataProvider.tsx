@@ -1,10 +1,10 @@
 import { useEffect } from "react";
+import { useMatch, useNavigate } from "react-router-dom";
 
 import { useApp } from "@/hooks/useApp";
 import { useAuth } from "@/hooks/useAuth";
 import { Splash } from "@/screens/Splash";
 import { getSessionRequest } from "@/services";
-import { useLocation, useMatch, useNavigate } from "react-router-dom";
 
 export type ComponentProps = {
   /**
@@ -15,7 +15,6 @@ export type ComponentProps = {
 
 export const DataProvider: React.FC<ComponentProps> = ({ children }) => {
   const navigate = useNavigate();
-  const { pathname } = useLocation();
   const { readyToUse, handleSetReady, handleLoadData } = useApp();
   const { handleSetUser } = useAuth();
 
