@@ -1,16 +1,16 @@
 import { useIonToast } from "@ionic/react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { authActions } from "@/context/actions/authActions";
 import { useAuthContext } from "@/context/AuthContext";
-import { defaultAvatar } from "@/helpers/defaultImage";
-import { getAdditionalUserInfo, User } from "@/helpers/firebase";
+import { getAdditionalUserInfo } from "@/helpers/firebase";
 import {
   errorsFirebase,
   errorsMessageAPI,
 } from "@/helpers/formatErrorsRequests";
-import { formatUserDataFirebase } from "@/helpers/user";
 import {
+  getUserDataRequest,
   signinGoogleRequest,
   signinRequest,
   signOutRequest,
@@ -24,19 +24,14 @@ export const useAuth = () => {
   const [present] = useIonToast();
   const [{ user }, dispatch] = useAuthContext();
   const { setUser } = authActions(dispatch);
-
-  const handleGetUser = user
-    ? { ...user, photoURL: user.photoURL || defaultAvatar }
-    : null;
-
-  const handleSetUser = (user: User | null) => {
-    const userFormat = formatUserDataFirebase(user);
-    setUser(userFormat);
-  };
+  const [loadingGoogle, setloadingGoogle] = useState(false);
 
   const signinAndRedirect = async (userForm: TAuthSigInForm) => {
-    const { user } = await signinRequest(userForm);
-    handleSetUser(user);
+    await signinRequest(userForm);
+    const {
+      data: { data: user },
+    } = await getUserDataRequest();
+    setUser(user);
     navigate("/app", { replace: true });
   };
 
@@ -49,6 +44,9 @@ export const useAuth = () => {
         navigate("/app/sesion/entrar", { replace: true });
       }
     } catch (error) {
+      await signOutRequest();
+      setUser(null);
+
       present({
         message: errorsMessageAPI(error),
         duration: 5000,
@@ -61,6 +59,9 @@ export const useAuth = () => {
     try {
       await signinAndRedirect(userForm);
     } catch (error: any) {
+      await signOutRequest();
+      setUser(null);
+
       present({
         message: errorsFirebase(error),
         duration: 5000,
@@ -71,18 +72,23 @@ export const useAuth = () => {
 
   const handleSigninGoogle = async () => {
     try {
-      const res = await signinGoogleRequest();
-      const { user } = res;
+      setloadingGoogle(true);
+      const resGoogle = await signinGoogleRequest();
+      const {
+        data: { data: user },
+      } = await getUserDataRequest();
       try {
-        const additionalUserInfo = getAdditionalUserInfo(res);
+        const additionalUserInfo = getAdditionalUserInfo(resGoogle);
         if (additionalUserInfo?.isNewUser) {
           await signUpRequestExternal({ email: user.email || "" });
         }
       } finally {
-        handleSetUser(user);
+        setUser(user);
         navigate("/app", { replace: true });
+        setloadingGoogle(false);
       }
     } catch (error) {
+      setloadingGoogle(false);
       present({
         message: errorsFirebase(error),
         duration: 5000,
@@ -95,17 +101,19 @@ export const useAuth = () => {
     try {
       await signOutRequest();
     } finally {
-      handleSetUser(null);
+      setUser(null);
       navigate("/app/sesion/entrar", { replace: true });
     }
   };
 
   return {
-    user: handleGetUser,
-    handleSetUser,
+    user,
+    setUser,
     handleSignup,
     handleSignin,
     handleSigninGoogle,
     handleSignOut,
+    getUserDataRequest,
+    loadingGoogle,
   };
 };

@@ -1,4 +1,5 @@
-import { UserInfo } from "firebase/auth";
+import { UserInfo, UserMetadata } from "firebase/auth";
+import { Timestamp } from "firebase/firestore";
 
 export type TAuthSignupForm = {
   name: string;
@@ -17,13 +18,20 @@ export type TAuthSigInForm = {
 
 export type TUser = {
   uid: string;
-  displayName: string;
   email: string;
   emailVerified: boolean;
-  phoneNumber: string;
+  displayName: string;
   photoURL: string;
+  phoneNumber: string;
+  disabled: boolean;
+  metadata: UserMetadata;
   providerData: UserInfo[];
-  providerId: string;
+  isAdmin: boolean;
+  creationTime: Timestamp;
+  verifyTokens: {
+    expiresIn: Timestamp;
+    token: string;
+  };
 };
 
 export type TAuth = {

@@ -15,7 +15,7 @@ import styles from "../Auth.module.css";
 
 export const Signin: React.FC = () => {
   useDocumentTitle("Iniciar Sesión");
-  const { handleSignin, handleSigninGoogle } = useAuth();
+  const { handleSignin, handleSigninGoogle, loadingGoogle } = useAuth();
   const {
     handleSubmit,
     handleChange,
@@ -56,7 +56,7 @@ export const Signin: React.FC = () => {
             Icon={<BiEnvelope />}
             onIonChange={handleChange}
             onIonBlur={handleBlur}
-            disabled={isSubmitting}
+            disabled={isSubmitting || loadingGoogle}
             value={values.email}
             helper={getErrorMessage("email", touched, errors)}
             helperIsError
@@ -65,7 +65,7 @@ export const Signin: React.FC = () => {
             name="password"
             onIonChange={handleChange}
             onIonBlur={handleBlur}
-            disabled={isSubmitting}
+            disabled={isSubmitting || loadingGoogle}
             value={values.password}
             helper={getErrorMessage("password", touched, errors)}
             helperIsError
@@ -74,7 +74,7 @@ export const Signin: React.FC = () => {
             expand="block"
             color="primary"
             type="submit"
-            isLoading={isSubmitting}
+            isLoading={isSubmitting || loadingGoogle}
             className={styles.btn}
           >
             Ingresar
@@ -84,7 +84,7 @@ export const Signin: React.FC = () => {
           expand="block"
           color="secondary"
           fill="clear"
-          isLoading={isSubmitting}
+          isLoading={isSubmitting || loadingGoogle}
           className={styles.btn}
           onClick={handleSigninGoogle}
         >

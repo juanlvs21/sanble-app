@@ -14,7 +14,9 @@ import {
   TAuthSignupForm,
   TAuthSigInForm,
   TAuthSignupExternal,
+  TUser,
 } from "@/types/TAuth";
+import { AxiosResponse } from "axios";
 
 // type TAuthParamsSigninGoogle = {
 //   isDesktop: boolean;
@@ -27,6 +29,9 @@ export const signUpRequest = (user: TAuthSignupForm) =>
 
 export const signUpRequestExternal = (user: TAuthSignupExternal) =>
   api.post("/auth/signup/external", user);
+
+export const getUserDataRequest = (): Promise<AxiosResponse<{ data: TUser }>> =>
+  api.get("/auth/user");
 
 export const signinRequest = async ({ email, password }: TAuthSigInForm) => {
   return signInWithEmailAndPassword(auth, email, password);

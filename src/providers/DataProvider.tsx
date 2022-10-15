@@ -16,7 +16,7 @@ export type ComponentProps = {
 export const DataProvider: React.FC<ComponentProps> = ({ children }) => {
   const navigate = useNavigate();
   const { readyToUse, handleSetReady, handleLoadData } = useApp();
-  const { handleSetUser } = useAuth();
+  const { setUser, getUserDataRequest } = useAuth();
 
   const matchSignin = useMatch("/app/sesion/entrar");
   const matchSignup = useMatch("/app/sesion/registrarse");
@@ -26,9 +26,13 @@ export const DataProvider: React.FC<ComponentProps> = ({ children }) => {
 
     getSessionRequest(async (user) => {
       if (user) {
-        handleSetUser(user);
+        const {
+          data: { data: user },
+        } = await getUserDataRequest();
+        console.log({ user });
+        setUser(user);
       } else {
-        handleSetUser(null);
+        setUser(null);
         if (!matchSignin && !matchSignup)
           navigate("/app/sesion/entrar", { replace: true });
       }
