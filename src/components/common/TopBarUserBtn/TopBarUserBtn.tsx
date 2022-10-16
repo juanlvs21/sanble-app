@@ -12,7 +12,7 @@ export const TopBarUserBtn: React.FC = () => {
       <img
         src={user?.photoURL}
         alt="Perfil"
-        className={styles.homeTopBarUserPhoto}
+        className={styles.topBarUserPhoto}
       />
     </Button>
   );

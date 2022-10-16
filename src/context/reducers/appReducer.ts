@@ -8,6 +8,7 @@ export const initialAppState: TApp = {
   showSidebar: false,
   openNotifications: false,
   isDesktop: false,
+  scrollTop: 0,
 };
 
 export const appReducer = (state: TApp, action: TAction<TApp>): TApp => {
@@ -45,6 +46,14 @@ export const appReducer = (state: TApp, action: TAction<TApp>): TApp => {
       return {
         ...state,
         isDesktop,
+      };
+    }
+    case appConstants.SET_SCROLL_TOP: {
+      const scrollTop = action.payload?.scrollTop || 0;
+
+      return {
+        ...state,
+        scrollTop,
       };
     }
 

@@ -1,10 +1,13 @@
-import { getPlatforms } from "@ionic/react";
+import { getPlatforms, ScrollDetail } from "@ionic/react";
+
 import { appActions } from "@/context/actions/appActions";
 import { useAppContext } from "@/context/AppContext";
 
 export const useApp = () => {
-  const [{ readyToUse, isDesktop, showSidebar }, dispatch] = useAppContext();
-  const { setReadyToUse, setIsDesktop, setShowSidebar } = appActions(dispatch);
+  const [{ readyToUse, isDesktop, showSidebar, scrollTop }, dispatch] =
+    useAppContext();
+  const { setReadyToUse, setIsDesktop, setShowSidebar, setScrollTop } =
+    appActions(dispatch);
 
   const handleSetReady = (ready: boolean) => setReadyToUse(ready);
 
@@ -20,12 +23,18 @@ export const useApp = () => {
     else setShowSidebar(show);
   };
 
+  const handleSeScrollTop = (event?: CustomEvent<ScrollDetail>) => {
+    setScrollTop(event ? event.detail.scrollTop : 0);
+  };
+
   return {
     readyToUse,
     isDesktop,
     showSidebar,
+    scrollTop,
     handleSetReady,
     handleLoadData,
     handleShowSidebar,
+    handleSeScrollTop,
   };
 };

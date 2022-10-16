@@ -3,4 +3,5 @@ export type TApp = {
   showSidebar: boolean;
   openNotifications: boolean;
   isDesktop: boolean;
+  scrollTop: number;
 };

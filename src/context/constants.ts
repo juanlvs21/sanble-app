@@ -3,6 +3,7 @@ export const appConstants = {
   OPEN_NOTIFICATIONS: "OPEN_NOTIFICATIONS",
   SET_READY_TO_USE: "SET_READY_TO_USE",
   SET_IS_DESKTOP: "SET_IS_DESKTOP",
+  SET_SCROLL_TOP: "SET_SCROLL_TOP",
 };
 
 export const authConstants = {

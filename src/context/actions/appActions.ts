@@ -24,4 +24,9 @@ export const appActions = (dispatch: Dispatch<TAction>) => ({
       type: appConstants.SET_IS_DESKTOP,
       payload: { isDesktop },
     }),
+  setScrollTop: (scrollTop: number) =>
+    dispatch({
+      type: appConstants.SET_SCROLL_TOP,
+      payload: { scrollTop },
+    }),
 });

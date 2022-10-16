@@ -1,0 +1,75 @@
+.topBarContainer {
+  --background: transparent;
+  --padding-top: 30px;
+  --padding-bottom: 20px;
+  --padding-end: 20px;
+  --padding-start: 20px;
+  top: 0;
+  left: 0;
+  width: 100%;
+  position: fixed;
+  transition: all 400ms ease-in-out;
+}
+
+.topBarContainer.sticky {
+  --padding-bottom: 5px;
+  background: #fff !important;
+  margin-top: -20px !important;
+  transition: all 400ms ease-in-out;
+
+  -webkit-box-shadow: 0px 0px 5px 5px rgba(200, 200, 200, 0.1);
+  box-shadow: 0px 0px 5px 5px rgba(200, 200, 200, 0.1);
+  transition: all 400ms ease-in-out;
+}
+
+.topBarProgressBar {
+  top: 0;
+}
+
+.topBarTitle {
+  font-family: "Quicksand";
+  font-weight: 700;
+  font-size: 28px;
+  color: var(--ion-color-primary);
+}
+
+.topBarStart {
+  margin-left: 20px;
+  margin-bottom: 3px;
+}
+
+.topBarEnd {
+  margin-right: 20px;
+  margin-bottom: 3px;
+}
+
+.topBarContainer ion-buttons,
+.topBarContainer ion-button {
+  width: 38px;
+  height: 38px;
+  border-radius: 38px;
+}
+
+.topBarContainer ion-button::part(native) {
+  width: 38px;
+  height: 38px;
+  border-radius: 38px;
+  padding: 0;
+}
+
+.topBarContainer ion-button::part(native) {
+  --background: var(--ion-color-light);
+  --color: var(--ion-color-black);
+}
+
+@media (min-width: 768px) {
+  .topBarContainer {
+    --background: #fff;
+    --padding-top: 10px;
+    --padding-bottom: 11px;
+
+    -webkit-box-shadow: 0px 0px 5px 5px rgba(200, 200, 200, 0.1);
+    box-shadow: 0px 0px 5px 5px rgba(200, 200, 200, 0.1);
+    transition: all 400ms ease-in-out;
+  }
+}

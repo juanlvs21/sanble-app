@@ -1,3 +1,4 @@
+import { IonContent } from "@ionic/react";
 import { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 
@@ -6,6 +7,7 @@ import {
   navFadeUpEnd,
   navFadeUpStart,
 } from "@/helpers/constTransitionsClasses";
+import { useApp } from "@/hooks/useApp";
 import styles from "./Home.module.css";
 
 type ComponentProps = {
@@ -23,6 +25,7 @@ export const HomeLayout: React.FC<ComponentProps> = ({
   transitionStage,
   onAnimationEnd,
 }) => {
+  const { handleSeScrollTop } = useApp();
   const [transitionStageLayout, setTransitionStageLayout] =
     useState(navFadeUpEnd);
 
@@ -36,12 +39,14 @@ export const HomeLayout: React.FC<ComponentProps> = ({
 
   return (
     <div className={`${styles.homeContainer} ${transitionStageLayout}`}>
-      <section
+      <IonContent
         className={`${styles.homeContent} ${transitionStage}`}
         onAnimationEnd={onAnimationEnd}
+        onIonScroll={handleSeScrollTop}
+        scrollEvents
       >
         <Outlet />
-      </section>
+      </IonContent>
       <BottomBar />
     </div>
   );

@@ -54,10 +54,6 @@ export const BottomBar: React.FC = () => {
     };
   }, []);
 
-  useEffect(() => {
-    console.log({ showSidebar });
-  }, [showSidebar]);
-
   return (
     <div className={`${styles.homeBarContainer} ${transitionStage}`}>
       <IonList className={styles.homeBarList}>

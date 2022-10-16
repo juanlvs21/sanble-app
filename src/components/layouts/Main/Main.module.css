@@ -1,9 +1,10 @@
-.mainContent::part(background) {
+.mainContent {
+  height: 100%;
   background-color: #fff;
   transition: all 400ms ease-in-out;
 }
 
-.mainContent.showSidebar::part(background) {
+.mainContent.showSidebar {
   background-color: var(--ion-color-primary);
   transition: all 300ms ease-in-out;
 }
