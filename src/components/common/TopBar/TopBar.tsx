@@ -7,6 +7,10 @@ import styles from "./TopBar.module.css";
 
 type ComponentProps = {
   /**
+   * React component or string for the TopBar title
+   */
+  title?: React.ReactElement | string;
+  /**
    * React component to start slot
    */
   start?: React.ReactElement;
@@ -29,6 +33,7 @@ type ComponentProps = {
 };
 
 export const TopBar: React.FC<ComponentProps> = ({
+  title,
   startUser,
   start,
   end,
@@ -55,7 +60,7 @@ export const TopBar: React.FC<ComponentProps> = ({
           {startUser ? <TopBarUserBtn /> : start}
         </IonButtons>
       )}
-      <IonTitle className={styles.topBarTitle}>Sanble</IonTitle>
+      {title && <IonTitle className={styles.topBarTitle}>{title}</IonTitle>}
       {end && (
         <IonButtons slot="end" className={styles.topBarEnd}>
           {end}

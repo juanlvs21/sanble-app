@@ -1,9 +1,9 @@
 import { BiBell } from "react-icons/bi";
 
-import { TopBar } from "@/components/common/TopBar";
 import { Button } from "@/components/common/buttons/Button";
+import { TopBar } from "@/components/common/TopBar";
 import { useDocumentTitle } from "@/hooks/useDocumentTitle";
-import styles from "./Home.module.css";
+// import styles from "./Home.module.css";
 
 export const Home: React.FC = () => {
   useDocumentTitle("Inicio");
@@ -11,13 +11,16 @@ export const Home: React.FC = () => {
   return (
     <>
       <TopBar
-        startUser
-        sticky
+        title="Sanble"
         end={
           <Button>
+            {/* <span className={styles.notificationBadge} />  */}
+            {/* TODO: Enable this when notifications are working */}
             <BiBell size={24} />
           </Button>
         }
+        startUser
+        sticky
       />
       <div>
         <h1>App</h1>
