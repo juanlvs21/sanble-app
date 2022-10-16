@@ -26,16 +26,7 @@
   height: 100%;
   padding: 0;
   margin: 0;
-  transition: all 1s ease-in-out;
-}
-
-.layoutContainer.isDesktopContainer {
-  max-width: 768px;
-  margin: 20px auto;
-  height: calc(100% - 40px);
-  border-radius: var(--sanble-border-radius);
-  -webkit-box-shadow: 0px 0px 30px 5px rgba(0, 0, 0, 0.3);
-  box-shadow: 0px 0px 30px 5px rgba(0, 0, 0, 0.3);
+  transition: all 400ms ease-in-out;
 }
 
 .layoutContainer.signinRoute {
@@ -63,6 +54,18 @@
 @media (max-height: 620px) {
   .layoutContainer {
     background-size: cover;
-    transition: all 1s ease-in-out;
+    transition: all 400ms ease-in-out;
+  }
+}
+
+@media (min-width: 768px) {
+  .layoutContainer {
+    max-width: 768px;
+    margin: 20px auto;
+    height: calc(100% - 40px);
+    border-radius: var(--sanble-border-radius);
+    -webkit-box-shadow: 0px 0px 30px 5px rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 0px 30px 5px rgba(0, 0, 0, 0.3);
+    transition: all 400ms ease-in-out;
   }
 }

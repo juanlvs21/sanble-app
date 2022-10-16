@@ -35,9 +35,7 @@ export const AuthLayout: React.FC<ComponentProps> = ({
 
   return (
     <IonContent
-      className={`${styles.layoutContent} ${getWavesClass(location.pathname)} ${
-        isDesktop ? styles.isDesktopContent : ""
-      }`}
+      className={`${styles.layoutContent} ${getWavesClass(location.pathname)}`}
     >
       <div
         className={`${styles.layoutContainer} ${getWavesClass(
