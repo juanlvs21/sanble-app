@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { useMatch, useNavigate } from "react-router-dom";
 
 import { useApp } from "@/hooks/useApp";
@@ -16,20 +17,29 @@ export type ComponentProps = {
 export const DataProvider: React.FC<ComponentProps> = ({ children }) => {
   const navigate = useNavigate();
   const { readyToUse, handleSetReady, handleLoadData } = useApp();
-  const { setUser, getUserDataRequest } = useAuth();
+  const { setUser, getUserDataFetcher, user: userStore } = useAuth();
 
   const matchSignin = useMatch("/app/sesion/entrar");
   const matchSignup = useMatch("/app/sesion/registrarse");
+
+  const { data: userData, refetch: refetchUser } = useQuery(
+    ["user"],
+    getUserDataFetcher,
+    {
+      enabled: false,
+    }
+  );
+
+  useEffect(() => {
+    setUser(userData || null);
+  }, [userData]);
 
   useEffect(() => {
     handleLoadData();
 
     getSessionRequest(async (user) => {
       if (user) {
-        const {
-          data: { data: user },
-        } = await getUserDataRequest();
-        setUser(user);
+        await refetchUser();
       } else {
         setUser(null);
         if (!matchSignin && !matchSignup)

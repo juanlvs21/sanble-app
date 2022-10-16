@@ -29,10 +29,6 @@ export const signUpRequest = (user: TAuthSignupForm) =>
 
 export const signUpRequestExternal = (user: TAuthSignupExternal) =>
   api.post("/auth/signup/external", user);
-
-export const getUserDataRequest = (): Promise<AxiosResponse<{ data: TUser }>> =>
-  api.get("/auth/user");
-
 export const signinRequest = async ({ email, password }: TAuthSigInForm) => {
   return signInWithEmailAndPassword(auth, email, password);
 };
@@ -48,3 +44,6 @@ export const signinGoogleRequest = async () => {
 
 export const getSessionRequest = (nextOrObserver: NextOrObserver<User>) =>
   onAuthStateChanged(auth, nextOrObserver);
+
+export const getUserDataFetcher = (): Promise<TUser> =>
+  api.get("/auth/user").then(({ data }) => data.data);

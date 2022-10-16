@@ -1,6 +1,7 @@
 import { useIonToast } from "@ionic/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 
 import { authActions } from "@/context/actions/authActions";
 import { useAuthContext } from "@/context/AuthContext";
@@ -10,12 +11,12 @@ import {
   errorsMessageAPI,
 } from "@/helpers/formatErrorsRequests";
 import {
-  getUserDataRequest,
   signinGoogleRequest,
   signinRequest,
   signOutRequest,
   signUpRequest,
   signUpRequestExternal,
+  getUserDataFetcher,
 } from "@/services";
 import { TAuthSigInForm, TAuthSignupForm } from "@/types/TAuth";
 
@@ -26,11 +27,21 @@ export const useAuth = () => {
   const { setUser } = authActions(dispatch);
   const [loadingGoogle, setloadingGoogle] = useState(false);
 
+  const { data: userData, refetch: refetchUser } = useQuery(
+    ["user"],
+    getUserDataFetcher,
+    {
+      enabled: false,
+    }
+  );
+
+  useEffect(() => {
+    setUser(userData || null);
+  }, [userData]);
+
   const signinAndRedirect = async (userForm: TAuthSigInForm) => {
     await signinRequest(userForm);
-    const {
-      data: { data: user },
-    } = await getUserDataRequest();
+    await refetchUser();
     setUser(user);
     navigate("/app", { replace: true });
   };
@@ -74,13 +85,12 @@ export const useAuth = () => {
     try {
       setloadingGoogle(true);
       const resGoogle = await signinGoogleRequest();
-      const {
-        data: { data: user },
-      } = await getUserDataRequest();
+      await refetchUser();
+
       try {
         const additionalUserInfo = getAdditionalUserInfo(resGoogle);
         if (additionalUserInfo?.isNewUser) {
-          await signUpRequestExternal({ email: user.email || "" });
+          await signUpRequestExternal({ email: userData?.email || "" });
         }
       } finally {
         setUser(user);
@@ -108,12 +118,12 @@ export const useAuth = () => {
 
   return {
     user,
+    loadingGoogle,
     setUser,
     handleSignup,
     handleSignin,
     handleSigninGoogle,
     handleSignOut,
-    getUserDataRequest,
-    loadingGoogle,
+    getUserDataFetcher,
   };
 };
