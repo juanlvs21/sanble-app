@@ -96,7 +96,7 @@ export const Signup: React.FC = () => {
           expand="block"
           color="secondary"
           fill="clear"
-          isLoading={isSubmitting || loadingGoogle}
+          disabled={isSubmitting || loadingGoogle}
           className={styles.btn}
           onClick={handleSigninGoogle}
         >
