@@ -29,7 +29,6 @@ export const DataProvider: React.FC<ComponentProps> = ({ children }) => {
         const {
           data: { data: user },
         } = await getUserDataRequest();
-        console.log({ user });
         setUser(user);
       } else {
         setUser(null);

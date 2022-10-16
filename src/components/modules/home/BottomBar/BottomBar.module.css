@@ -15,11 +15,6 @@
   transition: opacity 500s ease-in-out;
 }
 
-.homeBarList.homeBarHidden {
-  opacity: 0;
-  transition: opacity 500ms ease-in-out;
-}
-
 .homeBarList a {
   width: 100%;
   border-radius: var(--sanble-border-radius);
@@ -65,10 +60,5 @@
 
   .homeBarList {
     width: 400px;
-  }
-
-  .homeBarList.homeBarHidden {
-    opacity: 1;
-    transition: opacity 500ms ease-in-out;
   }
 }

@@ -1,0 +1,61 @@
+.homeTopBarContainer {
+  --background: transparent;
+  --padding-top: 30px;
+  --padding-bottom: 10px;
+  --min-height: 80px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
+.homeTopBarProgressBar {
+  top: 0;
+}
+
+.homeTopBarTitle {
+  font-family: "Quicksand";
+  font-weight: 700;
+  font-size: 28px;
+  color: var(--ion-color-primary);
+}
+
+.homeTopBarStart {
+  margin-left: 20px;
+  margin-bottom: 3px;
+}
+
+.homeTopBarEnd {
+  margin-right: 20px;
+  margin-bottom: 3px;
+}
+
+.homeTopBarContainer ion-buttons,
+.homeTopBarContainer ion-button {
+  width: 38px;
+  height: 38px;
+  border-radius: 38px;
+}
+
+.homeTopBarContainer ion-button::part(native) {
+  width: 38px;
+  height: 38px;
+  border-radius: 38px;
+  padding: 0;
+}
+
+.homeTopBarContainer ion-button::part(native) {
+  --background: var(--ion-color-light);
+  --color: var(--ion-color-black);
+}
+
+@media (min-width: 768px) {
+  .homeTopBarContainer {
+    --background: #fff;
+    --padding-top: 10px;
+    --min-height: 50px;
+
+    -webkit-box-shadow: 0px 0px 5px 5px rgba(200, 200, 200, 0.1);
+    box-shadow: 0px 0px 5px 5px rgba(200, 200, 200, 0.1);
+  }
+}

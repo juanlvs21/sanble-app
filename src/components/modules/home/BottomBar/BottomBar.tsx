@@ -54,13 +54,13 @@ export const BottomBar: React.FC = () => {
     };
   }, []);
 
+  useEffect(() => {
+    console.log({ showSidebar });
+  }, [showSidebar]);
+
   return (
     <div className={`${styles.homeBarContainer} ${transitionStage}`}>
-      <IonList
-        className={`${styles.homeBarList} ${
-          showSidebar ? styles.homeBarHidden : ""
-        }`}
-      >
+      <IonList className={styles.homeBarList}>
         {items.map((item) => (
           <Link to={item.path} key={item.path}>
             <IonItem

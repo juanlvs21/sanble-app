@@ -1,10 +1,8 @@
-import { QueryClient, QueryClientProvider } from "react-query";
+// import {SWRConfig} from "swr"
 
 // Context
 import { AppProvider as AppContextProvider } from "@/context/AppContext";
 import { AuthProvider } from "@/context/AuthContext";
-
-const queryClient = new QueryClient();
 
 type ComponentProps = {
   /**
@@ -14,9 +12,9 @@ type ComponentProps = {
 };
 
 export const AppProvider: React.FC<ComponentProps> = ({ children }) => (
-  <QueryClientProvider client={queryClient}>
-    <AppContextProvider>
-      <AuthProvider>{children}</AuthProvider>
-    </AppContextProvider>
-  </QueryClientProvider>
+  // <SWRConfig value={{ provider: () => new Map() }}>
+  <AppContextProvider>
+    <AuthProvider>{children}</AuthProvider>
+  </AppContextProvider>
+  //</SWRConfig>
 );
