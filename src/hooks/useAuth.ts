@@ -1,22 +1,26 @@
+import { FirebaseAuthentication } from "@capacitor-firebase/authentication";
 import { useIonToast } from "@ionic/react";
+import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
 
 import { authActions } from "@/context/actions/authActions";
 import { useAuthContext } from "@/context/AuthContext";
-import { getAdditionalUserInfo } from "@/helpers/firebase";
+import {
+  auth,
+  GoogleAuthProvider,
+  signInWithCredential,
+} from "@/helpers/firebase";
 import {
   errorsFirebase,
   errorsMessageAPI,
 } from "@/helpers/formatErrorsRequests";
 import {
-  signinGoogleRequest,
+  getUserDataFetcher,
   signinRequest,
   signOutRequest,
   signUpRequest,
   signUpRequestExternal,
-  getUserDataFetcher,
 } from "@/services";
 import { TAuthSigInForm, TAuthSignupForm } from "@/types/TAuth";
 
@@ -47,6 +51,7 @@ export const useAuth = () => {
   };
 
   const handleSignup = async (userForm: TAuthSignupForm) => {
+    // TODO: Usar @capacitor-firebase/authentication aqui
     try {
       await signUpRequest(userForm);
       try {
@@ -67,6 +72,7 @@ export const useAuth = () => {
   };
 
   const handleSignin = async (userForm: TAuthSigInForm) => {
+    // TODO: Usar @capacitor-firebase/authentication aqui
     try {
       await signinAndRedirect(userForm);
     } catch (error: any) {
@@ -83,13 +89,33 @@ export const useAuth = () => {
 
   const handleSigninGoogle = async () => {
     try {
+      // setloadingGoogle(true);
+      // const resGoogle = await signinGoogleRequest();
+      // await refetchUser();
+
+      // try {
+      //   const additionalUserInfo = getAdditionalUserInfo(resGoogle);
+      //   if (additionalUserInfo?.isNewUser) {
+      //     await signUpRequestExternal({ email: userData?.email || "" });
+      //   }
+      // } finally {
+      //   setUser(user);
+      //   navigate("/app", { replace: true });
+      //   setloadingGoogle(false);
+      // }
+
       setloadingGoogle(true);
-      const resGoogle = await signinGoogleRequest();
+      const resGoogle = await FirebaseAuthentication.signInWithGoogle();
+      const credential = GoogleAuthProvider.credential(
+        resGoogle.credential?.idToken
+      );
+
+      await signInWithCredential(auth, credential);
+
       await refetchUser();
 
       try {
-        const additionalUserInfo = getAdditionalUserInfo(resGoogle);
-        if (additionalUserInfo?.isNewUser) {
+        if (resGoogle.additionalUserInfo?.isNewUser) {
           await signUpRequestExternal({ email: userData?.email || "" });
         }
       } finally {
@@ -98,6 +124,7 @@ export const useAuth = () => {
         setloadingGoogle(false);
       }
     } catch (error) {
+      console.log({ error });
       setloadingGoogle(false);
       present({
         message: errorsFirebase(error),
@@ -109,7 +136,7 @@ export const useAuth = () => {
 
   const handleSignOut = async () => {
     try {
-      await signOutRequest();
+      await FirebaseAuthentication.signOut();
     } finally {
       setUser(null);
       navigate("/app/sesion/entrar", { replace: true });

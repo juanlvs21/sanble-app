@@ -11,17 +11,21 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
+    "ionic:build": "tsc && vite build",
+    "ionic:serve": "vite",
     "cap:build": "ionic capacitor build android",
     "cap:copy": "ionic capacitor copy android",
     "cap:sync": "ionic capacitor sync android",
     "cap:open": "ionic capacitor open android",
     "cap:run": "ionic capacitor run android",
-    "start:live": "ionic cap run android -l --external"
+    "start:live": "ionic capacitor run android -l --external",
+    "android:build": "npm run cap:copy && cd android && ./gradlew assembleDebug"
   },
   "dependencies": {
+    "@capacitor-firebase/authentication": "1.1.0",
     "@capacitor/android": "4.3.0",
     "@capacitor/app": "4.0.1",
-    "@capacitor/core": "4.2.0",
+    "@capacitor/core": "4.3.0",
     "@ionic/react": "6.2.6",
     "@tanstack/react-query": "4.12.0",
     "axios": "0.27.2",

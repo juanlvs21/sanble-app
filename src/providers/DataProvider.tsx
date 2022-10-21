@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useMatch, useNavigate } from "react-router-dom";
+import { FirebaseAuthentication } from "@capacitor-firebase/authentication";
 
 import { useApp } from "@/hooks/useApp";
 import { useAuth } from "@/hooks/useAuth";
@@ -37,16 +38,29 @@ export const DataProvider: React.FC<ComponentProps> = ({ children }) => {
   useEffect(() => {
     handleLoadData();
 
-    getSessionRequest(async (user) => {
+    FirebaseAuthentication.addListener("authStateChange", async ({ user }) => {
       if (user) {
         await refetchUser();
       } else {
         setUser(null);
-        if (!matchSignin && !matchSignup)
+        if (!matchSignin && !matchSignup) {
           navigate("/app/sesion/entrar", { replace: true });
+        }
       }
+
       handleSetReady(true);
     });
+
+    // getSessionRequest(async (user) => {
+    //   if (user) {
+    //     await refetchUser();
+    //   } else {
+    //     setUser(null);
+    //     if (!matchSignin && !matchSignup)
+    //       navigate("/app/sesion/entrar", { replace: true });
+    //   }
+    //   handleSetReady(true);
+    // });
   }, []);
 
   return readyToUse ? <>{children}</> : <Splash />;
