@@ -36,7 +36,7 @@ export const signinRequest = async ({ email, password }: TAuthSigInForm) => {
 export const signinGoogleRequest = async () => {
   auth.useDeviceLanguage();
   const provider = new GoogleAuthProvider();
-  return signInWithRedirect(auth, provider);
+  return signInWithPopup(auth, provider);
   // return params?.isDesktop
   //   ? signInWithPopup(auth, provider)
   //   : signInWithRedirect(auth, provider);

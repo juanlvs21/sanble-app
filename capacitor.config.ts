@@ -11,10 +11,10 @@ const config: CapacitorConfig = {
       providers: ["google.com"],
     },
   },
-  server: {
-    url: "http://192.168.0.117:3000",
-    cleartext: true,
-  },
+  // server: {
+  //   url: "http://192.168.0.117:3000",
+  //   cleartext: true,
+  // },
 };
 
 export default config;
