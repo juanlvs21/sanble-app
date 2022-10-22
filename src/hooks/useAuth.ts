@@ -1,13 +1,8 @@
 import { GoogleAuth } from "@codetrix-studio/capacitor-google-auth";
 import { useIonToast } from "@ionic/react";
-import {
-  QueryObserverResult,
-  RefetchOptions,
-  RefetchQueryFilters,
-  useQuery,
-} from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
-import { useLocation, useMatch, useNavigate } from "react-router-dom";
+import { useLocation, useMatch } from "react-router-dom";
 
 import { authActions } from "@/context/actions/authActions";
 import { useAuthContext } from "@/context/AuthContext";
@@ -29,43 +24,66 @@ import {
   signOutRequest,
   signUpRequest,
 } from "@/services";
-import { TAuthSigInForm, TAuthSignupForm, TUser } from "@/types/TAuth";
+import { TAuthSigInForm, TAuthSignupForm } from "@/types/TAuth";
+import { useCustomNavigate } from "./useCustomNavigate";
 
 type TClearSessionFuncParams = {
   withLogout?: boolean;
 };
 
 export const useAuth = () => {
-  const navigate = useNavigate();
   const { pathname } = useLocation();
   const [present] = useIonToast();
+  const { navigate } = useCustomNavigate();
   const [{ user }, dispatch] = useAuthContext();
   const { setUser } = authActions(dispatch);
   const { isCapacitor, setIsLoadingFull } = useApp();
+  const [redirectAppFromLogin, setRedirectAppFromLogin] = useState(false);
 
   const matchSignin = useMatch("/app/sesion/entrar");
   const matchSignup = useMatch("/app/sesion/registrarse");
+
+  const { data: userData, refetch: refetchUser } = useQuery(
+    ["user"],
+    getUserDataFetcher,
+    {
+      enabled: false,
+    }
+  );
+
+  useEffect(() => {
+    if (userData) setUser(userData);
+    setIsLoadingFull(false);
+  }, [userData]);
+
+  useEffect(() => {
+    if (redirectAppFromLogin) {
+      navigate("/app", { replace: true });
+      setRedirectAppFromLogin(false);
+    }
+  }, [redirectAppFromLogin]);
 
   const clearSessionRedirect = async (params?: TClearSessionFuncParams) => {
     if (!matchSignin && !matchSignup)
       navigate("/app/sesion/entrar", { replace: true });
     if (params?.withLogout) await signOutRequest();
-    setIsLoadingFull(false);
   };
 
   const handleSignup = async (userForm: TAuthSignupForm) => {
     try {
       setIsLoadingFull(true);
+      setRedirectAppFromLogin(false);
       await signUpRequest(userForm);
       try {
         await signinRequest(userForm);
+        await refetchUser();
+        setRedirectAppFromLogin(true);
       } catch (error) {
         await signOutRequest();
         clearSessionRedirect({ withLogout: true });
       }
     } catch (error) {
       setIsLoadingFull(false);
-
       present({
         message: errorsMessageAPI(error),
         duration: 5000,
@@ -77,11 +95,13 @@ export const useAuth = () => {
   const handleSignin = async (userForm: TAuthSigInForm) => {
     try {
       setIsLoadingFull(true);
+      setRedirectAppFromLogin(false);
       await signinRequest(userForm);
+      await refetchUser();
+      setRedirectAppFromLogin(true);
     } catch (error: any) {
       await signOutRequest();
       setIsLoadingFull(false);
-
       present({
         message: errorsFirebase(error),
         duration: 5000,
@@ -93,6 +113,7 @@ export const useAuth = () => {
   const handleSigninGoogle = async () => {
     try {
       setIsLoadingFull(true);
+      setRedirectAppFromLogin(false);
 
       if (isCapacitor) {
         const googleUser = await GoogleAuth.signIn();
@@ -103,6 +124,9 @@ export const useAuth = () => {
       } else {
         await signinGoogleRequest();
       }
+
+      await refetchUser();
+      setRedirectAppFromLogin(true);
     } catch (error) {
       setIsLoadingFull(false);
       present({
@@ -121,12 +145,7 @@ export const useAuth = () => {
     }
   };
 
-  const handleGetSession = async (
-    userFirebase: User | null,
-    refetchUser: <TPageData>(
-      options?: (RefetchOptions & RefetchQueryFilters<TPageData>) | undefined
-    ) => Promise<QueryObserverResult<TUser, unknown>>
-  ) => {
+  const handleGetSession = async (userFirebase: User | null) => {
     if (userFirebase) {
       try {
         await refetchUser();
@@ -140,7 +159,6 @@ export const useAuth = () => {
     } else {
       clearSessionRedirect();
     }
-    setIsLoadingFull(false);
   };
 
   return {
@@ -152,6 +170,5 @@ export const useAuth = () => {
     handleSignOut,
     handleGetSession,
     clearSessionRedirect,
-    getUserDataFetcher,
   };
 };

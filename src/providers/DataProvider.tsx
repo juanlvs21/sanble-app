@@ -15,30 +15,13 @@ export type ComponentProps = {
 
 export const DataProvider: React.FC<ComponentProps> = ({ children }) => {
   const { readyToUse, handleSetReady, handleLoadData } = useApp();
-  const {
-    user: userStore,
-    setUser,
-    getUserDataFetcher,
-    handleGetSession,
-  } = useAuth();
-
-  const { data: userData, refetch: refetchUser } = useQuery(
-    ["user"],
-    getUserDataFetcher,
-    {
-      enabled: false,
-    }
-  );
-
-  useEffect(() => {
-    if (userData) setUser(userData);
-  }, [userData]);
+  const { handleGetSession } = useAuth();
 
   useEffect(() => {
     handleLoadData();
 
     const unsubscribe = getSessionRequest(async (user) => {
-      await handleGetSession(user, refetchUser);
+      await handleGetSession(user);
       handleSetReady(true);
     });
 
