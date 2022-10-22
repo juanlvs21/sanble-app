@@ -33,7 +33,6 @@ import { TAuthSigInForm, TAuthSignupForm, TUser } from "@/types/TAuth";
 
 type TClearSessionFuncParams = {
   withLogout?: boolean;
-  noClearUserStore?: boolean;
 };
 
 export const useAuth = () => {
@@ -51,7 +50,6 @@ export const useAuth = () => {
     if (!matchSignin && !matchSignup)
       navigate("/app/sesion/entrar", { replace: true });
     if (params?.withLogout) await signOutRequest();
-    if (!params?.noClearUserStore) setUser(null);
     setIsLoadingFull(false);
   };
 
@@ -67,7 +65,6 @@ export const useAuth = () => {
       }
     } catch (error) {
       setIsLoadingFull(false);
-      setUser(null);
 
       present({
         message: errorsMessageAPI(error),
@@ -84,7 +81,6 @@ export const useAuth = () => {
     } catch (error: any) {
       await signOutRequest();
       setIsLoadingFull(false);
-      setUser(null);
 
       present({
         message: errorsFirebase(error),
@@ -121,7 +117,7 @@ export const useAuth = () => {
     try {
       await signOutRequest();
     } finally {
-      clearSessionRedirect({ noClearUserStore: true });
+      clearSessionRedirect();
     }
   };
 
@@ -134,8 +130,6 @@ export const useAuth = () => {
     if (userFirebase) {
       try {
         await refetchUser();
-
-        console.log("pathname: ");
 
         if (pathname.includes("/sesion")) {
           navigate("/app", { replace: true });

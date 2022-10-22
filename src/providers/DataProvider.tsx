@@ -31,7 +31,7 @@ export const DataProvider: React.FC<ComponentProps> = ({ children }) => {
   );
 
   useEffect(() => {
-    setUser(userData || null);
+    if (userData) setUser(userData);
   }, [userData]);
 
   useEffect(() => {
