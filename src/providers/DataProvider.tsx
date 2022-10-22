@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { useLocation, useMatch, useNavigate } from "react-router-dom";
 
 import { useApp } from "@/hooks/useApp";
 import { useAuth } from "@/hooks/useAuth";
@@ -15,13 +14,13 @@ export type ComponentProps = {
 };
 
 export const DataProvider: React.FC<ComponentProps> = ({ children }) => {
-  const navigate = useNavigate();
-  const { pathname } = useLocation();
   const { readyToUse, handleSetReady, handleLoadData } = useApp();
-  const { setUser, getUserDataFetcher, user: userStore } = useAuth();
-
-  const matchSignin = useMatch("/app/sesion/entrar");
-  const matchSignup = useMatch("/app/sesion/registrarse");
+  const {
+    user: userStore,
+    setUser,
+    getUserDataFetcher,
+    handleGetSession,
+  } = useAuth();
 
   const { data: userData, refetch: refetchUser } = useQuery(
     ["user"],
@@ -38,20 +37,14 @@ export const DataProvider: React.FC<ComponentProps> = ({ children }) => {
   useEffect(() => {
     handleLoadData();
 
-    getSessionRequest(async (user) => {
-      if (user) {
-        await refetchUser();
-
-        if (pathname.includes("/sesion")) {
-          navigate("/app", { replace: true });
-        }
-      } else {
-        setUser(null);
-        if (!matchSignin && !matchSignup)
-          navigate("/app/sesion/entrar", { replace: true });
-      }
+    const unsubscribe = getSessionRequest(async (user) => {
+      await handleGetSession(user, refetchUser);
       handleSetReady(true);
     });
+
+    return () => {
+      unsubscribe();
+    };
   }, []);
 
   return readyToUse ? <>{children}</> : <Splash />;

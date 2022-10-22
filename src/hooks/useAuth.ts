@@ -1,61 +1,72 @@
+import { GoogleAuth } from "@codetrix-studio/capacitor-google-auth";
 import { useIonToast } from "@ionic/react";
+import {
+  QueryObserverResult,
+  RefetchOptions,
+  RefetchQueryFilters,
+  useQuery,
+} from "@tanstack/react-query";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
+import { useLocation, useMatch, useNavigate } from "react-router-dom";
 
 import { authActions } from "@/context/actions/authActions";
 import { useAuthContext } from "@/context/AuthContext";
-import { getAdditionalUserInfo } from "@/helpers/firebase";
+import {
+  auth,
+  GoogleAuthProvider,
+  signInWithCredential,
+  User,
+} from "@/helpers/firebase";
 import {
   errorsFirebase,
   errorsMessageAPI,
 } from "@/helpers/formatErrorsRequests";
+import { useApp } from "@/hooks/useApp";
 import {
+  getUserDataFetcher,
   signinGoogleRequest,
   signinRequest,
   signOutRequest,
   signUpRequest,
-  signUpRequestExternal,
-  getUserDataFetcher,
 } from "@/services";
-import { TAuthSigInForm, TAuthSignupForm } from "@/types/TAuth";
+import { TAuthSigInForm, TAuthSignupForm, TUser } from "@/types/TAuth";
+
+type TClearSessionFuncParams = {
+  withLogout?: boolean;
+  noClearUserStore?: boolean;
+};
 
 export const useAuth = () => {
   const navigate = useNavigate();
+  const { pathname } = useLocation();
   const [present] = useIonToast();
   const [{ user }, dispatch] = useAuthContext();
   const { setUser } = authActions(dispatch);
-  const [loadingGoogle, setloadingGoogle] = useState(false);
+  const { isCapacitor, setIsLoadingFull } = useApp();
 
-  const { data: userData, refetch: refetchUser } = useQuery(
-    ["user"],
-    getUserDataFetcher,
-    {
-      enabled: false,
-    }
-  );
+  const matchSignin = useMatch("/app/sesion/entrar");
+  const matchSignup = useMatch("/app/sesion/registrarse");
 
-  useEffect(() => {
-    setUser(userData || null);
-  }, [userData]);
-
-  const signinAndRedirect = async (userForm: TAuthSigInForm) => {
-    await signinRequest(userForm);
-    await refetchUser();
-    setUser(user);
-    navigate("/app", { replace: true });
+  const clearSessionRedirect = async (params?: TClearSessionFuncParams) => {
+    if (!matchSignin && !matchSignup)
+      navigate("/app/sesion/entrar", { replace: true });
+    if (params?.withLogout) await signOutRequest();
+    if (!params?.noClearUserStore) setUser(null);
+    setIsLoadingFull(false);
   };
 
   const handleSignup = async (userForm: TAuthSignupForm) => {
     try {
+      setIsLoadingFull(true);
       await signUpRequest(userForm);
       try {
-        await signinAndRedirect(userForm);
+        await signinRequest(userForm);
       } catch (error) {
-        navigate("/app/sesion/entrar", { replace: true });
+        await signOutRequest();
+        clearSessionRedirect({ withLogout: true });
       }
     } catch (error) {
-      await signOutRequest();
+      setIsLoadingFull(false);
       setUser(null);
 
       present({
@@ -68,9 +79,11 @@ export const useAuth = () => {
 
   const handleSignin = async (userForm: TAuthSigInForm) => {
     try {
-      await signinAndRedirect(userForm);
+      setIsLoadingFull(true);
+      await signinRequest(userForm);
     } catch (error: any) {
       await signOutRequest();
+      setIsLoadingFull(false);
       setUser(null);
 
       present({
@@ -83,22 +96,19 @@ export const useAuth = () => {
 
   const handleSigninGoogle = async () => {
     try {
-      setloadingGoogle(true);
-      const resGoogle = await signinGoogleRequest();
-      await refetchUser();
+      setIsLoadingFull(true);
 
-      try {
-        const additionalUserInfo = getAdditionalUserInfo(resGoogle);
-        if (additionalUserInfo?.isNewUser) {
-          await signUpRequestExternal({ email: userData?.email || "" });
-        }
-      } finally {
-        setUser(user);
-        navigate("/app", { replace: true });
-        setloadingGoogle(false);
+      if (isCapacitor) {
+        const googleUser = await GoogleAuth.signIn();
+        const credential = GoogleAuthProvider.credential(
+          googleUser.authentication.idToken
+        );
+        await signInWithCredential(auth, credential);
+      } else {
+        await signinGoogleRequest();
       }
     } catch (error) {
-      setloadingGoogle(false);
+      setIsLoadingFull(false);
       present({
         message: errorsFirebase(error),
         duration: 5000,
@@ -111,19 +121,43 @@ export const useAuth = () => {
     try {
       await signOutRequest();
     } finally {
-      setUser(null);
-      navigate("/app/sesion/entrar", { replace: true });
+      clearSessionRedirect({ noClearUserStore: true });
     }
+  };
+
+  const handleGetSession = async (
+    userFirebase: User | null,
+    refetchUser: <TPageData>(
+      options?: (RefetchOptions & RefetchQueryFilters<TPageData>) | undefined
+    ) => Promise<QueryObserverResult<TUser, unknown>>
+  ) => {
+    if (userFirebase) {
+      try {
+        await refetchUser();
+
+        console.log("pathname: ");
+
+        if (pathname.includes("/sesion")) {
+          navigate("/app", { replace: true });
+        }
+      } catch (error) {
+        clearSessionRedirect({ withLogout: true });
+      }
+    } else {
+      clearSessionRedirect();
+    }
+    setIsLoadingFull(false);
   };
 
   return {
     user,
-    loadingGoogle,
     setUser,
     handleSignup,
     handleSignin,
     handleSigninGoogle,
     handleSignOut,
+    handleGetSession,
+    clearSessionRedirect,
     getUserDataFetcher,
   };
 };

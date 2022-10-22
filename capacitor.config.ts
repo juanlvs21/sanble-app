@@ -1,4 +1,8 @@
+/// <reference types="@codetrix-studio/capacitor-google-auth" />
+
 import { CapacitorConfig } from "@capacitor/cli";
+
+import { googleAuth } from "./capacitor.env.json";
 
 const config: CapacitorConfig = {
   appId: "dev.juanl.sanble",
@@ -6,9 +10,10 @@ const config: CapacitorConfig = {
   webDir: "dist",
   bundledWebRuntime: false,
   plugins: {
-    FirebaseAuthentication: {
-      skipNativeAuth: false,
-      providers: ["google.com"],
+    GoogleAuth: {
+      scopes: ["profile", "email"],
+      clientId: googleAuth.clientId,
+      forceCodeForRefreshToken: true,
     },
   },
   // server: {

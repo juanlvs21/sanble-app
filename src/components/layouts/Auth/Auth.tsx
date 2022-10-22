@@ -1,8 +1,9 @@
-import { IonContent, IonCol } from "@ionic/react";
+import { IonCol, IonContent } from "@ionic/react";
 import { Outlet } from "react-router-dom";
 
 import styles from "./Auth.module.css";
 
+import { SpinnerFullScreen } from "@/components/common/loaders/SpinnerFullScreen";
 import { TabBar } from "@/components/modules/auth/TabBar";
 import { useApp } from "@/hooks/useApp";
 
@@ -31,7 +32,7 @@ export const AuthLayout: React.FC<ComponentProps> = ({
   onAnimationEnd,
   transitionStage,
 }) => {
-  const { isDesktop } = useApp();
+  const { isLoadingFull } = useApp();
 
   return (
     <IonContent
@@ -40,7 +41,7 @@ export const AuthLayout: React.FC<ComponentProps> = ({
       <div
         className={`${styles.layoutContainer} ${getWavesClass(
           location.pathname
-        )} ${isDesktop ? styles.isDesktopContainer : ""}`}
+        )}`}
       >
         <div>
           <IonCol className={styles.logoContainer}>
@@ -57,6 +58,7 @@ export const AuthLayout: React.FC<ComponentProps> = ({
         <main className={transitionStage} onAnimationEnd={onAnimationEnd}>
           <Outlet />
         </main>
+        <SpinnerFullScreen show={isLoadingFull} borderRadius />
       </div>
     </IonContent>
   );

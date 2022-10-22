@@ -7,8 +7,9 @@ export const initialAppState: TApp = {
   readyToUse: false,
   showSidebar: false,
   openNotifications: false,
-  isDesktop: false,
   scrollTop: 0,
+  isCapacitor: false,
+  isLoadingFull: false,
 };
 
 export const appReducer = (state: TApp, action: TAction<TApp>): TApp => {
@@ -40,20 +41,28 @@ export const appReducer = (state: TApp, action: TAction<TApp>): TApp => {
         openNotifications,
       };
     }
-    case appConstants.SET_IS_DESKTOP: {
-      const isDesktop = action.payload?.isDesktop ?? false;
-
-      return {
-        ...state,
-        isDesktop,
-      };
-    }
     case appConstants.SET_SCROLL_TOP: {
       const scrollTop = action.payload?.scrollTop || 0;
 
       return {
         ...state,
         scrollTop,
+      };
+    }
+    case appConstants.SET_IS_CAPACITOR: {
+      const isCapacitor = action.payload?.isCapacitor ?? false;
+
+      return {
+        ...state,
+        isCapacitor,
+      };
+    }
+    case appConstants.SET_IS_LOADING_FULL: {
+      const isLoadingFull = action.payload?.isLoadingFull ?? false;
+
+      return {
+        ...state,
+        isLoadingFull,
       };
     }
 

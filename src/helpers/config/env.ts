@@ -14,4 +14,8 @@ export const FIREBASE_STORAGE_BUCKET =
   import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || "";
 export const FIREBASE_DATABASE_URL =
   import.meta.env.VITE_FIREBASE_DATABASE_URL || "";
+
 export const RECAPTCHA_KEY = import.meta.env.VITE_RECAPTCHA_KEY || "";
+
+export const GOOGLE_AUTH_CLIENT_ID =
+  import.meta.env.VITE_GOOGLE_AUTH_CLIENT_ID || "";

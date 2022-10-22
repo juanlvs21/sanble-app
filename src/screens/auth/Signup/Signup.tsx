@@ -15,7 +15,7 @@ import styles from "../Auth.module.css";
 
 export const Signup: React.FC = () => {
   useDocumentTitle("Registrarse");
-  const { handleSignup, handleSigninGoogle, loadingGoogle } = useAuth();
+  const { handleSignup, handleSigninGoogle } = useAuth();
   const {
     handleSubmit,
     handleChange,
@@ -56,7 +56,7 @@ export const Signup: React.FC = () => {
             Icon={<BiUser />}
             onIonChange={handleChange}
             onIonBlur={handleBlur}
-            disabled={isSubmitting || loadingGoogle}
+            disabled={isSubmitting}
             value={values.name}
             helper={getErrorMessage("name", touched, errors)}
             helperIsError
@@ -69,7 +69,7 @@ export const Signup: React.FC = () => {
             Icon={<BiEnvelope />}
             onIonChange={handleChange}
             onIonBlur={handleBlur}
-            disabled={isSubmitting || loadingGoogle}
+            disabled={isSubmitting}
             value={values.email}
             helper={getErrorMessage("email", touched, errors)}
             helperIsError
@@ -78,7 +78,7 @@ export const Signup: React.FC = () => {
             name="password"
             onIonChange={handleChange}
             onIonBlur={handleBlur}
-            disabled={isSubmitting || loadingGoogle}
+            disabled={isSubmitting}
             value={values.password}
             helper={getErrorMessage("password", touched, errors)}
             helperIsError
@@ -87,7 +87,7 @@ export const Signup: React.FC = () => {
             expand="block"
             color="primary"
             type="submit"
-            isLoading={isSubmitting || loadingGoogle}
+            disabled={isSubmitting}
             className={styles.btn}
           >
             Unirse
@@ -97,7 +97,7 @@ export const Signup: React.FC = () => {
           expand="block"
           color="secondary"
           fill="clear"
-          disabled={isSubmitting || loadingGoogle}
+          disabled={isSubmitting}
           className={styles.btn}
           onClick={handleSigninGoogle}
         >
