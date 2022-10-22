@@ -53,6 +53,7 @@ export const Signin: React.FC = () => {
             placeholder="Correo electrónico"
             type="email"
             name="email"
+            inputmode="email"
             Icon={<BiEnvelope />}
             onIonChange={handleChange}
             onIonBlur={handleBlur}

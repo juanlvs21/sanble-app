@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { useMatch, useNavigate } from "react-router-dom";
-import { FirebaseAuthentication } from "@capacitor-firebase/authentication";
+import { useLocation, useMatch, useNavigate } from "react-router-dom";
 
 import { useApp } from "@/hooks/useApp";
 import { useAuth } from "@/hooks/useAuth";
@@ -17,6 +16,7 @@ export type ComponentProps = {
 
 export const DataProvider: React.FC<ComponentProps> = ({ children }) => {
   const navigate = useNavigate();
+  const { pathname } = useLocation();
   const { readyToUse, handleSetReady, handleLoadData } = useApp();
   const { setUser, getUserDataFetcher, user: userStore } = useAuth();
 
@@ -38,29 +38,20 @@ export const DataProvider: React.FC<ComponentProps> = ({ children }) => {
   useEffect(() => {
     handleLoadData();
 
-    FirebaseAuthentication.addListener("authStateChange", async ({ user }) => {
+    getSessionRequest(async (user) => {
       if (user) {
         await refetchUser();
+
+        if (pathname.includes("/sesion")) {
+          navigate("/app", { replace: true });
+        }
       } else {
         setUser(null);
-        if (!matchSignin && !matchSignup) {
+        if (!matchSignin && !matchSignup)
           navigate("/app/sesion/entrar", { replace: true });
-        }
       }
-
       handleSetReady(true);
     });
-
-    // getSessionRequest(async (user) => {
-    //   if (user) {
-    //     await refetchUser();
-    //   } else {
-    //     setUser(null);
-    //     if (!matchSignin && !matchSignup)
-    //       navigate("/app/sesion/entrar", { replace: true });
-    //   }
-    //   handleSetReady(true);
-    // });
   }, []);
 
   return readyToUse ? <>{children}</> : <Splash />;

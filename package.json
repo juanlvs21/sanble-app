@@ -8,21 +8,20 @@
     "url": "https://juanl.dev"
   },
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --host",
     "build": "tsc && vite build",
     "preview": "vite preview",
     "ionic:build": "tsc && vite build",
-    "ionic:serve": "vite",
+    "ionic:serve": "vite --host",
     "cap:build": "ionic capacitor build android",
     "cap:copy": "ionic capacitor copy android",
     "cap:sync": "ionic capacitor sync android",
     "cap:open": "ionic capacitor open android",
     "cap:run": "ionic capacitor run android",
-    "start:live": "ionic capacitor run android -l --external",
-    "android:build": "npm run cap:copy && cd android && ./gradlew assembleDebug"
+    "cap:run:e": "ionic capacitor run android -l --external",
+    "gen:apk": "npm run cap:sync && cd android && ./gradlew assembleDebug"
   },
   "dependencies": {
-    "@capacitor-firebase/authentication": "1.1.0",
     "@capacitor/android": "4.3.0",
     "@capacitor/app": "4.0.1",
     "@capacitor/core": "4.3.0",
@@ -30,7 +29,7 @@
     "@tanstack/react-query": "4.12.0",
     "axios": "0.27.2",
     "dayjs": "1.11.5",
-    "firebase": "9.10.0",
+    "firebase": "9.12.1",
     "formik": "2.2.9",
     "react": "18.2.0",
     "react-dom": "18.2.0",
