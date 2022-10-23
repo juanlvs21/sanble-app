@@ -137,3 +137,21 @@ form {
 /* .split-pane-main {
   background-color: var(--ion-color-primary);
 } */
+
+/* List Data */
+.dataListContainer {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+}
+
+@media (min-width: 768px) {
+  .dataListContainer {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1440px) {
+  .dataListContainer {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}

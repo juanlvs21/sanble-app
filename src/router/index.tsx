@@ -22,6 +22,11 @@ const SignupScreen = lazy(() =>
 const HomeScreen = lazy(() =>
   import("@/screens/home/Home").then(({ Home }) => ({ default: Home }))
 );
+const FairsListScreen = lazy(() =>
+  import("@/screens/home/FairsList").then(({ FairsList }) => ({
+    default: FairsList,
+  }))
+);
 const FavoritesListScreen = lazy(() =>
   import("@/screens/favorites/FavoritesList").then(({ FavoritesList }) => ({
     default: FavoritesList,
@@ -70,7 +75,7 @@ export const AppRoutes: React.FC = () => {
             path="ferias"
             element={
               <Suspense fallback={<LoadingSuspense />}>
-                <FavoritesListScreen />
+                <FairsListScreen />
               </Suspense>
             }
           />

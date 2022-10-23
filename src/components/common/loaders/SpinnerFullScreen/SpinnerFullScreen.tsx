@@ -9,29 +9,21 @@ type ComponentProps = {
   /**
    * Border radios background
    */
-  borderRadius?: number | string | true;
+  borderRadius?: boolean;
 };
 
 export const SpinnerFullScreen: React.FC<ComponentProps> = ({
   show,
   borderRadius,
-}) => {
-  let customStyles: React.CSSProperties = {};
-
-  if (borderRadius) {
-    if (borderRadius === true) {
-      customStyles.borderRadius = "var(--sanble-border-radius)";
-    } else customStyles.borderRadius = borderRadius;
-  }
-
-  return show ? (
+}) =>
+  show ? (
     <div
       className={`${styles.sprinnerFullScren} ${
         show ? styles.showSprinnerFullScren : ""
+      } ${
+        borderRadius ? styles.showSprinnerBgBorderRadius : ""
       } animate__animated animate__fadeIn`}
-      style={customStyles}
     >
       <Spinner />
     </div>
   ) : null;
-};

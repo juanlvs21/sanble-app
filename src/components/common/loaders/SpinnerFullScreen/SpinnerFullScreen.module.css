@@ -9,3 +9,13 @@
   align-items: center;
   background-color: rgba(46, 46, 46, 0.3);
 }
+
+.showSprinnerBgBorderRadius {
+  border-radius: var(--sanble-border-radius);
+}
+
+@media (max-width: 768px) {
+  .showSprinnerBgBorderRadius {
+    border-radius: 0;
+  }
+}

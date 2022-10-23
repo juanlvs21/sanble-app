@@ -24,6 +24,9 @@ export const Sidebar: React.FC = () => {
   const { user, handleSignOut } = useAuth();
 
   const matchHome = useMatch("/app");
+  const matchFairsList = useMatch("/app/ferias");
+  const matchStandsList = useMatch("/app/stands");
+  const matchProductsList = useMatch("/app/productos");
   const matchFavorites = useMatch("/app/favoritos");
   const matchMySanble = useMatch("/app/misanble");
   const matchNearYou = useMatch("/app/cerca");
@@ -36,7 +39,8 @@ export const Sidebar: React.FC = () => {
         label: "Inicio",
         path: "/app",
         icon: <FiHome size={28} />,
-        active: matchHome,
+        active:
+          matchHome || matchFairsList || matchStandsList || matchProductsList,
       },
       {
         label: "Favoritos",
