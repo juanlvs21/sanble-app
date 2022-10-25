@@ -13,7 +13,12 @@ export const useTransitionsScreen = () => {
   const [transitionStage, setTransitionStage] = useState(navFadeUpStart);
 
   useEffect(() => {
-    if (location !== displayLocation) setTransitionStage(navFadeUpEnd);
+    const currentRoute = `${displayLocation.pathname}${displayLocation.search}`;
+    const newRoute = `${location.pathname}${location.search}`;
+
+    if (currentRoute !== newRoute) {
+      setTransitionStage(navFadeUpEnd);
+    }
   }, [location, displayLocation]);
 
   const onAnimationEnd = () => {

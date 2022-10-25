@@ -38,7 +38,6 @@ export const useAuth = () => {
   const [{ user }, dispatch] = useAuthContext();
   const { setUser } = authActions(dispatch);
   const { isCapacitor, setIsLoadingFull } = useApp();
-  const [redirectAppFromLogin, setRedirectAppFromLogin] = useState(false);
 
   const matchSignin = useMatch("/app/sesion/entrar");
   const matchSignup = useMatch("/app/sesion/registrarse");
@@ -56,13 +55,6 @@ export const useAuth = () => {
     setIsLoadingFull(false);
   }, [userData]);
 
-  useEffect(() => {
-    if (redirectAppFromLogin) {
-      navigate("/app", { replace: true });
-      setRedirectAppFromLogin(false);
-    }
-  }, [redirectAppFromLogin]);
-
   const clearSessionRedirect = async (params?: TClearSessionFuncParams) => {
     if (!matchSignin && !matchSignup)
       navigate("/app/sesion/entrar", { replace: true });
@@ -72,12 +64,11 @@ export const useAuth = () => {
   const handleSignup = async (userForm: TAuthSignupForm) => {
     try {
       setIsLoadingFull(true);
-      setRedirectAppFromLogin(false);
       await signUpRequest(userForm);
       try {
         await signinRequest(userForm);
         await refetchUser();
-        setRedirectAppFromLogin(true);
+        navigate("/app", { replace: true });
       } catch (error) {
         await signOutRequest();
         clearSessionRedirect({ withLogout: true });
@@ -95,10 +86,9 @@ export const useAuth = () => {
   const handleSignin = async (userForm: TAuthSigInForm) => {
     try {
       setIsLoadingFull(true);
-      setRedirectAppFromLogin(false);
       await signinRequest(userForm);
       await refetchUser();
-      setRedirectAppFromLogin(true);
+      navigate("/app", { replace: true });
     } catch (error: any) {
       await signOutRequest();
       setIsLoadingFull(false);
@@ -113,7 +103,6 @@ export const useAuth = () => {
   const handleSigninGoogle = async () => {
     try {
       setIsLoadingFull(true);
-      setRedirectAppFromLogin(false);
 
       if (isCapacitor) {
         const googleUser = await GoogleAuth.signIn();
@@ -126,7 +115,7 @@ export const useAuth = () => {
       }
 
       await refetchUser();
-      setRedirectAppFromLogin(true);
+      navigate("/app", { replace: true });
     } catch (error) {
       setIsLoadingFull(false);
       present({
