@@ -1,7 +1,7 @@
 import { GoogleAuth } from "@codetrix-studio/capacitor-google-auth";
 import { useIonToast } from "@ionic/react";
 import { useQuery } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useLocation, useMatch } from "react-router-dom";
 
 import { authActions } from "@/context/actions/authActions";
@@ -16,6 +16,7 @@ import {
   errorsFirebase,
   errorsMessageAPI,
 } from "@/helpers/formatErrorsRequests";
+import { StorageUserKey } from "@/helpers/storageKeys";
 import { useApp } from "@/hooks/useApp";
 import {
   getUserDataFetcher,
@@ -24,8 +25,9 @@ import {
   signOutRequest,
   signUpRequest,
 } from "@/services";
-import { TAuthSigInForm, TAuthSignupForm } from "@/types/TAuth";
+import { TAuthSigInForm, TAuthSignupForm, TUser } from "@/types/TAuth";
 import { useCustomNavigate } from "./useCustomNavigate";
+import { getStorage, removeStorage, setStorage } from "@/helpers/storage";
 
 type TClearSessionFuncParams = {
   withLogout?: boolean;
@@ -56,6 +58,8 @@ export const useAuth = () => {
   }, [userData]);
 
   const clearSessionRedirect = async (params?: TClearSessionFuncParams) => {
+    await removeStorage(StorageUserKey);
+
     if (!matchSignin && !matchSignup)
       navigate("/app/sesion/entrar", { replace: true });
     if (params?.withLogout) await signOutRequest();
@@ -71,7 +75,7 @@ export const useAuth = () => {
         navigate("/app", { replace: true });
       } catch (error) {
         await signOutRequest();
-        clearSessionRedirect({ withLogout: true });
+        await clearSessionRedirect({ withLogout: true });
       }
     } catch (error) {
       setIsLoadingFull(false);
@@ -130,24 +134,35 @@ export const useAuth = () => {
     try {
       await signOutRequest();
     } finally {
-      clearSessionRedirect();
+      await clearSessionRedirect();
     }
   };
 
-  const handleGetSession = async (userFirebase: User | null) => {
+  const handleGetSession = async (
+    userFirebase: User | null,
+    setReady: (ready: boolean) => void
+  ) => {
     if (userFirebase) {
+      const userStorage = await getStorage<TUser>(StorageUserKey);
+
       try {
+        if (userStorage?.uid === userFirebase.uid) {
+          await setStorage(StorageUserKey, user);
+          setUser(userStorage);
+          setReady(true);
+        }
         await refetchUser();
 
         if (pathname.includes("/sesion")) {
           navigate("/app", { replace: true });
         }
       } catch (error) {
-        clearSessionRedirect({ withLogout: true });
+        await clearSessionRedirect({ withLogout: true });
       }
     } else {
-      clearSessionRedirect();
+      await clearSessionRedirect();
     }
+    setReady(true);
   };
 
   return {

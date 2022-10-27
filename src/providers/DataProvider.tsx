@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import { useQuery } from "@tanstack/react-query";
 
 import { useApp } from "@/hooks/useApp";
 import { useAuth } from "@/hooks/useAuth";
@@ -21,8 +20,7 @@ export const DataProvider: React.FC<ComponentProps> = ({ children }) => {
     handleLoadData();
 
     const unsubscribe = getSessionRequest(async (user) => {
-      await handleGetSession(user);
-      handleSetReady(true);
+      await handleGetSession(user, handleSetReady);
     });
 
     return () => {

@@ -1,13 +1,22 @@
 import { Dispatch } from "react";
 
 import { authConstants } from "@/context/constants";
-import { TAction } from "@/types/TContext";
+import { removeStorage, setStorage } from "@/helpers/storage";
+import { StorageUserKey } from "@/helpers/storageKeys";
 import { TUser } from "@/types/TAuth";
+import { TAction } from "@/types/TContext";
 
 export const authActions = (dispatch: Dispatch<TAction>) => ({
-  setUser: (user: TUser | null) =>
-    dispatch({
+  setUser: async (user: TUser | null) => {
+    if (user) {
+      await setStorage(StorageUserKey, user);
+    } else {
+      await removeStorage(StorageUserKey);
+    }
+
+    return dispatch({
       type: authConstants.SET_USER,
       payload: { user },
-    }),
+    });
+  },
 });
