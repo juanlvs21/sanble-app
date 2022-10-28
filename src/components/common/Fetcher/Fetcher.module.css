@@ -1,0 +1,33 @@
+.sectionFetcher {
+  height: 100%;
+  overflow: hidden;
+}
+
+.ionContentFetcher {
+  --background: transparent;
+  height: 100%;
+}
+
+.fetcherRefresh {
+  padding-top: 120px;
+}
+
+@media (min-width: 768px) {
+  .sectionFetcher {
+    height: calc(100% - 124px);
+    margin-top: 62px;
+  }
+  .fetcherRefresh {
+    padding-top: 50px;
+    padding-bottom: 60px;
+  }
+}
+
+@media (max-width: 768px) {
+  .ionContentFetcher {
+    --padding-top: 100px;
+    --padding-bottom: 50px;
+    --padding-start: 20px;
+    --padding-end: 20px;
+  }
+}

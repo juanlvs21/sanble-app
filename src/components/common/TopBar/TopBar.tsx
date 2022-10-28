@@ -25,7 +25,7 @@ type ComponentProps = {
   /**
    * If true, an infinite progressbar representing the state of loading will be displayed.
    */
-  loading?: boolean;
+  isLoading?: boolean;
   /**
    * If true, the TopBar will become sticky when scrolling.
    */
@@ -37,7 +37,7 @@ export const TopBar: React.FC<ComponentProps> = ({
   startUser,
   start,
   end,
-  loading,
+  isLoading,
   sticky,
 }) => {
   const { scrollTop } = useApp();
@@ -48,7 +48,7 @@ export const TopBar: React.FC<ComponentProps> = ({
         sticky && scrollTop > 25 ? styles.sticky : ""
       }`}
     >
-      {loading && (
+      {isLoading && (
         <IonProgressBar
           type="indeterminate"
           className={styles.topBarProgressBar}

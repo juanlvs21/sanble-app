@@ -25,7 +25,6 @@ export const HomeLayout: React.FC<ComponentProps> = ({
   transitionStage,
   onAnimationEnd,
 }) => {
-  const { handleSeScrollTop } = useApp();
   const [transitionStageLayout, setTransitionStageLayout] =
     useState(navFadeUpEnd);
 
@@ -39,14 +38,12 @@ export const HomeLayout: React.FC<ComponentProps> = ({
 
   return (
     <div className={`${styles.homeContainer} ${transitionStageLayout}`}>
-      <IonContent
+      <section
         className={`${styles.homeContent} ${transitionStage}`}
         onAnimationEnd={onAnimationEnd}
-        onIonScroll={handleSeScrollTop}
-        scrollEvents
       >
         <Outlet />
-      </IonContent>
+      </section>
       <BottomBar />
     </div>
   );

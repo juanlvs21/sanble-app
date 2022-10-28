@@ -10,9 +10,10 @@ export const api = axios.create({
 api.interceptors.request.use(async function (config: any) {
   try {
     if (auth.currentUser) {
-      const idToken = await auth.currentUser.getIdToken(
-        /* forceRefresh */ true
-      );
+      const idToken = await auth.currentUser
+        .getIdToken
+        // /* forceRefresh */ true
+        ();
       config.headers.common.Authorization = idToken;
     }
   } catch (error) {}
