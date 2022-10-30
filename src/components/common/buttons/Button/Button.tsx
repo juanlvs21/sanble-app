@@ -12,15 +12,31 @@ type ComponentProps = TButton & {
    * Button Loading
    */
   isLoading?: boolean;
+  /**
+   * Spinner color
+   *
+   * @default 'light'
+   */
+  spinnerColor?:
+    | "primary"
+    | "secondary"
+    | "tertiary"
+    | "success"
+    | "warning"
+    | "danger"
+    | "light"
+    | "medium"
+    | "dark";
 };
 
 export const Button: React.FC<ComponentProps> = ({
   children,
   isLoading,
   disabled,
+  spinnerColor = "light",
   ...rest
 }) => (
   <IonButton {...rest} disabled={disabled || isLoading}>
-    {isLoading ? <Spinner color="#fff" marginTop="-12px" /> : children}
+    {isLoading ? <Spinner marginTop="-12px" color={spinnerColor} /> : children}
   </IonButton>
 );

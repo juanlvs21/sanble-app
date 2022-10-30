@@ -44,13 +44,28 @@ export const useAuth = () => {
   const matchSignin = useMatch("/app/sesion/entrar");
   const matchSignup = useMatch("/app/sesion/registrarse");
 
-  const { data: userData, refetch: refetchUser } = useQuery(
-    ["user"],
-    getUserDataFetcher,
-    {
-      enabled: false,
-    }
-  );
+  const {
+    data: userData,
+    refetch: refetchUser,
+    error: errorUser,
+  } = useQuery(["user"], getUserDataFetcher, {
+    enabled: false,
+    retry: 0,
+  });
+
+  useEffect(() => {
+    const handleSignOut = async () => {
+      await signOutRequest();
+      navigate("/app/sesion/entrar", { replace: true });
+      setIsLoadingFull(false);
+      present({
+        message: "Error al obtener la información del usuario",
+        duration: 5000,
+        color: "danger",
+      });
+    };
+    if (errorUser) handleSignOut();
+  }, [errorUser]);
 
   useEffect(() => {
     if (userData) setUser(userData);
@@ -119,8 +134,10 @@ export const useAuth = () => {
       }
 
       await refetchUser();
-      navigate("/app", { replace: true });
+      console.log({ userData });
+      if (userData) navigate("/app", { replace: true });
     } catch (error) {
+      await signOutRequest();
       setIsLoadingFull(false);
       present({
         message: errorsFirebase(error),
@@ -153,7 +170,7 @@ export const useAuth = () => {
         }
         await refetchUser();
 
-        if (pathname.includes("/sesion")) {
+        if (pathname.includes("/sesion") && userData) {
           navigate("/app", { replace: true });
         }
       } catch (error) {

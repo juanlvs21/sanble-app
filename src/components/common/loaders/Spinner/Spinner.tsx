@@ -3,9 +3,20 @@ import styles from "../Loaders.module.css";
 
 type ComponentProps = {
   /**
-   * Spinner color
+   * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
+   *
+   * @default 'light'
    */
-  color?: string;
+  color?:
+    | "primary"
+    | "secondary"
+    | "tertiary"
+    | "success"
+    | "warning"
+    | "danger"
+    | "light"
+    | "medium"
+    | "dark";
   /**
    * Size
    */
@@ -25,7 +36,7 @@ type ComponentProps = {
 };
 
 export const Spinner: React.FC<ComponentProps> = ({
-  color,
+  color = "primary",
   size,
   marginTop,
   marginBottom,
@@ -38,11 +49,6 @@ export const Spinner: React.FC<ComponentProps> = ({
     justifyContent: "center",
   };
 
-  let styleDot: CSSProperties = { backgroundColor: color };
-
-  if (size)
-    styleDot = { ...styleDot, width: size, height: size, borderRadius: size };
-
   if (center)
     styleContainer = {
       ...styleContainer,
@@ -51,11 +57,34 @@ export const Spinner: React.FC<ComponentProps> = ({
       width: "100%",
     };
 
+  const colorClass = {
+    primary: styles.primary,
+    secondary: styles.secondary,
+    tertiary: styles.tertiary,
+    success: styles.success,
+    warning: styles.warning,
+    danger: styles.danger,
+    light: styles.light,
+    medium: styles.medium,
+    dark: styles.dark,
+  };
+
   return (
     <div className="animate__animated animate__fadeIn" style={styleContainer}>
-      <span className={styles.spinnerDot} style={styleDot} />
-      <span className={styles.spinnerDot} style={styleDot} />
-      <span className={styles.spinnerDot} style={styleDot} />
+      <div className={`${styles.spinner} ${colorClass[color]}`}>
+        <div />
+        <div />
+        <div />
+        <div />
+        <div />
+        <div />
+        <div />
+        <div />
+        <div />
+        <div />
+        <div />
+        <div />
+      </div>
     </div>
   );
 };
