@@ -48,9 +48,7 @@ const Fetcher: React.FC<ComponentProps> = ({
 
   const infiniteFetch = async (event: InfiniteScrollCustomEvent) => {
     if (handleInfiniteScroll) await handleInfiniteScroll();
-    setTimeout(async () => {
-      await event.target.complete();
-    }, 4000);
+    await event.target.complete();
   };
 
   return (

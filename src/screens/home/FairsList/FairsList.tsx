@@ -2,13 +2,19 @@ import { BiFilterAlt } from "react-icons/bi";
 
 import { Button } from "@/components/common/buttons/Button";
 import Fetcher from "@/components/common/Fetcher/Fetcher";
+import { Skeleton } from "@/components/common/Skeleton";
 import { TopBar } from "@/components/common/TopBar";
 import { FairCardList } from "@/components/modules/fairs/FairCardList";
 import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 import { useFairs } from "@/hooks/useFairs";
 
 export const FairsList: React.FC = () => {
-  const { fairsList, refetchFairsList } = useFairs();
+  const {
+    fairsList,
+    isLoadingFairsList,
+    handleRefreshFairList,
+    handleInfiniteFairList,
+  } = useFairs({ defaultPerPage: 10 });
   useDocumentTitle("Lista de Ferias 🛍️");
 
   return (
@@ -25,14 +31,19 @@ export const FairsList: React.FC = () => {
       />
 
       <Fetcher
-        handleRefresh={refetchFairsList}
-        handleInfiniteScroll={refetchFairsList}
+        handleRefresh={handleRefreshFairList}
+        handleInfiniteScroll={handleInfiniteFairList}
       >
         <div className="dataListContainer">
-          {fairsList &&
-            fairsList.fairs.map((fair) => (
-              <FairCardList key={fair.id} fair={fair} />
-            ))}
+          {isLoadingFairsList && !fairsList.length
+            ? Array(5)
+                .fill(0)
+                .map((_, i) => (
+                  <Skeleton key={i} height={130} style={{ marginBottom: 20 }} />
+                ))
+            : fairsList.map((fair) => (
+                <FairCardList key={fair.id} fair={fair} />
+              ))}
         </div>
       </Fetcher>
     </>

@@ -17,7 +17,7 @@ type ComponentProps = {
 
 export const FairCardList: React.FC<ComponentProps> = ({ fair }) => {
   return (
-    <div className={styles.fairListCard}>
+    <div className={`animate__animated animate__fadeIn ${styles.fairListCard}`}>
       <picture>
         <img src={fair.coverUrl} alt={fair.name} />
       </picture>
