@@ -24,6 +24,6 @@ export const SpinnerFullScreen: React.FC<ComponentProps> = ({
         borderRadius ? styles.showSprinnerBgBorderRadius : ""
       } animate__animated animate__fadeIn`}
     >
-      <Spinner />
+      <Spinner center />
     </div>
   ) : null;

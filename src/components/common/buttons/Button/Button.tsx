@@ -4,7 +4,13 @@ import { TButton } from "@/types/TComponents";
 import { Spinner } from "@/components/common/loaders/Spinner";
 
 type ComponentProps = TButton & {
+  /**
+   * Children element
+   */
   children: React.ReactElement | React.ReactElement[] | string;
+  /**
+   * Button Loading
+   */
   isLoading?: boolean;
 };
 

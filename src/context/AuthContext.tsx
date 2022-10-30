@@ -15,6 +15,9 @@ export type TAuthProps = {
    * @default initialUserState
    */
   initialState?: TAuth;
+  /**
+   * Children element
+   */
   children: React.ReactElement | React.ReactElement[];
 };
 
