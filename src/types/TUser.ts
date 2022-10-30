@@ -1,6 +1,12 @@
 import { UserInfo, UserMetadata } from "firebase/auth";
 import { Timestamp } from "firebase/firestore";
 
+export enum EUserFav {
+  FAIR = "fair",
+  STAND = "stand",
+  PRODUCT = "product",
+}
+
 export type TAuthSignupForm = {
   name: string;
   email: string;
@@ -19,6 +25,9 @@ export type TUser = {
   displayName: string;
   photoURL: string;
   phoneNumber: string;
+  favoriteFairs: string[];
+  favoriteStands: string[];
+  favoriteProducts: string[];
   disabled: boolean;
   metadata: UserMetadata;
   providerData: UserInfo[];
@@ -32,4 +41,8 @@ export type TUser = {
 
 export type TAuth = {
   user: TUser | null;
+};
+
+export type TUserFavorites = {
+  favorites: string[];
 };

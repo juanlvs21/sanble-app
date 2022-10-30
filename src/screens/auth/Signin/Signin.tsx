@@ -10,7 +10,7 @@ import { getErrorMessage } from "@/helpers/getFormikErrorMsg";
 import { signInSchema } from "@/helpers/validator/auth";
 import { useAuth } from "@/hooks/useAuth";
 import { useDocumentTitle } from "@/hooks/useDocumentTitle";
-import { TAuthSigInForm } from "@/types/TAuth";
+import { TAuthSigInForm } from "@/types/TUser";
 import styles from "../Auth.module.css";
 
 export const Signin: React.FC = () => {

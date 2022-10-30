@@ -15,13 +15,15 @@ import { Link, useLocation, useMatch } from "react-router-dom";
 
 import { useApp } from "@/hooks/useApp";
 import { useAuth } from "@/hooks/useAuth";
+import { useUser } from "@/hooks/useUser";
 import styles from "./Sidebar.module.css";
 
 export const Sidebar: React.FC = () => {
   const { pathname } = useLocation();
   const [presentAlert] = useIonAlert();
   const { showSidebar, handleShowSidebar } = useApp();
-  const { user, handleSignOut } = useAuth();
+  const { handleSignOut } = useAuth();
+  const { user } = useUser();
 
   const matchHome = useMatch("/app");
   const matchFairsList = useMatch("/app/ferias");

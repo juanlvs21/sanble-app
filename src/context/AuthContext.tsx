@@ -2,7 +2,7 @@ import { createContext, useContext, useReducer } from "react";
 
 import { initialUserState, authReducer } from "@/context/reducers/authReducer";
 import { TContextProps } from "@/types/TContext";
-import { TAuth } from "@/types/TAuth";
+import { TAuth } from "@/types/TUser";
 
 export const AuthContext = createContext<TContextProps<TAuth>>([
   initialUserState,

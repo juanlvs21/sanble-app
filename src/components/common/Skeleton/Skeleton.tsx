@@ -4,15 +4,15 @@ import styles from "./Skeleton.module.css";
 
 type ComponentProps = {
   /**
-   *
+   * Skeleton width
    */
   width?: number | string;
   /**
-   *
+   * Skeleton Height
    */
   height?: number | string;
   /**
-   *
+   * Skeleton online styles
    */
   style?: CSSProperties;
 };

@@ -19,14 +19,14 @@ export const ButtonFav: React.FC<ComponentProps> = ({
   isActive = false,
   className,
   ...rest
-}) => {
-  return (
-    <Button
-      color={isActive ? "primary" : "medium"}
-      className={`${styles.buttonFav} ${className}`}
-      {...rest}
-    >
-      <FiHeart size={22} />
-    </Button>
-  );
-};
+}) => (
+  <Button
+    color={isActive ? "primary" : "medium"}
+    className={`${styles.buttonFav} ${className}`}
+    spinnerColor={isActive ? "medium" : "primary"}
+    spinnerSize={15}
+    {...rest}
+  >
+    <FiHeart className="animate__animated animate__bounceIn" size={22} />
+  </Button>
+);

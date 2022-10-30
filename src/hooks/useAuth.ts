@@ -1,11 +1,9 @@
 import { GoogleAuth } from "@codetrix-studio/capacitor-google-auth";
 import { useIonToast } from "@ionic/react";
 import { useQuery } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useLocation, useMatch } from "react-router-dom";
 
-import { authActions } from "@/context/actions/authActions";
-import { useAuthContext } from "@/context/AuthContext";
 import {
   auth,
   GoogleAuthProvider,
@@ -16,8 +14,10 @@ import {
   errorsFirebase,
   errorsMessageAPI,
 } from "@/helpers/formatErrorsRequests";
+import { getStorage, removeStorage, setStorage } from "@/helpers/storage";
 import { StorageUserKey } from "@/helpers/storageKeys";
 import { useApp } from "@/hooks/useApp";
+import { useUser } from "@/hooks/useUser";
 import {
   getUserDataFetcher,
   signinGoogleRequest,
@@ -25,9 +25,8 @@ import {
   signOutRequest,
   signUpRequest,
 } from "@/services";
-import { TAuthSigInForm, TAuthSignupForm, TUser } from "@/types/TAuth";
+import { TAuthSigInForm, TAuthSignupForm, TUser } from "@/types/TUser";
 import { useCustomNavigate } from "./useCustomNavigate";
-import { getStorage, removeStorage, setStorage } from "@/helpers/storage";
 
 type TClearSessionFuncParams = {
   withLogout?: boolean;
@@ -37,8 +36,7 @@ export const useAuth = () => {
   const { pathname } = useLocation();
   const [present] = useIonToast();
   const { navigate } = useCustomNavigate();
-  const [{ user }, dispatch] = useAuthContext();
-  const { setUser } = authActions(dispatch);
+  const { user, setUser } = useUser();
   const { isCapacitor, setIsLoadingFull } = useApp();
 
   const matchLanding = useMatch("/");
@@ -182,8 +180,6 @@ export const useAuth = () => {
   };
 
   return {
-    user,
-    setUser,
     handleSignup,
     handleSignin,
     handleSigninGoogle,

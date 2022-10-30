@@ -1,5 +1,5 @@
 import { TAction } from "@/types/TContext";
-import { TAuth } from "@/types/TAuth";
+import { TAuth } from "@/types/TUser";
 
 import { authConstants } from "@/context/constants";
 

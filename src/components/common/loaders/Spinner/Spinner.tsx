@@ -39,12 +39,17 @@ type ComponentProps = {
    * Custom className for content component
    */
   className?: string;
+  /**
+   * Spinner online styles
+   */
+  style?: CSSProperties;
 };
 
 export const Spinner: React.FC<ComponentProps> = ({
   color = "primary",
   size = 35,
   className = "",
+  style,
   marginTop,
   marginBottom,
   center,
@@ -54,6 +59,7 @@ export const Spinner: React.FC<ComponentProps> = ({
     marginBottom,
     width: "100%",
     justifyContent: "center",
+    ...style,
   };
 
   if (center)
@@ -76,7 +82,7 @@ export const Spinner: React.FC<ComponentProps> = ({
 
   return (
     <div
-      className={`animate__animated animate__fadeIn ${className}`}
+      className={`animate__animated animate__bounceIn ${className}`}
       style={styleContainer}
     >
       <div

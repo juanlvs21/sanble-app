@@ -1,7 +1,7 @@
 import { BiFilterAlt } from "react-icons/bi";
 
 import { Button } from "@/components/common/buttons/Button";
-import Fetcher from "@/components/common/Fetcher/Fetcher";
+import { Fetcher } from "@/components/common/Fetcher";
 import { Skeleton } from "@/components/common/Skeleton";
 import { TopBar } from "@/components/common/TopBar";
 import { FairCardList } from "@/components/modules/fairs/FairCardList";
@@ -9,13 +9,13 @@ import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 import { useFairs } from "@/hooks/useFairs";
 
 export const FairsList: React.FC = () => {
+  useDocumentTitle("Lista de Ferias 🛍️");
   const {
     fairsList,
     isLoadingFairsList,
     handleRefreshFairList,
     handleInfiniteFairList,
   } = useFairs({ defaultPerPage: 10 });
-  useDocumentTitle("Lista de Ferias 🛍️");
 
   return (
     <>

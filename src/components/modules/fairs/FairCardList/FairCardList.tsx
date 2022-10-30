@@ -6,6 +6,7 @@ import { TFair } from "@/types/TFairs";
 
 import { ButtonFav } from "@/components/common/buttons/ButtonFav";
 import { Stars } from "@/components/common/Stars";
+import { useUser } from "@/hooks/useUser";
 import styles from "./FairCardList.module.css";
 
 type ComponentProps = {
@@ -16,6 +17,8 @@ type ComponentProps = {
 };
 
 export const FairCardList: React.FC<ComponentProps> = ({ fair }) => {
+  const { user, loadingSetFav, handleSetFavoriteFair } = useUser();
+
   return (
     <div className={`animate__animated animate__fadeIn ${styles.fairListCard}`}>
       <picture>
@@ -32,7 +35,12 @@ export const FairCardList: React.FC<ComponentProps> = ({ fair }) => {
           <span>{dayjs(fair.creationTime).format("DD MMM")}</span>
         </div>
       </div>
-      <ButtonFav className={styles.fairListCardBtnFav} />
+      <ButtonFav
+        className={styles.fairListCardBtnFav}
+        isLoading={loadingSetFav}
+        isActive={user?.favoriteFairs.includes(fair.id)}
+        onClick={() => handleSetFavoriteFair(fair.id)}
+      />
     </div>
   );
 };

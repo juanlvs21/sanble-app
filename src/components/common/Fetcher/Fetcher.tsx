@@ -33,7 +33,7 @@ type ComponentProps = {
   className?: string;
 };
 
-const Fetcher: React.FC<ComponentProps> = ({
+export const Fetcher: React.FC<ComponentProps> = ({
   children,
   className = "",
   handleRefresh,
@@ -92,5 +92,3 @@ const Fetcher: React.FC<ComponentProps> = ({
     </section>
   );
 };
-
-export default Fetcher;

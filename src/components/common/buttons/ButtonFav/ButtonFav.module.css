@@ -1,6 +1,6 @@
 .buttonFav {
   --border-radius: 44px;
-  --padding-top: 2px;
+  --padding-top: 0;
   --padding-bottom: 0;
   --padding-start: 0;
   --padding-end: 0;
@@ -9,4 +9,8 @@
 .buttonFav::part(native) {
   width: 44px;
   height: 44px;
+}
+
+.buttonFav svg {
+  margin-top: 2px;
 }

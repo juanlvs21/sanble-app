@@ -5,6 +5,7 @@ import { useApp } from "@/hooks/useApp";
 import { useAuth } from "@/hooks/useAuth";
 import { Splash } from "@/screens/Splash";
 import { getSessionRequest } from "@/services";
+import { useUser } from "@/hooks/useUser";
 
 export type ComponentProps = {
   /**
@@ -17,13 +18,14 @@ export const DataProvider: React.FC<ComponentProps> = ({ children }) => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const { readyToUse, handleSetReady, handleLoadData } = useApp();
-  const { handleGetSession, user } = useAuth();
+  const { handleGetSession } = useAuth();
+  const { user } = useUser();
 
   useEffect(() => {
     handleLoadData();
 
-    const unsubscribe = getSessionRequest(async (user) => {
-      await handleGetSession(user, handleSetReady);
+    const unsubscribe = getSessionRequest(async (userFirebase) => {
+      await handleGetSession(userFirebase, handleSetReady);
     });
 
     return () => {

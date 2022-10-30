@@ -3,7 +3,7 @@ import { Dispatch } from "react";
 import { authConstants } from "@/context/constants";
 import { removeStorage, setStorage } from "@/helpers/storage";
 import { StorageUserKey } from "@/helpers/storageKeys";
-import { TUser } from "@/types/TAuth";
+import { TUser } from "@/types/TUser";
 import { TAction } from "@/types/TContext";
 
 export const authActions = (dispatch: Dispatch<TAction>) => ({
