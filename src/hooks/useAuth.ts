@@ -1,7 +1,7 @@
 import { GoogleAuth } from "@codetrix-studio/capacitor-google-auth";
 import { useIonToast } from "@ionic/react";
 import { useQuery } from "@tanstack/react-query";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useLocation, useMatch } from "react-router-dom";
 
 import { authActions } from "@/context/actions/authActions";
@@ -41,31 +41,28 @@ export const useAuth = () => {
   const { setUser } = authActions(dispatch);
   const { isCapacitor, setIsLoadingFull } = useApp();
 
+  const matchLanding = useMatch("/");
   const matchSignin = useMatch("/app/sesion/entrar");
   const matchSignup = useMatch("/app/sesion/registrarse");
 
-  const {
-    data: userData,
-    refetch: refetchUser,
-    error: errorUser,
-  } = useQuery(["user"], getUserDataFetcher, {
-    enabled: false,
-    retry: 0,
-  });
-
-  useEffect(() => {
-    const handleSignOut = async () => {
-      await signOutRequest();
-      navigate("/app/sesion/entrar", { replace: true });
-      setIsLoadingFull(false);
-      present({
-        message: "Error al obtener la información del usuario",
-        duration: 5000,
-        color: "danger",
-      });
-    };
-    if (errorUser) handleSignOut();
-  }, [errorUser]);
+  const { data: userData, refetch: refetchUser } = useQuery(
+    ["user"],
+    getUserDataFetcher,
+    {
+      enabled: false,
+      retry: 0,
+      onError: async () => {
+        await signOutRequest();
+        present({
+          message: "Error al obtener la información del usuario",
+          duration: 5000,
+          color: "danger",
+        });
+        navigate("/app/sesion/entrar", { replace: true });
+        setIsLoadingFull(false);
+      },
+    }
+  );
 
   useEffect(() => {
     if (userData) setUser(userData);
@@ -75,14 +72,16 @@ export const useAuth = () => {
   const clearSessionRedirect = async (params?: TClearSessionFuncParams) => {
     await removeStorage(StorageUserKey);
 
-    if (!matchSignin && !matchSignup)
+    if (!matchLanding && !matchSignin && !matchSignup)
       navigate("/app/sesion/entrar", { replace: true });
+
     if (params?.withLogout) await signOutRequest();
   };
 
   const handleSignup = async (userForm: TAuthSignupForm) => {
     try {
       setIsLoadingFull(true);
+
       await signUpRequest(userForm);
       try {
         await signinRequest(userForm);
@@ -105,6 +104,7 @@ export const useAuth = () => {
   const handleSignin = async (userForm: TAuthSigInForm) => {
     try {
       setIsLoadingFull(true);
+
       await signinRequest(userForm);
       await refetchUser();
       navigate("/app", { replace: true });
@@ -134,8 +134,7 @@ export const useAuth = () => {
       }
 
       await refetchUser();
-      console.log({ userData });
-      if (userData) navigate("/app", { replace: true });
+      navigate("/app", { replace: true });
     } catch (error) {
       await signOutRequest();
       setIsLoadingFull(false);
@@ -170,7 +169,7 @@ export const useAuth = () => {
         }
         await refetchUser();
 
-        if (pathname.includes("/sesion") && userData) {
+        if (pathname.includes("/sesion")) {
           navigate("/app", { replace: true });
         }
       } catch (error) {

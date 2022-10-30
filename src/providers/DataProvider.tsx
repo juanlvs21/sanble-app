@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import { useApp } from "@/hooks/useApp";
 import { useAuth } from "@/hooks/useAuth";
@@ -13,8 +14,10 @@ export type ComponentProps = {
 };
 
 export const DataProvider: React.FC<ComponentProps> = ({ children }) => {
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
   const { readyToUse, handleSetReady, handleLoadData } = useApp();
-  const { handleGetSession } = useAuth();
+  const { handleGetSession, user } = useAuth();
 
   useEffect(() => {
     handleLoadData();
@@ -27,6 +30,12 @@ export const DataProvider: React.FC<ComponentProps> = ({ children }) => {
       unsubscribe();
     };
   }, []);
+
+  useEffect(() => {
+    if (!pathname.includes("/app/sesion") && readyToUse && !user) {
+      navigate("/app/sesion/entrar", { replace: true });
+    }
+  }, [pathname]);
 
   return readyToUse ? <>{children}</> : <Splash />;
 };
