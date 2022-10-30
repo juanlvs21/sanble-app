@@ -33,11 +33,16 @@ type ComponentProps = {
    * If true the Spinner will be centered in a full width container
    */
   center?: boolean;
+  /**
+   * Custom className for content component
+   */
+  className?: string;
 };
 
 export const Spinner: React.FC<ComponentProps> = ({
   color = "primary",
-  size,
+  size = 35,
+  className = "",
   marginTop,
   marginBottom,
   center,
@@ -53,8 +58,6 @@ export const Spinner: React.FC<ComponentProps> = ({
     styleContainer = {
       ...styleContainer,
       display: "flex",
-      justifyContent: "center",
-      width: "100%",
     };
 
   const colorClass = {
@@ -70,21 +73,14 @@ export const Spinner: React.FC<ComponentProps> = ({
   };
 
   return (
-    <div className="animate__animated animate__fadeIn" style={styleContainer}>
-      <div className={`${styles.spinner} ${colorClass[color]}`}>
-        <div />
-        <div />
-        <div />
-        <div />
-        <div />
-        <div />
-        <div />
-        <div />
-        <div />
-        <div />
-        <div />
-        <div />
-      </div>
+    <div
+      className={`animate__animated animate__fadeIn ${className}`}
+      style={styleContainer}
+    >
+      <div
+        className={`${styles.spinner} ${colorClass[color]}`}
+        style={{ width: size, height: size }}
+      />
     </div>
   );
 };

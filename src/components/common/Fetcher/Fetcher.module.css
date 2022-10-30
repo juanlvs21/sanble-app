@@ -5,11 +5,28 @@
 
 .ionContentFetcher {
   --background: transparent;
+  --padding-bottom: 30px;
   height: 100%;
 }
 
 .fetcherRefresh {
-  padding-top: 120px;
+  padding-top: 115px;
+}
+
+.fetcherInfiniteScroll {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  height: 0;
+  transition: all 400ms ease-in-out;
+}
+
+.fetcherInfiniteScroll:global(.infinite-scroll-loading) {
+  height: 80px;
+  transition: all 400ms ease-in-out;
+}
+
+.infiniteScrollSpinner {
+  display: none;
 }
 
 @media (min-width: 768px) {
@@ -18,15 +35,14 @@
     margin-top: 62px;
   }
   .fetcherRefresh {
-    padding-top: 50px;
-    padding-bottom: 60px;
+    padding-top: 20px;
   }
 }
 
 @media (max-width: 768px) {
   .ionContentFetcher {
     --padding-top: 100px;
-    --padding-bottom: 50px;
+    --padding-bottom: 100px;
     --padding-start: 20px;
     --padding-end: 20px;
   }

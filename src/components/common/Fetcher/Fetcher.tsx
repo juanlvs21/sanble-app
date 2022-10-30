@@ -10,6 +10,7 @@ import {
 
 import { useApp } from "@/hooks/useApp";
 import styles from "./Fetcher.module.css";
+import { Spinner } from "@/components/common/loaders/Spinner";
 
 type ComponentProps = {
   /**
@@ -47,7 +48,9 @@ const Fetcher: React.FC<ComponentProps> = ({
 
   const infiniteFetch = async (event: InfiniteScrollCustomEvent) => {
     if (handleInfiniteScroll) await handleInfiniteScroll();
-    event.target.complete();
+    setTimeout(async () => {
+      await event.target.complete();
+    }, 4000);
   };
 
   return (
@@ -57,25 +60,36 @@ const Fetcher: React.FC<ComponentProps> = ({
         onIonScroll={handleSeScrollTop}
         scrollEvents
       >
-        {handleRefresh && (
-          <IonRefresher
-            slot="fixed"
-            onIonRefresh={doRefresh}
-            className={styles.fetcherRefresh}
+        <IonRefresher
+          slot="fixed"
+          onIonRefresh={doRefresh}
+          disabled={!handleRefresh}
+          className={styles.fetcherRefresh}
+        >
+          <IonRefresherContent
+            pullingIcon={undefined}
+            pullingText=""
+            refreshingSpinner={undefined}
+            refreshingText=""
           >
-            <IonRefresherContent />
-          </IonRefresher>
-        )}
+            <Spinner className="refresher-refreshing-icon" center />
+          </IonRefresherContent>
+        </IonRefresher>
+
         {children}
 
-        {handleInfiniteScroll && (
-          <IonInfiniteScroll onIonInfinite={infiniteFetch} threshold="100px">
-            <IonInfiniteScrollContent
-              loadingSpinner="bubbles"
-              // loadingText="Cargando..."
-            ></IonInfiniteScrollContent>
-          </IonInfiniteScroll>
-        )}
+        <IonInfiniteScroll
+          onIonInfinite={infiniteFetch}
+          disabled={!handleInfiniteScroll}
+          threshold="100px"
+          className={styles.fetcherInfiniteScroll}
+        >
+          <IonInfiniteScrollContent loadingSpinner={undefined} loadingText="">
+            <div className={`${styles.infiniteScrollSpinner} infinite-loading`}>
+              <Spinner center />
+            </div>
+          </IonInfiniteScrollContent>
+        </IonInfiniteScroll>
       </IonContent>
     </section>
   );
