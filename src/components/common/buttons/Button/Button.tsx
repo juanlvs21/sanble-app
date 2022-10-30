@@ -37,6 +37,6 @@ export const Button: React.FC<ComponentProps> = ({
   ...rest
 }) => (
   <IonButton {...rest} disabled={disabled || isLoading}>
-    {isLoading ? <Spinner marginTop="-12px" color={spinnerColor} /> : children}
+    {isLoading ? <Spinner size={18} color={spinnerColor} center /> : children}
   </IonButton>
 );
