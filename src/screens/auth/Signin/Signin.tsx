@@ -77,7 +77,6 @@ export const Signin: React.FC = () => {
             type="submit"
             disabled={isSubmitting}
             className={styles.btn}
-            isLoading
           >
             Ingresar
           </Button>
