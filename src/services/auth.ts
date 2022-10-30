@@ -14,7 +14,7 @@ import { TAuthSigInForm, TAuthSignupForm, TUser } from "@/types/TAuth";
 export const signOutRequest = () => signOut(auth);
 
 export const signUpRequest = (user: TAuthSignupForm): Promise<TUser> =>
-  api.post("/auth/signup", user).then(({ data }) => data.data);
+  api.post("/user/signup", user).then(({ data }) => data.data);
 
 export const signinRequest = async ({ email, password }: TAuthSigInForm) => {
   return signInWithEmailAndPassword(auth, email, password);
@@ -30,4 +30,4 @@ export const getSessionRequest = (nextOrObserver: NextOrObserver<User>) =>
   onAuthStateChanged(auth, nextOrObserver);
 
 export const getUserDataFetcher = (): Promise<TUser> =>
-  api.get("/auth/user").then(({ data }) => data.data);
+  api.get("/user/profile").then(({ data }) => data.data);
