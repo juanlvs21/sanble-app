@@ -26,7 +26,7 @@ export const FairCardList: React.FC<ComponentProps> = ({ fair }) => {
       </picture>
       <div className={styles.fairListCardContent}>
         <h1>{fair.name}</h1>
-        <Stars />
+        <Stars value={fair.stars} />
         <span className={styles.fairListCardType}>{fairType[fair.type]}</span>
 
         <div className={styles.fairListCardDate}>
