@@ -31,6 +31,7 @@ export const useUser = () => {
         });
       }
     } catch (error) {
+      // TODO: Implement error with toast
       console.log(error);
     } finally {
       setLoadingSetFav(false);

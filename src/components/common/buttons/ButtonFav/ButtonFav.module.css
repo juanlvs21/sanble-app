@@ -4,11 +4,11 @@
   --padding-bottom: 0;
   --padding-start: 0;
   --padding-end: 0;
-  width: 44px;
+  width: 40px;
 }
 .buttonFav::part(native) {
-  width: 44px;
-  height: 44px;
+  width: 40px;
+  height: 40px;
 }
 
 .buttonFav svg {
