@@ -1,5 +1,4 @@
 import { GoogleAuth } from "@codetrix-studio/capacitor-google-auth";
-import { useIonToast } from "@ionic/react";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { useLocation, useMatch } from "react-router-dom";
@@ -10,13 +9,10 @@ import {
   signInWithCredential,
   User,
 } from "@/helpers/firebase";
-import {
-  errorsFirebase,
-  errorsMessageAPI,
-} from "@/helpers/formatErrorsRequests";
 import { getStorage, removeStorage, setStorage } from "@/helpers/storage";
 import { StorageUserKey } from "@/helpers/storageKeys";
 import { useApp } from "@/hooks/useApp";
+import { useToast } from "@/hooks/useToast";
 import { useUser } from "@/hooks/useUser";
 import {
   getUserDataFetcher,
@@ -34,10 +30,10 @@ type TClearSessionFuncParams = {
 
 export const useAuth = () => {
   const { pathname } = useLocation();
-  const [present] = useIonToast();
   const { navigate } = useCustomNavigate();
   const { user, setUser } = useUser();
   const { isCapacitor, setIsLoadingFull } = useApp();
+  const { toast } = useToast();
 
   const matchLanding = useMatch("/");
   const matchSignin = useMatch("/app/sesion/entrar");
@@ -51,10 +47,8 @@ export const useAuth = () => {
       retry: 0,
       onError: async () => {
         await signOutRequest();
-        present({
-          message: "Error al obtener la información del usuario",
-          duration: 5000,
-          color: "danger",
+        toast("Error al obtener la información del usuario", {
+          type: "error",
         });
         navigate("/app/sesion/entrar", { replace: true });
         setIsLoadingFull(false);
@@ -91,11 +85,7 @@ export const useAuth = () => {
       }
     } catch (error) {
       setIsLoadingFull(false);
-      present({
-        message: errorsMessageAPI(error),
-        duration: 5000,
-        color: "danger",
-      });
+      toast(error, { type: "error" });
     }
   };
 
@@ -109,11 +99,7 @@ export const useAuth = () => {
     } catch (error: any) {
       await signOutRequest();
       setIsLoadingFull(false);
-      present({
-        message: errorsFirebase(error),
-        duration: 5000,
-        color: "danger",
-      });
+      toast(error, { type: "error" });
     }
   };
 
@@ -136,11 +122,7 @@ export const useAuth = () => {
     } catch (error) {
       await signOutRequest();
       setIsLoadingFull(false);
-      present({
-        message: errorsFirebase(error),
-        duration: 5000,
-        color: "danger",
-      });
+      toast(error, { type: "error" });
     }
   };
 

@@ -30,7 +30,7 @@ export const Signup: React.FC = () => {
       email: "",
       password: "",
     },
-    validationSchema: signUpSchema,
+    // validationSchema: signUpSchema,
     onSubmit: handleSignup,
   });
 

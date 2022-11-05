@@ -90,6 +90,14 @@ http://ionicframework.com/docs/theming/ */
   --ion-color-black-contrast-rgb: 255, 255, 255;
   --ion-color-black-shade: #1f1c1c;
   --ion-color-black-tint: #393636;
+
+  /* react-toastify */
+  --toastify-color-light: var(--ion-color-primary-contrast);
+  --toastify-color-dark: var(--ion-color-secondary);
+  --toastify-color-info: var(--ion-color-tertiary);
+  --toastify-color-success: var(--ion-color-success);
+  --toastify-color-warning: var(--ion-color-warning);
+  --toastify-color-error: var(--ion-color-danger);
 }
 
 /* @media (prefers-color-scheme: dark) { */

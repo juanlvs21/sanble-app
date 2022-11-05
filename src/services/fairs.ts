@@ -4,7 +4,7 @@ import { infiteScrollData } from "@/helpers/infiniteScrollData";
 import { api } from "@/services";
 import { TFair } from "@/types/TFairs";
 import { TPaginationParams } from "@/types/TPagination";
-import { TPagination } from "@/types/TRequest";
+import { TPagination } from "@/types/THttp";
 
 type ListResponse = {
   fairs: TFair[];

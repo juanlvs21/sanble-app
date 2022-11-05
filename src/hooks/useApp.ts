@@ -4,6 +4,7 @@ import { appActions } from "@/context/actions/appActions";
 import { useAppContext } from "@/context/AppContext";
 
 export const useApp = () => {
+  const platforms = getPlatforms();
   const [
     { readyToUse, isCapacitor, showSidebar, scrollTop, isLoadingFull },
     dispatch,
@@ -16,12 +17,28 @@ export const useApp = () => {
     setIsLoadingFull,
   } = appActions(dispatch);
 
+  const isPlatform = (
+    platf:
+      | "ios"
+      | "ipad"
+      | "iphone"
+      | "android"
+      | "phablet"
+      | "tablet"
+      | "cordova"
+      | "capacitor"
+      | "electron"
+      | "pwa"
+      | "mobile"
+      | "mobileweb"
+      | "desktop"
+      | "hybrid"
+  ) => platforms.includes(platf);
+
   const handleSetReady = (ready: boolean) => setReadyToUse(ready);
 
   const handleLoadData = async () => {
-    const platforms = getPlatforms();
-
-    if (platforms.includes("capacitor")) setIsCapacitor(true);
+    if (isPlatform("capacitor")) setIsCapacitor(true);
   };
 
   const handleShowSidebar = (show?: boolean) => {
@@ -35,14 +52,15 @@ export const useApp = () => {
 
   return {
     readyToUse,
-    isCapacitor,
     showSidebar,
     scrollTop,
     isLoadingFull,
+    isCapacitor,
     handleSetReady,
     handleLoadData,
     handleShowSidebar,
     handleSeScrollTop,
     setIsLoadingFull,
+    isPlatform,
   };
 };
