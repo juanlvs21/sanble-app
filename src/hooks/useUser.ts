@@ -2,12 +2,14 @@ import { useState } from "react";
 
 import { authActions } from "@/context/actions/authActions";
 import { useAuthContext } from "@/context/AuthContext";
+import { useToast } from "@/hooks/useToast";
 import { setFavoriteRequest } from "@/services";
 import { EUserFav } from "@/types/TUser";
 
 export const useUser = () => {
   const [{ user }, dispatch] = useAuthContext();
   const { setUser } = authActions(dispatch);
+  const { toast } = useToast();
   const [loadingSetFav, setLoadingSetFav] = useState(false);
 
   const setFavorite = async (favoriteType: EUserFav, favoriteID: string) => {
@@ -31,8 +33,7 @@ export const useUser = () => {
         });
       }
     } catch (error) {
-      // TODO: Implement error with toast
-      console.log(error);
+      toast("Ha ocurrido un error al guardar el favorito", { type: "error" });
     } finally {
       setLoadingSetFav(false);
     }
