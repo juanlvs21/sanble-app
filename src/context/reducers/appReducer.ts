@@ -8,7 +8,6 @@ export const initialAppState: TApp = {
   showSidebar: false,
   openNotifications: false,
   scrollTop: 0,
-  isCapacitor: false,
   isLoadingFull: false,
 };
 
@@ -47,14 +46,6 @@ export const appReducer = (state: TApp, action: TAction<TApp>): TApp => {
       return {
         ...state,
         scrollTop,
-      };
-    }
-    case appConstants.SET_IS_CAPACITOR: {
-      const isCapacitor = action.payload?.isCapacitor ?? false;
-
-      return {
-        ...state,
-        isCapacitor,
       };
     }
     case appConstants.SET_IS_LOADING_FULL: {

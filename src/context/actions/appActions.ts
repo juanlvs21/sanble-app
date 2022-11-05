@@ -24,11 +24,6 @@ export const appActions = (dispatch: Dispatch<TAction>) => ({
       type: appConstants.SET_SCROLL_TOP,
       payload: { scrollTop },
     }),
-  setIsCapacitor: (isCapacitor: boolean) =>
-    dispatch({
-      type: appConstants.SET_IS_CAPACITOR,
-      payload: { isCapacitor },
-    }),
   setIsLoadingFull: (isLoadingFull: boolean) =>
     dispatch({
       type: appConstants.SET_IS_LOADING_FULL,

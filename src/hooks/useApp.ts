@@ -5,17 +5,10 @@ import { useAppContext } from "@/context/AppContext";
 
 export const useApp = () => {
   const platforms = getPlatforms();
-  const [
-    { readyToUse, isCapacitor, showSidebar, scrollTop, isLoadingFull },
-    dispatch,
-  ] = useAppContext();
-  const {
-    setReadyToUse,
-    setIsCapacitor,
-    setShowSidebar,
-    setScrollTop,
-    setIsLoadingFull,
-  } = appActions(dispatch);
+  const [{ readyToUse, showSidebar, scrollTop, isLoadingFull }, dispatch] =
+    useAppContext();
+  const { setReadyToUse, setShowSidebar, setScrollTop, setIsLoadingFull } =
+    appActions(dispatch);
 
   const isPlatform = (
     platf:
@@ -37,9 +30,7 @@ export const useApp = () => {
 
   const handleSetReady = (ready: boolean) => setReadyToUse(ready);
 
-  const handleLoadData = async () => {
-    if (isPlatform("capacitor")) setIsCapacitor(true);
-  };
+  const handleLoadData = async () => {};
 
   const handleShowSidebar = (show?: boolean) => {
     if (show === undefined) setShowSidebar(!showSidebar);
@@ -51,16 +42,17 @@ export const useApp = () => {
   };
 
   return {
-    readyToUse,
-    showSidebar,
-    scrollTop,
-    isLoadingFull,
-    isCapacitor,
     handleSetReady,
     handleLoadData,
     handleShowSidebar,
     handleSeScrollTop,
     setIsLoadingFull,
     isPlatform,
+    readyToUse,
+    showSidebar,
+    scrollTop,
+    isLoadingFull,
+    isMobile: isPlatform("capacitor"),
+    isCapacitor: isPlatform("mobile"),
   };
 };

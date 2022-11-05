@@ -3,6 +3,5 @@ export type TApp = {
   showSidebar: boolean;
   openNotifications: boolean;
   scrollTop: number;
-  isCapacitor: boolean;
   isLoadingFull: boolean;
 };

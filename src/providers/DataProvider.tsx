@@ -18,7 +18,7 @@ export type ComponentProps = {
 export const DataProvider: React.FC<ComponentProps> = ({ children }) => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
-  const { readyToUse, isPlatform, handleSetReady, handleLoadData } = useApp();
+  const { readyToUse, isMobile, handleSetReady, handleLoadData } = useApp();
   const { handleGetSession } = useAuth();
   const { user } = useUser();
 
@@ -48,9 +48,7 @@ export const DataProvider: React.FC<ComponentProps> = ({ children }) => {
         theme="light"
         autoClose={5000}
         position={
-          isPlatform("mobile")
-            ? toast.POSITION.BOTTOM_CENTER
-            : toast.POSITION.BOTTOM_RIGHT
+          isMobile ? toast.POSITION.BOTTOM_CENTER : toast.POSITION.BOTTOM_RIGHT
         }
       />
     </>
