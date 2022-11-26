@@ -1,25 +1,45 @@
 import { Icon } from "leaflet";
-import "leaflet/dist/leaflet.css";
 import { useEffect, useState } from "react";
-import { MapContainer, Marker, TileLayer, Tooltip } from "react-leaflet";
+import {
+  MapContainer,
+  Marker,
+  TileLayer,
+  Tooltip /* Popup */,
+} from "react-leaflet";
+
+import "leaflet/dist/leaflet.css";
 
 import { SpinnerFullScreen } from "@/components/common/loaders/SpinnerFullScreen";
 import { useGeolocation } from "@/hooks/useGeolocation";
+import { EMapIcon, TMapMarker } from "@/types/TMap";
 import styles from "./Map.module.css";
 
-// const fairPin = new Icon({
-//   iconUrl: "/assets/icon/shoppingBagPrimary.svg",
-//   iconSize: [50, 50],
-// });
-
 const userPin = new Icon({
-  iconUrl: "/assets/icon/userPinPrimary.svg",
+  iconUrl: `/assets/icon/${EMapIcon.USER_PRIMARY}.svg`,
   iconSize: [50, 50],
 });
 
-export const Map: React.FC = () => {
+type ComponentProps = {
+  /**
+   * List of marks to place on the map
+   *
+   * @default []
+   */
+  markers?: TMapMarker[];
+  /**
+   * Map Loading
+   *
+   * @default false
+   */
+  isLoading?: boolean;
+};
+
+export const Map: React.FC<ComponentProps> = ({
+  markers = [],
+  isLoading = false,
+}) => {
   const { userPosition, getCurrentPosition } = useGeolocation();
-  const [isLoading, setIsLoading] = useState(true);
+  const [mapReady, setMapReady] = useState(false);
 
   useEffect(() => {
     getCurrentPosition();
@@ -28,15 +48,15 @@ export const Map: React.FC = () => {
   return userPosition ? (
     <>
       <SpinnerFullScreen
-        show={isLoading}
-        className={styles.spinner}
+        show={!mapReady || isLoading}
+        className={styles.mapSpinner}
         borderRadius
       />
       <MapContainer
         center={[userPosition.latitude, userPosition.longitude]}
         zoom={15}
         className={styles.mapContainer}
-        whenReady={() => setIsLoading(false)}
+        whenReady={() => setMapReady(true)}
       >
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -47,10 +67,58 @@ export const Map: React.FC = () => {
           position={[userPosition.latitude, userPosition.longitude]}
           icon={userPin}
         >
-          <Tooltip direction="top" offset={[0, -25]} permanent>
-            Tu ubicación actual
+          {/* <Popup>
+            <div className={styles.mapTooltipContent}>
+              <span>Tu ubicación actual</span>
+            </div>
+          </Popup> */}
+          <Tooltip direction="bottom" offset={[0, 30]} permanent>
+            <div className={styles.mapTooltipContent}>
+              <span>Tu ubicación actual</span>
+            </div>
           </Tooltip>
         </Marker>
+
+        {markers.map((marker: TMapMarker) => (
+          <Marker
+            key={marker.id}
+            position={marker.position}
+            icon={
+              new Icon({
+                iconUrl: `/assets/icon/${
+                  marker.icon || EMapIcon.GENERIC_SECONDARY
+                }.svg`,
+                iconSize: [50, 50],
+              })
+            }
+          >
+            {/* <Popup>
+              <div
+                className={styles.mapTooltipContent}
+                onClick={() => alert("TEST")}
+              >
+                <span>{marker.title}</span>
+                {marker.additional}
+              </div>
+            </Popup> */}
+            <Tooltip
+              direction="bottom"
+              offset={[0, 30]}
+              eventHandlers={{
+                click: marker.onClick || undefined,
+              }}
+              interactive
+              permanent
+            >
+              <div
+                className={styles.mapTooltipContent}
+                // onClick={(e) => console.log(e)}
+              >
+                <span>{marker.title}</span>
+              </div>
+            </Tooltip>
+          </Marker>
+        ))}
       </MapContainer>
     </>
   ) : null;

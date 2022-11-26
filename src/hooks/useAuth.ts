@@ -1,7 +1,7 @@
 import { GoogleAuth } from "@codetrix-studio/capacitor-google-auth";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
-import { useLocation, useMatch } from "react-router-dom";
+import { useLocation, useMatch, useNavigate } from "react-router-dom";
 
 import {
   auth,
@@ -22,7 +22,6 @@ import {
   signUpRequest,
 } from "@/services";
 import { TAuthSigInForm, TAuthSignupForm, TUser } from "@/types/TUser";
-import { useCustomNavigate } from "./useCustomNavigate";
 
 type TClearSessionFuncParams = {
   withLogout?: boolean;
@@ -30,7 +29,7 @@ type TClearSessionFuncParams = {
 
 export const useAuth = () => {
   const { pathname } = useLocation();
-  const { navigate } = useCustomNavigate();
+  const navigate = useNavigate();
   const { user, setUser } = useUser();
   const { isCapacitor, setIsLoadingFull } = useApp();
   const { toast } = useToast();

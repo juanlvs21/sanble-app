@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { BiFilterAlt } from "react-icons/bi";
 
 import { Button } from "@/components/common/buttons/Button";
@@ -13,9 +14,14 @@ export const FairsList: React.FC = () => {
   const {
     fairsList,
     isLoadingFairsList,
+    handleLoadFairsList,
     handleRefreshFairList,
     handleInfiniteFairList,
   } = useFairs({ defaultPerPage: 10 });
+
+  useEffect(() => {
+    handleLoadFairsList();
+  }, []);
 
   return (
     <>
@@ -35,13 +41,13 @@ export const FairsList: React.FC = () => {
         handleInfiniteScroll={handleInfiniteFairList}
       >
         <div className="dataListContainer">
-          {isLoadingFairsList && !fairsList.length
+          {isLoadingFairsList && !fairsList?.fairs.length
             ? Array(5)
                 .fill(0)
                 .map((_, i) => (
                   <Skeleton key={i} height={130} style={{ marginBottom: 20 }} />
                 ))
-            : fairsList.map((fair) => (
+            : fairsList?.fairs.map((fair) => (
                 <FairCardList key={fair.id} fair={fair} />
               ))}
         </div>

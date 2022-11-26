@@ -156,3 +156,18 @@ form {
   margin: 10px;
   border-radius: var(--sanble-border-radius);
 }
+
+.leaflet-container .leaflet-pane .leaflet-tooltip {
+  padding: 0;
+  border-radius: var(--sanble-border-radius);
+}
+
+.leaflet-container .leaflet-pane .leaflet-tooltip,
+.leaflet-container .leaflet-pane .leaflet-tooltip:before {
+  pointer-events: all;
+}
+
+.leaflet-container .leaflet-popup .leaflet-popup-content {
+  padding: 10px;
+  text-align: center;
+}
