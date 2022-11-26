@@ -43,12 +43,14 @@ export const FairCardList: React.FC<ComponentProps> = ({ fair }) => {
           </span>
         </div>
       </div>
-      <ButtonFav
-        className={styles.fairListCardBtnFav}
-        isLoading={loadingSetFav}
-        isActive={user?.favoriteFairs.includes(fair.id)}
-        onClick={() => handleSetFavoriteFair(fair.id)}
-      />
+      {user?.uid !== fair.owner.id && (
+        <ButtonFav
+          className={styles.fairListCardBtnFav}
+          isLoading={loadingSetFav}
+          isActive={user?.favoriteFairs.includes(fair.id)}
+          onClick={() => handleSetFavoriteFair(fair.id)}
+        />
+      )}
     </div>
   );
 };
