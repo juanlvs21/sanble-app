@@ -85,14 +85,14 @@ export const Sidebar: React.FC = () => {
 
   const handleClickSignOut = () =>
     presentAlert({
-      header: "Salir de Sanble",
+      header: "¿Cerrar sessión?",
       buttons: [
         {
-          text: "Cancelar",
+          text: "No",
           role: "cancel",
         },
         {
-          text: "Salir",
+          text: "Si",
           role: "confirm",
           handler: handleSignOut,
         },

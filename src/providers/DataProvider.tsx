@@ -1,12 +1,15 @@
+import { App } from "@capacitor/app";
+import { useIonAlert } from "@ionic/react";
 import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 
 import { useApp } from "@/hooks/useApp";
 import { useAuth } from "@/hooks/useAuth";
+import { useStatusBar } from "@/hooks/useStatusBar";
+import { useUser } from "@/hooks/useUser";
 import { Splash } from "@/screens/Splash";
 import { getSessionRequest } from "@/services";
-import { useUser } from "@/hooks/useUser";
 
 export type ComponentProps = {
   /**
@@ -18,9 +21,11 @@ export type ComponentProps = {
 export const DataProvider: React.FC<ComponentProps> = ({ children }) => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
+  const [presentAlert] = useIonAlert();
   const { readyToUse, isMobile, handleSetReady, handleLoadData } = useApp();
   const { handleGetSession } = useAuth();
   const { user } = useUser();
+  const { styleDefault } = useStatusBar();
 
   useEffect(() => {
     handleLoadData();
@@ -35,6 +40,35 @@ export const DataProvider: React.FC<ComponentProps> = ({ children }) => {
   }, []);
 
   useEffect(() => {
+    App.addListener("backButton", ({ canGoBack }) => {
+      if (canGoBack) {
+        navigate(-1);
+      } else {
+        presentAlert({
+          header: "¿Cerrar ahora?",
+          buttons: [
+            {
+              text: "No",
+              role: "cancel",
+            },
+            {
+              text: "Si",
+              role: "confirm",
+              handler: () => App.exitApp(),
+            },
+          ],
+        });
+      }
+    });
+
+    return () => {
+      App.removeAllListeners();
+    };
+  }, []);
+
+  useEffect(() => {
+    styleDefault();
+
     if (!pathname.includes("/app/sesion") && readyToUse && !user) {
       navigate("/app/sesion/entrar", { replace: true });
     }

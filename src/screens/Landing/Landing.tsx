@@ -38,7 +38,7 @@ export const Landing: React.FC<ComponentProps> = ({
 
         <div className={styles.btnContainer}>
           {/* <a href="/app"> */}
-          <Link to="/app">
+          <Link to="/app" replace>
             <Button color="secondary" className={styles.btn}>
               Ir a la aplicación
             </Button>

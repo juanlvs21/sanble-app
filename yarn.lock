@@ -297,6 +297,11 @@
   resolved "https://registry.yarnpkg.com/@capacitor/preferences/-/preferences-4.0.1.tgz#fd56f24fe2cde1222cf5c3057d52cd55fd033e7b"
   integrity sha512-FffJjKS4XcodUj/rtFtWizQ9q/oYDSn5opZ+JYwj/EkjiMWMhY/Pk9lN3vwQfp+VJrTt3hjr+bwKXjhTbYBqKw==
 
+"@capacitor/status-bar@4.1.0":
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/@capacitor/status-bar/-/status-bar-4.1.0.tgz#58f1f162f66eac17cecb589564877031fd252564"
+  integrity sha512-3yHVmSTKtSxiM4rUT/WmALDOes+htEGHPlzMSe2hN9uOOEKr/pMnNA2VBFJS+EfxRMWDGOcR14q9kXxmn9Rz+w==
+
 "@codetrix-studio/capacitor-google-auth@3.2.0":
   version "3.2.0"
   resolved "https://registry.npmjs.org/@codetrix-studio/capacitor-google-auth/-/capacitor-google-auth-3.2.0.tgz"
