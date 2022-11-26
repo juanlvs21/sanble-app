@@ -32,6 +32,11 @@ const FavoritesListScreen = lazy(() =>
     default: FavoritesList,
   }))
 );
+const NearYouScreen = lazy(() =>
+  import("@/screens/NearYou").then(({ NearYou }) => ({
+    default: NearYou,
+  }))
+);
 
 export const AppRoutes: React.FC = () => {
   const {
@@ -126,7 +131,7 @@ export const AppRoutes: React.FC = () => {
           path="cerca"
           element={
             <Suspense fallback={<LoadingSuspense />}>
-              <FavoritesListScreen />
+              <NearYouScreen />
             </Suspense>
           }
         />

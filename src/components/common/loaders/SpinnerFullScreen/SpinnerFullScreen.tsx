@@ -32,6 +32,10 @@ type ComponentProps = {
    * @default 50
    */
   size?: string | number;
+  /**
+   * Custom className for content component
+   */
+  className?: string;
 };
 
 export const SpinnerFullScreen: React.FC<ComponentProps> = ({
@@ -39,6 +43,7 @@ export const SpinnerFullScreen: React.FC<ComponentProps> = ({
   borderRadius,
   color = "primary",
   size = 50,
+  className = "",
 }) =>
   show ? (
     <div
@@ -46,7 +51,7 @@ export const SpinnerFullScreen: React.FC<ComponentProps> = ({
         show ? styles.showSprinnerFullScren : ""
       } ${
         borderRadius ? styles.showSprinnerBgBorderRadius : ""
-      } animate__animated animate__fadeIn`}
+      } ${className} animate__animated animate__fadeIn`}
     >
       <Spinner size={size} color={color} center />
     </div>

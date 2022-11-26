@@ -30,9 +30,12 @@ export const FairCardList: React.FC<ComponentProps> = ({ fair }) => {
         <span className={styles.fairListCardType}>{fairType[fair.type]}</span>
 
         <div className={styles.fairListCardDate}>
-          {/* TODO: Replace to celebrationDate */}
           <HiOutlineCalendar size={17} />
-          <span>{dayjs(fair.creationTime).format("DD MMM")}</span>
+          <span>
+            {fair.celebrationDate
+              ? dayjs(fair.celebrationDate).format("DD MMM")
+              : "Próximamente"}
+          </span>
         </div>
       </div>
       <ButtonFav

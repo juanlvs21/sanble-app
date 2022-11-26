@@ -151,3 +151,8 @@ form {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
+
+.Toastify__toast {
+  margin: 10px;
+  border-radius: var(--sanble-border-radius);
+}

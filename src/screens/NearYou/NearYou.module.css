@@ -1,0 +1,5 @@
+.mapSection {
+  margin-top: 60px;
+  position: relative;
+  height: calc(100% - 60px);
+}

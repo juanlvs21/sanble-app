@@ -19,6 +19,7 @@ export const useToast = () => {
 
   return {
     toast,
+    toastDismiss: toastBase.dismiss,
     POSITION: toastBase.POSITION,
   };
 };

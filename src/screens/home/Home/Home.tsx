@@ -6,7 +6,7 @@ import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 // import styles from "./Home.module.css";
 
 export const Home: React.FC = () => {
-  useDocumentTitle("Inicio");
+  useDocumentTitle("Inicio 🏠");
 
   return (
     <>

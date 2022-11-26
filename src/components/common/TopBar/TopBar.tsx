@@ -30,6 +30,14 @@ type ComponentProps = {
    * If true, the TopBar will become sticky when scrolling.
    */
   sticky?: boolean;
+  /**
+   * If true, the TopBar will become sticky when scrolling regardless of scrolling.
+   */
+  stickyNoScroll?: boolean;
+  /**
+   * Custom className for content component
+   */
+  className?: string;
 };
 
 export const TopBar: React.FC<ComponentProps> = ({
@@ -39,14 +47,16 @@ export const TopBar: React.FC<ComponentProps> = ({
   end,
   isLoading,
   sticky,
+  stickyNoScroll,
+  className = "",
 }) => {
   const { scrollTop } = useApp();
 
   return (
     <IonToolbar
       className={`${styles.topBarContainer} ${
-        sticky && scrollTop > 25 ? styles.sticky : ""
-      }`}
+        (sticky && scrollTop > 25) || stickyNoScroll ? styles.sticky : ""
+      } ${className}`}
     >
       {isLoading && (
         <IonProgressBar
