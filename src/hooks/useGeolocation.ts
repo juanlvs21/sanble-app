@@ -1,7 +1,6 @@
 import { Geolocation } from "@capacitor/geolocation";
 import { useState } from "react";
 
-import { useApp } from "@/hooks/useApp";
 import { useToast } from "@/hooks/useToast";
 import { TCoords } from "@/types/TGeolocation";
 
@@ -9,20 +8,16 @@ const noGeolocationPermissionsID = "toast_no_geolocation_permissions_id";
 
 export const useGeolocation = () => {
   const { toast, toastDismiss } = useToast();
-  const { isMobile } = useApp();
   const [userPosition, setUserPosition] = useState<TCoords>();
 
   const getCurrentPosition = async () => {
     try {
       toastDismiss(noGeolocationPermissionsID);
 
+      // TODO: Add a way to turn it on if the GPS is off (Prompt to activate)
+
       const { location, coarseLocation } = await Geolocation.checkPermissions();
       if (location || coarseLocation) {
-        // if (isMobile) {
-        //   const request = await Geolocation.requestPermissions();
-        //   console.log({ request });
-        // }
-
         const { coords } = await Geolocation.getCurrentPosition();
         setUserPosition(coords);
       } else {
