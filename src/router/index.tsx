@@ -27,6 +27,11 @@ const FairsListScreen = lazy(() =>
     default: FairsList,
   }))
 );
+const FairDetailsScreen = lazy(() =>
+  import("@/screens/fairs/FairDetails").then(({ FairDetails }) => ({
+    default: FairDetails,
+  }))
+);
 const FavoritesListScreen = lazy(() =>
   import("@/screens/favorites/FavoritesList").then(({ FavoritesList }) => ({
     default: FavoritesList,
@@ -140,6 +145,15 @@ export const AppRoutes: React.FC = () => {
           element={
             <Suspense fallback={<LoadingSuspense />}>
               <FavoritesListScreen />
+            </Suspense>
+          }
+        />
+
+        <Route
+          path="/app/ferias/:fairID"
+          element={
+            <Suspense fallback={<LoadingSuspense />}>
+              <FairDetailsScreen />
             </Suspense>
           }
         />

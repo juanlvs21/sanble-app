@@ -1,5 +1,6 @@
 import dayjs from "dayjs";
 import { HiOutlineCalendar } from "react-icons/hi";
+import { useNavigate } from "react-router-dom";
 
 import { fairType } from "@/helpers/fairs";
 import { TFair } from "@/types/TFairs";
@@ -17,10 +18,14 @@ type ComponentProps = {
 };
 
 export const FairCardList: React.FC<ComponentProps> = ({ fair }) => {
+  const navigate = useNavigate();
   const { user, loadingSetFav, handleSetFavoriteFair } = useUser();
 
   return (
-    <div className={`animate__animated animate__fadeIn ${styles.fairListCard}`}>
+    <div
+      className={`animate__animated animate__fadeIn ${styles.fairListCard}`}
+      onClick={() => navigate(`/app/ferias/${fair.id}`)}
+    >
       <picture>
         <img src={fair.coverUrl} alt={fair.name} />
       </picture>
