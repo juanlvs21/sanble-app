@@ -33,11 +33,6 @@ export const useGeolocation = () => {
           toastId: noGeolocationPermissionsID,
         });
       } else {
-        console.log("------------");
-        console.log("hola: ", error);
-        console.log(typeof error);
-        console.log(JSON.stringify(error));
-        console.log("------------");
         toast("Ha ocurrido un error al obtener tu ubicación", {
           type: "error",
           toastId: noGeolocationPermissionsID,
