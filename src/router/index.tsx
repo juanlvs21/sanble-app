@@ -20,10 +20,10 @@ const SignupScreen = lazy(() =>
   import("@/screens/auth/Signup").then(({ Signup }) => ({ default: Signup }))
 );
 const HomeScreen = lazy(() =>
-  import("@/screens/home/Home").then(({ Home }) => ({ default: Home }))
+  import("@/screens/Home").then(({ Home }) => ({ default: Home }))
 );
 const FairsListScreen = lazy(() =>
-  import("@/screens/home/FairsList").then(({ FairsList }) => ({
+  import("@/screens/fairs/FairsList").then(({ FairsList }) => ({
     default: FairsList,
   }))
 );

@@ -5,6 +5,6 @@ export const LoadingSuspense: React.FC = () => (
   <div
     className={`animate__animated animate__fadeIn ${styles.loadingSuspenseContainer}`}
   >
-    <Spinner />
+    <Spinner center />
   </div>
 );

@@ -8,6 +8,7 @@ import { TopBar } from "@/components/common/TopBar";
 import { FairCardList } from "@/components/modules/fairs/FairCardList";
 import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 import { useFairs } from "@/hooks/useFairs";
+import styles from "./FairsList.module.css";
 
 export const FairsList: React.FC = () => {
   useDocumentTitle("Lista de Ferias 🛍️");
@@ -45,7 +46,11 @@ export const FairsList: React.FC = () => {
             ? Array(5)
                 .fill(0)
                 .map((_, i) => (
-                  <Skeleton key={i} height={130} style={{ marginBottom: 20 }} />
+                  <Skeleton
+                    key={i}
+                    height={130}
+                    className={styles.fairListCardSkeleton}
+                  />
                 ))
             : fairsList?.fairs.map((fair) => (
                 <FairCardList key={fair.id} fair={fair} />

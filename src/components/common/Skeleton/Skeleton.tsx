@@ -12,6 +12,10 @@ type ComponentProps = {
    */
   height?: number | string;
   /**
+   * Custom className for content component
+   */
+  className?: string;
+  /**
    * Skeleton online styles
    */
   style?: CSSProperties;
@@ -21,4 +25,10 @@ export const Skeleton: React.FC<ComponentProps> = ({
   width,
   height,
   style,
-}) => <div className={styles.skeleton} style={{ width, height, ...style }} />;
+  className = "",
+}) => (
+  <div
+    className={`${styles.skeleton} ${className}`}
+    style={{ width, height, ...style }}
+  />
+);
