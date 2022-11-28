@@ -2,15 +2,16 @@ import { AxiosResponse } from "axios";
 
 import { infiteScrollData } from "@/helpers/infiniteScrollData";
 import { api } from "@/services";
-import { FairsListResponse, TFair } from "@/types/TFairs";
+import { TFair } from "@/types/TFairs";
 import { TPaginationParams } from "@/types/TPagination";
+import { TResponseList } from "@/types/THttp";
 
 export const getFairListInfiniteScrollFetcher = (
   currentData?: TFair[],
   params?: TPaginationParams
-): Promise<FairsListResponse> =>
+): Promise<TResponseList<TFair[]>> =>
   api
-    .get<AxiosResponse<FairsListResponse>>("/fairs/list", {
+    .get<AxiosResponse<TResponseList<TFair[]>>>("/fairs/list", {
       params: {
         page: params?.page || 1,
         perPage: params?.perPage || 10,
@@ -18,7 +19,7 @@ export const getFairListInfiniteScrollFetcher = (
     })
     .then(({ data }) => ({
       ...data.data,
-      fairs: infiteScrollData("id", data.data.fairs, currentData),
+      list: infiteScrollData("id", data.data.list, currentData),
     }));
 // TODO: I must create a similar fetcher but without joining the data, with a normal pagination
 

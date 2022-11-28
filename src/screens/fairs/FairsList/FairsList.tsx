@@ -42,7 +42,7 @@ export const FairsList: React.FC = () => {
         handleInfiniteScroll={handleInfiniteFairList}
       >
         <div className="dataListContainer">
-          {isLoadingFairsList && !fairsList?.fairs.length
+          {isLoadingFairsList && !fairsList?.list.length
             ? Array(5)
                 .fill(0)
                 .map((_, i) => (
@@ -52,7 +52,7 @@ export const FairsList: React.FC = () => {
                     className={styles.fairListCardSkeleton}
                   />
                 ))
-            : fairsList?.fairs.map((fair) => (
+            : fairsList?.list.map((fair) => (
                 <FairCardList key={fair.id} fair={fair} />
               ))}
         </div>

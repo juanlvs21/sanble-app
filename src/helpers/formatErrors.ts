@@ -1,6 +1,6 @@
 import { unknownErrorMsg } from "./constTexts";
 
-type formatData422 = {
+type TFormatError422 = {
   value: string;
   msg: string;
   param: string;
@@ -15,7 +15,7 @@ export const errorsMessage = (errors: any) => {
 
   if (errors?.response) {
     if (getStatusCode(errors.response) == 422) {
-      errors.response.data?.errors.map((err: formatData422) => {
+      errors.response.data?.errors.map((err: TFormatError422) => {
         messageArray.push(err.msg);
       });
     }

@@ -14,9 +14,14 @@ export type TPagination = {
   totalPages: number;
 };
 
-export type formatData422 = {
+export type TFormatError422 = {
   value: string;
   msg: string;
   param: string;
   location: string;
+};
+
+export type TResponseList<T> = {
+  list: T;
+  pagination: TPagination;
 };

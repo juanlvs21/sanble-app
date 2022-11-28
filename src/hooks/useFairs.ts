@@ -8,8 +8,9 @@ import {
   getFairListGeolocationFetcher,
   getFairListInfiniteScrollFetcher,
 } from "@/services";
-import { FairsListResponse, TFair, TFairGeo } from "@/types/TFairs";
+import { TFair, TFairGeo } from "@/types/TFairs";
 import { TPaginationParams } from "@/types/TPagination";
+import { TResponseList } from "@/types/THttp";
 
 type THookParams = {
   defaultPerPage?: number;
@@ -27,7 +28,7 @@ export const useFairs = (hookParams?: THookParams) => {
     data: fairsListData,
     refetch: refetchFairsList,
     isFetching: isLoadingFairsList,
-  } = useQuery<FairsListResponse>(
+  } = useQuery<TResponseList<TFair[]>>(
     ["fairs-list", listPage, listPerPage],
     () =>
       // TODO: This fetcher must be different if it is mobile or if it is desktop
@@ -59,7 +60,7 @@ export const useFairs = (hookParams?: THookParams) => {
   );
 
   useEffect(() => {
-    if (fairsListData) setList(fairsListData?.fairs);
+    if (fairsListData) setList(fairsListData?.list);
   }, [fairsListData]);
 
   const handleLoadFairsList = async (params?: TPaginationParams) => {

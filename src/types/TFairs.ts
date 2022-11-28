@@ -31,8 +31,3 @@ export type TFairGeo = {
   stars: number;
   type: EFairType; // TODO: We can distinguish the marker icon depending on the type of fair
 };
-
-export type FairsListResponse = {
-  fairs: TFair[];
-  pagination: TPagination;
-};
