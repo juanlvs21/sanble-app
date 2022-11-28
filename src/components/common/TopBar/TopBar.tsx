@@ -11,6 +11,16 @@ type ComponentProps = {
    */
   title?: React.ReactElement | string;
   /**
+   * Set the title of the top bar to the color light in the color palette
+   */
+  titleLight?: boolean;
+  /**
+   * Set the font size of the title
+   *
+   * @default 28
+   */
+  titleSize?: number | string;
+  /**
    * React component to start slot
    */
   start?: React.ReactElement;
@@ -48,6 +58,8 @@ export const TopBar: React.FC<ComponentProps> = ({
   isLoading,
   sticky,
   stickyNoScroll,
+  titleLight,
+  titleSize = 28,
   className = "",
 }) => {
   const { scrollTop } = useApp();
@@ -70,7 +82,18 @@ export const TopBar: React.FC<ComponentProps> = ({
           {startUser ? <TopBarUserBtn /> : start}
         </IonButtons>
       )}
-      {title && <IonTitle className={styles.topBarTitle}>{title}</IonTitle>}
+      {title && (
+        <IonTitle
+          className={`${styles.topBarTitle} ${
+            titleLight ? styles.topBarTitleLight : ""
+          } ${
+            (sticky && scrollTop > 25) || stickyNoScroll ? styles.sticky : ""
+          }`}
+          style={{ fontSize: titleSize }}
+        >
+          {title}
+        </IonTitle>
+      )}
       {end && (
         <IonButtons slot="end" className={styles.topBarEnd}>
           {end}

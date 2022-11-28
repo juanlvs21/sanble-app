@@ -37,7 +37,7 @@ export const useApp = () => {
     else setShowSidebar(show);
   };
 
-  const handleSeScrollTop = (event?: CustomEvent<ScrollDetail>) => {
+  const handleSetScrollTop = (event?: CustomEvent<ScrollDetail>) => {
     setScrollTop(event ? event.detail.scrollTop : 0);
   };
 
@@ -45,14 +45,14 @@ export const useApp = () => {
     handleSetReady,
     handleLoadData,
     handleShowSidebar,
-    handleSeScrollTop,
+    handleSetScrollTop,
     setIsLoadingFull,
     isPlatform,
     readyToUse,
     showSidebar,
     scrollTop,
     isLoadingFull,
-    isMobile: isPlatform("capacitor"),
-    isCapacitor: isPlatform("mobile"),
+    isMobile: isPlatform("mobile"),
+    isCapacitor: isPlatform("capacitor"),
   };
 };

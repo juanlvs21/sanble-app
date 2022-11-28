@@ -28,18 +28,23 @@ type ComponentProps = {
    */
   handleInfiniteScroll?: () => Promise<any>;
   /**
+   * Custom className for section tag
+   */
+  classNameSection?: string;
+  /**
    * Custom className for content component
    */
-  className?: string;
+  classNameContent?: string;
 };
 
 export const Fetcher: React.FC<ComponentProps> = ({
   children,
-  className = "",
+  classNameSection = "",
+  classNameContent = "",
   handleRefresh,
   handleInfiniteScroll,
 }) => {
-  const { handleSeScrollTop } = useApp();
+  const { handleSetScrollTop } = useApp();
 
   const doRefresh = async (event: CustomEvent<RefresherEventDetail>) => {
     if (handleRefresh) await handleRefresh();
@@ -52,10 +57,10 @@ export const Fetcher: React.FC<ComponentProps> = ({
   };
 
   return (
-    <section className={styles.sectionFetcher}>
+    <section className={`${styles.sectionFetcher} ${classNameSection}`}>
       <IonContent
-        className={`${styles.ionContentFetcher} ${className}`}
-        onIonScroll={handleSeScrollTop}
+        className={`${styles.ionContentFetcher} ${classNameContent}`}
+        onIonScroll={handleSetScrollTop}
         scrollEvents
       >
         <IonRefresher

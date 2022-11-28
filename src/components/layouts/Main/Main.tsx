@@ -23,10 +23,10 @@ export const MainLayout: React.FC<ComponentProps> = ({
   onAnimationEnd,
 }) => {
   const location = useLocation();
-  const { showSidebar, handleShowSidebar, handleSeScrollTop } = useApp();
+  const { showSidebar, handleShowSidebar, handleSetScrollTop } = useApp();
 
   useEffect(() => {
-    handleSeScrollTop();
+    handleSetScrollTop();
     handleShowSidebar(false);
   }, [location]);
 
@@ -52,6 +52,5 @@ export const MainLayout: React.FC<ComponentProps> = ({
         <Outlet />
       </main>
     </div>
-    // </IonContent>
   );
 };

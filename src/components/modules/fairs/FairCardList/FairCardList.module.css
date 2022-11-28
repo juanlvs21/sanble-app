@@ -73,6 +73,12 @@
   bottom: 10px;
 }
 
+.fairListCardLink {
+  display: flex;
+  width: 100%;
+  color: var(--ion-text-color, #000);
+}
+
 @media (min-width: 768px) {
   .fairListCard {
     margin: 20px;

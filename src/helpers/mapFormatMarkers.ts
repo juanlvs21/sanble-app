@@ -3,7 +3,7 @@ import { EMapIcon, TMapMarker } from "@/types/TMap";
 
 export const formatFairsMarks = (
   fairs: TFairGeo[],
-  onClick?: (id: string) => void
+  onClick?: (id: string, text?: string) => void
 ): TMapMarker[] => {
   const markers: TMapMarker[] = [];
 
@@ -14,7 +14,7 @@ export const formatFairsMarks = (
         title: fair.name,
         position: fair.geopoint,
         icon: EMapIcon.SHOPPING_BAG_PRIMARY,
-        onClick: onClick ? () => onClick(fair.id) : undefined,
+        onClick: onClick ? () => onClick(fair.id, fair.name) : undefined,
         // additional: undefined,
       });
     }

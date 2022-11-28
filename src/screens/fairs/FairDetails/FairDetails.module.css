@@ -1,0 +1,236 @@
+.fairDetailsFetcherContent {
+  --padding-top: 0 !important;
+  --padding-bottom: 0 !important;
+  --padding-start: 0 !important;
+  --padding-end: 0 !important;
+  transition: all 500ms ease-in-out;
+}
+
+.fairDetailsFetcherSection {
+  height: 100% !important;
+  transition: all 500ms ease-in-out;
+}
+
+.fairDetailsBg {
+  background-color: var(--ion-color-primary);
+  height: 300px;
+  display: flex;
+  justify-content: center;
+  transition: all 500ms ease-in-out;
+}
+
+.fairCover {
+  position: relative;
+  width: calc(100% - 60px);
+  height: 220px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 100px;
+  background-color: var(--ion-color-light);
+  border-radius: var(--sanble-border-radius);
+  transition: all 400ms ease-in-out;
+}
+
+.fairCover .fairSkeleton {
+  border-radius: var(--sanble-border-radius);
+  box-shadow: 0px 0px 5px 5px rgba(200, 200, 200, 0.1);
+  width: 100%;
+  height: 220px;
+  transition: all 500ms ease-in-out;
+}
+
+.fairCover img {
+  position: relative;
+  border-radius: var(--sanble-border-radius);
+  object-fit: cover;
+  object-position: center;
+  -webkit-box-shadow: 0px 0px 5px 5px rgba(200, 200, 200, 0.1);
+  box-shadow: 0px 0px 5px 5px rgba(200, 200, 200, 0.1);
+  height: 220px;
+  width: 100%;
+  z-index: 50;
+  transition: all 500ms ease-in-out;
+}
+
+.fairDetailsContent {
+  border-top-left-radius: calc(var(--sanble-border-radius) * 2);
+  border-top-right-radius: calc(var(--sanble-border-radius) * 2);
+  background-color: #fff;
+  margin-top: -70px;
+  padding: 120px 30px 50px;
+  transition: all 500ms ease-in-out;
+}
+
+.fairDetailsContent .fairDetailsNameContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  word-break: break-all;
+  font-size: 20px;
+  min-height: 35px;
+}
+
+.fairDetailsContent .fairDetailsNameContainer h1 {
+  font-size: 22px;
+  font-weight: 600;
+  text-align: start;
+  margin: 0;
+}
+
+.fairDetailsContent .fairDetailsNameStars {
+  width: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 20px;
+  font-weight: 500;
+  font-size: 20px;
+  color: var(--sanble-gray-color-2);
+}
+
+.fairDetailsContent .fairDetailsNameStars .fairDetailsNameStarsIcon {
+  width: 28px;
+  height: 28px;
+  border-radius: 28px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 5px;
+  background-color: var(--ion-color-primary);
+}
+
+.fairDetailsOverlay {
+  position: fixed;
+  background: rgb(0 0 0 / 46%);
+  height: 100vh;
+  width: 100%;
+  z-index: -100;
+  opacity: 0;
+  transition: all 500ms ease-in-out;
+}
+
+.fairDetailsCoverBtnClose {
+  position: fixed;
+  top: 30px;
+  right: 30px;
+  width: 30px;
+  height: 30px;
+  border-radius: 30px;
+  z-index: 1000;
+}
+
+.fairDetailsCoverBtnClose::part(native) {
+  padding: 0;
+  z-index: 1000;
+}
+
+.fairDetailsCoverBtnClose svg {
+  color: black;
+}
+
+.fairDetailsOverlay.fairCoverOpen {
+  z-index: 600;
+  opacity: 1;
+  transition: all 500ms ease-in-out;
+}
+
+.fairDetailsFetcherSection.fairCoverOpen {
+  margin: 0;
+  height: 100vh !important;
+  transition: all 500ms ease-in-out;
+}
+
+.fairDetailsFetcherContent.fairCoverOpen::part(scroll) {
+  overflow: hidden;
+  transition: all 500ms ease-in-out;
+}
+
+.fairCover.fairCoverOpen {
+  width: 100%;
+  height: 100vh;
+  z-index: 700;
+  position: fixed;
+  top: 0;
+  margin: 0;
+  padding: 20px;
+  background-color: transparent;
+  transition: all 400ms ease-in-out;
+}
+
+.fairCover img.fairCoverOpen {
+  height: 100%;
+  z-index: 3000;
+  transition: all 500ms ease-in-out;
+}
+
+.fairTopBarCoverOpen {
+  top: -200px;
+  transition: all 500ms ease-in-out;
+}
+
+.fairDetailsContent .fairDetailsInfo h6 {
+  min-height: 20px;
+  margin: 5px 0;
+  color: var(--sanble-gray-color-2);
+}
+
+.fairDetailsContent .fairDetailsInfo .fairDetailsInfoDescription {
+  margin-top: 10px;
+}
+
+.fairDetailsContent .fairDetailsInfo .fairDetailsInfoDescription p {
+  margin: 5px 0px;
+}
+
+.fairDetailsContent .fairDetailsInfo .fairDetailsInfoAddress {
+  margin-top: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--sanble-gray-color-2);
+}
+
+.fairDetailsContent .fairDetailsInfo .fairDetailsInfoAddress i {
+  width: 40px;
+  text-align: start;
+  margin-right: 10px;
+}
+
+@media (min-width: 768px) {
+  .fairDetailsFetcherSection {
+    height: calc(100% - 62px) !important;
+    transition: all 500ms ease-in-out;
+  }
+
+  .fairDetailsBg {
+    height: 410px;
+    transition: all 500ms ease-in-out;
+  }
+
+  .fairCover {
+    width: calc(100% - 20px);
+    margin-top: 15px;
+    height: 380px;
+    transition: all 500ms ease-in-out;
+  }
+
+  .fairCover img {
+    height: 380px;
+    transition: all 500ms ease-in-out;
+  }
+
+  .fairCover .fairSkeleton {
+    height: 380px;
+    transition: all 500ms ease-in-out;
+  }
+  .fairDetailsContent {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    margin-top: 0px;
+    padding: 50px 100px 120px;
+    transition: all 500ms ease-in-out;
+  }
+}

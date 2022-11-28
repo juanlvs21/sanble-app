@@ -1,4 +1,6 @@
 export const fairType = {
-  entrepreneurship: "Emprendimiento",
-  gastronomic: "Gastronómica",
+  entrepreneurship_short: "Emprendimiento",
+  gastronomic_short: "Gastronómica",
+  entrepreneurship_long: "Feria de Emprendimiento",
+  gastronomic_long: "Feria Gastronómica",
 };

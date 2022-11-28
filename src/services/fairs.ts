@@ -10,7 +10,7 @@ export const getFairListInfiniteScrollFetcher = (
   params?: TPaginationParams
 ): Promise<FairsListResponse> =>
   api
-    .get<AxiosResponse<FairsListResponse>>("/fairs", {
+    .get<AxiosResponse<FairsListResponse>>("/fairs/list", {
       params: {
         page: params?.page || 1,
         perPage: params?.perPage || 10,

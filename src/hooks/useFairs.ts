@@ -4,13 +4,19 @@ import { useNavigate } from "react-router-dom";
 
 import { formatFairsMarks } from "@/helpers/mapFormatMarkers";
 import {
+  getFairDetailsFetcher,
   getFairListGeolocationFetcher,
   getFairListInfiniteScrollFetcher,
 } from "@/services";
 import { FairsListResponse, TFair, TFairGeo } from "@/types/TFairs";
 import { TPaginationParams } from "@/types/TPagination";
 
-export const useFairs = (hookParams = { defaultPerPage: 1 }) => {
+type THookParams = {
+  defaultPerPage?: number;
+  fairID?: string;
+};
+
+export const useFairs = (hookParams?: THookParams) => {
   const navigate = useNavigate();
 
   const [listPage, setListPage] = useState(1);
@@ -40,6 +46,18 @@ export const useFairs = (hookParams = { defaultPerPage: 1 }) => {
     enabled: false,
   });
 
+  const {
+    data: fairDetailsData,
+    refetch: refetchFairDetails,
+    isFetching: isLoadingFairDetails,
+  } = useQuery<TFair>(
+    ["fairs-details", hookParams?.fairID],
+    () => getFairDetailsFetcher(hookParams?.fairID || ""),
+    {
+      enabled: false,
+    }
+  );
+
   useEffect(() => {
     if (fairsListData) setList(fairsListData?.fairs);
   }, [fairsListData]);
@@ -51,7 +69,10 @@ export const useFairs = (hookParams = { defaultPerPage: 1 }) => {
   };
 
   const handleRefreshFairList = async () => {
-    await handleLoadFairsList({ page: 1, perPage: hookParams.defaultPerPage });
+    await handleLoadFairsList({
+      page: 1,
+      perPage: hookParams?.defaultPerPage || 10,
+    });
   };
 
   const handleInfiniteFairList = async () => {
@@ -64,18 +85,26 @@ export const useFairs = (hookParams = { defaultPerPage: 1 }) => {
   };
 
   const prepareListGeo = () =>
-    formatFairsMarks(fairsListGeoData || [], (id) =>
-      navigate(`/app/ferias/${id}`)
+    formatFairsMarks(fairsListGeoData || [], (id, name) =>
+      navigate(`/app/ferias/${id}`, {
+        state: {
+          fairID: id,
+          fairName: name,
+        },
+      })
     );
 
   return {
     fairsList: fairsListData,
     fairsListGeo: prepareListGeo(),
+    fairDetails: fairDetailsData,
     isLoadingFairsList,
     isLoadingFairsListGeo,
+    isLoadingFairDetails,
     handleRefreshFairList,
     handleInfiniteFairList,
     handleLoadFairsList,
     handleLoadFairsListGeo: refetchFairsListGeo,
+    handleLoadFairDetails: refetchFairDetails,
   };
 };
