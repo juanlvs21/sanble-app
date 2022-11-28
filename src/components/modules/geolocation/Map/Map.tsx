@@ -50,7 +50,6 @@ export const Map: React.FC<ComponentProps> = ({
       <SpinnerFullScreen
         show={!mapReady || isLoading}
         className={styles.mapSpinner}
-        borderRadius
       />
       <MapContainer
         center={[userPosition.latitude, userPosition.longitude]}
@@ -74,7 +73,7 @@ export const Map: React.FC<ComponentProps> = ({
           </Popup> */}
           <Tooltip direction="bottom" offset={[0, 30]} permanent>
             <div className={styles.mapTooltipContent}>
-              <span>Tu ubicación actual</span>
+              <b>Tu ubicación actual</b>
             </div>
           </Tooltip>
         </Marker>
@@ -110,11 +109,9 @@ export const Map: React.FC<ComponentProps> = ({
               interactive
               permanent
             >
-              <div
-                className={styles.mapTooltipContent}
-                // onClick={(e) => console.log(e)}
-              >
-                <span>{marker.title}</span>
+              <div className={styles.mapTooltipContent}>
+                <b>{marker.title}</b>
+                {marker.onClick && <small>Ver detalles</small>}
               </div>
             </Tooltip>
           </Marker>

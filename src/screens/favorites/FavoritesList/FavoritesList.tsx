@@ -12,7 +12,7 @@ export const FavoritesList: React.FC = () => {
     <div>
       <h1>{pathname}</h1>
       <button onClick={() => handleShowSidebar()}>
-        {showSidebar ? "Hidden" : "Show"}
+        {showSidebar ? "Hide Sidebar" : "Show Sidebar"}
       </button>
       <p>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum

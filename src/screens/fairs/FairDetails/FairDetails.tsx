@@ -94,7 +94,8 @@ export const FairDetails: React.FC = () => {
         <div className={styles.fairDetailsBg}>
           {openCover && (
             <IonButton
-              fill="clear"
+              fill="solid"
+              color="light"
               size="small"
               onClick={() => setOpenCover((state) => !state)}
               className={`${styles.fairDetailsCoverBtnClose} animate__animated animate__zoomIn`}
