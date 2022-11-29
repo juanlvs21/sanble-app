@@ -1,5 +1,6 @@
 import { lazy, Suspense } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
+import { isPlatform } from "@ionic/react";
 
 import { LoadingSuspense } from "@/components/common/loaders/LoadingSuspense";
 import { AuthLayout } from "@/components/layouts/Auth";
@@ -12,6 +13,11 @@ const NotFoundScreen = lazy(() =>
 );
 const LandingScreen = lazy(() =>
   import("@/screens/Landing").then(({ Landing }) => ({ default: Landing }))
+);
+const WelcomeSlidesScreen = lazy(() =>
+  import("@/screens/WelcomeSlides").then(({ WelcomeSlides }) => ({
+    default: WelcomeSlides,
+  }))
 );
 const SigninScreen = lazy(() =>
   import("@/screens/auth/Signin").then(({ Signin }) => ({ default: Signin }))
@@ -56,13 +62,28 @@ export const AppRoutes: React.FC = () => {
       <Route
         path="/"
         element={
-          <LandingScreen
+          <MainLayout
             onAnimationEnd={onAnimationEnd}
             transitionStage={transitionStage}
           />
         }
-      />
-
+      >
+        <Route
+          index
+          element={
+            <>
+              {isPlatform("capacitor") ? (
+                <WelcomeSlidesScreen />
+              ) : (
+                <LandingScreen
+                  onAnimationEnd={onAnimationEnd}
+                  transitionStage={transitionStage}
+                />
+              )}
+            </>
+          }
+        />
+      </Route>
       <Route path="/app" element={<MainLayout />}>
         <Route
           path=""

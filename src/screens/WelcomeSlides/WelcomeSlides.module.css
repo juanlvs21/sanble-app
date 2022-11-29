@@ -1,0 +1,125 @@
+.slidesWelcomeContent::part(scroll) {
+  overflow: hidden;
+}
+
+.slidesWelcomeContainer {
+  height: 100vh;
+}
+
+.slideWelcomeDataContent {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-position: top;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.slideWelcomeImgContainer {
+  width: 100%;
+  height: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+.slideWelcomeImgContainer img {
+  object-fit: contain;
+  object-position: center;
+}
+
+.slideWelcomeDescriptionContainer {
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  height: 50%;
+  padding: 10px 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.slideWelcomeDescriptionContainer h1 {
+  font-weight: 600;
+  font-size: 24px;
+}
+
+.slideWelcomeDescriptionContainer h1.onlyTitle {
+  margin-top: 30px;
+}
+
+.slideWelcomeDescriptionContainer p {
+  font-weight: 500;
+  font-size: 16px;
+  color: var(--ion-color-secondary);
+  letter-spacing: 0.5px;
+  line-height: 25px;
+}
+
+.slideWelcomeActions {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+.slidesWelcomeStart {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.slidesWelcomeStart span {
+  margin-right: 20px;
+  font-weight: 500;
+  font-size: 18px;
+}
+
+.slidesWelcomeStart svg {
+  margin-left: -18px;
+  margin-top: 3px;
+}
+
+.slidesWelcomePrev {
+  position: fixed;
+  top: 40px;
+  left: 20px;
+  width: 40px;
+  height: 40px;
+  border-radius: 40px;
+  z-index: 1000;
+}
+
+.slidesWelcomePrev::part(native) {
+  width: 40px;
+  height: 40px;
+  border-radius: 40px;
+  padding: 0;
+}
+
+.slidesWelcomeProgress {
+  position: relative;
+  bottom: 20px;
+  z-index: 1000;
+  width: calc(100% - 40px);
+  max-width: 600px;
+  overflow: hidden;
+  margin: auto;
+  height: 7px;
+  border-radius: var(--sanble-border-radius);
+  background-color: rgba(255, 134, 52, 0.24);
+}
+
+.slidesWelcomeProgress div {
+  background-color: var(--ion-color-primary);
+  border-radius: var(--sanble-border-radius);
+  width: 100%;
+  height: 7px;
+  position: relative;
+  transition: all 400ms ease-in-out;
+}

@@ -138,6 +138,14 @@ ion-button.button-block {
   color: #015871;
 }
 
+ion-button {
+  border-radius: var(--sanble-border-radius);
+}
+
+ion-button::part(native) {
+  border-radius: var(--sanble-border-radius);
+}
+
 ion-toast {
   --background: #fff;
   --box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);

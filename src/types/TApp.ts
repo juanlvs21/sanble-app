@@ -4,4 +4,5 @@ export type TApp = {
   openNotifications: boolean;
   scrollTop: number;
   isLoadingFull: boolean;
+  hideMobileWelcome: boolean;
 };

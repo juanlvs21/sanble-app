@@ -17,7 +17,6 @@ import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 import { useFairs } from "@/hooks/useFairs";
 import { useStatusBar } from "@/hooks/useStatusBar";
 import { useUser } from "@/hooks/useUser";
-import { IonButton } from "@ionic/react";
 import styles from "./FairDetails.module.css";
 
 export const FairDetails: React.FC = () => {
@@ -93,7 +92,7 @@ export const FairDetails: React.FC = () => {
         />
         <div className={styles.fairDetailsBg}>
           {openCover && (
-            <IonButton
+            <Button
               fill="solid"
               color="light"
               size="small"
@@ -101,7 +100,7 @@ export const FairDetails: React.FC = () => {
               className={`${styles.fairDetailsCoverBtnClose} animate__animated animate__zoomIn`}
             >
               <IoIosCloseCircleOutline size={24} />
-            </IonButton>
+            </Button>
           )}
           <picture
             className={`${styles.fairCover} ${

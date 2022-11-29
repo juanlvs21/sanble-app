@@ -9,6 +9,7 @@ export const initialAppState: TApp = {
   openNotifications: false,
   scrollTop: 0,
   isLoadingFull: false,
+  hideMobileWelcome: false,
 };
 
 export const appReducer = (state: TApp, action: TAction<TApp>): TApp => {
@@ -22,7 +23,7 @@ export const appReducer = (state: TApp, action: TAction<TApp>): TApp => {
         readyToUse,
       };
     }
-    case appConstants.SHOW_SIDEBAR: {
+    case appConstants.SET_SHOW_SIDEBAR: {
       const showSidebar =
         action.payload?.showSidebar ?? initialAppState.showSidebar;
 
@@ -31,7 +32,7 @@ export const appReducer = (state: TApp, action: TAction<TApp>): TApp => {
         showSidebar,
       };
     }
-    case appConstants.OPEN_NOTIFICATIONS: {
+    case appConstants.SET_OPEN_NOTIFICATIONS: {
       const openNotifications =
         action.payload?.openNotifications ?? initialAppState.showSidebar;
 
@@ -54,6 +55,14 @@ export const appReducer = (state: TApp, action: TAction<TApp>): TApp => {
       return {
         ...state,
         isLoadingFull,
+      };
+    }
+    case appConstants.SET_HIDE_MOBILE_WELCOME: {
+      const hideMobileWelcome = action.payload?.hideMobileWelcome ?? false;
+
+      return {
+        ...state,
+        hideMobileWelcome,
       };
     }
 

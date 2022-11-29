@@ -2,13 +2,22 @@ import { getPlatforms, ScrollDetail } from "@ionic/react";
 
 import { appActions } from "@/context/actions/appActions";
 import { useAppContext } from "@/context/AppContext";
+import { getStorage } from "@/helpers/storage";
+import { StorageHideMobileWelcomeKey } from "@/helpers/storageKeys";
 
 export const useApp = () => {
   const platforms = getPlatforms();
-  const [{ readyToUse, showSidebar, scrollTop, isLoadingFull }, dispatch] =
-    useAppContext();
-  const { setReadyToUse, setShowSidebar, setScrollTop, setIsLoadingFull } =
-    appActions(dispatch);
+  const [
+    { readyToUse, showSidebar, scrollTop, isLoadingFull, hideMobileWelcome },
+    dispatch,
+  ] = useAppContext();
+  const {
+    setReadyToUse,
+    setShowSidebar,
+    setScrollTop,
+    setIsLoadingFull,
+    setHideMobileWelcome,
+  } = appActions(dispatch);
 
   const isPlatform = (
     platf:
@@ -30,7 +39,13 @@ export const useApp = () => {
 
   const handleSetReady = (ready: boolean) => setReadyToUse(ready);
 
-  const handleLoadData = async () => {};
+  const handleLoadData = async () => {
+    const hideMobileWelcome = await getStorage<boolean>(
+      StorageHideMobileWelcomeKey
+    );
+
+    setHideMobileWelcome(hideMobileWelcome);
+  };
 
   const handleShowSidebar = (show?: boolean) => {
     if (show === undefined) setShowSidebar(!showSidebar);
@@ -52,6 +67,7 @@ export const useApp = () => {
     showSidebar,
     scrollTop,
     isLoadingFull,
+    hideMobileWelcome,
     isMobile: isPlatform("mobile"),
     isCapacitor: isPlatform("capacitor"),
   };

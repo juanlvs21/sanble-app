@@ -2,6 +2,8 @@ import { Dispatch } from "react";
 
 import { appConstants } from "@/context/constants";
 import { TAction } from "@/types/TContext";
+import { setStorage } from "@/helpers/storage";
+import { StorageHideMobileWelcomeKey } from "@/helpers/storageKeys";
 
 export const appActions = (dispatch: Dispatch<TAction>) => ({
   setReadyToUse: (readyToUse: boolean) =>
@@ -11,12 +13,12 @@ export const appActions = (dispatch: Dispatch<TAction>) => ({
     }),
   setShowSidebar: (showSidebar: boolean) =>
     dispatch({
-      type: appConstants.SHOW_SIDEBAR,
+      type: appConstants.SET_SHOW_SIDEBAR,
       payload: { showSidebar },
     }),
   setOpenNotifications: (openNotifications: boolean) =>
     dispatch({
-      type: appConstants.OPEN_NOTIFICATIONS,
+      type: appConstants.SET_OPEN_NOTIFICATIONS,
       payload: { openNotifications },
     }),
   setScrollTop: (scrollTop: number) =>
@@ -29,4 +31,12 @@ export const appActions = (dispatch: Dispatch<TAction>) => ({
       type: appConstants.SET_IS_LOADING_FULL,
       payload: { isLoadingFull },
     }),
+  setHideMobileWelcome: async (hideMobileWelcome: boolean = false) => {
+    await setStorage(StorageHideMobileWelcomeKey, Boolean(hideMobileWelcome));
+
+    return dispatch({
+      type: appConstants.SET_HIDE_MOBILE_WELCOME,
+      payload: { hideMobileWelcome },
+    });
+  },
 });
