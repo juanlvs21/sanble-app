@@ -10,7 +10,7 @@ import {
 import { useApp } from "@/hooks/useApp";
 import styles from "./Home.module.css";
 
-type ComponentProps = {
+export type ComponentProps = {
   /**
    * CSS transition className
    */

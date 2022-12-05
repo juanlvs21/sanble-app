@@ -4,7 +4,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { AppProvider as AppContextProvider } from "@/context/AppContext";
 import { AuthProvider } from "@/context/AuthContext";
 
-type ComponentProps = {
+export type ComponentProps = {
   /**
    * Children element
    */

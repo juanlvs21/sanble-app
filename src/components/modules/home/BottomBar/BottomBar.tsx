@@ -7,13 +7,11 @@ import { MdOutlineStorefront } from "react-icons/md";
 import { Link, useLocation, useMatch } from "react-router-dom";
 
 import { navFadeEnd, navFadeStart } from "@/helpers/constTransitionsClasses";
-import { useApp } from "@/hooks/useApp";
 import styles from "./BottomBar.module.css";
 
 export const BottomBar: React.FC = () => {
   const { pathname } = useLocation();
   const [transitionStage, setTransitionStage] = useState(navFadeEnd);
-  const { showSidebar } = useApp();
 
   const matchHome = useMatch("/app");
   const matchFairsList = useMatch("/app/ferias");

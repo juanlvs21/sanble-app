@@ -2,7 +2,7 @@ import { CSSProperties } from "react";
 
 import styles from "./Skeleton.module.css";
 
-type ComponentProps = {
+export type ComponentProps = {
   /**
    * Skeleton width
    */

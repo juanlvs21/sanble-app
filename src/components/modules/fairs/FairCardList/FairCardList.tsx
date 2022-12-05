@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
 import { HiOutlineCalendar } from "react-icons/hi";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import { fairType } from "@/helpers/fairs";
 import { TFair } from "@/types/TFairs";
@@ -10,19 +10,21 @@ import { Stars } from "@/components/common/Stars";
 import { useUser } from "@/hooks/useUser";
 import styles from "./FairCardList.module.css";
 
-type ComponentProps = {
+export type ComponentProps = {
   /**
    * Fair Details
    */
   fair: TFair;
 };
 
+// TODO: This card should change to a different layout on desktop screens. They suggested a large card with the whole cover in the background. Above a div with a gradient and the information it at the bottom of the card
 export const FairCardList: React.FC<ComponentProps> = ({ fair }) => {
-  const navigate = useNavigate();
   const { user, loadingSetFav, handleSetFavoriteFair } = useUser();
 
   return (
-    <div className={`animate__animated animate__fadeIn ${styles.fairListCard}`}>
+    <article
+      className={`animate__animated animate__fadeIn ${styles.fairListCard}`}
+    >
       <Link
         to={`/app/ferias/${fair.id}`}
         state={{ fairID: fair.id, fairName: fair.name }}
@@ -56,6 +58,6 @@ export const FairCardList: React.FC<ComponentProps> = ({ fair }) => {
         isActive={user?.favoriteFairs.includes(fair.id)}
         onClick={() => handleSetFavoriteFair(fair.id)}
       />
-    </div>
+    </article>
   );
 };

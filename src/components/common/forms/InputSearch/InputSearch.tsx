@@ -3,18 +3,29 @@ import { FiSearch } from "react-icons/fi";
 
 import { TInput } from "@/types/TComponents";
 
-type ComponentProps = TInput & {
+export type ComponentProps = TInput & {
+  /**
+   * Error content
+   */
   helper?: string | React.ReactElement;
+  /**
+   * Show error
+   */
   helperIsError?: boolean;
+  /**
+   * Custom className for content component
+   */
+  classNameItem?: string;
 };
 
 export const InputSearch: React.FC<ComponentProps> = ({
   inputmode = "search",
+  classNameItem = "",
   helper,
   helperIsError,
   ...rest
 }) => (
-  <IonItem fill="outline" className="inputItem withoutStart">
+  <IonItem fill="outline" className={`${classNameItem} inputItem withoutStart`}>
     <IonInput {...rest} inputmode={inputmode} />
     <IonButton
       slot="end"

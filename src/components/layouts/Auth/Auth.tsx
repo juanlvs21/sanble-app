@@ -17,7 +17,7 @@ const getWavesClass = (pathname: string) => {
   return cssClassName ? styles[cssClassName] : "";
 };
 
-type ComponentProps = {
+export type ComponentProps = {
   /**
    * CSS transition className
    */

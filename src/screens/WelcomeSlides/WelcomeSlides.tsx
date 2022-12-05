@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import { MdKeyboardArrowRight } from "react-icons/md";
 
 import { Button } from "@/components/common/buttons/Button";
-import { useStatusBar } from "@/hooks/useStatusBar";
 import { useUser } from "@/hooks/useUser";
 import styles from "./WelcomeSlides.module.css";
 import { setStorage } from "@/helpers/storage";

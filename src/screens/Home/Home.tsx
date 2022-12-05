@@ -1,13 +1,34 @@
+import { useEffect } from "react";
 import { BiBell } from "react-icons/bi";
 
 import { Button } from "@/components/common/buttons/Button";
+import { Carousel } from "@/components/common/Carousel";
+import { Fetcher } from "@/components/common/Fetcher";
 import { InputSearch } from "@/components/common/forms/InputSearch";
 import { TopBar } from "@/components/common/TopBar";
+import { FairCardBest } from "@/components/modules/fairs/FairCardBest";
 import { useDocumentTitle } from "@/hooks/useDocumentTitle";
+import { useHome } from "@/hooks/useHome";
 import styles from "./Home.module.css";
 
 export const Home: React.FC = () => {
   useDocumentTitle("Inicio 🏠");
+  const {
+    handleLoadFairsBest,
+    handleLoadStandsBest,
+    fairsBest,
+    standsBest,
+    isLoadingFairsBest,
+    isLoadingStandsBest,
+  } = useHome();
+
+  const handleLoadData = async () => {
+    await Promise.all([handleLoadFairsBest(), handleLoadStandsBest()]);
+  };
+
+  useEffect(() => {
+    handleLoadData();
+  }, []);
 
   return (
     <>
@@ -23,64 +44,45 @@ export const Home: React.FC = () => {
         startUser
         sticky
       />
-      <div className={styles.homeContainer}>
-        <InputSearch placeholder="Buscar Ferias, Stands, etc..." />
-        <h1>App</h1>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum
-          blandit venenatis orci et imperdiet. Nunc lacus turpis, lobortis id
-          gravida et, aliquet at quam. Donec sagittis tellus ut turpis ultrices
-          dictum. In mauris purus, feugiat eu aliquet a, vehicula nec dolor.
-          Donec tristique consectetur nisl, sed consectetur turpis feugiat
-          vitae. Pellentesque nec sapien odio. Curabitur maximus purus at massa
-          ullamcorper blandit.
-        </p>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum
-          blandit venenatis orci et imperdiet. Nunc lacus turpis, lobortis id
-          gravida et, aliquet at quam. Donec sagittis tellus ut turpis ultrices
-          dictum. In mauris purus, feugiat eu aliquet a, vehicula nec dolor.
-          Donec tristique consectetur nisl, sed consectetur turpis feugiat
-          vitae. Pellentesque nec sapien odio. Curabitur maximus purus at massa
-          ullamcorper blandit.
-        </p>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum
-          blandit venenatis orci et imperdiet. Nunc lacus turpis, lobortis id
-          gravida et, aliquet at quam. Donec sagittis tellus ut turpis ultrices
-          dictum. In mauris purus, feugiat eu aliquet a, vehicula nec dolor.
-          Donec tristique consectetur nisl, sed consectetur turpis feugiat
-          vitae. Pellentesque nec sapien odio. Curabitur maximus purus at massa
-          ullamcorper blandit.
-        </p>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum
-          blandit venenatis orci et imperdiet. Nunc lacus turpis, lobortis id
-          gravida et, aliquet at quam. Donec sagittis tellus ut turpis ultrices
-          dictum. In mauris purus, feugiat eu aliquet a, vehicula nec dolor.
-          Donec tristique consectetur nisl, sed consectetur turpis feugiat
-          vitae. Pellentesque nec sapien odio. Curabitur maximus purus at massa
-          ullamcorper blandit.
-        </p>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum
-          blandit venenatis orci et imperdiet. Nunc lacus turpis, lobortis id
-          gravida et, aliquet at quam. Donec sagittis tellus ut turpis ultrices
-          dictum. In mauris purus, feugiat eu aliquet a, vehicula nec dolor.
-          Donec tristique consectetur nisl, sed consectetur turpis feugiat
-          vitae. Pellentesque nec sapien odio. Curabitur maximus purus at massa
-          ullamcorper blandit.
-        </p>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum
-          blandit venenatis orci et imperdiet. Nunc lacus turpis, lobortis id
-          gravida et, aliquet at quam. Donec sagittis tellus ut turpis ultrices
-          dictum. In mauris purus, feugiat eu aliquet a, vehicula nec dolor.
-          Donec tristique consectetur nisl, sed consectetur turpis feugiat
-          vitae. Pellentesque nec sapien odio. Curabitur maximus purus at massa
-          ullamcorper blandit.
-        </p>
-      </div>
+      <InputSearch
+        placeholder="Buscar Ferias, Stands, etc..."
+        classNameItem={styles.homeSearchInput}
+      />
+      <Fetcher
+        handleRefresh={handleLoadData}
+        classNameContent={styles.homeContainer}
+      >
+        <Carousel
+          title="Mejores Ferias"
+          isLoading={isLoadingFairsBest}
+          items={
+            fairsBest?.map((fair) => (
+              <FairCardBest key={fair.id} fair={fair} />
+            )) || []
+          }
+          skeletonProps={{
+            width: "100%",
+            height: 90,
+            style: {
+              marginBottom: 45,
+            },
+          }}
+          className={styles.homeCarousel}
+        />
+        <Carousel
+          title="Mejores Stands"
+          isLoading={isLoadingStandsBest}
+          items={standsBest?.map((stand) => <h1>{stand.name}</h1>) || []}
+          skeletonProps={{
+            width: "100%",
+            height: 90,
+            style: {
+              marginBottom: 45,
+            },
+          }}
+          className={styles.homeCarousel}
+        />
+      </Fetcher>
     </>
   );
 };

@@ -1,0 +1,93 @@
+.fairBestCard {
+  background-color: var(--ion-color-light);
+  border-radius: var(--sanble-border-radius);
+  color: var(--ion-text-color);
+  position: relative;
+  display: flex;
+  height: 90px;
+  width: 100%;
+  padding: 5px;
+  cursor: pointer;
+  -webkit-box-shadow: 0px 0px 5px 5px rgba(200, 200, 200, 0.05);
+  box-shadow: 0px 0px 5px 5px rgba(200, 200, 200, 0.05);
+}
+
+.fairBestCover {
+  height: 100%;
+}
+
+.fairBestCover img {
+  border-radius: var(--sanble-border-radius);
+  object-fit: cover;
+  object-position: center;
+  width: 100%;
+  height: 100%;
+}
+
+.fairBestContent {
+  width: calc(100% - 70px);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  text-align: start;
+  padding: 5px 10px;
+}
+
+.fairBestContent h1 {
+  font-weight: 600;
+  font-size: 12px;
+  height: 14px;
+  margin: 0;
+
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.fairBestContent .fairBestCardType {
+  /* color: var(--sanble-gray-color-2); */
+  font-weight: 500;
+  font-size: 10px;
+  margin-top: 5px;
+  height: 12px;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.fairBestContent .fairBestCardDate {
+  background-color: var(--ion-color-primary);
+  border-radius: var(--sanble-border-radius);
+  color: var(--ion-color-light);
+  font-weight: 500;
+  font-size: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2px 8px;
+  margin-top: auto;
+}
+
+.fairBestContent .fairBestCardDate svg {
+  margin-right: 5px;
+}
+
+@media (min-width: 320px) {
+  .fairBestCover {
+    width: 60px;
+  }
+}
+
+@media (min-width: 425px) {
+  .fairBestCover {
+    width: 70px;
+  }
+}
+
+@media (min-width: 768px) {
+  .fairBestCover {
+    width: 80px;
+  }
+}

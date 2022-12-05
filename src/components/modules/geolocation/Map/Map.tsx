@@ -19,7 +19,7 @@ const userPin = new Icon({
   iconSize: [50, 50],
 });
 
-type ComponentProps = {
+export type ComponentProps = {
   /**
    * List of marks to place on the map
    *

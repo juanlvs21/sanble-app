@@ -28,6 +28,7 @@
 .topBarTitle {
   font-family: "Quicksand";
   font-weight: 700;
+  color: var(--ion-color-primary);
 }
 
 .topBarTitleLight {

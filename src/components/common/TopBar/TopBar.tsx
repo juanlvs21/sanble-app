@@ -5,7 +5,7 @@ import { TopBarUserBtn } from "@/components/common/TopBarUserBtn";
 
 import styles from "./TopBar.module.css";
 
-type ComponentProps = {
+export type ComponentProps = {
   /**
    * React component or string for the TopBar title
    */

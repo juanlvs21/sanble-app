@@ -2,7 +2,7 @@ import { IonInput, IonItem, IonNote } from "@ionic/react";
 
 import { TInput } from "@/types/TComponents";
 
-type ComponentProps = TInput & {
+export type ComponentProps = TInput & {
   Icon?: React.ReactElement;
   helper?: string | React.ReactElement;
   helperIsError?: boolean;

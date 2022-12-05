@@ -4,7 +4,7 @@ import { HiOutlineKey, HiOutlineEye, HiOutlineEyeOff } from "react-icons/hi";
 
 import { TInput } from "@/types/TComponents";
 
-type ComponentProps = TInput & {
+export type ComponentProps = TInput & {
   helper?: string | React.ReactElement;
   helperIsError?: boolean;
 };

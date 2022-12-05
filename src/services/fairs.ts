@@ -21,7 +21,9 @@ export const getFairListInfiniteScrollFetcher = (
       ...data.data,
       list: infiteScrollData("id", data.data.list, currentData),
     }));
-// TODO: I must create a similar fetcher but without joining the data, with a normal pagination
+
+export const getFairBestListFetcher = (): Promise<TFair[]> =>
+  api.get(`/fairs/best`).then(({ data }) => data.data);
 
 export const getFairDetailsFetcher = (fairID: string): Promise<TFair> =>
   api.get(`/fairs/${fairID}`).then(({ data }) => data.data);

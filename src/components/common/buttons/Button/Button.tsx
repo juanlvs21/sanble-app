@@ -4,7 +4,7 @@ import { CSSProperties } from "react";
 import { Spinner } from "@/components/common/loaders/Spinner";
 import { TButton } from "@/types/TComponents";
 
-type ComponentProps = TButton & {
+export type ComponentProps = TButton & {
   /**
    * Children element
    */

@@ -12,7 +12,7 @@ import { useApp } from "@/hooks/useApp";
 import styles from "./Fetcher.module.css";
 import { Spinner } from "@/components/common/loaders/Spinner";
 
-type ComponentProps = {
+export type ComponentProps = {
   /**
    * Children element
    */

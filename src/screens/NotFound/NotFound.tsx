@@ -2,7 +2,7 @@ import { useEffect } from "react";
 
 import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 
-type ComponentProps = {
+export type ComponentProps = {
   /**
    * Function to set location in displayLocation
    */

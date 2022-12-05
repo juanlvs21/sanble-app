@@ -5,7 +5,7 @@ import { Sidebar } from "@/components/common/Sidebar";
 import { useApp } from "@/hooks/useApp";
 import styles from "./Main.module.css";
 
-type ComponentProps = {
+export type ComponentProps = {
   /**
    * CSS transition className
    *

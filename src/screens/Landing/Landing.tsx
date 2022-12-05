@@ -4,7 +4,7 @@ import { useLanding } from "@/hooks/useLanding";
 import { Link } from "react-router-dom";
 import styles from "./Landing.module.css";
 
-type ComponentProps = {
+export type ComponentProps = {
   /**
    * CSS transition className
    */

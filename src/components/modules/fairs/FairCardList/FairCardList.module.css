@@ -24,7 +24,7 @@
 
 .fairListCardContent {
   margin: 15px 20px;
-  width: 100%;
+  width: calc(100% - 60px);
   display: flex;
   flex-direction: column;
 }
@@ -34,7 +34,7 @@
   font-size: 18px;
   margin: 0;
   margin-bottom: 5px;
-  max-height: 43px;
+  max-height: 22px;
 
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
@@ -46,13 +46,18 @@
   /* color: var(--sanble-gray-color-2); */
   font-weight: 500;
   font-size: 13px;
+  height: 15px;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .fairListCardContent .fairListCardDate {
   display: flex;
   width: 100%;
   align-items: center;
-  margin-top: 2px;
+  margin-top: 10px;
 }
 
 .fairListCardContent .fairListCardDate svg {
@@ -69,8 +74,8 @@
 
 .fairListCard .fairListCardBtnFav {
   position: absolute;
-  right: 10px;
-  bottom: 10px;
+  right: 6px;
+  bottom: 0;
 }
 
 .fairListCardLink {
@@ -83,15 +88,30 @@
   .fairListCard {
     margin: 20px;
   }
+  .fairListCardContent {
+    width: cal(100% - 80px);
+  }
 }
 
-@media (max-width: 320px) {
+@media (max-width: 380px) {
+  .fairListCardBtnFav {
+    bottom: -5px;
+    width: 30px;
+    height: 30px;
+  }
+  .fairListCardBtnFav::part(native) {
+    width: 30px;
+    height: 30px;
+  }
+}
+
+@media (max-width: 330px) {
   .fairListCard img {
     width: 80px;
   }
 
   .fairListCardContent {
-    width: cal(100% - 80px);
+    width: cal(100% - 100px);
   }
 
   .fairListCardContent h1 {

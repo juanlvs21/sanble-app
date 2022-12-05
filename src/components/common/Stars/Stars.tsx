@@ -2,7 +2,7 @@ import { TiStarOutline, TiStarFullOutline } from "react-icons/ti";
 
 import styles from "./Stars.module.css";
 
-type ComponentProps = {
+export type ComponentProps = {
   /**
    * Number of filled stars
    */

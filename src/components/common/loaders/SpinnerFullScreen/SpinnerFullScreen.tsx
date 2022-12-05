@@ -1,7 +1,7 @@
 import { Spinner } from "@/components/common/loaders/Spinner";
 import styles from "./SpinnerFullScreen.module.css";
 
-type ComponentProps = {
+export type ComponentProps = {
   /**
    * If true, the spinner will be show full screen
    */

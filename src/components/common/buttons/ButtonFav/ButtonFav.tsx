@@ -3,7 +3,7 @@ import { TButton } from "@/types/TComponents";
 import { IoMdHeart, IoMdHeartEmpty } from "react-icons/io";
 import styles from "./ButtonFav.module.css";
 
-type ComponentProps = Omit<TButton, "color"> & {
+export type ComponentProps = Omit<TButton, "color"> & {
   /**
    * Button Loading
    */
