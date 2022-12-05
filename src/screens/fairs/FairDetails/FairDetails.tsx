@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { IoIosArrowBack, IoIosCloseCircleOutline } from "react-icons/io";
 import { RiMapPinLine } from "react-icons/ri";
-import { TiStarOutline } from "react-icons/ti";
+import { TiStar } from "react-icons/ti";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 import { Button } from "@/components/common/buttons/Button";
@@ -142,7 +142,7 @@ export const FairDetails: React.FC = () => {
                   <span
                     className={`${styles.fairDetailsNameStarsIcon} animate__animated animate__fadeIn`}
                   >
-                    <TiStarOutline size={22} color="#FFF" />
+                    <TiStar size={25} />
                   </span>
                   <span className="animate__animated animate__fadeIn">{`${
                     fair?.stars || 0
