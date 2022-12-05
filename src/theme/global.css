@@ -76,6 +76,10 @@ ion-item.inputItem::part(native)::after {
   background: transparent;
 }
 
+ion-item.inputItem.withoutStart::part(native) {
+  padding-left: 18px;
+}
+
 ion-item.inputItem ion-input {
   margin-top: -3px;
 }

@@ -14,7 +14,7 @@ export const InputSearch: React.FC<ComponentProps> = ({
   helperIsError,
   ...rest
 }) => (
-  <IonItem fill="outline" className="inputItem">
+  <IonItem fill="outline" className="inputItem withoutStart">
     <IonInput {...rest} inputmode={inputmode} />
     <IonButton
       slot="end"
