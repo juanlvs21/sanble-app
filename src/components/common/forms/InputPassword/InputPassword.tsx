@@ -31,7 +31,7 @@ export const InputPassword: React.FC<ComponentProps> = ({
       />
       <IonButton
         slot="end"
-        className="showPassBtn"
+        className="itemInputEndIcon"
         fill="clear"
         shape="round"
         onClick={toggleShowPassword}

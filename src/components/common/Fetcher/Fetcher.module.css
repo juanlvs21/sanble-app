@@ -56,7 +56,7 @@
   .ionContentFetcher {
     --padding-top: 100px;
     --padding-bottom: 100px;
-    --padding-start: 20px;
-    --padding-end: 20px;
+    --padding-start: 30px;
+    --padding-end: 30px;
   }
 }

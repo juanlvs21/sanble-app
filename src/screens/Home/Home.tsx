@@ -1,9 +1,10 @@
 import { BiBell } from "react-icons/bi";
 
 import { Button } from "@/components/common/buttons/Button";
+import { InputSearch } from "@/components/common/forms/InputSearch";
 import { TopBar } from "@/components/common/TopBar";
 import { useDocumentTitle } from "@/hooks/useDocumentTitle";
-// import styles from "./Home.module.css";
+import styles from "./Home.module.css";
 
 export const Home: React.FC = () => {
   useDocumentTitle("Inicio 🏠");
@@ -22,7 +23,8 @@ export const Home: React.FC = () => {
         startUser
         sticky
       />
-      <div>
+      <div className={styles.homeContainer}>
+        <InputSearch placeholder="Buscar Ferias, Stands, etc..." />
         <h1>App</h1>
         <p>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum

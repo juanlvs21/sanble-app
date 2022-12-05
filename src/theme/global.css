@@ -56,7 +56,8 @@ ion-searchbar input.searchbar-input {
 
 ion-item.inputItem {
   --border-radius: var(--sanble-border-radius);
-  --border-color: #fff;
+  --background: var(--ion-color-light);
+  --border-color: var(--ion-color-light);
   --transition: all 400ms ease-in-out;
   --padding-start: 45px;
   --padding-top: 2px;
@@ -118,7 +119,7 @@ ion-item.inputItem.item-has-value .slotIconStart {
   box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
 }
 
-ion-item.inputItem .showPassBtn {
+ion-item.inputItem .itemInputEndIcon {
   height: 35px;
   width: 35px;
   margin-top: 0;

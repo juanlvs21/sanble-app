@@ -7,3 +7,8 @@
   border-radius: 8px;
   background-color: var(--ion-color-primary);
 }
+
+.homeContainer {
+  margin-top: 70px;
+  padding: 30px;
+}
