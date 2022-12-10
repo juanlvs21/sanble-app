@@ -146,8 +146,7 @@ ion-button.button-block {
 ion-button {
   border-radius: var(--sanble-border-radius);
 }
-
-ion-button::part(native) {
+medium ion-button::part(native) {
   border-radius: var(--sanble-border-radius);
 }
 

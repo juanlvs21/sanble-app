@@ -57,7 +57,7 @@ export const ButtonFav: React.FC<ComponentProps> = ({
   <Button
     color={color || (isActive ? "primary" : "medium")}
     className={`${styles.buttonFav} ${className}`}
-    spinnerColor={spinnerColor || (isActive ? "medium" : "primary")}
+    spinnerColor={spinnerColor || (isActive ? "medium" : "dark")}
     spinnerSize={15}
     fill="solid"
     {...rest}

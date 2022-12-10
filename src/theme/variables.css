@@ -71,7 +71,7 @@ http://ionicframework.com/docs/theming/ */
   --ion-color-medium-rgb: 214, 214, 214;
   --ion-color-medium-contrast: #ffffff;
   --ion-color-medium-contrast-rgb: 255, 255, 255;
-  --ion-color-medium-shade: var(--ion-text-color);
+  --ion-color-medium-shade: var(--sanble-gray-color-1);
   --ion-color-medium-tint: #9d9fa6;
 
   /** light **/

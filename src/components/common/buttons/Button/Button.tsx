@@ -45,7 +45,7 @@ export const Button: React.FC<ComponentProps> = ({
   isLoading,
   disabled,
   spinnerStyle,
-  spinnerSize = 18,
+  spinnerSize = 25,
   spinnerColor = "light",
   ...rest
 }) => (

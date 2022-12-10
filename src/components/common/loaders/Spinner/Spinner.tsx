@@ -85,7 +85,7 @@ export const Spinner: React.FC<ComponentProps> = ({
       className={`animate__animated animate__bounceIn ${className}`}
       style={styleContainer}
     >
-      <div
+      <span
         className={`${styles.spinner} ${colorClass[color]}`}
         style={{ width: size, height: size }}
       />

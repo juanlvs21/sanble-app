@@ -68,7 +68,6 @@
 .topBarContainer ion-button::part(native) {
   --background: var(--ion-color-light);
   --color: var(--sanble-gray-color-2);
-  border: 1px solid var(--ion-color-light);
 }
 
 @media (min-width: 768px) {
