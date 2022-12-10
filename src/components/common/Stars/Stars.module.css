@@ -1,4 +1,8 @@
 .star {
   margin-right: 1px;
+  color: var(--sanble-gray-color-2);
+}
+
+.star.starFull {
   color: var(--ion-color-primary);
 }

@@ -1,4 +1,4 @@
-import { TiStarOutline, TiStarFullOutline } from "react-icons/ti";
+import { TiStarFullOutline } from "react-icons/ti";
 
 import styles from "./Stars.module.css";
 
@@ -15,12 +15,16 @@ export const Stars: React.FC<ComponentProps> = ({ value }) => {
       {Array(value)
         .fill(0)
         .map((_, i) => (
-          <TiStarFullOutline key={i} className={styles.star} size={20} />
+          <TiStarFullOutline
+            key={i}
+            className={`${styles.star} ${styles.starFull}`}
+            size={20}
+          />
         ))}
       {Array(5 - value)
         .fill(0)
         .map((_, i) => (
-          <TiStarOutline key={i} className={styles.star} size={20} />
+          <TiStarFullOutline key={i} className={styles.star} size={20} />
         ))}
     </div>
   );

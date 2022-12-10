@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { useMediaQuery } from "react-responsive";
 
 import { fairType } from "@/helpers/fairs";
 import { TFair } from "@/types/TFairs";
@@ -14,31 +15,35 @@ export type ComponentProps = {
 };
 
 // TODO: This card should change to a different layout on desktop screens. They suggested a large card with the whole cover in the background. Above a div with a gradient and the information it at the bottom of the card
-export const FairCardBest: React.FC<ComponentProps> = ({ fair }) => (
-  <Link
-    to={`/app/ferias/${fair.id}`}
-    state={{ fairID: fair.id, fairName: fair.name }}
-  >
-    <article className={styles.fairBestCard}>
-      <picture className={styles.fairBestCover}>
-        <img src={fair.coverUrl} alt={fair.name} />
-      </picture>
-      <div className={styles.fairBestContent}>
-        <h1>{fair.name}</h1>
+export const FairCardBest: React.FC<ComponentProps> = ({ fair }) => {
+  const isMobileL = useMediaQuery({ query: "(min-width: 425px)" });
 
-        <span className={styles.fairBestCardType}>
-          {fairType[`${fair.type}_short`]}
-        </span>
+  return (
+    <Link
+      to={`/app/ferias/${fair.id}`}
+      state={{ fairID: fair.id, fairName: fair.name }}
+    >
+      <article className={styles.fairBestCard}>
+        <picture className={styles.fairBestCover}>
+          <img src={fair.coverUrl} alt={fair.name} />
+        </picture>
+        <div className={styles.fairBestContent}>
+          <h1>{fair.name}</h1>
 
-        <div className={styles.fairBestCardDate}>
-          <HiOutlineCalendar size={15} />
-          <span>
-            {fair.celebrationDate
-              ? dayjs(fair.celebrationDate).format("DD MMM - HH:mm")
-              : "Próximamente"}
+          <span className={styles.fairBestCardType}>
+            {fairType[`${fair.type}${isMobileL ? "_long" : "_short"}`]}
           </span>
+
+          <div className={styles.fairBestCardDate}>
+            <HiOutlineCalendar size={15} />
+            <span>
+              {fair.celebrationDate
+                ? dayjs(fair.celebrationDate).format("DD MMM - HH:mm")
+                : "Próximamente"}
+            </span>
+          </div>
         </div>
-      </div>
-    </article>
-  </Link>
-);
+      </article>
+    </Link>
+  );
+};

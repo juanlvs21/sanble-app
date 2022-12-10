@@ -46,11 +46,11 @@
 }
 
 .fairBestContent .fairBestCardType {
-  /* color: var(--sanble-gray-color-2); */
+  color: var(--sanble-gray-color-2);
   font-weight: 500;
-  font-size: 10px;
+  font-size: 11px;
   margin-top: 5px;
-  height: 12px;
+  height: 14px;
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
   overflow: hidden;
@@ -83,6 +83,13 @@
 @media (min-width: 425px) {
   .fairBestCover {
     width: 70px;
+  }
+  .fairBestContent h1 {
+    font-size: 14px;
+    height: 16px;
+  }
+  .fairBestContent .fairBestCardType {
+    font-size: 12px;
   }
 }
 
