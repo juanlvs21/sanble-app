@@ -2,7 +2,6 @@ import { IonApp, setupIonicReact } from "@ionic/react";
 import { BrowserRouter } from "react-router-dom";
 
 import "react-toastify/dist/ReactToastify.css";
-import "react-tooltip/dist/react-tooltip.css";
 
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";

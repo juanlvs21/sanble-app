@@ -8,7 +8,7 @@ import {
   getFairListGeolocationFetcher,
   getFairListInfiniteScrollFetcher,
 } from "@/services";
-import { TFair, TFairGeo } from "@/types/TFairs";
+import { TFair, TFairGeo } from "@/types/TFair";
 import { TPaginationParams } from "@/types/TPagination";
 import { TResponseList } from "@/types/THttp";
 

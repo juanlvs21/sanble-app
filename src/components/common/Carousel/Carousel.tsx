@@ -46,7 +46,8 @@ const slideOpts = {
 
   breakpoints: {
     320: { slidesPerView: 1.1 }, // >= 320
-    375: { slidesPerView: 1.5 }, // >= 375
+    375: { slidesPerView: 1.2 }, // >= 375
+    425: { slidesPerView: 1.3 }, // >= 425
     500: { slidesPerView: 1.8 }, // >= 500
     630: { slidesPerView: 2.4 }, // >= 630
     768: { slidesPerView: 2.8 }, // >= 768

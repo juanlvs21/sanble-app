@@ -1,9 +1,10 @@
 import dayjs from "dayjs";
 import { HiOutlineCalendar } from "react-icons/hi";
 import { Link } from "react-router-dom";
+import { useMediaQuery } from "react-responsive";
 
 import { fairType } from "@/helpers/fairs";
-import { TFair } from "@/types/TFairs";
+import { TFair } from "@/types/TFair";
 
 import { ButtonFav } from "@/components/common/buttons/ButtonFav";
 import { Stars } from "@/components/common/Stars";
@@ -19,6 +20,7 @@ export type ComponentProps = {
 
 // TODO: This card should change to a different layout on desktop screens. They suggested a large card with the whole cover in the background. Above a div with a gradient and the information it at the bottom of the card
 export const FairCardList: React.FC<ComponentProps> = ({ fair }) => {
+  const isMobileS = useMediaQuery({ query: "(max-width: 320px)" });
   const { user, loadingSetFav, handleSetFavoriteFair } = useUser();
 
   return (
@@ -37,7 +39,7 @@ export const FairCardList: React.FC<ComponentProps> = ({ fair }) => {
           <h1>{fair.name}</h1>
           <Stars value={fair.stars} />
           <span className={styles.fairListCardType}>
-            {fairType[`${fair.type}_long`]}
+            {fairType[`${fair.type}${isMobileS ? "_short" : "_long"}`]}
           </span>
 
           <div className={styles.fairListCardDate}>

@@ -1,4 +1,4 @@
-import { TFairGeo } from "@/types/TFairs";
+import { TFairGeo } from "@/types/TFair";
 import { EMapIcon, TMapMarker } from "@/types/TMap";
 
 export const formatFairsMarks = (

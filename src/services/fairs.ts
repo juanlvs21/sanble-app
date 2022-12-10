@@ -2,7 +2,7 @@ import { AxiosResponse } from "axios";
 
 import { infiteScrollData } from "@/helpers/infiniteScrollData";
 import { api } from "@/services";
-import { TFair } from "@/types/TFairs";
+import { TFair } from "@/types/TFair";
 import { TPaginationParams } from "@/types/TPagination";
 import { TResponseList } from "@/types/THttp";
 

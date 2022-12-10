@@ -17,15 +17,22 @@ export const Home: React.FC = () => {
   const {
     handleLoadFairsBest,
     handleLoadStandsBest,
+    handleLoadProductTypes,
     fairsBest,
     standsBest,
+    productTypes,
     isLoadingFairsBest,
     isLoadingStandsBest,
+    isLoadingProductTypes,
   } = useHome();
   const isLaptop = useMediaQuery({ query: "(min-width: 1024px)" });
 
   const handleLoadData = async () => {
-    await Promise.all([handleLoadFairsBest(), handleLoadStandsBest()]);
+    await Promise.all([
+      handleLoadFairsBest(),
+      handleLoadStandsBest(),
+      handleLoadProductTypes(),
+    ]);
   };
 
   useEffect(() => {
@@ -64,10 +71,30 @@ export const Home: React.FC = () => {
           }
           skeletonProps={{
             width: "100%",
-            height: isLaptop ? 180 : 90,
-            style: {
-              marginBottom: 45,
-            },
+            height: isLaptop ? 180 : 110,
+          }}
+          className={styles.homeCarousel}
+        />
+        <Carousel
+          title="Productos"
+          isLoading={isLoadingProductTypes}
+          items={
+            productTypes?.map((type) => (
+              <div
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  background: "#ff8634",
+                  borderRadius: 20,
+                }}
+              >
+                <span>{type.name}</span>
+              </div>
+            )) || []
+          }
+          skeletonProps={{
+            width: "100%",
+            height: isLaptop ? 180 : 110,
           }}
           className={styles.homeCarousel}
         />
@@ -76,17 +103,22 @@ export const Home: React.FC = () => {
           isLoading={isLoadingStandsBest}
           items={
             standsBest?.map((stand) => (
-              <div style={{ width: "100%", height: "100%", background: "red" }}>
-                <h1>{stand.name}</h1>
+              <div
+                key={stand.id}
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  background: "#ff8634",
+                  borderRadius: 20,
+                }}
+              >
+                <span>{stand.name}</span>
               </div>
             )) || []
           }
           skeletonProps={{
             width: "100%",
-            height: 90,
-            style: {
-              marginBottom: 45,
-            },
+            height: isLaptop ? 180 : 110,
           }}
           className={styles.homeCarousel}
         />

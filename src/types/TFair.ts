@@ -1,4 +1,3 @@
-import { TPagination } from "@/types/THttp";
 import { TPhotograph } from "@/types/TPhotograph";
 import { TFireBaseDocRefBasic } from "./TFirebase";
 

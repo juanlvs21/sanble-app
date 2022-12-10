@@ -6,20 +6,27 @@
 
 .slidesItem {
   width: 220px;
-  height: 100px;
+  height: 110px;
   transition: all 400ms ease-in-out;
 }
 
-@media (min-width: 425px) {
+@media (min-width: 375px) {
   .slidesItem {
-    width: 240px;
+    width: 250px;
     transition: all 400ms ease-in-out;
   }
 }
 
-@media (min-width: 550px) {
+@media (min-width: 425px) {
   .slidesItem {
     width: 260px;
+    transition: all 400ms ease-in-out;
+  }
+}
+
+@media (min-width: 500px) {
+  .slidesItem {
+    width: 250px;
     transition: all 400ms ease-in-out;
   }
 }
