@@ -1,3 +1,4 @@
+import { useIonActionSheet } from "@ionic/react";
 import { useEffect } from "react";
 import { BiFilterAlt } from "react-icons/bi";
 
@@ -8,13 +9,16 @@ import { TopBar } from "@/components/common/TopBar";
 import { FairCardList } from "@/components/modules/fairs/FairCardList";
 import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 import { useFairs } from "@/hooks/useFairs";
+import { EFairOrderBy } from "@/types/TFair";
 import styles from "./FairsList.module.css";
 
 export const FairsList: React.FC = () => {
   useDocumentTitle("Lista de Ferias 🛍️");
+  const [present] = useIonActionSheet();
   const {
     fairsList,
     isLoadingFairsList,
+    orderBy,
     handleLoadFairsList,
     handleRefreshFairList,
     handleInfiniteFairList,
@@ -29,7 +33,55 @@ export const FairsList: React.FC = () => {
       <TopBar
         title="Ferias"
         end={
-          <Button>
+          <Button
+            onClick={() =>
+              present({
+                header: "Ordenar Ferias",
+                buttons: [
+                  {
+                    text: "Mejor puntuadas",
+                    cssClass: orderBy == EFairOrderBy.BEST ? "active" : "",
+                    handler: () =>
+                      handleLoadFairsList({ orderBy: EFairOrderBy.BEST }),
+                  },
+                  {
+                    text: "Menor puntuadas",
+                    cssClass: orderBy == EFairOrderBy.WORST ? "active" : "",
+                    handler: () =>
+                      handleLoadFairsList({ orderBy: EFairOrderBy.WORST }),
+                  },
+                  {
+                    text: "Favoritos",
+                    cssClass: orderBy == EFairOrderBy.FAVORITE ? "active" : "",
+                    handler: () =>
+                      handleLoadFairsList({ orderBy: EFairOrderBy.FAVORITE }),
+                  },
+                  {
+                    text: "Fechas cercanas",
+                    cssClass:
+                      orderBy == EFairOrderBy.CELEBRATIONDATE ? "active" : "",
+                    handler: () =>
+                      handleLoadFairsList({
+                        orderBy: EFairOrderBy.CELEBRATIONDATE,
+                      }),
+                  },
+                  {
+                    text: "Limpiar filtro",
+                    // cssClass: "warning-color",
+                    handler: () => handleLoadFairsList(),
+                  },
+                  {
+                    text: "Cancel",
+                    cssClass: "danger-color",
+                    role: "cancel",
+                    data: {
+                      action: "cancel",
+                    },
+                  },
+                ],
+              })
+            }
+          >
             <BiFilterAlt size={24} />
           </Button>
         }

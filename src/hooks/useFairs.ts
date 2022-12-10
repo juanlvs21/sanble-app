@@ -8,7 +8,7 @@ import {
   getFairListGeolocationFetcher,
   getFairListInfiniteScrollFetcher,
 } from "@/services";
-import { TFair, TFairGeo } from "@/types/TFair";
+import { EFairOrderBy, TFair, TFairGeo } from "@/types/TFair";
 import { TPaginationParams } from "@/types/TPagination";
 import { TResponseList } from "@/types/THttp";
 
@@ -22,6 +22,7 @@ export const useFairs = (hookParams?: THookParams) => {
 
   const [listPage, setListPage] = useState(1);
   const [listPerPage, setListPerPage] = useState(hookParams?.defaultPerPage);
+  const [orderBy, setOrderBy] = useState<string>(EFairOrderBy.BEST);
   const [list, setList] = useState<TFair[]>([]);
 
   const {
@@ -64,6 +65,8 @@ export const useFairs = (hookParams?: THookParams) => {
   }, [fairsListData]);
 
   const handleLoadFairsList = async (params?: TPaginationParams) => {
+    setOrderBy(params?.orderBy || EFairOrderBy.BEST);
+
     setListPage(params?.page || 1);
     setListPerPage(params?.perPage || hookParams?.defaultPerPage);
     await refetchFairsList();
@@ -96,6 +99,7 @@ export const useFairs = (hookParams?: THookParams) => {
     );
 
   return {
+    orderBy,
     fairsList: fairsListData,
     fairsListGeo: prepareListGeo(),
     fairDetails: fairDetailsData,

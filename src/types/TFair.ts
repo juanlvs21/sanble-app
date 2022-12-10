@@ -6,6 +6,13 @@ export enum EFairType {
   GASTRONOMIC = "gastronomic",
 }
 
+export enum EFairOrderBy {
+  BEST = "best",
+  WORST = "worst",
+  FAVORITE = "favorites",
+  CELEBRATIONDATE = "celebrationDate",
+}
+
 export type TFair = {
   id: string;
   name: string;
