@@ -47,6 +47,9 @@
   margin-right: 16px;
   margin-bottom: 3px;
 }
+.topBarEnd svg {
+  color: var(--sanble-gray-color-2);
+}
 
 .topBarContainer ion-buttons,
 .topBarContainer ion-button {
@@ -64,7 +67,7 @@
 
 .topBarContainer ion-button::part(native) {
   --background: var(--ion-color-light);
-  --color: var(--ion-color-black);
+  --color: var(--sanble-gray-color-2);
   border: 1px solid var(--ion-color-light);
 }
 
