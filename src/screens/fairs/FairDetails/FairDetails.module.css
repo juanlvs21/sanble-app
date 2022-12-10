@@ -21,7 +21,7 @@
 
 .fairCover {
   position: relative;
-  width: calc(100% - 60px);
+  width: calc(100% - 32px);
   height: 220px;
   position: relative;
   display: flex;
@@ -61,7 +61,7 @@
   margin-top: -70px !important;
   max-width: 1100px;
   margin: auto;
-  padding: 120px 30px 50px;
+  padding: 120px 16px 50px;
   transition: all 500ms ease-in-out;
 }
 

@@ -39,12 +39,12 @@
 }
 
 .topBarStart {
-  margin-left: 20px;
+  margin-left: 16px;
   margin-bottom: 3px;
 }
 
 .topBarEnd {
-  margin-right: 20px;
+  margin-right: 16px;
   margin-bottom: 3px;
 }
 
@@ -82,5 +82,11 @@
   }
   .topBarTitleLight {
     color: var(--ion-color-primary);
+  }
+  .topBarStart {
+    margin-left: 30px;
+  }
+  .topBarEnd {
+    margin-right: 30px;
   }
 }

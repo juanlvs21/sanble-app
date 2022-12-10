@@ -6,6 +6,8 @@
 .ionContentFetcher {
   --background: transparent;
   --padding-bottom: 30px;
+  --padding-start: 16px;
+  --padding-end: 16px;
   height: 100%;
 }
 
@@ -56,7 +58,5 @@
   .ionContentFetcher {
     --padding-top: 100px;
     --padding-bottom: 100px;
-    --padding-start: 30px;
-    --padding-end: 30px;
   }
 }
