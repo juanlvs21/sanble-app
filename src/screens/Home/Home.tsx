@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { useMediaQuery } from "react-responsive";
 import { BiBell } from "react-icons/bi";
 
 import { Button } from "@/components/common/buttons/Button";
@@ -21,6 +22,7 @@ export const Home: React.FC = () => {
     isLoadingFairsBest,
     isLoadingStandsBest,
   } = useHome();
+  const isLaptop = useMediaQuery({ query: "(min-width: 1024px)" });
 
   const handleLoadData = async () => {
     await Promise.all([handleLoadFairsBest(), handleLoadStandsBest()]);
@@ -62,7 +64,7 @@ export const Home: React.FC = () => {
           }
           skeletonProps={{
             width: "100%",
-            height: 90,
+            height: isLaptop ? 180 : 90,
             style: {
               marginBottom: 45,
             },
@@ -72,7 +74,13 @@ export const Home: React.FC = () => {
         <Carousel
           title="Mejores Stands"
           isLoading={isLoadingStandsBest}
-          items={standsBest?.map((stand) => <h1>{stand.name}</h1>) || []}
+          items={
+            standsBest?.map((stand) => (
+              <div style={{ width: "100%", height: "100%", background: "red" }}>
+                <h1>{stand.name}</h1>
+              </div>
+            )) || []
+          }
           skeletonProps={{
             width: "100%",
             height: 90,

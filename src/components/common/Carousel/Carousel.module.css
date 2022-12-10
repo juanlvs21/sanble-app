@@ -3,3 +3,59 @@
   font-size: 20px;
   margin-bottom: 16px;
 }
+
+.slidesItem {
+  width: 220px;
+  height: 100px;
+  transition: all 400ms ease-in-out;
+}
+
+@media (min-width: 425px) {
+  .slidesItem {
+    width: 240px;
+    transition: all 400ms ease-in-out;
+  }
+}
+
+@media (min-width: 550px) {
+  .slidesItem {
+    width: 260px;
+    transition: all 400ms ease-in-out;
+  }
+}
+
+@media (min-width: 630px) {
+  .slidesItem {
+    width: 240px;
+    transition: all 400ms ease-in-out;
+  }
+}
+
+@media (min-width: 820) {
+  .slidesItem {
+    width: 270px;
+    transition: all 400ms ease-in-out;
+  }
+}
+
+@media (min-width: 1024px) {
+  .slidesItem {
+    height: 200px;
+    width: 300px;
+    transition: all 400ms ease-in-out;
+  }
+}
+
+@media (min-width: 1336px) {
+  .slidesItem {
+    width: 400px;
+    transition: all 400ms ease-in-out;
+  }
+}
+
+@media (min-width: 2000px) {
+  .slidesItem {
+    width: 550px;
+    transition: all 400ms ease-in-out;
+  }
+}

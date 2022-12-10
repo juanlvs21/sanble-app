@@ -17,6 +17,10 @@ export type ComponentProps = {
    */
   items: React.ReactElement[];
   /**
+   * Object of responsive
+   */
+  breakpoints?: Record<string, any>;
+  /**
    * Data Loading
    */
   isLoading?: boolean;
@@ -24,6 +28,10 @@ export type ComponentProps = {
    * Custom className for content component
    */
   className?: string;
+  /**
+   * Custom className for content item component
+   */
+  classNameItem?: string;
   /**
    * Skeleton props
    */
@@ -37,14 +45,13 @@ const slideOpts = {
   spaceBetween: 0,
 
   breakpoints: {
+    320: { slidesPerView: 1.1 }, // >= 320
     375: { slidesPerView: 1.5 }, // >= 375
-    470: { slidesPerView: 1.8 }, // >= 470
-    520: { slidesPerView: 2.2 }, // >= 520
-    650: { slidesPerView: 2.6 }, // >= 650
-    768: { slidesPerView: 3.1 }, // >= 768
-    1024: { slidesPerView: 3.8 }, // >= 1024
-    1336: { slidesPerView: 4.2 }, // >= 1336
-    1440: { slidesPerView: 5.5 }, // >= 1440
+    500: { slidesPerView: 1.8 }, // >= 500
+    630: { slidesPerView: 2.4 }, // >= 630
+    768: { slidesPerView: 2.8 }, // >= 768
+    991: { slidesPerView: 3.1 }, // >= 991
+    1600: { slidesPerView: 3.7 }, // >= 1600
   },
 };
 
@@ -53,7 +60,9 @@ export const Carousel: React.FC<ComponentProps> = ({
   items,
   isLoading,
   skeletonProps,
+  breakpoints,
   className = "",
+  classNameItem = "",
 }) => {
   return (
     <section className={`${className} animate__animated animate__fadeIn`}>
@@ -63,11 +72,14 @@ export const Carousel: React.FC<ComponentProps> = ({
         <Skeleton {...skeletonProps} />
       ) : (
         <IonSlides
-          options={slideOpts}
-          className={styles.slidesWelcomeContainer}
+          options={breakpoints ? { ...slideOpts, breakpoints } : slideOpts}
         >
           {items.map((item, i) => (
-            <IonSlide key={i}>{item}</IonSlide>
+            <IonSlide key={i}>
+              <div className={`${styles.slidesItem} ${classNameItem}`}>
+                {item}
+              </div>
+            </IonSlide>
           ))}
         </IonSlides>
       )}
