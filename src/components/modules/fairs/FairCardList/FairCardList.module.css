@@ -10,11 +10,11 @@
   box-shadow: 0px 0px 5px 5px rgba(200, 200, 200, 0.05);
 }
 
-.fairListCard picture {
+.fairListCard .fairListCardPicture {
   display: contents;
 }
 
-.fairListCard img {
+.fairListCard .fairListCardImg {
   border-radius: var(--sanble-border-radius);
   width: 100px;
   height: 100%;

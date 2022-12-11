@@ -1,0 +1,19 @@
+.imagePicture {
+  position: relative;
+}
+
+.imageSkeleton {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.imageTag {
+  visibility: visible;
+  transition: all 400ms ease-in-out;
+}
+
+.imageTag.imageIsLoading {
+  visibility: hidden;
+  transition: all 400ms ease-in-out;
+}

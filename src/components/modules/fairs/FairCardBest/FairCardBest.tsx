@@ -6,6 +6,7 @@ import { TFair } from "@/types/TFair";
 import styles from "./FairCardBest.module.css";
 import { HiOutlineCalendar } from "react-icons/hi";
 import dayjs from "dayjs";
+import { Image } from "@/components/common/Image";
 
 export type ComponentProps = {
   /**
@@ -24,9 +25,16 @@ export const FairCardBest: React.FC<ComponentProps> = ({ fair }) => {
       state={{ fairID: fair.id, fairName: fair.name }}
     >
       <article className={styles.fairBestCard}>
-        <picture className={styles.fairBestCover}>
-          <img src={fair.coverUrl} alt={fair.name} />
-        </picture>
+        <Image
+          src={fair.coverUrl}
+          alt={fair.name}
+          classNamePicture={styles.fairBestCover}
+          className={styles.fairBestCoverImg}
+          skeletonProps={{
+            className: styles.fairBestCoverImg,
+          }}
+        />
+
         <div className={styles.fairBestContent}>
           <h1>{fair.name}</h1>
 

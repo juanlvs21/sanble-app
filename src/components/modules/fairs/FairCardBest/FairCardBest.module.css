@@ -19,7 +19,7 @@
   transition: all 400ms ease-in-out;
 }
 
-.fairBestCover img {
+.fairBestCover .fairBestCoverImg {
   border-radius: var(--sanble-border-radius);
   object-fit: cover;
   object-position: center;

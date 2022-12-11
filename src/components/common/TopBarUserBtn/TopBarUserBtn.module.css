@@ -1,4 +1,9 @@
-.topBarUserPhoto {
+.topBarUserPicture {
+  width: 100%;
+  height: 100%;
+}
+
+.topBarUserImg {
   object-fit: cover;
   object-position: center;
   width: 100%;

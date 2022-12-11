@@ -13,6 +13,7 @@ import { FiHome } from "react-icons/fi";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import { Link, useLocation, useMatch } from "react-router-dom";
 
+import { Image } from "@/components/common/Image";
 import { useApp } from "@/hooks/useApp";
 import { useAuth } from "@/hooks/useAuth";
 import { useUser } from "@/hooks/useUser";
@@ -113,7 +114,15 @@ export const Sidebar: React.FC = () => {
       </IonButton>
 
       <div className={styles.sidebarUserContainer}>
-        <img src={user?.photoURL} />
+        <Image
+          src={user?.photoURL}
+          alt="Perfil"
+          classNamePicture={styles.sidebarUserPicture}
+          className={styles.sidebarUserImg}
+          skeletonProps={{
+            className: styles.sidebarUserImg,
+          }}
+        />
         <IonText>
           <h4>{user?.displayName}</h4>
         </IonText>

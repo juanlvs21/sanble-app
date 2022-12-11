@@ -1,12 +1,13 @@
 import dayjs from "dayjs";
 import { HiOutlineCalendar } from "react-icons/hi";
-import { Link } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
+import { Link } from "react-router-dom";
 
 import { fairType } from "@/helpers/fairs";
 import { TFair } from "@/types/TFair";
 
 import { ButtonFav } from "@/components/common/buttons/ButtonFav";
+import { Image } from "@/components/common/Image";
 import { Stars } from "@/components/common/Stars";
 import { useUser } from "@/hooks/useUser";
 import styles from "./FairCardList.module.css";
@@ -32,9 +33,15 @@ export const FairCardList: React.FC<ComponentProps> = ({ fair }) => {
         state={{ fairID: fair.id, fairName: fair.name }}
         className={styles.fairListCardLink}
       >
-        <picture>
-          <img src={fair.coverUrl} alt={fair.name} />
-        </picture>
+        <Image
+          src={fair?.coverUrl}
+          alt={fair?.name}
+          classNamePicture={styles.fairListCardPicture}
+          className={styles.fairListCardImg}
+          skeletonProps={{
+            className: styles.fairListCardImg,
+          }}
+        />
         <div className={styles.fairListCardContent}>
           <h1>{fair.name}</h1>
           <Stars value={fair.stars} />

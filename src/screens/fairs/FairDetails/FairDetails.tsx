@@ -7,6 +7,7 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { Button } from "@/components/common/buttons/Button";
 import { ButtonFav } from "@/components/common/buttons/ButtonFav";
 import { Fetcher } from "@/components/common/Fetcher";
+import { Image } from "@/components/common/Image";
 import { Skeleton } from "@/components/common/Skeleton";
 import { TopBar } from "@/components/common/TopBar";
 import { EColors } from "@/helpers/colors";
@@ -102,26 +103,19 @@ export const FairDetails: React.FC = () => {
               <IoIosCloseCircleOutline size={24} />
             </Button>
           )}
-          <picture
-            className={`${styles.fairCover} ${
+
+          <Image
+            src={fair?.coverUrl}
+            alt={fair?.name}
+            onClick={() => setOpenCover((state) => !state)}
+            className={`${openCover ? styles.fairCoverOpen : ""}`}
+            classNamePicture={`${styles.fairCover} ${
               openCover ? styles.fairCoverOpen : ""
             }`}
-          >
-            {isLoading ? (
-              <Skeleton
-                className={`${styles.fairSkeleton} animate__animated animate__fadeIn`}
-              />
-            ) : (
-              <img
-                src={fair?.coverUrl}
-                alt={fair?.name}
-                className={`${
-                  openCover ? styles.fairCoverOpen : ""
-                } animate__animated animate__fadeIn`}
-                onClick={() => setOpenCover((state) => !state)}
-              />
-            )}
-          </picture>
+            skeletonProps={{
+              className: styles.fairSkeleton,
+            }}
+          />
         </div>
         <section className={styles.fairDetailsContent}>
           <div className={styles.fairDetailsNameContainer}>
