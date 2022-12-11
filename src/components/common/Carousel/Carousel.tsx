@@ -1,4 +1,5 @@
 import { IonSlide, IonSlides } from "@ionic/react";
+import { useMemo } from "react";
 
 import {
   ComponentProps as SkeletonProps,
@@ -16,6 +17,12 @@ export type ComponentProps = {
    * List of items to render on the slides
    */
   items: React.ReactElement[];
+  /**
+   * Default slides per view
+   *
+   * @default 1.1
+   */
+  slidesPerView?: number;
   /**
    * Object of responsive
    */
@@ -38,33 +45,36 @@ export type ComponentProps = {
   skeletonProps?: SkeletonProps;
 };
 
-const slideOpts = {
-  initialSlide: 0,
-  speed: 400,
-  slidesPerView: 1.2,
-  spaceBetween: 0,
-
-  breakpoints: {
-    320: { slidesPerView: 1.1 }, // >= 320
-    375: { slidesPerView: 1.2 }, // >= 375
-    425: { slidesPerView: 1.3 }, // >= 425
-    500: { slidesPerView: 1.8 }, // >= 500
-    630: { slidesPerView: 2.4 }, // >= 630
-    768: { slidesPerView: 2.8 }, // >= 768
-    991: { slidesPerView: 3.1 }, // >= 991
-    1600: { slidesPerView: 3.7 }, // >= 1600
-  },
-};
-
 export const Carousel: React.FC<ComponentProps> = ({
   title,
   items,
   isLoading,
   skeletonProps,
-  breakpoints,
   className = "",
   classNameItem = "",
+  slidesPerView = 1.1,
+  breakpoints = {
+    375: { slidesPerView: 1.2 },
+    425: { slidesPerView: 1.3 },
+    500: { slidesPerView: 1.8 },
+    630: { slidesPerView: 2.4 },
+    768: { slidesPerView: 2.8 },
+    991: { slidesPerView: 3.1 },
+    1600: { slidesPerView: 3.7 },
+  },
 }) => {
+  const slideOpts = useMemo(
+    () => ({
+      slidesPerView,
+      breakpoints,
+
+      initialSlide: 0,
+      speed: 400,
+      spaceBetween: 0,
+    }),
+    []
+  );
+
   return (
     <section className={`${className} animate__animated animate__fadeIn`}>
       {title && <h2 className={styles.carouselTitle}>{title}</h2>}
@@ -72,9 +82,7 @@ export const Carousel: React.FC<ComponentProps> = ({
       {isLoading ? (
         <Skeleton {...skeletonProps} />
       ) : (
-        <IonSlides
-          options={breakpoints ? { ...slideOpts, breakpoints } : slideOpts}
-        >
+        <IonSlides options={slideOpts}>
           {items.map((item, i) => (
             <IonSlide key={i}>
               <div className={`${styles.slidesItem} ${classNameItem}`}>

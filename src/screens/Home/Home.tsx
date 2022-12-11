@@ -1,6 +1,6 @@
 import { useEffect } from "react";
-import { useMediaQuery } from "react-responsive";
 import { BiBell } from "react-icons/bi";
+import { useMediaQuery } from "react-responsive";
 
 import { Button } from "@/components/common/buttons/Button";
 import { Carousel } from "@/components/common/Carousel";
@@ -8,6 +8,7 @@ import { Fetcher } from "@/components/common/Fetcher";
 import { InputSearch } from "@/components/common/forms/InputSearch";
 import { TopBar } from "@/components/common/TopBar";
 import { FairCardBest } from "@/components/modules/fairs/FairCardBest";
+import { ProductCarouselCard } from "@/components/modules/products/ProductCard";
 import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 import { useHome } from "@/hooks/useHome";
 import styles from "./Home.module.css";
@@ -79,19 +80,23 @@ export const Home: React.FC = () => {
           title="Productos"
           isLoading={isLoadingProductTypes}
           items={
-            productTypes?.map((type) => (
-              <div
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  background: "#ff8634",
-                  borderRadius: 20,
-                }}
-              >
-                <span>{type.name}</span>
-              </div>
+            productTypes?.map((productType) => (
+              <ProductCarouselCard
+                key={productType.id}
+                productType={productType}
+              />
             )) || []
           }
+          slidesPerView={1.9}
+          breakpoints={{
+            310: { slidesPerView: 2.2 },
+            425: { slidesPerView: 3.2 },
+            550: { slidesPerView: 3.8 },
+            630: { slidesPerView: 4.2 },
+            900: { slidesPerView: 4.8 },
+            991: { slidesPerView: 3.1 },
+            1600: { slidesPerView: 3.7 },
+          }}
           skeletonProps={{
             width: "100%",
             height: isLaptop ? 200 : 110,

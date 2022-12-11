@@ -15,7 +15,6 @@ export type ComponentProps = {
   fair: TFair;
 };
 
-// TODO: This card should change to a different layout on desktop screens. They suggested a large card with the whole cover in the background. Above a div with a gradient and the information it at the bottom of the card
 export const FairCardBest: React.FC<ComponentProps> = ({ fair }) => {
   const isMobileM = useMediaQuery({ query: "(max-width: 375px)" });
 
@@ -24,7 +23,9 @@ export const FairCardBest: React.FC<ComponentProps> = ({ fair }) => {
       to={`/app/ferias/${fair.id}`}
       state={{ fairID: fair.id, fairName: fair.name }}
     >
-      <article className={styles.fairBestCard}>
+      <article
+        className={`${styles.fairBestCard} animate__animated animate__fadeIn`}
+      >
         <Image
           src={fair.coverUrl}
           alt={fair.name}
