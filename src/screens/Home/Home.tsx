@@ -53,14 +53,14 @@ export const Home: React.FC = () => {
         startUser
         sticky
       />
-      <InputSearch
-        placeholder="Buscar Ferias, Stands, etc..."
-        classNameItem={styles.homeSearchInput}
-      />
       <Fetcher
         handleRefresh={handleLoadData}
         classNameContent={styles.homeContainer}
       >
+        <InputSearch
+          placeholder="Buscar Ferias, Stands, etc..."
+          classNameItem={styles.homeSearchInput}
+        />
         <Carousel
           title="Mejores Ferias"
           isLoading={isLoadingFairsBest}
@@ -71,7 +71,7 @@ export const Home: React.FC = () => {
           }
           skeletonProps={{
             width: "100%",
-            height: isLaptop ? 180 : 110,
+            height: isLaptop ? 200 : 110,
           }}
           className={styles.homeCarousel}
         />
@@ -94,7 +94,7 @@ export const Home: React.FC = () => {
           }
           skeletonProps={{
             width: "100%",
-            height: isLaptop ? 180 : 110,
+            height: isLaptop ? 200 : 110,
           }}
           className={styles.homeCarousel}
         />
@@ -118,7 +118,7 @@ export const Home: React.FC = () => {
           }
           skeletonProps={{
             width: "100%",
-            height: isLaptop ? 180 : 110,
+            height: isLaptop ? 200 : 110,
           }}
           className={styles.homeCarousel}
         />
