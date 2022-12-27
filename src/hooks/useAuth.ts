@@ -1,6 +1,4 @@
 import { GoogleAuth } from "@codetrix-studio/capacitor-google-auth";
-import { useQuery } from "@tanstack/react-query";
-import { useEffect } from "react";
 import { useLocation, useMatch, useNavigate } from "react-router-dom";
 
 import {
@@ -15,7 +13,7 @@ import { useApp } from "@/hooks/useApp";
 import { useToast } from "@/hooks/useToast";
 import { useUser } from "@/hooks/useUser";
 import {
-  getUserDataFetcher,
+  getUserDataRequest,
   signinGoogleRequest,
   signinRequest,
   signOutRequest,
@@ -30,35 +28,30 @@ type TClearSessionFuncParams = {
 export const useAuth = () => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
+  const { toast } = useToast();
   const { user, setUser } = useUser();
   const { isCapacitor, setIsLoadingFull } = useApp();
-  const { toast } = useToast();
 
   const matchLanding = useMatch("/");
   const matchSignin = useMatch("/app/sesion/entrar");
   const matchSignup = useMatch("/app/sesion/registrarse");
 
-  const { data: userData, refetch: refetchUser } = useQuery(
-    ["user"],
-    getUserDataFetcher,
-    {
-      enabled: false,
-      retry: 0,
-      onError: async () => {
-        await signOutRequest();
-        toast("Error al obtener la información del usuario", {
-          type: "error",
-        });
-        navigate("/app/sesion/entrar", { replace: true });
-        setIsLoadingFull(false);
-      },
-    }
-  );
+  const handleLoadUser = async () => {
+    setIsLoadingFull(true);
 
-  useEffect(() => {
-    if (userData) setUser(userData);
-    setIsLoadingFull(false);
-  }, [userData]);
+    try {
+      const userRes = await getUserDataRequest();
+      setUser(userRes);
+    } catch (error: any) {
+      await signOutRequest();
+      toast("Error al obtener la información del usuario", {
+        type: "error",
+      });
+      navigate("/app/sesion/entrar", { replace: true });
+    } finally {
+      setIsLoadingFull(false);
+    }
+  };
 
   const clearSessionRedirect = async (params?: TClearSessionFuncParams) => {
     await removeStorage(StorageUserKey);
@@ -76,7 +69,7 @@ export const useAuth = () => {
       await signUpRequest(userForm);
       try {
         await signinRequest(userForm);
-        await refetchUser();
+        await handleLoadUser();
         navigate("/app", { replace: true });
       } catch (error) {
         await signOutRequest();
@@ -93,7 +86,7 @@ export const useAuth = () => {
       setIsLoadingFull(true);
 
       await signinRequest(userForm);
-      await refetchUser();
+      await handleLoadUser();
       navigate("/app", { replace: true });
     } catch (error: any) {
       await signOutRequest();
@@ -116,7 +109,8 @@ export const useAuth = () => {
         await signinGoogleRequest();
       }
 
-      await refetchUser();
+      await handleLoadUser();
+
       navigate("/app", { replace: true });
     } catch (error) {
       await signOutRequest();
@@ -146,7 +140,8 @@ export const useAuth = () => {
           setUser(userStorage);
           setReady(true);
         }
-        await refetchUser();
+
+        await handleLoadUser();
 
         if (pathname.includes("/sesion")) {
           navigate("/app", { replace: true });

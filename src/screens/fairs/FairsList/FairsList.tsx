@@ -1,5 +1,4 @@
 import { useIonActionSheet } from "@ionic/react";
-import { useEffect } from "react";
 import { BiFilterAlt } from "react-icons/bi";
 
 import { Button } from "@/components/common/buttons/Button";
@@ -8,25 +7,31 @@ import { Skeleton } from "@/components/common/Skeleton";
 import { TopBar } from "@/components/common/TopBar";
 import { FairCardList } from "@/components/modules/fairs/FairCardList";
 import { useDocumentTitle } from "@/hooks/useDocumentTitle";
-import { useFairs } from "@/hooks/useFairs";
-import { EFairOrderBy } from "@/types/TFair";
+import { useFairsList } from "@/hooks/fairs/useFairsList";
 import styles from "./FairsList.module.css";
 
 export const FairsList: React.FC = () => {
   useDocumentTitle("Lista de Ferias 🛍️");
   const [present] = useIonActionSheet();
   const {
-    fairsList,
-    isLoadingFairsList,
+    list,
     orderBy,
-    handleLoadFairsList,
-    handleRefreshFairList,
-    handleInfiniteFairList,
-  } = useFairs({ defaultPerPage: 10 });
+    orderDir,
+    isLoading,
+    isSorting,
+    handleRefresh,
+    handleInfinite,
+    handleShorting,
+  } = useFairsList();
 
-  useEffect(() => {
-    handleLoadFairsList();
-  }, []);
+  const actionCssClasses = (isOrderBy = false, isOrderDir = false) => {
+    const classes = [];
+
+    if (isSorting) classes.push("disable");
+    if (isOrderBy && isOrderDir) classes.push("active");
+
+    return classes.length ? classes : "";
+  };
 
   return (
     <>
@@ -40,35 +45,32 @@ export const FairsList: React.FC = () => {
                 buttons: [
                   {
                     text: "Mejor puntuadas",
-                    cssClass: orderBy == EFairOrderBy.BEST ? "active" : "",
-                    handler: () =>
-                      handleLoadFairsList({ orderBy: EFairOrderBy.BEST }),
+                    cssClass: actionCssClasses(
+                      orderBy === "stars",
+                      orderDir === "desc"
+                    ),
+                    handler: () => handleShorting("stars", "desc"),
                   },
                   {
                     text: "Menor puntuadas",
-                    cssClass: orderBy == EFairOrderBy.WORST ? "active" : "",
-                    handler: () =>
-                      handleLoadFairsList({ orderBy: EFairOrderBy.WORST }),
-                  },
-                  {
-                    text: "Favoritos",
-                    cssClass: orderBy == EFairOrderBy.FAVORITE ? "active" : "",
-                    handler: () =>
-                      handleLoadFairsList({ orderBy: EFairOrderBy.FAVORITE }),
+                    cssClass: actionCssClasses(
+                      orderBy === "stars",
+                      orderDir === "asc"
+                    ),
+                    handler: () => handleShorting("stars", "asc"),
                   },
                   {
                     text: "Fechas cercanas",
-                    cssClass:
-                      orderBy == EFairOrderBy.CELEBRATIONDATE ? "active" : "",
-                    handler: () =>
-                      handleLoadFairsList({
-                        orderBy: EFairOrderBy.CELEBRATIONDATE,
-                      }),
+                    cssClass: actionCssClasses(
+                      orderBy === "celebrationDate",
+                      orderDir === "desc"
+                    ),
+                    handler: () => handleShorting("celebrationDate", "desc"),
                   },
                   {
                     text: "Limpiar filtro",
-                    // cssClass: "warning-color",
-                    handler: () => handleLoadFairsList(),
+                    cssClass: actionCssClasses(),
+                    handler: () => handleShorting("stars", "desc"),
                   },
                   {
                     text: "Cancel",
@@ -90,11 +92,11 @@ export const FairsList: React.FC = () => {
       />
 
       <Fetcher
-        handleRefresh={handleRefreshFairList}
-        handleInfiniteScroll={handleInfiniteFairList}
+        handleRefresh={handleRefresh}
+        handleInfiniteScroll={handleInfinite}
       >
         <div className="dataListContainer">
-          {isLoadingFairsList && !fairsList?.list.length
+          {(isLoading && !list.length) || isSorting
             ? Array(5)
                 .fill(0)
                 .map((_, i) => (
@@ -104,9 +106,7 @@ export const FairsList: React.FC = () => {
                     className={styles.fairListCardSkeleton}
                   />
                 ))
-            : fairsList?.list.map((fair) => (
-                <FairCardList key={fair.id} fair={fair} />
-              ))}
+            : list.map((fair) => <FairCardList key={fair.id} fair={fair} />)}
         </div>
       </Fetcher>
     </>

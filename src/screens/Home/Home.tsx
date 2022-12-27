@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { BiBell } from "react-icons/bi";
-import { useMediaQuery } from "react-responsive";
+import { useMediaQuery } from "usehooks-ts";
 
 import { Button } from "@/components/common/buttons/Button";
 import { Carousel } from "@/components/common/Carousel";
@@ -26,7 +26,7 @@ export const Home: React.FC = () => {
     isLoadingStandsBest,
     isLoadingProductTypes,
   } = useHome();
-  const isLaptop = useMediaQuery({ query: "(min-width: 1024px)" });
+  const isLaptop = useMediaQuery("(min-width: 1024px)");
 
   const handleLoadData = async () => {
     await Promise.all([

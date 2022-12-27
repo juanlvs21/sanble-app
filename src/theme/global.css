@@ -186,6 +186,16 @@ ion-action-sheet button.danger-color {
   color: var(--ion-color-danger) !important;
 }
 
+ion-action-sheet button.disable {
+  pointer-events: none;
+  color: var(--ion-color-secondary-tint) !important;
+}
+
+ion-action-sheet button.disable::after {
+  background: none !important;
+  opacity: var(--button-background-hover-opacity) !important;
+}
+
 form {
   width: 100%;
 }

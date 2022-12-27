@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
 import { HiOutlineCalendar } from "react-icons/hi";
-import { useMediaQuery } from "react-responsive";
+import { useMediaQuery } from "usehooks-ts";
 import { Link } from "react-router-dom";
 
 import { fairType } from "@/helpers/fairs";
@@ -20,7 +20,7 @@ export type ComponentProps = {
 };
 
 export const FairCardList: React.FC<ComponentProps> = ({ fair }) => {
-  const isMobileS = useMediaQuery({ query: "(max-width: 320px)" });
+  const isMobileS = useMediaQuery("(max-width: 320px)");
   const { user, loadingSetFav, handleSetFavoriteFair } = useUser();
 
   return (

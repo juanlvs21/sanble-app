@@ -1,43 +1,74 @@
-import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
 
-import { getFairBestListFetcher, getProductTypesFetcher } from "@/services";
+import { useToast } from "@/hooks/useToast";
+import { getFairBestListRequest, getProductTypesRequest } from "@/services";
 import { TFair } from "@/types/TFair";
 import { TProductType } from "@/types/TProduct";
 
 export const useHome = () => {
-  const {
-    data: fairsBestData,
-    refetch: refetchFairsBest,
-    isFetching: isLoadingFairsBest,
-  } = useQuery<TFair[]>(["home-fairs-best"], getFairBestListFetcher, {
-    enabled: false,
-  });
+  const { toast } = useToast();
 
-  const {
-    data: standsBestData,
-    refetch: refetchStandsBest,
-    isFetching: isLoadingStandsBest,
-  } = useQuery<TFair[]>(["home-stands-best"], getFairBestListFetcher, {
-    enabled: false,
-  });
+  const [fairsBest, setFairsBest] = useState<TFair[]>([]);
+  const [standsBest, setStandsBest] = useState<any[]>([]);
+  const [productTypes, setProductTypes] = useState<TProductType[]>([]);
+  const [isLoadingFairsBest, setIsLoadingFairsBest] = useState(true);
+  const [isLoadingStandsBest, setIsLoadingStandsBest] = useState(true);
+  const [isLoadingProductTypes, setIsLoadingProductTypes] = useState(true);
 
-  const {
-    data: productTypesData,
-    refetch: refetchProductTypes,
-    isFetching: isLoadingProductTypes,
-  } = useQuery<TProductType[]>(["home-product-types"], getProductTypesFetcher, {
-    enabled: false,
-  });
+  const handleLoadFairsBest = async () => {
+    setIsLoadingFairsBest(true);
+
+    try {
+      const data = await getFairBestListRequest();
+      setFairsBest(data);
+    } catch (error: any) {
+      toast("Error al cargar las mejores ferias", {
+        type: "error",
+      });
+    } finally {
+      setIsLoadingFairsBest(false);
+    }
+  };
+
+  const handleLoadStandsBest = async () => {
+    setIsLoadingStandsBest(true);
+
+    try {
+      const data = await getFairBestListRequest();
+      setStandsBest(data);
+    } catch (error: any) {
+      toast("Error al cargar los mejores stands", {
+        type: "error",
+      });
+    } finally {
+      setIsLoadingStandsBest(false);
+    }
+  };
+
+  const handleLoadProductTypes = async () => {
+    setIsLoadingProductTypes(true);
+
+    try {
+      const data = await getProductTypesRequest();
+      setProductTypes(data);
+    } catch (error: any) {
+      toast("Error al cargar las categorias de productos", {
+        type: "error",
+      });
+    } finally {
+      setIsLoadingProductTypes(false);
+    }
+  };
 
   return {
     isLoadingFairsBest,
     isLoadingStandsBest,
     isLoadingProductTypes,
-    fairsBest: fairsBestData,
-    standsBest: standsBestData,
-    productTypes: productTypesData,
-    handleLoadFairsBest: refetchFairsBest,
-    handleLoadStandsBest: refetchStandsBest,
-    handleLoadProductTypes: refetchProductTypes,
+    fairsBest,
+    standsBest,
+    productTypes,
+    handleLoadFairsBest,
+    handleLoadStandsBest,
+    handleLoadProductTypes,
   };
 };

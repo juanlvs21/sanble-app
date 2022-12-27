@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useMediaQuery } from "react-responsive";
+import { useMediaQuery } from "usehooks-ts";
 
 import { fairType } from "@/helpers/fairs";
 import { TFair } from "@/types/TFair";
@@ -16,7 +16,7 @@ export type ComponentProps = {
 };
 
 export const FairCardBest: React.FC<ComponentProps> = ({ fair }) => {
-  const isMobileM = useMediaQuery({ query: "(max-width: 375px)" });
+  const isMobileM = useMediaQuery("(max-width: 375px)");
 
   return (
     <Link
@@ -47,7 +47,7 @@ export const FairCardBest: React.FC<ComponentProps> = ({ fair }) => {
             <HiOutlineCalendar size={15} />
             <span>
               {fair.celebrationDate
-                ? dayjs(fair.celebrationDate).format("DD MMM - HH:mm")
+                ? dayjs(fair.celebrationDate).format("DD MMM - hh:mm a")
                 : "Próximamente"}
             </span>
           </div>

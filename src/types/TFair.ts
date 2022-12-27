@@ -9,7 +9,6 @@ export enum EFairType {
 export enum EFairOrderBy {
   BEST = "best",
   WORST = "worst",
-  FAVORITE = "favorites",
   CELEBRATIONDATE = "celebrationDate",
 }
 

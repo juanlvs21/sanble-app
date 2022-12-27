@@ -87,6 +87,10 @@
     width: 60px;
     transition: all 400ms ease-in-out;
   }
+  .fairBestContent .fairBestCardDate {
+    font-size: 9px;
+    transition: all 400ms ease-in-out;
+  }
 }
 
 @media (min-width: 425px) {

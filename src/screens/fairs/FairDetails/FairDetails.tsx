@@ -15,7 +15,7 @@ import { fairType } from "@/helpers/fairs";
 import { getNavStateText } from "@/helpers/navigation";
 import { useApp } from "@/hooks/useApp";
 import { useDocumentTitle } from "@/hooks/useDocumentTitle";
-import { useFairs } from "@/hooks/useFairs";
+import { useFairDetails } from "@/hooks/fairs/useFairDetails";
 import { useStatusBar } from "@/hooks/useStatusBar";
 import { useUser } from "@/hooks/useUser";
 import styles from "./FairDetails.module.css";
@@ -27,11 +27,9 @@ export const FairDetails: React.FC = () => {
   const { scrollTop } = useApp();
   const { backgroundStatusBar } = useStatusBar();
   const { user, loadingSetFav, handleSetFavoriteFair } = useUser();
-  const {
-    handleLoadFairDetails,
-    fairDetails: fair,
-    isLoadingFairDetails: isLoading,
-  } = useFairs({ fairID: fairID || "" });
+  const { fair, isLoading } = useFairDetails(fairID || "");
+  const [openCover, setOpenCover] = useState(false);
+
   useDocumentTitle(
     `${
       getNavStateText(fairID, state?.fairID, state?.fairName) ||
@@ -39,7 +37,6 @@ export const FairDetails: React.FC = () => {
       "Feria"
     } 🛍️`
   );
-  const [openCover, setOpenCover] = useState(false);
 
   useEffect(() => {
     if (scrollTop > 25) {
@@ -48,12 +45,6 @@ export const FairDetails: React.FC = () => {
       backgroundStatusBar(EColors.PRIMARY);
     }
   }, [scrollTop]);
-
-  useEffect(() => {
-    if (fairID) {
-      handleLoadFairDetails();
-    }
-  }, []);
 
   return (
     <>

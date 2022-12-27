@@ -1,32 +1,35 @@
-import { AxiosResponse } from "axios";
+import { AxiosRequestConfig, AxiosResponse } from "axios";
 
-import { infiteScrollData } from "@/helpers/infiniteScrollData";
 import { api } from "@/services";
-import { TFair } from "@/types/TFair";
-import { TPaginationParams } from "@/types/TPagination";
+import { TFair, TFairGeo } from "@/types/TFair";
 import { TResponseList } from "@/types/THttp";
+import { TGetListParams } from "@/types/TRequest";
 
-export const getFairListInfiniteScrollFetcher = (
-  currentData?: TFair[],
-  params?: TPaginationParams
-): Promise<TResponseList<TFair[]>> =>
+export const getFairListRequest = (
+  params?: TGetListParams,
+  config?: AxiosRequestConfig
+) =>
   api
     .get<AxiosResponse<TResponseList<TFair[]>>>("/fairs/list", {
+      ...config,
       params: {
         page: params?.page || 1,
         perPage: params?.perPage || 10,
+        orderBy: params?.orderBy || "stars",
+        orderDir: params?.orderDir || "desc",
       },
     })
-    .then(({ data }) => ({
-      ...data.data,
-      list: infiteScrollData("id", data.data.list, currentData),
-    }));
+    .then(({ data }) => data.data);
 
-export const getFairBestListFetcher = (): Promise<TFair[]> =>
-  api.get(`/fairs/best`).then(({ data }) => data.data);
+export const getFairBestListRequest = () =>
+  api.get<AxiosResponse<TFair[]>>(`/fairs/best`).then(({ data }) => data.data);
 
-export const getFairDetailsFetcher = (fairID: string): Promise<TFair> =>
-  api.get(`/fairs/${fairID}`).then(({ data }) => data.data);
+export const getFairDetailsRequest = (fairID: string) =>
+  api
+    .get<AxiosResponse<TFair>>(`/fairs/${fairID}`)
+    .then(({ data }) => data.data);
 
-export const getFairListGeolocationFetcher = (): Promise<TFair[]> =>
-  api.get(`/fairs/geolocation`).then(({ data }) => data.data);
+export const getFairListGeolocationRequest = () =>
+  api
+    .get<AxiosResponse<TFairGeo[]>>(`/fairs/geolocation`)
+    .then(({ data }) => data.data);
