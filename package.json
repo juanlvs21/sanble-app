@@ -59,5 +59,8 @@
   },
   "repository": {
     "url": "https://github.com/juanlvs21/sanble-app"
+  },
+  "engines": {
+    "node": ">=16.15.0"
   }
 }
