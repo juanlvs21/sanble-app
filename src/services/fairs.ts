@@ -10,7 +10,7 @@ export const getFairListRequest = (
   config?: AxiosRequestConfig
 ) =>
   api
-    .get<AxiosResponse<TResponseList<TFair[]>>>("/fairs/list", {
+    .get<AxiosResponse<TResponseList<TFair[]>>>("/fairs", {
       ...config,
       params: {
         page: params?.page || 1,
