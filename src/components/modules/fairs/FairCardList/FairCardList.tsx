@@ -7,7 +7,7 @@ import { fairType } from "@/helpers/fairs";
 import { TFair } from "@/types/TFair";
 
 import { ButtonFav } from "@/components/common/buttons/ButtonFav";
-import { Image } from "@/components/common/Image";
+import { ImageExtended } from "@/components/common/Image";
 import { Stars } from "@/components/common/Stars";
 import { useUser } from "@/hooks/useUser";
 import styles from "./FairCardList.module.css";
@@ -32,7 +32,7 @@ export const FairCardList: React.FC<ComponentProps> = ({ fair }) => {
         state={{ fairID: fair.id, fairName: fair.name }}
         className={styles.fairListCardLink}
       >
-        <Image
+        <ImageExtended
           src={fair?.coverUrl}
           alt={fair?.name}
           classNamePicture={styles.fairListCardPicture}

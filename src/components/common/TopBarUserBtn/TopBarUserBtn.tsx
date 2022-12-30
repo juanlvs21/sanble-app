@@ -1,5 +1,5 @@
 import { Button } from "@/components/common/buttons/Button";
-import { Image } from "@/components/common/Image";
+import { ImageExtended } from "@/components/common/Image";
 import { useApp } from "@/hooks/useApp";
 import { useUser } from "@/hooks/useUser";
 import styles from "./TopBarUserBtn.module.css";
@@ -10,7 +10,7 @@ export const TopBarUserBtn: React.FC = () => {
 
   return (
     <Button onClick={() => handleShowSidebar()} icon-only>
-      <Image
+      <ImageExtended
         src={user?.photoURL}
         alt="Perfil"
         classNamePicture={styles.topBarUserPicture}

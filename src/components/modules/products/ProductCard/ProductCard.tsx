@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-import { Image } from "@/components/common/Image";
+import { ImageExtended } from "@/components/common/Image";
 import { TProductType } from "@/types/TProduct";
 import styles from "./ProductCard.module.css";
 
@@ -26,7 +26,7 @@ export const ProductCarouselCard: React.FC<ComponentProps> = ({
       <article
         className={`${styles.productTypeCard} animate__animated animate__fadeIn`}
       >
-        <Image
+        <ImageExtended
           src={`/assets/images/products/${productType.key}.png`}
           alt={productType.name}
           className={styles.productTypeCardImg}

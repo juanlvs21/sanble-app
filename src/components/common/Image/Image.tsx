@@ -24,36 +24,58 @@ export type ComponentProps = DetailedHTMLProps<
    * Skeleton props
    */
   skeletonProps?: SkeletonProps;
+  /**
+   * Component Loading
+   */
+  isLoading?: boolean;
 };
 
-export const Image: React.FC<ComponentProps> = ({
+export const ImageExtended: React.FC<ComponentProps> = ({
   classNamePicture = "",
   skeletonProps = {},
+  isLoading = false,
   ...props
 }) => {
-  const [imageUrl, setImageUrl] = useState(defaultImage);
-  const [isLoading, setIsLoading] = useState(true);
+  const [imageUrl, setImageUrl] = useState("");
+  const [isLoadingSrc, setIsLoadingSrc] = useState(true);
 
   useEffect(() => {
-    if (props.src) setImageUrl(props.src);
-  }, []);
+    if (!isLoading) handleGetImage();
+  }, [isLoading]);
+
+  const handleGetImage = async () => {
+    setIsLoadingSrc(true);
+
+    const downloadingImage = new Image();
+
+    downloadingImage.onload = function (this: any) {
+      if (this?.src) setImageUrl(this.src);
+    };
+
+    downloadingImage.onerror = function () {
+      setImageUrl(brokenImage);
+    };
+
+    downloadingImage.src = props?.src || defaultImage;
+  };
 
   return (
     <picture
       className={`${classNamePicture} ${styles.imagePicture} animate__animated animate__fadeIn`}
     >
-      <img
-        {...props}
-        src={imageUrl}
-        loading={props.loading || "lazy"}
-        onLoad={() => setIsLoading(false)}
-        onError={() => setImageUrl(brokenImage)}
-        className={`${props.className} ${styles.imageTag} ${
-          isLoading ? styles.imageIsLoading : ""
-        } animate__animated animate__fadeIn`}
-      />
+      {imageUrl && (
+        <img
+          {...props}
+          src={imageUrl}
+          loading={props.loading || "lazy"}
+          onLoad={() => setIsLoadingSrc(false)}
+          className={`${props.className} ${styles.imageTag} ${
+            isLoadingSrc ? styles.imageIsLoading : ""
+          } animate__animated animate__fadeIn`}
+        />
+      )}
 
-      {isLoading && (
+      {(isLoading || isLoadingSrc) && (
         <Skeleton
           {...skeletonProps}
           className={`${styles.imageSkeleton} ${skeletonProps?.className} animate__animated animate__fadeIn`}

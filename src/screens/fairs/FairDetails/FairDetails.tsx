@@ -7,7 +7,7 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { Button } from "@/components/common/buttons/Button";
 import { ButtonFav } from "@/components/common/buttons/ButtonFav";
 import { Fetcher } from "@/components/common/Fetcher";
-import { Image } from "@/components/common/Image";
+import { ImageExtended } from "@/components/common/Image";
 import { Skeleton } from "@/components/common/Skeleton";
 import { TopBar } from "@/components/common/TopBar";
 import { EColors } from "@/helpers/colors";
@@ -95,9 +95,10 @@ export const FairDetails: React.FC = () => {
             </Button>
           )}
 
-          <Image
+          <ImageExtended
             src={fair?.coverUrl}
             alt={fair?.name}
+            isLoading={!fair}
             onClick={() => setOpenCover((state) => !state)}
             className={`${openCover ? styles.fairCoverOpen : ""}`}
             classNamePicture={`${styles.fairCover} ${

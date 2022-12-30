@@ -6,7 +6,7 @@ import { TFair } from "@/types/TFair";
 import styles from "./FairCardBest.module.css";
 import { HiOutlineCalendar } from "react-icons/hi";
 import dayjs from "dayjs";
-import { Image } from "@/components/common/Image";
+import { ImageExtended } from "@/components/common/Image";
 
 export type ComponentProps = {
   /**
@@ -26,7 +26,7 @@ export const FairCardBest: React.FC<ComponentProps> = ({ fair }) => {
       <article
         className={`${styles.fairBestCard} animate__animated animate__fadeIn`}
       >
-        <Image
+        <ImageExtended
           src={fair.coverUrl}
           alt={fair.name}
           classNamePicture={styles.fairBestCover}
