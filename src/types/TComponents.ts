@@ -1,3 +1,4 @@
+import { TextareaChangeEventDetail } from "@ionic/react";
 import { DOMAttributes } from "react";
 
 export interface InputChangeEventDetail {
@@ -7,6 +8,11 @@ export interface InputChangeEventDetail {
 export interface IonInputCustomEvent<T> extends CustomEvent<T> {
   detail: T;
   target: HTMLIonInputElement;
+}
+
+export interface IonTextareaCustomEvent<T> extends CustomEvent<T> {
+  detail: T;
+  target: HTMLIonTextareaElement;
 }
 
 export interface IonButtonCustomEvent<T> extends CustomEvent<T> {
@@ -21,7 +27,18 @@ export interface IonicReactProps {
   };
 }
 
-export type TInput = IonicReactProps & {
+export type TColor =
+  | "primary"
+  | "secondary"
+  | "tertiary"
+  | "success"
+  | "warning"
+  | "danger"
+  | "light"
+  | "medium"
+  | "dark";
+
+export type TInputBase = {
   /**
    * Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user. Available options: `"off"`, `"none"`, `"on"`, `"sentences"`, `"words"`, `"characters"`.
    */
@@ -104,16 +121,7 @@ export type TInput = IonicReactProps & {
   /**
    * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
    */
-  color?:
-    | "primary"
-    | "secondary"
-    | "tertiary"
-    | "success"
-    | "warning"
-    | "danger"
-    | "light"
-    | "medium"
-    | "dark";
+  color?: TColor;
   /**
    * Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke. This also impacts form bindings such as `ngModel` or `v-model`.
    */
@@ -239,6 +247,128 @@ export type TInput = IonicReactProps & {
   value?: string | number | null;
 };
 
+export type TTextareaBase = {
+  /**
+   * If `true`, the textarea container will grow and shrink based on the contents of the textarea.
+   */
+  autoGrow?: boolean;
+  /**
+   * Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user. Available options: `"off"`, `"none"`, `"on"`, `"sentences"`, `"words"`, `"characters"`.
+   */
+  autocapitalize?: string;
+  /**
+   * This Boolean attribute lets you specify that a form control should have input focus when the page loads.
+   */
+  autofocus?: boolean;
+  /**
+   * If `true`, the value will be cleared after focus upon edit. Defaults to `true` when `type` is `"password"`, `false` for all other types.
+   */
+  clearOnEdit?: boolean;
+  /**
+   * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
+   */
+  color?: TColor;
+  /**
+   * The visible width of the text control, in average character widths. If it is specified, it must be a positive integer.
+   */
+  cols?: number;
+  /**
+   * Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke. This also impacts form bindings such as `ngModel` or `v-model`.
+   */
+  debounce?: number;
+  /**
+   * If `true`, the user cannot interact with the textarea.
+   */
+  disabled?: boolean;
+  /**
+   * A hint to the browser for which enter key to display. Possible values: `"enter"`, `"done"`, `"go"`, `"next"`, `"previous"`, `"search"`, and `"send"`.
+   */
+  enterkeyhint?:
+    | "enter"
+    | "done"
+    | "go"
+    | "next"
+    | "previous"
+    | "search"
+    | "send";
+  /**
+   * A hint to the browser for which keyboard to display. Possible values: `"none"`, `"text"`, `"tel"`, `"url"`, `"email"`, `"numeric"`, `"decimal"`, and `"search"`.
+   */
+  inputmode?:
+    | "none"
+    | "text"
+    | "tel"
+    | "url"
+    | "email"
+    | "numeric"
+    | "decimal"
+    | "search";
+  /**
+   * If the value of the type attribute is `text`, `email`, `search`, `password`, `tel`, or `url`, this attribute specifies the maximum number of characters that the user can enter.
+   */
+  maxlength?: number;
+  /**
+   * If the value of the type attribute is `text`, `email`, `search`, `password`, `tel`, or `url`, this attribute specifies the minimum number of characters that the user can enter.
+   */
+  minlength?: number;
+  /**
+   * The mode determines which platform styles to use.
+   */
+  mode?: "ios" | "md";
+  /**
+   * The name of the control, which is submitted with the form data.
+   */
+  name?: string;
+  /**
+   * Emitted when the input loses focus.
+   */
+  onIonBlur?: (event: IonTextareaCustomEvent<FocusEvent>) => void;
+  /**
+   * Emitted when the input value has changed.
+   */
+  onIonChange?: (
+    event: IonTextareaCustomEvent<TextareaChangeEventDetail>
+  ) => void;
+  /**
+   * Emitted when the input has focus.
+   */
+  onIonFocus?: (event: IonTextareaCustomEvent<FocusEvent>) => void;
+  /**
+   * Emitted when a keyboard input occurred.
+   */
+  onIonInput?: (event: IonTextareaCustomEvent<InputEvent>) => void;
+  /**
+   * Instructional text that shows before the input has a value.
+   */
+  placeholder?: string;
+  /**
+   * If `true`, the user cannot modify the value.
+   */
+  readonly?: boolean;
+  /**
+   * If `true`, the user must fill in a value before submitting a form.
+   */
+  required?: boolean;
+  /**
+   * The number of visible text lines for the control.
+   */
+  rows?: number;
+  /**
+   * If `true`, the element will have its spelling and grammar checked.
+   */
+  spellcheck?: boolean;
+  /**
+   * The value of the textarea.
+   */
+  value?: string | null;
+  /**
+   * Indicates how the control wraps text.
+   */
+  wrap?: "hard" | "soft" | "off";
+};
+
+export type TInput = IonicReactProps & TInputBase & TTextareaBase;
+
 export type TButton<T = any> = IonicReactProps &
   DOMAttributes<T> & {
     /**
@@ -252,16 +382,7 @@ export type TButton<T = any> = IonicReactProps &
     /**
      * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
      */
-    color?:
-      | "primary"
-      | "secondary"
-      | "tertiary"
-      | "success"
-      | "warning"
-      | "danger"
-      | "light"
-      | "medium"
-      | "dark";
+    color?: TColor;
     /**
      * If `true`, the user cannot interact with the button.
      */

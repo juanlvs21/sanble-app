@@ -1,23 +1,28 @@
+import { useFormik } from "formik";
 import { useEffect, useState } from "react";
 import { IoIosArrowBack, IoIosCloseCircleOutline } from "react-icons/io";
-import { RiMapPinLine } from "react-icons/ri";
 import { TiStar } from "react-icons/ti";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 import { Button } from "@/components/common/buttons/Button";
 import { ButtonFav } from "@/components/common/buttons/ButtonFav";
 import { Fetcher } from "@/components/common/Fetcher";
+import { Input } from "@/components/common/forms/Input";
 import { ImageExtended } from "@/components/common/Image";
 import { Skeleton } from "@/components/common/Skeleton";
+import { Stars } from "@/components/common/Stars";
 import { TopBar } from "@/components/common/TopBar";
 import { EColors } from "@/helpers/colors";
 import { fairType } from "@/helpers/fairs";
+import { getErrorMessage } from "@/helpers/getFormikErrorMsg";
 import { getNavStateText } from "@/helpers/navigation";
+import { reviewSchema } from "@/helpers/validator/schema";
+import { useFairDetails } from "@/hooks/fairs/useFairDetails";
 import { useApp } from "@/hooks/useApp";
 import { useDocumentTitle } from "@/hooks/useDocumentTitle";
-import { useFairDetails } from "@/hooks/fairs/useFairDetails";
 import { useStatusBar } from "@/hooks/useStatusBar";
 import { useUser } from "@/hooks/useUser";
+import { TReviewForm } from "@/types/TReview";
 import styles from "./FairDetails.module.css";
 
 export const FairDetails: React.FC = () => {
@@ -27,7 +32,9 @@ export const FairDetails: React.FC = () => {
   const { scrollTop } = useApp();
   const { backgroundStatusBar } = useStatusBar();
   const { user, loadingSetFav, handleSetFavoriteFair } = useUser();
-  const { fair, isLoading } = useFairDetails(fairID || "");
+  const { fair, handleSaveReview, isLoading, isSaving } = useFairDetails(
+    fairID || ""
+  );
   const [openCover, setOpenCover] = useState(false);
 
   useDocumentTitle(
@@ -45,6 +52,26 @@ export const FairDetails: React.FC = () => {
       backgroundStatusBar(EColors.PRIMARY);
     }
   }, [scrollTop]);
+
+  const {
+    handleSubmit,
+    handleChange,
+    handleBlur,
+    setFieldValue,
+    values,
+    touched,
+    errors,
+    isSubmitting,
+  } = useFormik<TReviewForm>({
+    initialValues: {
+      comment: "",
+      stars: 0,
+    },
+    validationSchema: reviewSchema,
+    onSubmit: handleSaveReview,
+  });
+
+  const handleChangeStars = (value: number) => setFieldValue("stars", value);
 
   return (
     <>
@@ -130,14 +157,14 @@ export const FairDetails: React.FC = () => {
                   >
                     <TiStar size={25} />
                   </span>
-                  <span className="animate__animated animate__fadeIn">{`${
-                    fair?.stars || 0
-                  }`}</span>
+                  <span className="animate__animated animate__fadeIn">
+                    {`${fair?.stars || 0}`}
+                  </span>
                 </>
               )}
             </div>
           </div>
-          <div className={styles.fairDetailsInfo}>
+          <div>
             {isLoading ? (
               <Skeleton
                 width="100%"
@@ -145,9 +172,11 @@ export const FairDetails: React.FC = () => {
                 style={{ margin: "5px 0px" }}
               />
             ) : (
-              <h6>{fair ? fairType[`${fair?.type}_long`] : ""}</h6>
+              <h6 className={styles.fairDetailsType}>
+                {fair ? fairType[`${fair?.type}_long`] : ""}
+              </h6>
             )}
-            <div className={styles.fairDetailsInfoDescription}>
+            <section className={styles.fairDetailsInfoDescription}>
               {isLoading ? (
                 Array(5)
                   .fill(0)
@@ -162,17 +191,48 @@ export const FairDetails: React.FC = () => {
               ) : (
                 <p>{fair?.description}</p>
               )}
-            </div>
-            {!isLoading && fair && (
-              <div
-                className={`${styles.fairDetailsInfoAddress} animate__animated animate__fadeIn`}
-              >
-                <i>
-                  <RiMapPinLine size={25} />
-                </i>
-                <span>{fair.address}</span>
-              </div>
-            )}
+            </section>
+
+            <section
+              className={`${styles.fairDetailsReviewForm} animate__animated animate__fadeIn`}
+            >
+              <h3>Califica esta Feria</h3>
+              <p>Comparte tu opinión con otros usuarios</p>
+
+              <form onSubmit={handleSubmit}>
+                <Stars
+                  value={values.stars}
+                  onChange={handleChangeStars}
+                  size={40}
+                  className={styles.fairDetailsStars}
+                />
+                <Input
+                  placeholder="Comentario"
+                  type="text"
+                  name="comment"
+                  // Icon={<BiEnvelope />}
+                  onIonChange={handleChange}
+                  onIonBlur={handleBlur}
+                  disabled={isSubmitting || isSaving || isLoading}
+                  value={values.comment}
+                  helper={getErrorMessage("comment", touched, errors)}
+                  maxlength={500}
+                  max={5}
+                  helperIsError
+                  textarea
+                  multiple
+                />
+                <Button
+                  expand="block"
+                  color="primary"
+                  type="submit"
+                  disabled={isSubmitting || isSaving || isLoading}
+                  isLoading={isSubmitting || isSaving}
+                >
+                  Guardar
+                </Button>
+              </form>
+            </section>
           </div>
         </section>
       </Fetcher>

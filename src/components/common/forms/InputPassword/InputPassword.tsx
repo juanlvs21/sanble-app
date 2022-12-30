@@ -20,7 +20,7 @@ export const InputPassword: React.FC<ComponentProps> = ({
   const toggleShowPassword = () => setShowPassword(!showPassword);
 
   return (
-    <IonItem fill="outline" className="inputItem">
+    <IonItem fill="outline" className="inputItem inputWithIcon">
       <span slot="start" className="slotIconStart">
         <HiOutlineKey />
       </span>

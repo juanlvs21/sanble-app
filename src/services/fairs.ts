@@ -4,6 +4,7 @@ import { api } from "@/services";
 import { TFair, TFairGeo } from "@/types/TFair";
 import { TResponseList } from "@/types/THttp";
 import { TGetListParams } from "@/types/TRequest";
+import { TReview, TReviewForm } from "@/types/TReview";
 
 export const getFairListRequest = (
   params?: TGetListParams,
@@ -32,4 +33,12 @@ export const getFairDetailsRequest = (fairID: string) =>
 export const getFairListGeolocationRequest = () =>
   api
     .get<AxiosResponse<TFairGeo[]>>(`/fairs/geolocation`)
+    .then(({ data }) => data.data);
+
+export const saveFairReviewRequest = (fairID: string, data: TReviewForm) =>
+  api
+    .post<AxiosResponse<{ review: TReview; fairStars: number }>>(
+      `/fairs/${fairID}/reviews`,
+      data
+    )
     .then(({ data }) => data.data);

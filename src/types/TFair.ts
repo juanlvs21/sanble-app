@@ -1,5 +1,5 @@
 import { TPhotograph } from "@/types/TPhotograph";
-import { TFireBaseDocRefBasic } from "./TFirebase";
+import { TFireBaseDocRefBasic } from "@/types/TFirebase";
 
 export enum EFairType {
   ENTREPRENEURSHIP = "entrepreneurship",

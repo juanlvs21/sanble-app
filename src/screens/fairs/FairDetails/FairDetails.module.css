@@ -84,7 +84,7 @@
 }
 
 .fairDetailsContent .fairDetailsNameStars {
-  width: 50px;
+  width: 60px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -179,31 +179,43 @@
   transition: all 500ms ease-in-out;
 }
 
-.fairDetailsContent .fairDetailsInfo h6 {
+.fairDetailsContent .fairDetailsType {
   min-height: 20px;
   margin: 5px 0;
   color: var(--sanble-gray-color-2);
 }
 
-.fairDetailsContent .fairDetailsInfo .fairDetailsInfoDescription {
+.fairDetailsContent .fairDetailsInfoDescription {
   margin-top: 10px;
 }
 
-.fairDetailsContent .fairDetailsInfo .fairDetailsInfoDescription p {
+.fairDetailsContent .fairDetailsInfoDescription p {
   margin: 5px 0px;
 }
 
-.fairDetailsContent .fairDetailsInfo .fairDetailsInfoAddress {
-  margin-top: 15px;
-  display: flex;
-  align-items: center;
-  color: var(--sanble-gray-color-2);
+.fairDetailsContent .fairDetailsReviewForm {
+  margin-top: 30px;
 }
 
-.fairDetailsContent .fairDetailsInfo .fairDetailsInfoAddress i {
-  width: 40px;
-  text-align: start;
-  margin-right: 10px;
+.fairDetailsContent .fairDetailsReviewForm h3 {
+  font-weight: 600;
+  font-size: 18px;
+}
+
+.fairDetailsContent .fairDetailsReviewForm p {
+  color: var(--sanble-gray-color-2);
+  font-weight: 500;
+  font-size: 12px;
+}
+
+.fairDetailsContent .fairDetailsReviewForm form {
+  margin-top: 20px;
+}
+
+.fairDetailsContent .fairDetailsReviewForm .fairDetailsStars {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
 }
 
 @media (min-width: 768px) {

@@ -1,13 +1,16 @@
 import { useEffect, useState } from "react";
 
 import { useToast } from "@/hooks/useToast";
-import { getFairDetailsRequest } from "@/services";
+import { getFairDetailsRequest, saveFairReviewRequest } from "@/services";
 import { TFair } from "@/types/TFair";
+import { TReview, TReviewForm } from "@/types/TReview";
 
 export const useFairDetails = (fairID: string) => {
   const { toast } = useToast();
-  const [isLoading, setIsLoading] = useState(true);
   const [fair, setFair] = useState<TFair>();
+  const [review, setReview] = useState<TReview>();
+  const [isLoading, setIsLoading] = useState(true);
+  const [isSaving, setIsSaving] = useState(false);
 
   useEffect(() => {
     if (fairID) handleLoad();
@@ -28,9 +31,29 @@ export const useFairDetails = (fairID: string) => {
     }
   };
 
+  const handleSaveReview = async (data: TReviewForm) => {
+    try {
+      setIsSaving(true);
+
+      const { review, fairStars } = await saveFairReviewRequest(fairID, data);
+
+      setReview(review);
+      setFair((state) => (state ? { ...state, stars: fairStars } : undefined));
+
+      toast("Opinión guardada con éxito", { type: "success" });
+    } catch (error) {
+      toast(error, { type: "error" });
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
   return {
     fair,
+    review,
+    isSaving,
     isLoading,
     handleLoad,
+    handleSaveReview,
   };
 };

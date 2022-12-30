@@ -1,8 +1,10 @@
 .star {
   margin-right: 1px;
   color: var(--sanble-gray-color-2);
+  transition: all 400ms ease-in-out;
 }
 
 .star.starFull {
   color: var(--ion-color-primary);
+  transition: all 400ms ease-in-out;
 }
