@@ -1,0 +1,33 @@
+.reviewForm {
+  margin-top: 40px;
+}
+
+.reviewForm h3 {
+  font-weight: 600;
+  font-size: 18px;
+}
+
+.reviewForm p {
+  color: var(--sanble-gray-color-2);
+  font-weight: 500;
+  font-size: 12px;
+}
+
+.reviewForm form {
+  margin-top: 20px;
+}
+
+.reviewForm .stars {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.reviewFormInput {
+  height: 120px;
+}
+
+.reviewFormInput::part(native),
+.reviewFormInput textarea {
+  height: 120px !important;
+}

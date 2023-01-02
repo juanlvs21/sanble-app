@@ -1,20 +1,22 @@
 import { useFormik } from "formik";
 import { useEffect, useState } from "react";
+import { AiOutlineInfoCircle } from "react-icons/ai";
+import { FiMapPin } from "react-icons/fi";
+import { HiOutlinePhotograph } from "react-icons/hi";
 import { IoIosArrowBack, IoIosCloseCircleOutline } from "react-icons/io";
+import { MdOutlineStorefront } from "react-icons/md";
 import { TiStar } from "react-icons/ti";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 import { Button } from "@/components/common/buttons/Button";
 import { ButtonFav } from "@/components/common/buttons/ButtonFav";
 import { Fetcher } from "@/components/common/Fetcher";
-import { Input } from "@/components/common/forms/Input";
 import { ImageExtended } from "@/components/common/Image";
 import { Skeleton } from "@/components/common/Skeleton";
-import { Stars } from "@/components/common/Stars";
 import { TopBar } from "@/components/common/TopBar";
+import { Reviews } from "@/components/modules/Reviews";
 import { EColors } from "@/helpers/colors";
 import { fairType } from "@/helpers/fairs";
-import { getErrorMessage } from "@/helpers/getFormikErrorMsg";
 import { getNavStateText } from "@/helpers/navigation";
 import { reviewSchema } from "@/helpers/validator/schema";
 import { useFairDetails } from "@/hooks/fairs/useFairDetails";
@@ -59,27 +61,6 @@ export const FairDetails: React.FC = () => {
       backgroundStatusBar(EColors.PRIMARY);
     }
   }, [scrollTop]);
-
-  const {
-    handleSubmit,
-    handleChange,
-    handleBlur,
-    setFieldValue,
-    values,
-    touched,
-    errors,
-    isSubmitting,
-  } = useFormik<TReviewForm>({
-    enableReinitialize: true,
-    initialValues: {
-      comment: review?.comment || "",
-      stars: review?.stars || 0,
-    },
-    validationSchema: reviewSchema,
-    onSubmit: handleSaveReview,
-  });
-
-  const handleChangeStars = (value: number) => setFieldValue("stars", value);
 
   return (
     <>
@@ -215,49 +196,32 @@ export const FairDetails: React.FC = () => {
               )}
             </section>
 
-            <section
-              className={`${styles.fairDetailsReviewForm} animate__animated animate__fadeIn`}
-            >
-              <h3>Califica esta Feria</h3>
-              <p>Comparte tu opinión con otros usuarios</p>
-
-              <form onSubmit={handleSubmit}>
-                <Stars
-                  value={values.stars}
-                  onChange={handleChangeStars}
-                  size={40}
-                  className={styles.fairDetailsStars}
-                />
-                <Input
-                  placeholder="Comentario"
-                  type="text"
-                  name="comment"
-                  // Icon={<BiEnvelope />}
-                  onIonChange={handleChange}
-                  onIonBlur={handleBlur}
-                  disabled={
-                    isSubmitting || isSaving || isLoading || isLoadingReviews
-                  }
-                  value={values.comment}
-                  helper={getErrorMessage("comment", touched, errors)}
-                  className={styles.fairDetailsReviewFormInput}
-                  maxlength={500}
-                  max={5}
-                  helperIsError
-                  textarea
-                  multiple
-                />
-                <Button
-                  expand="block"
-                  color="primary"
-                  type="submit"
-                  disabled={isLoading}
-                  isLoading={isSubmitting || isSaving || isLoadingReviews}
-                >
-                  {review ? "Editar" : "Guardar"}
-                </Button>
-              </form>
+            <section className={styles.fairDetailsInfo}>
+              <div className={styles.fairDetailsInfoCard}>
+                <AiOutlineInfoCircle size={35} />
+                <h5>Información de Contacto</h5>
+              </div>
+              <div className={styles.fairDetailsInfoCard}>
+                <FiMapPin size={35} />
+                <h5>Localización en Mapa</h5>
+              </div>
+              <div className={styles.fairDetailsInfoCard}>
+                <HiOutlinePhotograph size={35} />
+                <h5>Fotos</h5>
+              </div>
+              <div className={styles.fairDetailsInfoCard}>
+                <MdOutlineStorefront size={35} />
+                <h5>Stands </h5>
+              </div>
             </section>
+
+            <Reviews
+              title="Califica esta Feria"
+              subTitle="Comparte tu opinión con otros usuarios"
+              review={review}
+              handleSave={handleSaveReview}
+              isLoading={isSaving || isLoadingReviews}
+            />
           </div>
         </section>
       </Fetcher>

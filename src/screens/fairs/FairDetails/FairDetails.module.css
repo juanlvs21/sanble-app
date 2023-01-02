@@ -130,13 +130,32 @@
   color: var(--ion-color-primary);
 }
 
-.fairDetailsContent .fairDetailsReviewFormInput {
-  height: 120px;
+.fairDetailsContent .fairDetailsInfo {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 15px;
+  row-gap: 15px;
+  margin-top: 30px;
 }
 
-.fairDetailsContent .fairDetailsReviewFormInput::part(native),
-.fairDetailsContent .fairDetailsReviewFormInput textarea {
-  height: 120px !important;
+.fairDetailsContent .fairDetailsInfo .fairDetailsInfoCard {
+  background-color: var(--ion-color-primary);
+  border-radius: var(--sanble-border-radius);
+  color: var(--ion-color-light);
+  width: 100%;
+  height: 150px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 15px;
+  padding-top: 40px;
+  cursor: pointer;
+}
+
+.fairDetailsContent .fairDetailsInfo .fairDetailsInfoCard h5 {
+  font-size: 18px;
+  margin-top: 10px;
 }
 
 .fairDetailsOverlay {
@@ -225,31 +244,6 @@
   margin: 5px 0px;
 }
 
-.fairDetailsContent .fairDetailsReviewForm {
-  margin-top: 30px;
-}
-
-.fairDetailsContent .fairDetailsReviewForm h3 {
-  font-weight: 600;
-  font-size: 18px;
-}
-
-.fairDetailsContent .fairDetailsReviewForm p {
-  color: var(--sanble-gray-color-2);
-  font-weight: 500;
-  font-size: 12px;
-}
-
-.fairDetailsContent .fairDetailsReviewForm form {
-  margin-top: 20px;
-}
-
-.fairDetailsContent .fairDetailsReviewForm .fairDetailsStars {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 20px;
-}
-
 @media (min-width: 768px) {
   .fairDetailsFetcherSection {
     height: calc(100% - 62px) !important;
@@ -277,6 +271,7 @@
     height: 380px;
     transition: all 500ms ease-in-out;
   }
+
   .fairDetailsContent {
     margin-top: -60px !important;
     padding: 100px 100px 120px;
@@ -292,6 +287,11 @@
     width: 1100px;
     border-radius: var(--sanble-border-radius);
   }
+
+  .fairDetailsContent .fairDetailsInfo {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
   .fairDetailsCoverContainer {
     width: 1100px;
     margin: auto;
