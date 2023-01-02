@@ -1,4 +1,4 @@
-.fairDetailsFetcherContent {
+.fairFetcherContent {
   --padding-top: 0 !important;
   --padding-bottom: 0 !important;
   --padding-start: 0 !important;
@@ -6,12 +6,12 @@
   transition: all 500ms ease-in-out;
 }
 
-.fairDetailsFetcherSection {
+.fairFetcherSection {
   height: 100% !important;
   transition: all 500ms ease-in-out;
 }
 
-.fairDetailsBg {
+.fairCoverBg {
   background-color: var(--ion-color-primary);
   background-image: url("/assets/images/fairs/details-bg.svg");
   background-size: contain;
@@ -25,14 +25,14 @@
   z-index: -1;
 }
 
-.fairDetailsBg.fairCoverOpen {
+.fairCoverBg.fairCoverOpen {
   background-size: cover;
   width: 100%;
   height: 100%;
   transition: all 500ms ease-in-out;
 }
 
-.fairDetailsCoverContainer {
+.fairCoverContainer {
   position: relative;
   display: flex;
   justify-content: center;
@@ -74,7 +74,7 @@
   transition: all 500ms ease-in-out;
 }
 
-.fairDetailsContent {
+.fairContent {
   border-top-left-radius: var(--sanble-border-radius);
   border-top-right-radius: var(--sanble-border-radius);
   background-color: #fff;
@@ -84,12 +84,12 @@
   transition: all 500ms ease-in-out;
 }
 
-.fairDetailsContent.fairCoverOpen {
+.fairContent.fairCoverOpen {
   margin-top: 100% !important;
   transition: all 500ms ease-in-out;
 }
 
-.fairDetailsContent .fairDetailsNameContainer {
+.fairNameContainer {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -99,14 +99,14 @@
   min-height: 35px;
 }
 
-.fairDetailsContent .fairDetailsNameContainer h1 {
+.fairNameContainer h1 {
   font-size: 22px;
   font-weight: 600;
   text-align: start;
   margin: 0;
 }
 
-.fairDetailsContent .fairDetailsNameStars {
+.fairNameStars {
   width: 60px;
   display: flex;
   justify-content: center;
@@ -117,7 +117,7 @@
   color: var(--sanble-gray-color-2);
 }
 
-.fairDetailsContent .fairDetailsNameStars .fairDetailsNameStarsIcon {
+.fairNameStars .fairNameStarsIcon {
   width: 25px;
   height: 25px;
   display: flex;
@@ -126,11 +126,11 @@
   margin-right: 5px;
 }
 
-.fairDetailsContent .fairDetailsNameStars .fairDetailsNameStarsIcon svg {
+.fairNameStars .fairNameStarsIcon svg {
   color: var(--ion-color-primary);
 }
 
-.fairDetailsContent .fairDetailsInfo {
+.fairInfo {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   column-gap: 15px;
@@ -138,7 +138,7 @@
   margin-top: 30px;
 }
 
-.fairDetailsContent .fairDetailsInfo .fairDetailsInfoCard {
+.fairInfo .fairInfoCard {
   background-color: var(--ion-color-primary);
   border-radius: var(--sanble-border-radius);
   color: var(--ion-color-light);
@@ -153,12 +153,12 @@
   cursor: pointer;
 }
 
-.fairDetailsContent .fairDetailsInfo .fairDetailsInfoCard h5 {
+.fairInfo .fairInfoCard h5 {
   font-size: 18px;
   margin-top: 10px;
 }
 
-.fairDetailsOverlay {
+.fairCoverOverlay {
   position: fixed;
   background: rgb(0 0 0 / 46%);
   height: 100vh;
@@ -169,7 +169,7 @@
   transition: all 500ms ease-in-out;
 }
 
-.fairDetailsCoverBtnClose {
+.fairCoverBtnClose {
   position: fixed;
   top: 30px;
   right: 30px;
@@ -179,7 +179,7 @@
   z-index: 1000;
 }
 
-.fairDetailsCoverBtnClose::part(native) {
+.fairCoverBtnClose::part(native) {
   padding: 0;
   width: 30px;
   height: 30px;
@@ -187,21 +187,21 @@
   z-index: 1000;
 }
 
-.fairDetailsCoverBtnClose svg {
+.fairCoverBtnClose svg {
   color: black;
 }
 
-.fairDetailsOverlay.fairCoverOpen {
+.fairCoverOverlay.fairCoverOpen {
   z-index: 600;
   opacity: 1;
   transition: all 500ms ease-in-out;
 }
 
-.fairDetailsFetcherSection.fairCoverOpen {
+.fairFetcherSection.fairCoverOpen {
   transition: all 500ms ease-in-out;
 }
 
-.fairDetailsFetcherContent.fairCoverOpen::part(scroll) {
+.fairFetcherContent.fairCoverOpen::part(scroll) {
   overflow: hidden;
   transition: all 500ms ease-in-out;
 }
@@ -230,27 +230,42 @@
   transition: all 500ms ease-in-out;
 }
 
-.fairDetailsContent .fairDetailsType {
+.fairType {
   min-height: 20px;
   margin: 5px 0;
   color: var(--sanble-gray-color-2);
 }
 
-.fairDetailsContent .fairDetailsInfoDescription {
+.fairDescription {
   margin-top: 10px;
 }
 
-.fairDetailsContent .fairDetailsInfoDescription p {
+.fairDescription p {
   margin: 5px 0px;
 }
 
+.fairReviewsContainer {
+  margin-top: 40px;
+}
+
+.fairReviewsContainer h3 {
+  font-weight: 600;
+  font-size: 18px;
+}
+
+.fairReviewsContainer p {
+  color: var(--sanble-gray-color-2);
+  font-weight: 500;
+  font-size: 12px;
+}
+
 @media (min-width: 768px) {
-  .fairDetailsFetcherSection {
+  .fairFetcherSection {
     height: calc(100% - 62px) !important;
     transition: all 500ms ease-in-out;
   }
 
-  .fairDetailsBg {
+  .fairCoverBg {
     height: 500px;
     transition: all 500ms ease-in-out;
   }
@@ -272,7 +287,7 @@
     transition: all 500ms ease-in-out;
   }
 
-  .fairDetailsContent {
+  .fairContent {
     margin-top: -60px !important;
     padding: 100px 100px 120px;
     transition: all 500ms ease-in-out;
@@ -280,19 +295,19 @@
 }
 
 @media (min-width: 1100px) {
-  .fairDetailsBg {
+  .fairCoverBg {
     height: 100%;
   }
-  .fairDetailsContent {
+  .fairContent {
     width: 1100px;
     border-radius: var(--sanble-border-radius);
   }
 
-  .fairDetailsContent .fairDetailsInfo {
+  .fairInfo {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 
-  .fairDetailsCoverContainer {
+  .fairCoverContainer {
     width: 1100px;
     margin: auto;
     padding: 0;

@@ -1,4 +1,3 @@
-import { useFormik } from "formik";
 import { useEffect, useState } from "react";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import { FiMapPin } from "react-icons/fi";
@@ -14,17 +13,16 @@ import { Fetcher } from "@/components/common/Fetcher";
 import { ImageExtended } from "@/components/common/Image";
 import { Skeleton } from "@/components/common/Skeleton";
 import { TopBar } from "@/components/common/TopBar";
-import { Reviews } from "@/components/modules/Reviews";
+import { ReviewForm } from "@/components/modules/reviews/ReviewForm";
+import { ReviewsList } from "@/components/modules/reviews/ReviewsList";
 import { EColors } from "@/helpers/colors";
 import { fairType } from "@/helpers/fairs";
 import { getNavStateText } from "@/helpers/navigation";
-import { reviewSchema } from "@/helpers/validator/schema";
 import { useFairDetails } from "@/hooks/fairs/useFairDetails";
 import { useApp } from "@/hooks/useApp";
 import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 import { useStatusBar } from "@/hooks/useStatusBar";
 import { useUser } from "@/hooks/useUser";
-import { TReviewForm } from "@/types/TReview";
 import styles from "./FairDetails.module.css";
 
 export const FairDetails: React.FC = () => {
@@ -37,6 +35,7 @@ export const FairDetails: React.FC = () => {
   const {
     fair,
     review,
+    reviews,
     isLoading,
     isSaving,
     isLoadingReviews,
@@ -87,7 +86,7 @@ export const FairDetails: React.FC = () => {
       />
 
       <div
-        className={`${styles.fairDetailsBg} ${
+        className={`${styles.fairCoverBg} ${
           openCover ? styles.fairCoverOpen : ""
         }`}
       />
@@ -96,26 +95,26 @@ export const FairDetails: React.FC = () => {
         handleRefresh={handleRefreshReviews}
         handleInfiniteScroll={handleInfiniteReviews}
         refreshSpinnerColor="medium"
-        classNameSection={`${styles.fairDetailsFetcherSection} ${
+        classNameSection={`${styles.fairFetcherSection} ${
           openCover ? styles.fairCoverOpen : ""
         }`}
-        classNameContent={`${styles.fairDetailsFetcherContent} ${
+        classNameContent={`${styles.fairFetcherContent} ${
           openCover ? styles.fairCoverOpen : ""
         }`}
       >
         <div
-          className={`${styles.fairDetailsOverlay} ${
+          className={`${styles.fairCoverOverlay} ${
             openCover ? styles.fairCoverOpen : ""
           }`}
         />
-        <div className={styles.fairDetailsCoverContainer}>
+        <div className={styles.fairCoverContainer}>
           {openCover && (
             <Button
               fill="solid"
               color="light"
               size="small"
               onClick={() => setOpenCover((state) => !state)}
-              className={`${styles.fairDetailsCoverBtnClose} animate__animated animate__zoomIn`}
+              className={`${styles.fairCoverBtnClose} animate__animated animate__zoomIn`}
             >
               <IoIosCloseCircleOutline size={24} />
             </Button>
@@ -136,11 +135,11 @@ export const FairDetails: React.FC = () => {
           />
         </div>
         <section
-          className={`${styles.fairDetailsContent} ${
+          className={`${styles.fairContent} ${
             openCover ? styles.fairCoverOpen : ""
           }`}
         >
-          <div className={styles.fairDetailsNameContainer}>
+          <div className={styles.fairNameContainer}>
             {getNavStateText(fairID, state?.fairID, state?.fairName) ? (
               <h1>{getNavStateText(fairID, state?.fairID, state?.fairName)}</h1>
             ) : (
@@ -152,11 +151,11 @@ export const FairDetails: React.FC = () => {
                 )}
               </>
             )}
-            <div className={styles.fairDetailsNameStars}>
+            <div className={styles.fairNameStars}>
               {!isLoading && (
                 <>
                   <span
-                    className={`${styles.fairDetailsNameStarsIcon} animate__animated animate__fadeIn`}
+                    className={`${styles.fairNameStarsIcon} animate__animated animate__fadeIn`}
                   >
                     <TiStar size={25} />
                   </span>
@@ -175,11 +174,11 @@ export const FairDetails: React.FC = () => {
                 style={{ margin: "5px 0px" }}
               />
             ) : (
-              <h6 className={styles.fairDetailsType}>
+              <h6 className={styles.fairType}>
                 {fair ? fairType[`${fair?.type}_long`] : ""}
               </h6>
             )}
-            <section className={styles.fairDetailsInfoDescription}>
+            <section className={styles.fairDescription}>
               {isLoading ? (
                 Array(5)
                   .fill(0)
@@ -196,32 +195,38 @@ export const FairDetails: React.FC = () => {
               )}
             </section>
 
-            <section className={styles.fairDetailsInfo}>
-              <div className={styles.fairDetailsInfoCard}>
+            <section className={styles.fairInfo}>
+              <div className={styles.fairInfoCard}>
                 <AiOutlineInfoCircle size={35} />
                 <h5>Información de Contacto</h5>
               </div>
-              <div className={styles.fairDetailsInfoCard}>
+              <div className={styles.fairInfoCard}>
                 <FiMapPin size={35} />
                 <h5>Localización en Mapa</h5>
               </div>
-              <div className={styles.fairDetailsInfoCard}>
+              <div className={styles.fairInfoCard}>
                 <HiOutlinePhotograph size={35} />
                 <h5>Fotos</h5>
               </div>
-              <div className={styles.fairDetailsInfoCard}>
+              <div className={styles.fairInfoCard}>
                 <MdOutlineStorefront size={35} />
                 <h5>Stands </h5>
               </div>
             </section>
 
-            <Reviews
-              title="Califica esta Feria"
-              subTitle="Comparte tu opinión con otros usuarios"
-              review={review}
-              handleSave={handleSaveReview}
-              isLoading={isSaving || isLoadingReviews}
-            />
+            <section
+              className={`${styles.fairReviewsContainer} animate__animated animate__fadeIn`}
+            >
+              <h3>Califica esta Feria</h3>
+              <p>Comparte tu opinión con otros usuarios</p>
+
+              <ReviewForm
+                review={review}
+                handleSave={handleSaveReview}
+                isLoading={isSaving || isLoadingReviews}
+              />
+              <ReviewsList reviews={reviews} />
+            </section>
           </div>
         </section>
       </Fetcher>
