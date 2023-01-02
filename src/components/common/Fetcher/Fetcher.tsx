@@ -1,16 +1,17 @@
 import {
+  InfiniteScrollCustomEvent,
   IonContent,
+  IonInfiniteScroll,
+  IonInfiniteScrollContent,
   IonRefresher,
   IonRefresherContent,
   RefresherEventDetail,
-  IonInfiniteScroll,
-  IonInfiniteScrollContent,
-  InfiniteScrollCustomEvent,
 } from "@ionic/react";
 
-import { useApp } from "@/hooks/useApp";
-import styles from "./Fetcher.module.css";
 import { Spinner } from "@/components/common/loaders/Spinner";
+import { useApp } from "@/hooks/useApp";
+import { TColor } from "@/types/TComponents";
+import styles from "./Fetcher.module.css";
 
 export type ComponentProps = {
   /**
@@ -35,12 +36,26 @@ export type ComponentProps = {
    * Custom className for content component
    */
   classNameContent?: string;
+  /**
+   * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
+   *
+   * @default 'primary'
+   */
+  refreshSpinnerColor?: TColor;
+  /**
+   * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
+   *
+   * @default 'primary'
+   */
+  infiniteSpinnerColor?: TColor;
 };
 
 export const Fetcher: React.FC<ComponentProps> = ({
   children,
   classNameSection = "",
   classNameContent = "",
+  refreshSpinnerColor = "primary",
+  infiniteSpinnerColor = "primary",
   handleRefresh,
   handleInfiniteScroll,
 }) => {
@@ -75,7 +90,11 @@ export const Fetcher: React.FC<ComponentProps> = ({
             refreshingSpinner={undefined}
             refreshingText=""
           >
-            <Spinner className="refresher-refreshing-icon" center />
+            <Spinner
+              className="refresher-refreshing-icon"
+              color={refreshSpinnerColor}
+              center
+            />
           </IonRefresherContent>
         </IonRefresher>
 
@@ -89,7 +108,7 @@ export const Fetcher: React.FC<ComponentProps> = ({
         >
           <IonInfiniteScrollContent loadingSpinner={undefined} loadingText="">
             <div className={`${styles.infiniteScrollSpinner} infinite-loading`}>
-              <Spinner center />
+              <Spinner color={infiniteSpinnerColor} center />
             </div>
           </IonInfiniteScrollContent>
         </IonInfiniteScroll>

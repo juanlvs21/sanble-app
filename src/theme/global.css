@@ -146,7 +146,8 @@ ion-item.inputItem.textareItem {
   height: auto;
 }
 
-ion-item.inputItem.textareItem::part(native) {
+ion-item.inputItem.textareItem::part(native),
+ion-item.inputItem.textareItem textarea {
   height: auto;
 }
 

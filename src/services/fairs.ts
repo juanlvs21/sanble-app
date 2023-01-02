@@ -35,6 +35,24 @@ export const getFairListGeolocationRequest = () =>
     .get<AxiosResponse<TFairGeo[]>>(`/fairs/geolocation`)
     .then(({ data }) => data.data);
 
+export const getFairReviewsRequest = (
+  fairID: string,
+  params?: TGetListParams,
+  config?: AxiosRequestConfig
+) =>
+  api
+    .get<AxiosResponse<TResponseList<TReview[]> & { form?: TReview }>>(
+      `/fairs/${fairID}/reviews`,
+      {
+        ...config,
+        params: {
+          page: params?.page || 1,
+          perPage: params?.perPage || 10,
+        },
+      }
+    )
+    .then(({ data }) => data.data);
+
 export const saveFairReviewRequest = (fairID: string, data: TReviewForm) =>
   api
     .post<AxiosResponse<{ review: TReview; fairStars: number }>>(

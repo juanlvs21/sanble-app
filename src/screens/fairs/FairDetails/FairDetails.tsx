@@ -32,9 +32,16 @@ export const FairDetails: React.FC = () => {
   const { scrollTop } = useApp();
   const { backgroundStatusBar } = useStatusBar();
   const { user, loadingSetFav, handleSetFavoriteFair } = useUser();
-  const { fair, handleSaveReview, isLoading, isSaving } = useFairDetails(
-    fairID || ""
-  );
+  const {
+    fair,
+    review,
+    isLoading,
+    isSaving,
+    isLoadingReviews,
+    handleSaveReview,
+    handleRefreshReviews,
+    handleInfiniteReviews,
+  } = useFairDetails(fairID || "");
   const [openCover, setOpenCover] = useState(false);
 
   useDocumentTitle(
@@ -63,9 +70,10 @@ export const FairDetails: React.FC = () => {
     errors,
     isSubmitting,
   } = useFormik<TReviewForm>({
+    enableReinitialize: true,
     initialValues: {
-      comment: "",
-      stars: 0,
+      comment: review?.comment || "",
+      stars: review?.stars || 0,
     },
     validationSchema: reviewSchema,
     onSubmit: handleSaveReview,
@@ -96,7 +104,17 @@ export const FairDetails: React.FC = () => {
         titleLight
         sticky
       />
+
+      <div
+        className={`${styles.fairDetailsBg} ${
+          openCover ? styles.fairCoverOpen : ""
+        }`}
+      />
+
       <Fetcher
+        handleRefresh={handleRefreshReviews}
+        handleInfiniteScroll={handleInfiniteReviews}
+        refreshSpinnerColor="medium"
         classNameSection={`${styles.fairDetailsFetcherSection} ${
           openCover ? styles.fairCoverOpen : ""
         }`}
@@ -109,7 +127,7 @@ export const FairDetails: React.FC = () => {
             openCover ? styles.fairCoverOpen : ""
           }`}
         />
-        <div className={styles.fairDetailsBg}>
+        <div className={styles.fairDetailsCoverContainer}>
           {openCover && (
             <Button
               fill="solid"
@@ -136,7 +154,11 @@ export const FairDetails: React.FC = () => {
             }}
           />
         </div>
-        <section className={styles.fairDetailsContent}>
+        <section
+          className={`${styles.fairDetailsContent} ${
+            openCover ? styles.fairCoverOpen : ""
+          }`}
+        >
           <div className={styles.fairDetailsNameContainer}>
             {getNavStateText(fairID, state?.fairID, state?.fairName) ? (
               <h1>{getNavStateText(fairID, state?.fairID, state?.fairName)}</h1>
@@ -213,9 +235,12 @@ export const FairDetails: React.FC = () => {
                   // Icon={<BiEnvelope />}
                   onIonChange={handleChange}
                   onIonBlur={handleBlur}
-                  disabled={isSubmitting || isSaving || isLoading}
+                  disabled={
+                    isSubmitting || isSaving || isLoading || isLoadingReviews
+                  }
                   value={values.comment}
                   helper={getErrorMessage("comment", touched, errors)}
+                  className={styles.fairDetailsReviewFormInput}
                   maxlength={500}
                   max={5}
                   helperIsError
@@ -226,10 +251,10 @@ export const FairDetails: React.FC = () => {
                   expand="block"
                   color="primary"
                   type="submit"
-                  disabled={isSubmitting || isSaving || isLoading}
-                  isLoading={isSubmitting || isSaving}
+                  disabled={isLoading}
+                  isLoading={isSubmitting || isSaving || isLoadingReviews}
                 >
-                  Guardar
+                  {review ? "Editar" : "Guardar"}
                 </Button>
               </form>
             </section>

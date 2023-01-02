@@ -1,4 +1,6 @@
 import { CSSProperties } from "react";
+
+import { TColor } from "@/types/TComponents";
 import styles from "../Loaders.module.css";
 
 export type ComponentProps = {
@@ -7,16 +9,7 @@ export type ComponentProps = {
    *
    * @default 'primary'
    */
-  color?:
-    | "primary"
-    | "secondary"
-    | "tertiary"
-    | "success"
-    | "warning"
-    | "danger"
-    | "light"
-    | "medium"
-    | "dark";
+  color?: TColor;
   /**
    * Size
    *

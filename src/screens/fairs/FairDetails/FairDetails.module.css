@@ -14,10 +14,29 @@
 .fairDetailsBg {
   background-color: var(--ion-color-primary);
   background-image: url("/assets/images/fairs/details-bg.svg");
-  height: 300px;
+  background-size: contain;
+  width: 100%;
+  height: 400px;
+  position: absolute;
+  top: 0;
   display: flex;
   justify-content: center;
   transition: all 500ms ease-in-out;
+  z-index: -1;
+}
+
+.fairDetailsBg.fairCoverOpen {
+  background-size: cover;
+  width: 100%;
+  height: 100%;
+  transition: all 500ms ease-in-out;
+}
+
+.fairDetailsCoverContainer {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  height: 400px;
 }
 
 .fairCover {
@@ -59,10 +78,14 @@
   border-top-left-radius: var(--sanble-border-radius);
   border-top-right-radius: var(--sanble-border-radius);
   background-color: #fff;
-  margin-top: -70px !important;
-  max-width: 1100px;
+  margin-top: -160px !important;
   margin: auto;
   padding: 120px 16px 50px;
+  transition: all 500ms ease-in-out;
+}
+
+.fairDetailsContent.fairCoverOpen {
+  margin-top: 100% !important;
   transition: all 500ms ease-in-out;
 }
 
@@ -107,6 +130,15 @@
   color: var(--ion-color-primary);
 }
 
+.fairDetailsContent .fairDetailsReviewFormInput {
+  height: 120px;
+}
+
+.fairDetailsContent .fairDetailsReviewFormInput::part(native),
+.fairDetailsContent .fairDetailsReviewFormInput textarea {
+  height: 120px !important;
+}
+
 .fairDetailsOverlay {
   position: fixed;
   background: rgb(0 0 0 / 46%);
@@ -114,6 +146,7 @@
   width: 100%;
   z-index: -100;
   opacity: 0;
+  top: 0;
   transition: all 500ms ease-in-out;
 }
 
@@ -146,8 +179,6 @@
 }
 
 .fairDetailsFetcherSection.fairCoverOpen {
-  margin: 0;
-  height: 100vh !important;
   transition: all 500ms ease-in-out;
 }
 
@@ -161,6 +192,7 @@
   height: 100vh;
   z-index: 700;
   position: fixed;
+  border-radius: 0;
   top: 0;
   margin: 0;
   padding: 20px;
@@ -225,7 +257,7 @@
   }
 
   .fairDetailsBg {
-    height: 410px;
+    height: 500px;
     transition: all 500ms ease-in-out;
   }
 
@@ -246,10 +278,26 @@
     transition: all 500ms ease-in-out;
   }
   .fairDetailsContent {
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
-    margin-top: 0px !important;
-    padding: 50px 100px 120px;
+    margin-top: -60px !important;
+    padding: 100px 100px 120px;
     transition: all 500ms ease-in-out;
+  }
+}
+
+@media (min-width: 1100px) {
+  .fairDetailsBg {
+    height: 100%;
+  }
+  .fairDetailsContent {
+    width: 1100px;
+    border-radius: var(--sanble-border-radius);
+  }
+  .fairDetailsCoverContainer {
+    width: 1100px;
+    margin: auto;
+    padding: 0;
+  }
+  .fairCover {
+    width: 100%;
   }
 }
