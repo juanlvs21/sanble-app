@@ -1,4 +1,4 @@
-import { Icon } from "leaflet";
+import { Icon, LatLngLiteral } from "leaflet";
 import { useEffect, useState } from "react";
 import {
   MapContainer,
@@ -21,6 +21,10 @@ const userPin = new Icon({
 
 export type ComponentProps = {
   /**
+   * Center map
+   */
+  center?: [number, number] | null;
+  /**
    * List of marks to place on the map
    *
    * @default []
@@ -35,6 +39,7 @@ export type ComponentProps = {
 };
 
 export const Map: React.FC<ComponentProps> = ({
+  center,
   markers = [],
   isLoading = false,
 }) => {
@@ -52,7 +57,7 @@ export const Map: React.FC<ComponentProps> = ({
         className={styles.mapSpinner}
       />
       <MapContainer
-        center={[userPosition.latitude, userPosition.longitude]}
+        center={center || [userPosition.latitude, userPosition.longitude]}
         zoom={15}
         className={styles.mapContainer}
         whenReady={() => setMapReady(true)}

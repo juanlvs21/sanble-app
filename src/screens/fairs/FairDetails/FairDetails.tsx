@@ -273,6 +273,7 @@ export const FairDetails: React.FC = () => {
         <IonContent>
           {fair && (
             <Map
+              center={fair.geopoint}
               markers={formatFairsMarks([
                 {
                   id: fair?.id,
