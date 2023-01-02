@@ -10,7 +10,7 @@ import {
   Skeleton,
 } from "@/components/common/Skeleton";
 import { brokenImage, defaultImage } from "@/helpers/defaultImage";
-import styles from "./Image.module.css";
+import styles from "./ImageExtended.module.css";
 
 export type ComponentProps = DetailedHTMLProps<
   ImgHTMLAttributes<HTMLImageElement>,

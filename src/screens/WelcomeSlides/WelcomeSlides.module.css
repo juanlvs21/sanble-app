@@ -26,11 +26,6 @@
   align-items: flex-end;
 }
 
-.slideWelcomeImgContainer img {
-  object-fit: contain;
-  object-position: center;
-}
-
 .slideWelcomeDescriptionContainer {
   position: relative;
   width: 100%;

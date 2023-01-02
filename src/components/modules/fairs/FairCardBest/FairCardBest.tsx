@@ -5,8 +5,8 @@ import { fairType } from "@/helpers/fairs";
 import { TFair } from "@/types/TFair";
 import styles from "./FairCardBest.module.css";
 import { HiOutlineCalendar } from "react-icons/hi";
-import dayjs from "dayjs";
-import { ImageExtended } from "@/components/common/Image";
+import { dayjs } from "@/helpers/time";
+import { ImageExtended } from "@/components/common/ImageExtended";
 
 export type ComponentProps = {
   /**

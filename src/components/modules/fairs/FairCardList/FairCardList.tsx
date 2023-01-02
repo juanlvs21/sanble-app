@@ -1,4 +1,4 @@
-import dayjs from "dayjs";
+import { dayjs } from "@/helpers/time";
 import { HiOutlineCalendar } from "react-icons/hi";
 import { useMediaQuery } from "usehooks-ts";
 import { Link } from "react-router-dom";
@@ -7,7 +7,7 @@ import { fairType } from "@/helpers/fairs";
 import { TFair } from "@/types/TFair";
 
 import { ButtonFav } from "@/components/common/buttons/ButtonFav";
-import { ImageExtended } from "@/components/common/Image";
+import { ImageExtended } from "@/components/common/ImageExtended";
 import { Stars } from "@/components/common/Stars";
 import { useUser } from "@/hooks/useUser";
 import styles from "./FairCardList.module.css";

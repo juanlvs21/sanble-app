@@ -130,34 +130,6 @@
   color: var(--ion-color-primary);
 }
 
-.fairInfo {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  column-gap: 15px;
-  row-gap: 15px;
-  margin-top: 30px;
-}
-
-.fairInfo .fairInfoCard {
-  background-color: var(--ion-color-primary);
-  border-radius: var(--sanble-border-radius);
-  color: var(--ion-color-light);
-  width: 100%;
-  height: 150px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: flex-start;
-  padding: 15px;
-  padding-top: 40px;
-  cursor: pointer;
-}
-
-.fairInfo .fairInfoCard h5 {
-  font-size: 18px;
-  margin-top: 10px;
-}
-
 .fairCoverOverlay {
   position: fixed;
   background: rgb(0 0 0 / 46%);
@@ -244,6 +216,34 @@
   margin: 5px 0px;
 }
 
+.fairInfo {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 15px;
+  row-gap: 15px;
+  margin-top: 30px;
+}
+
+.fairInfo .fairInfoCard {
+  background-color: var(--ion-color-primary);
+  border-radius: var(--sanble-border-radius);
+  color: var(--ion-color-light);
+  width: 100%;
+  height: 150px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 15px;
+  padding-top: 40px;
+  cursor: pointer;
+}
+
+.fairInfo .fairInfoCard h5 {
+  font-size: 18px;
+  margin-top: 10px;
+}
+
 .fairReviewsContainer {
   margin-top: 40px;
 }
@@ -257,6 +257,13 @@
   color: var(--sanble-gray-color-2);
   font-weight: 500;
   font-size: 12px;
+}
+
+@media (max-width: 375px) {
+  .fairInfo .fairInfoCard h5 {
+    font-size: 14px;
+    margin-top: 10px;
+  }
 }
 
 @media (min-width: 768px) {

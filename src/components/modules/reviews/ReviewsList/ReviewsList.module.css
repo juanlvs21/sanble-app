@@ -1,0 +1,41 @@
+.reviewsList {
+  margin-top: 30px;
+  padding-left: 0;
+  list-style: none;
+}
+
+.reviewsList li {
+  width: 100%;
+  margin-bottom: 30px;
+}
+
+.reviewOwnerContainer {
+  display: flex;
+  align-items: flex-start;
+}
+
+.reviewOwnerPhotoContainer {
+  margin-right: 20px;
+  height: 35px;
+}
+
+.reviewOwnerPhoto {
+  width: 35px;
+  height: 35px;
+  border-radius: 35px;
+}
+
+.reviewOwnerContainer h6 {
+  font-weight: 700;
+  font-size: 13px;
+  margin: 0;
+  word-break: normal;
+}
+
+.reviewOwnerContainer span {
+  color: var(--sanble-gray-color-2);
+  font-weight: 500;
+  font-size: 12px;
+  margin-top: 3px;
+  margin-left: 5px;
+}

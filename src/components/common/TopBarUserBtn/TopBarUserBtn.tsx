@@ -1,5 +1,5 @@
 import { Button } from "@/components/common/buttons/Button";
-import { ImageExtended } from "@/components/common/Image";
+import { ImageExtended } from "@/components/common/ImageExtended";
 import { useApp } from "@/hooks/useApp";
 import { useUser } from "@/hooks/useUser";
 import styles from "./TopBarUserBtn.module.css";

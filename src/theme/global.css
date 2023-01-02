@@ -210,6 +210,15 @@ ion-action-sheet button.disable::after {
   opacity: var(--button-background-hover-opacity) !important;
 }
 
+ion-modal {
+  -webkit-box-shadow: 5px 5px 5px 5px rgba(200, 200, 200, 0.2);
+  box-shadow: 5px 5px 5px 5px rgba(200, 200, 200, 0.1);
+}
+
+ion-modal ion-toolbar {
+  --background: transparent;
+}
+
 form {
   width: 100%;
 }

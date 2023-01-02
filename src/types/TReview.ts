@@ -12,6 +12,7 @@ export type TReview = {
   type: EReviewType;
   ownerName: string;
   ownerPhoto?: string;
+  creationTime: string;
   owner: TFireBaseDocRefBasic;
   parent: TFireBaseDocRefBasic;
 };

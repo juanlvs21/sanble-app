@@ -25,12 +25,15 @@ export type ComponentProps = {
 
 export const Stars: React.FC<ComponentProps> = ({
   value,
-  className,
   onChange,
   size = 20,
+  className = "",
 }) => {
   return (
-    <div className={`${className} animate__animated animate__fadeIn`}>
+    <div
+      className={`${className} animate__animated animate__fadeIn`}
+      style={{ height: size }}
+    >
       {Array(5)
         .fill(0)
         .map((_, i) => (

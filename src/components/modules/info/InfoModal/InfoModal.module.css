@@ -1,0 +1,37 @@
+.infoModal {
+  --border-radius: var(--sanble-border-radius);
+  --height: 220px;
+  --width: 360px;
+  overflow: hidden;
+}
+
+.infoClose {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.infoContent {
+  padding: 30px;
+  overflow: hidden;
+}
+
+.infoContent h1 {
+  font-weight: 600;
+  font-size: 18px;
+  text-align: center;
+  margin: 0;
+}
+
+.infoContent p {
+  color: var(--sanble-gray-color-2);
+  display: flex;
+  align-items: center;
+  margin: 0;
+  margin-top: 12px;
+}
+
+.infoContent p span {
+  margin-left: 10px;
+  word-break: break-all;
+}

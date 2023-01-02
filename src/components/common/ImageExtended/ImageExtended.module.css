@@ -11,6 +11,8 @@
 .imageTag {
   visibility: visible;
   transition: all 400ms ease-in-out;
+  object-fit: cover;
+  object-position: center;
 }
 
 .imageTag.imageIsLoading {

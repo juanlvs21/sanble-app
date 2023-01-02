@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-import { ImageExtended } from "@/components/common/Image";
+import { ImageExtended } from "@/components/common/ImageExtended";
 import { TProductType } from "@/types/TProduct";
 import styles from "./ProductCard.module.css";
 

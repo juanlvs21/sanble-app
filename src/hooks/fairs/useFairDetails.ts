@@ -90,6 +90,8 @@ export const useFairDetails = (fairID: string, params?: TGetListParams) => {
       setFair((state) => (state ? { ...state, stars: fairStars } : undefined));
 
       toast("Opinión guardada con éxito", { type: "success" });
+
+      handleLoadReviews();
     } catch (error) {
       toast(error, { type: "error" });
     } finally {

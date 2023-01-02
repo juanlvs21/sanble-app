@@ -13,7 +13,7 @@ import { FiHome } from "react-icons/fi";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import { Link, useLocation, useMatch } from "react-router-dom";
 
-import { ImageExtended } from "@/components/common/Image";
+import { ImageExtended } from "@/components/common/ImageExtended";
 import { useApp } from "@/hooks/useApp";
 import { useAuth } from "@/hooks/useAuth";
 import { useUser } from "@/hooks/useUser";
