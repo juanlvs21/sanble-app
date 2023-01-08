@@ -62,11 +62,13 @@ export const TopBar: React.FC<ComponentProps> = ({
   titleSize = 28,
   className = "",
 }) => {
-  const { scrollTop } = useApp();
+  const { scrollTop, isCapacitor } = useApp();
 
   return (
     <IonToolbar
       className={`${styles.topBarContainer} ${
+        isCapacitor ? styles.isCapacitor : ""
+      } ${
         (sticky && scrollTop > 25) || stickyNoScroll ? styles.sticky : ""
       } ${className}`}
     >

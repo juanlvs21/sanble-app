@@ -10,6 +10,10 @@
   transition: all 400ms ease-in-out;
 }
 
+.sidebar.isCapacitor {
+  padding-top: 60px;
+}
+
 .sidebar.showSidebar {
   left: 0;
   transition: all 400ms ease-in-out;
@@ -24,6 +28,10 @@
   height: 30px;
   left: 150px;
   transition: all 400ms ease-in-out;
+}
+
+.btnCloseSidebar.isCapacitor {
+  top: 45px;
 }
 
 .sidebar.showSidebar .btnCloseSidebar {

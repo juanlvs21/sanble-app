@@ -59,6 +59,10 @@
     border-radius: var(--sanble-border-radius);
     transition: all 400ms ease-in-out;
   }
+  .mainContainer.showSidebar.isCapacitor {
+    margin-top: 60px;
+    height: calc(100% - 80px);
+  }
   .mainOverlay {
     border-radius: var(--sanble-border-radius);
   }

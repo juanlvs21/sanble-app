@@ -9,16 +9,25 @@
   width: 100%;
   position: fixed;
   border-bottom: none;
-  transition: all 400ms ease-in-out;
+  transition: background 400ms ease-in-out;
+}
+
+.topBarContainer.isCapacitor {
+  --padding-top: 50px;
 }
 
 .topBarContainer.sticky {
+  --padding-top: 50px;
   --padding-bottom: 5px;
   background: #fff !important;
   margin-top: -20px !important;
   -webkit-box-shadow: 5px 5px 5px 5px rgba(200, 200, 200, 0.2);
   box-shadow: 5px 5px 5px 5px rgba(200, 200, 200, 0.1);
-  transition: all 400ms ease-in-out;
+  transition: background 400ms ease-in-out;
+}
+
+.topBarContainer.sticky.isCapacitor {
+  --padding-top: 70px;
 }
 
 .topBarProgressBar {

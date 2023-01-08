@@ -22,7 +22,7 @@ import styles from "./Sidebar.module.css";
 export const Sidebar: React.FC = () => {
   const { pathname } = useLocation();
   const [presentAlert] = useIonAlert();
-  const { showSidebar, handleShowSidebar } = useApp();
+  const { isCapacitor, showSidebar, handleShowSidebar } = useApp();
   const { handleSignOut } = useAuth();
   const { user } = useUser();
 
@@ -102,13 +102,17 @@ export const Sidebar: React.FC = () => {
 
   return (
     <nav
-      className={`${styles.sidebar} ${showSidebar ? styles.showSidebar : ""}`}
+      className={`${styles.sidebar} ${showSidebar ? styles.showSidebar : ""} ${
+        isCapacitor ? styles.isCapacitor : ""
+      }`}
     >
       <IonButton
         fill="clear"
         size="small"
         onClick={() => handleShowSidebar(false)}
-        className={styles.btnCloseSidebar}
+        className={`${styles.btnCloseSidebar} ${
+          isCapacitor ? styles.isCapacitor : ""
+        }`}
       >
         <IoIosCloseCircleOutline size={24} />
       </IonButton>

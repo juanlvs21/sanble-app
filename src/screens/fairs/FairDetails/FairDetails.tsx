@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useRef, useState } from "react";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import { FiMapPin } from "react-icons/fi";
 import { HiOutlinePhotograph } from "react-icons/hi";
@@ -17,13 +17,10 @@ import { FairModalMap } from "@/components/modules/fairs/FairModalMap";
 import { InfoModal } from "@/components/modules/info/InfoModal";
 import { ReviewForm } from "@/components/modules/reviews/ReviewForm";
 import { ReviewsList } from "@/components/modules/reviews/ReviewsList";
-import { EColors } from "@/helpers/colors";
 import { fairType } from "@/helpers/fairs";
 import { getNavStateText } from "@/helpers/navigation";
 import { useFairDetails } from "@/hooks/fairs/useFairDetails";
-import { useApp } from "@/hooks/useApp";
 import { useDocumentTitle } from "@/hooks/useDocumentTitle";
-import { useStatusBar } from "@/hooks/useStatusBar";
 import { useUser } from "@/hooks/useUser";
 import styles from "./FairDetails.module.css";
 
@@ -34,8 +31,6 @@ export const FairDetails: React.FC = () => {
   const navigate = useNavigate();
   const { fairID } = useParams();
   const { state } = useLocation();
-  const { scrollTop } = useApp();
-  const { backgroundStatusBar } = useStatusBar();
   const { user, loadingSetFav, handleSetFavoriteFair } = useUser();
   const {
     fair,
@@ -57,14 +52,6 @@ export const FairDetails: React.FC = () => {
       "Feria"
     } 🛍️`
   );
-
-  useEffect(() => {
-    if (scrollTop > 25) {
-      backgroundStatusBar(EColors.WHITE);
-    } else {
-      backgroundStatusBar(EColors.PRIMARY);
-    }
-  }, [scrollTop]);
 
   return (
     <>

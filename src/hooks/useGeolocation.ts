@@ -1,22 +1,17 @@
 import { Geolocation } from "@capacitor/geolocation";
 import { useState } from "react";
 
-import { useToast } from "@/hooks/useToast";
 import { TCoords } from "@/types/TGeolocation";
 
-const noGeolocationPermissionsID = "toast_no_geolocation_permissions_id";
-
 export const useGeolocation = () => {
-  const { toast, toastDismiss } = useToast();
   const [userPosition, setUserPosition] = useState<TCoords>();
   const [isGettingPosition, setIsGettingPosition] = useState(true);
+  const [error, setError] = useState<string>();
 
   const getCurrentPosition = async () => {
-    setIsGettingPosition(false);
+    setIsGettingPosition(true);
 
     try {
-      toastDismiss(noGeolocationPermissionsID);
-
       // TODO: Add a way to turn it on if the GPS is off (Prompt to activate)
 
       const { location, coarseLocation } = await Geolocation.checkPermissions();
@@ -25,27 +20,16 @@ export const useGeolocation = () => {
         const { coords } = await Geolocation.getCurrentPosition();
         setUserPosition(coords);
       } else {
-        toast("Sanble no tiene permisos para obtener tu ubicación", {
-          type: "error",
-          toastId: noGeolocationPermissionsID,
-        });
+        setError("Sanble no tiene permisos para obtener tu ubicación");
       }
     } catch (error: any) {
+      console.warn(error?.message);
       if (error?.message === "User denied Geolocation") {
-        toast("Sanble no tiene permisos para obtener tu ubicación", {
-          type: "error",
-          toastId: noGeolocationPermissionsID,
-        });
+        setError("Sanble no tiene permisos para obtener tu ubicación");
       } else if (error?.message === "location unavailable") {
-        toast("Tu ubicación es inaccesible", {
-          type: "error",
-          toastId: noGeolocationPermissionsID,
-        });
+        setError("Tu ubicación es inaccesible");
       } else {
-        toast("Ha ocurrido un error al obtener tu ubicación", {
-          type: "error",
-          toastId: noGeolocationPermissionsID,
-        });
+        setError("Ha ocurrido un error al obtener tu ubicación");
       }
     } finally {
       setIsGettingPosition(false);
@@ -55,6 +39,7 @@ export const useGeolocation = () => {
   return {
     userPosition,
     isGettingPosition,
+    error,
     getCurrentPosition,
   };
 };

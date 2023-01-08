@@ -9,12 +9,10 @@ import {
 } from "@ionic/react";
 import { useRef } from "react";
 import { AiOutlineClose } from "react-icons/ai";
-import { TbMapOff } from "react-icons/tb";
 
 import { Map } from "@/components/modules/geolocation/Map";
-import { EColors } from "@/helpers/colors";
 import { formatFairsMarks } from "@/helpers/mapFormatMarkers";
-import { useStatusBar } from "@/hooks/useStatusBar";
+import { useApp } from "@/hooks/useApp";
 import { TFair } from "@/types/TFair";
 import styles from "./FairModalMap.module.css";
 
@@ -43,21 +41,16 @@ export const FairModalMap: React.FC<ComponentProps> = ({
   trigger,
   className = "",
 }) => {
-  const { backgroundStatusBar } = useStatusBar();
+  const { isCapacitor } = useApp();
   const modalMap = useRef<HTMLIonModalElement>(null);
 
-  const handleWillPresent = () => backgroundStatusBar(EColors.WHITE);
-  const handleWillDismiss = () => backgroundStatusBar(EColors.PRIMARY);
-
   return (
-    <IonModal
-      ref={modalMap}
-      trigger={trigger}
-      className={className}
-      onIonModalWillPresent={handleWillPresent}
-      onIonModalWillDismiss={handleWillDismiss}
-    >
-      <IonHeader>
+    <IonModal ref={modalMap} trigger={trigger} className={className}>
+      <IonHeader
+        className={` ${styles.fairMapHeader} ${
+          isCapacitor ? styles.isCapacitor : ""
+        }`}
+      >
         <IonToolbar>
           <IonButtons slot="end">
             <Button
@@ -72,7 +65,7 @@ export const FairModalMap: React.FC<ComponentProps> = ({
         </IonToolbar>
       </IonHeader>
       <IonContent>
-        {fair?.geopoint ? (
+        {fair && (
           <Map
             center={fair.geopoint}
             markers={formatFairsMarks([
@@ -85,14 +78,12 @@ export const FairModalMap: React.FC<ComponentProps> = ({
               },
             ])}
             isLoading={isLoading}
+            errorMsg={
+              !fair?.geopoint
+                ? `${fair?.name || "Esta Feria"} no posee ubicación geográfica`
+                : undefined
+            }
           />
-        ) : (
-          <div className={styles.fairModalMapNoGeopoint}>
-            <TbMapOff size={62} />
-            <h4>{`${
-              fair?.name || "Esta Feria"
-            } no posee ubicación geográfica`}</h4>
-          </div>
         )}
       </IonContent>
     </IonModal>

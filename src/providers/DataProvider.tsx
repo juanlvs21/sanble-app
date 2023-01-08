@@ -25,7 +25,7 @@ export const DataProvider: React.FC<ComponentProps> = ({ children }) => {
   const { readyToUse, isMobile, handleSetReady, handleLoadData } = useApp();
   const { handleGetSession } = useAuth();
   const { user } = useUser();
-  const { styleDefault } = useStatusBar();
+  const { overlaysStatusBar } = useStatusBar();
 
   useEffect(() => {
     handleLoadData();
@@ -67,7 +67,7 @@ export const DataProvider: React.FC<ComponentProps> = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    styleDefault();
+    overlaysStatusBar(true);
 
     if (!pathname.includes("/app/sesion") && readyToUse && !user) {
       navigate("/app/sesion/entrar", { replace: true });

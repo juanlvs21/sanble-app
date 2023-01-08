@@ -1,12 +1,3 @@
-.fairModalMapNoGeopoint {
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  flex-direction: column;
-}
-
-.fairModalMapNoGeopoint svg {
-  color: var(--ion-color-primary);
+.fairMapHeader.isCapacitor {
+  padding-top: 50px;
 }

@@ -1,5 +1,6 @@
 import { Icon, LatLngTuple } from "leaflet";
 import { useEffect, useState } from "react";
+import { TbMapOff } from "react-icons/tb";
 import {
   MapContainer,
   Marker,
@@ -31,6 +32,10 @@ export type ComponentProps = {
    */
   markers?: TMapMarker[];
   /**
+   * Error message
+   */
+  errorMsg?: string;
+  /**
    * Map Loading
    *
    * @default false
@@ -40,16 +45,28 @@ export type ComponentProps = {
 
 export const Map: React.FC<ComponentProps> = ({
   center,
+  errorMsg,
   markers = [],
   isLoading = false,
 }) => {
-  const { userPosition, isGettingPosition, getCurrentPosition } =
+  const { userPosition, isGettingPosition, error, getCurrentPosition } =
     useGeolocation();
   const [mapReady, setMapReady] = useState(false);
 
   useEffect(() => {
     getCurrentPosition();
   }, []);
+
+  if (error || errorMsg) {
+    console.log("ERROR: ", error || errorMsg);
+    return (
+      <div className={styles.mapError}>
+        <TbMapOff size={62} />
+        <h4>{error || errorMsg}</h4>
+      </div>
+    );
+  }
+  console.log("userPosition: ", userPosition);
 
   return userPosition ? (
     <>

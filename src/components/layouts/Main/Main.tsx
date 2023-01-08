@@ -23,7 +23,8 @@ export const MainLayout: React.FC<ComponentProps> = ({
   onAnimationEnd,
 }) => {
   const location = useLocation();
-  const { showSidebar, handleShowSidebar, handleSetScrollTop } = useApp();
+  const { isCapacitor, showSidebar, handleShowSidebar, handleSetScrollTop } =
+    useApp();
 
   useEffect(() => {
     handleSetScrollTop();
@@ -40,7 +41,7 @@ export const MainLayout: React.FC<ComponentProps> = ({
       <main
         className={`${styles.mainContainer} ${
           showSidebar ? styles.showSidebar : ""
-        } ${transitionStage}`}
+        } ${isCapacitor ? styles.isCapacitor : ""} ${transitionStage}`}
         onAnimationEnd={onAnimationEnd}
       >
         <div

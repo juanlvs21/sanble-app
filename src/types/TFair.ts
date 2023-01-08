@@ -1,5 +1,6 @@
 import { TPhotograph } from "@/types/TPhotograph";
 import { TFireBaseDocRefBasic } from "@/types/TFirebase";
+import { LatLngTuple } from "leaflet";
 
 export enum EFairType {
   ENTREPRENEURSHIP = "entrepreneurship",
@@ -15,7 +16,7 @@ export enum EFairOrderBy {
 export type TFair = {
   id: string;
   name: string;
-  geopoint: [number, number] | null;
+  geopoint?: LatLngTuple;
   creationTime: string;
   celebrationDate: string;
   owner: TFireBaseDocRefBasic;
@@ -32,7 +33,7 @@ export type TFair = {
 export type TFairGeo = {
   id: string;
   name: string;
-  geopoint: [number, number] | null;
+  geopoint?: LatLngTuple;
   stars: number;
   type: EFairType; // TODO: We can distinguish the marker icon depending on the type of fair
 };

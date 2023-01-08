@@ -23,7 +23,10 @@ export const useStatusBar = () => {
   };
 
   const overlaysStatusBar = async (overlay: boolean = false) => {
-    if (isCapacitor) await StatusBar.setOverlaysWebView({ overlay });
+    if (isCapacitor) {
+      await StatusBar.setOverlaysWebView({ overlay });
+      await StatusBar.setBackgroundColor({ color: "transparent" });
+    }
   };
 
   const backgroundStatusBar = async (color: EColors = EColors.LIGH) => {
@@ -35,12 +38,6 @@ export const useStatusBar = () => {
     }
   };
 
-  const styleDefault = async () => {
-    backgroundStatusBar(EColors.WHITE);
-    // overlaysStatusBar(true);
-    // setStatusBarStyleLight();
-  };
-
   return {
     hideStatusBar,
     setStatusBarStyleDark,
@@ -48,6 +45,5 @@ export const useStatusBar = () => {
     showStatusBar,
     overlaysStatusBar,
     backgroundStatusBar,
-    styleDefault,
   };
 };
