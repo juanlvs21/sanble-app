@@ -24,8 +24,9 @@ export const useStatusBar = () => {
 
   const overlaysStatusBar = async (overlay: boolean = false) => {
     if (isCapacitor) {
+      await StatusBar.setBackgroundColor({ color: colors.white });
       await StatusBar.setOverlaysWebView({ overlay });
-      await StatusBar.setBackgroundColor({ color: "transparent" });
+      await StatusBar.setStyle({ style: Style.Light });
     }
   };
 

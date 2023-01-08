@@ -12,9 +12,7 @@ import { AiOutlineClose } from "react-icons/ai";
 
 import { Map } from "@/components/modules/geolocation/Map";
 import { formatFairsMarks } from "@/helpers/mapFormatMarkers";
-import { useApp } from "@/hooks/useApp";
 import { TFair } from "@/types/TFair";
-import styles from "./FairModalMap.module.css";
 
 export type ComponentProps = {
   /**
@@ -41,16 +39,11 @@ export const FairModalMap: React.FC<ComponentProps> = ({
   trigger,
   className = "",
 }) => {
-  const { isCapacitor } = useApp();
   const modalMap = useRef<HTMLIonModalElement>(null);
 
   return (
     <IonModal ref={modalMap} trigger={trigger} className={className}>
-      <IonHeader
-        className={` ${styles.fairMapHeader} ${
-          isCapacitor ? styles.isCapacitor : ""
-        }`}
-      >
+      <IonHeader>
         <IonToolbar>
           <IonButtons slot="end">
             <Button

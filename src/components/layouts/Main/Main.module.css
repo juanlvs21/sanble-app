@@ -61,7 +61,7 @@
   }
   .mainContainer.showSidebar.isCapacitor {
     margin-top: 60px;
-    height: calc(100% - 80px);
+    height: calc(100% - 100px);
   }
   .mainOverlay {
     border-radius: var(--sanble-border-radius);
