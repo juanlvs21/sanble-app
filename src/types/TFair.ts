@@ -28,6 +28,7 @@ export type TFair = {
   contactPhone: string;
   photographs: TPhotograph[];
   coverUrl?: string;
+  stands: TFireBaseDocRefBasic[];
 };
 
 export type TFairGeo = {
