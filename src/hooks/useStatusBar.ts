@@ -36,7 +36,7 @@ export const useStatusBar = () => {
   };
 
   const styleDefault = async () => {
-    backgroundStatusBar(EColors.LIGH);
+    backgroundStatusBar(EColors.WHITE);
     // overlaysStatusBar(true);
     // setStatusBarStyleLight();
   };

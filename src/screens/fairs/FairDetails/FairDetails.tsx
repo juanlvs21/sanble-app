@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from "react";
-import { AiOutlineClose, AiOutlineInfoCircle } from "react-icons/ai";
+import { useEffect, useState } from "react";
+import { AiOutlineInfoCircle } from "react-icons/ai";
 import { FiMapPin } from "react-icons/fi";
 import { HiOutlinePhotograph } from "react-icons/hi";
 import { IoIosArrowBack, IoIosCloseCircleOutline } from "react-icons/io";
@@ -13,27 +13,18 @@ import { Fetcher } from "@/components/common/Fetcher";
 import { ImageExtended } from "@/components/common/ImageExtended";
 import { Skeleton } from "@/components/common/Skeleton";
 import { TopBar } from "@/components/common/TopBar";
-import { Map } from "@/components/modules/geolocation/Map";
+import { FairModalMap } from "@/components/modules/fairs/FairModalMap";
 import { InfoModal } from "@/components/modules/info/InfoModal";
 import { ReviewForm } from "@/components/modules/reviews/ReviewForm";
 import { ReviewsList } from "@/components/modules/reviews/ReviewsList";
 import { EColors } from "@/helpers/colors";
 import { fairType } from "@/helpers/fairs";
-import { formatFairsMarks } from "@/helpers/mapFormatMarkers";
 import { getNavStateText } from "@/helpers/navigation";
 import { useFairDetails } from "@/hooks/fairs/useFairDetails";
 import { useApp } from "@/hooks/useApp";
 import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 import { useStatusBar } from "@/hooks/useStatusBar";
 import { useUser } from "@/hooks/useUser";
-import {
-  IonButtons,
-  IonContent,
-  IonHeader,
-  IonModal,
-  IonTitle,
-  IonToolbar,
-} from "@ionic/react";
 import styles from "./FairDetails.module.css";
 
 const MODAL_INFO_ID = "fair-info-open-modal";
@@ -59,8 +50,6 @@ export const FairDetails: React.FC = () => {
   } = useFairDetails(fairID || "");
   const [openCover, setOpenCover] = useState(false);
 
-  const modalMap = useRef<HTMLIonModalElement>(null);
-
   useDocumentTitle(
     `${
       getNavStateText(fairID, state?.fairID, state?.fairName) ||
@@ -71,7 +60,7 @@ export const FairDetails: React.FC = () => {
 
   useEffect(() => {
     if (scrollTop > 25) {
-      backgroundStatusBar(EColors.LIGH);
+      backgroundStatusBar(EColors.WHITE);
     } else {
       backgroundStatusBar(EColors.PRIMARY);
     }
@@ -255,39 +244,7 @@ export const FairDetails: React.FC = () => {
         contactEmail={fair?.contactEmail}
       />
 
-      <IonModal ref={modalMap} trigger={MODAL_MAP_ID}>
-        <IonHeader>
-          <IonToolbar>
-            <IonButtons slot="end">
-              <Button
-                onClick={() => modalMap.current?.dismiss()}
-                fill="clear"
-                color="medium"
-              >
-                <AiOutlineClose size={24} />
-              </Button>
-            </IonButtons>
-            <IonTitle>Ubicación</IonTitle>
-          </IonToolbar>
-        </IonHeader>
-        <IonContent>
-          {fair && (
-            <Map
-              center={fair.geopoint}
-              markers={formatFairsMarks([
-                {
-                  id: fair?.id,
-                  name: fair?.name,
-                  geopoint: fair?.geopoint,
-                  stars: fair?.stars,
-                  type: fair?.type,
-                },
-              ])}
-              isLoading={isLoading}
-            />
-          )}
-        </IonContent>
-      </IonModal>
+      <FairModalMap trigger={MODAL_MAP_ID} fair={fair} isLoading={isLoading} />
     </>
   );
 };

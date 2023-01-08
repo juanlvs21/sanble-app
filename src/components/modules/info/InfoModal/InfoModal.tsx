@@ -1,6 +1,5 @@
-import { IonModal as IonModalType } from "@ionic/core/components";
 import { IonContent, IonModal } from "@ionic/react";
-import { RefAttributes, useRef } from "react";
+import { useRef } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import { BiEnvelope } from "react-icons/bi";
 import { FiMapPin, FiPhone } from "react-icons/fi";
@@ -8,47 +7,47 @@ import { FiMapPin, FiPhone } from "react-icons/fi";
 import { Button } from "@/components/common/buttons/Button";
 import styles from "./InfoModal.module.css";
 
-export type ComponentProps = Partial<IonModalType> &
-  RefAttributes<HTMLIonModalElement> & {
-    /**
-     * Custom className component
-     */
-    className?: string;
-    /**
-     * Address
-     */
-    address?: string;
-    /**
-     * Contact Phone
-     */
-    contactPhone?: string;
-    /**
-     * Contact Email
-     */
-    contactEmail?: string;
-  };
+export type ComponentProps = {
+  /**
+   * Custom className component
+   */
+  className?: string;
+  /**
+   * Trigger open modal
+   */
+  trigger?: string;
+  /**
+   * Address
+   */
+  address?: string;
+  /**
+   * Contact Phone
+   */
+  contactPhone?: string;
+  /**
+   * Contact Email
+   */
+  contactEmail?: string;
+};
 
 export const InfoModal: React.FC<ComponentProps> = ({
-  ref,
-  className,
+  trigger,
   address,
   contactPhone,
   contactEmail,
-  ...props
+  className = "",
 }) => {
   const modalInfo = useRef<HTMLIonModalElement>(null);
-
-  const onDismiss = () => modalInfo.current?.dismiss();
 
   return (
     <IonModal
       ref={modalInfo}
+      trigger={trigger}
       className={`${className} ${styles.infoModal}`}
-      {...props}
     >
       <IonContent>
         <Button
-          onClick={onDismiss}
+          onClick={() => modalInfo.current?.dismiss()}
           fill="clear"
           color="medium"
           className={styles.infoClose}

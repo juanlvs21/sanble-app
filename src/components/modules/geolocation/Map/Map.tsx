@@ -1,4 +1,4 @@
-import { Icon, LatLngLiteral } from "leaflet";
+import { Icon, LatLngTuple } from "leaflet";
 import { useEffect, useState } from "react";
 import {
   MapContainer,
@@ -23,7 +23,7 @@ export type ComponentProps = {
   /**
    * Center map
    */
-  center?: [number, number] | null;
+  center?: LatLngTuple;
   /**
    * List of marks to place on the map
    *
@@ -43,7 +43,8 @@ export const Map: React.FC<ComponentProps> = ({
   markers = [],
   isLoading = false,
 }) => {
-  const { userPosition, getCurrentPosition } = useGeolocation();
+  const { userPosition, isGettingPosition, getCurrentPosition } =
+    useGeolocation();
   const [mapReady, setMapReady] = useState(false);
 
   useEffect(() => {
@@ -53,7 +54,7 @@ export const Map: React.FC<ComponentProps> = ({
   return userPosition ? (
     <>
       <SpinnerFullScreen
-        show={!mapReady || isLoading}
+        show={!mapReady || isLoading || isGettingPosition}
         className={styles.mapSpinner}
       />
       <MapContainer
