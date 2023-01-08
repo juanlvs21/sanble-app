@@ -65,17 +65,18 @@ export const Map: React.FC<ComponentProps> = ({
   return (
     <>
       <SpinnerFullScreen
-        show={!mapReady || isLoading || isGettingPosition}
+        show={
+          (!mapReady || isLoading || isGettingPosition) && !(error || errorMsg)
+        }
         className={`${styles.mapSpinner} ${classNameSpinner}`}
       />
 
-      {error ||
-        (errorMsg && (
-          <div className={styles.mapError}>
-            <TbMapOff size={62} />
-            <h4>{error || errorMsg}</h4>
-          </div>
-        ))}
+      {(error || errorMsg) && (
+        <div className={styles.mapError}>
+          <TbMapOff size={62} />
+          <h4>{error || errorMsg}</h4>
+        </div>
+      )}
 
       {userPosition && !error && !errorMsg && (
         <MapContainer
