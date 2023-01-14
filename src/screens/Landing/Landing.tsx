@@ -15,10 +15,10 @@ export type ComponentProps = {
   onAnimationEnd: () => void;
 };
 
-export const Landing: React.FC<ComponentProps> = ({
+export const Landing = ({
   onAnimationEnd,
   transitionStage,
-}) => {
+}: ComponentProps) => {
   const { handleGetDownloadAppLink } = useLanding();
   useDocumentTitle("¡Bienvenido! 🎉");
 

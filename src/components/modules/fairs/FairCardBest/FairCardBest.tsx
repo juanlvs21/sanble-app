@@ -15,7 +15,7 @@ export type ComponentProps = {
   fair: TFair;
 };
 
-export const FairCardBest: React.FC<ComponentProps> = ({ fair }) => {
+export const FairCardBest = ({ fair }: ComponentProps) => {
   const isMobileM = useMediaQuery("(max-width: 375px)");
 
   return (

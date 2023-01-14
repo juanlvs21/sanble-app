@@ -9,12 +9,12 @@ export type ComponentProps = TInput & {
   helperIsError?: boolean;
 };
 
-export const InputPassword: React.FC<ComponentProps> = ({
+export const InputPassword = ({
   placeholder = "Contraseña",
   helper,
   helperIsError,
   ...rest
-}) => {
+}: ComponentProps) => {
   const [showPassword, setShowPassword] = useState(false);
 
   const toggleShowPassword = () => setShowPassword(!showPassword);

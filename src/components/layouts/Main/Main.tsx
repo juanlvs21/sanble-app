@@ -18,10 +18,10 @@ export type ComponentProps = {
   onAnimationEnd?: () => void;
 };
 
-export const MainLayout: React.FC<ComponentProps> = ({
+export const MainLayout = ({
   transitionStage = "",
   onAnimationEnd,
-}) => {
+}: ComponentProps) => {
   const location = useLocation();
   const { isCapacitor, showSidebar, handleShowSidebar, handleSetScrollTop } =
     useApp();

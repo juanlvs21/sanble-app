@@ -30,12 +30,12 @@ export type ComponentProps = DetailedHTMLProps<
   isLoading?: boolean;
 };
 
-export const ImageExtended: React.FC<ComponentProps> = ({
+export const ImageExtended = ({
   classNamePicture = "",
   skeletonProps = {},
   isLoading = false,
   ...props
-}) => {
+}: ComponentProps) => {
   const [imageUrl, setImageUrl] = useState("");
   const [isLoadingSrc, setIsLoadingSrc] = useState(true);
 

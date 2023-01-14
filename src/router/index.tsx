@@ -49,7 +49,7 @@ const NearYouScreen = lazy(() =>
   }))
 );
 
-export const AppRoutes: React.FC = () => {
+export const AppRoutes = () => {
   const {
     setDefaultLocation,
     displayLocation,

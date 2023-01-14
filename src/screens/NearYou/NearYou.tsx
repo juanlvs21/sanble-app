@@ -6,7 +6,7 @@ import { useApp } from "@/hooks/useApp";
 import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 import styles from "./NearYou.module.css";
 
-export const NearYou: React.FC = () => {
+export const NearYou = () => {
   useDocumentTitle("Cerca de ti 📌");
   const { list, isLoading, prepareListMapPin } = useFairsListGeo();
   const { isCapacitor } = useApp();

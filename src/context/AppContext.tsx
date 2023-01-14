@@ -18,10 +18,10 @@ export type TAppContextProps = {
   children: React.ReactElement | React.ReactElement[];
 };
 
-export const AppProvider: React.FC<TAppContextProps> = ({
+export const AppProvider = ({
   children,
   initialState = initialAppState,
-}) => {
+}: TAppContextProps) => {
   const [state, dispatch] = useReducer(appReducer, initialState);
 
   return (

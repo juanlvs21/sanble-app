@@ -21,10 +21,10 @@ export type TAuthProps = {
   children: React.ReactElement | React.ReactElement[];
 };
 
-export const AuthProvider: React.FC<TAuthProps> = ({
+export const AuthProvider = ({
   children,
   initialState = initialUserState,
-}) => {
+}: TAuthProps) => {
   const [state, dispatch] = useReducer(authReducer, initialState);
 
   return (

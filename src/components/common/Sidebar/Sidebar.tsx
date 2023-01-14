@@ -19,7 +19,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { useUser } from "@/hooks/useUser";
 import styles from "./Sidebar.module.css";
 
-export const Sidebar: React.FC = () => {
+export const Sidebar = () => {
   const { pathname } = useLocation();
   const [presentAlert] = useIonAlert();
   const { isCapacitor, showSidebar, handleShowSidebar } = useApp();

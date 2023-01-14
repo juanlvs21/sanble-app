@@ -12,13 +12,13 @@ export type ComponentProps = TInput & {
   textarea?: boolean;
 };
 
-export const Input: React.FC<ComponentProps> = ({
+export const Input = ({
   Icon,
   helper,
   helperIsError,
   textarea,
   ...rest
-}) => (
+}: ComponentProps) => (
   <IonItem
     fill="outline"
     className={`inputItem ${textarea ? "textareItem" : ""} ${

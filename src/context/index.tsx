@@ -9,7 +9,7 @@ export type ComponentProps = {
   children: React.ReactElement | React.ReactElement[];
 };
 
-export const AppProvider: React.FC<ComponentProps> = ({ children }) => (
+export const AppProvider = ({ children }: ComponentProps) => (
   <AppContextProvider>
     <AuthProvider>{children}</AuthProvider>
   </AppContextProvider>

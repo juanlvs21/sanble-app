@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 import { useApp } from "@/hooks/useApp";
 import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 
-export const FavoritesList: React.FC = () => {
+export const FavoritesList = () => {
   const { pathname } = useLocation();
   const { handleShowSidebar, showSidebar } = useApp();
   useDocumentTitle("Lista de Favoritos");

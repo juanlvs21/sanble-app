@@ -9,7 +9,7 @@ import { Link, useLocation, useMatch } from "react-router-dom";
 import { navFadeEnd, navFadeStart } from "@/helpers/constTransitionsClasses";
 import styles from "./BottomBar.module.css";
 
-export const BottomBar: React.FC = () => {
+export const BottomBar = () => {
   const { pathname } = useLocation();
   const [transitionStage, setTransitionStage] = useState(navFadeEnd);
 

@@ -23,12 +23,12 @@ export type ComponentProps = {
   className?: string;
 };
 
-export const Stars: React.FC<ComponentProps> = ({
+export const Stars = ({
   value,
   onChange,
   size = 20,
   className = "",
-}) => {
+}: ComponentProps) => {
   return (
     <div
       className={`${className} animate__animated animate__fadeIn`}

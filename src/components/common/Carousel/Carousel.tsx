@@ -45,7 +45,7 @@ export type ComponentProps = {
   skeletonProps?: SkeletonProps;
 };
 
-export const Carousel: React.FC<ComponentProps> = ({
+export const Carousel = ({
   title,
   items,
   isLoading,
@@ -62,7 +62,7 @@ export const Carousel: React.FC<ComponentProps> = ({
     991: { slidesPerView: 3.1 },
     1600: { slidesPerView: 3.7 },
   },
-}) => {
+}: ComponentProps) => {
   const slideOpts = useMemo(
     () => ({
       slidesPerView,

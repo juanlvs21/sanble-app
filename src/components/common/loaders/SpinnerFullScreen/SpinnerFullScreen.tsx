@@ -38,13 +38,13 @@ export type ComponentProps = {
   className?: string;
 };
 
-export const SpinnerFullScreen: React.FC<ComponentProps> = ({
+export const SpinnerFullScreen = ({
   show,
   borderRadius,
   color = "primary",
   size = 50,
   className = "",
-}) =>
+}: ComponentProps) =>
   show ? (
     <div
       className={`${styles.sprinnerFullScren} ${

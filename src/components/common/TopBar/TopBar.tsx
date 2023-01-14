@@ -50,7 +50,7 @@ export type ComponentProps = {
   className?: string;
 };
 
-export const TopBar: React.FC<ComponentProps> = ({
+export const TopBar = ({
   title,
   startUser,
   start,
@@ -61,7 +61,7 @@ export const TopBar: React.FC<ComponentProps> = ({
   titleLight,
   titleSize = 28,
   className = "",
-}) => {
+}: ComponentProps) => {
   const { scrollTop, isCapacitor } = useApp();
 
   return (

@@ -33,12 +33,12 @@ export type ComponentProps = {
   isLoading?: boolean;
 };
 
-export const FairModalMap: React.FC<ComponentProps> = ({
+export const FairModalMap = ({
   fair,
   isLoading,
   trigger,
   className = "",
-}) => {
+}: ComponentProps) => {
   const modalMap = useRef<HTMLIonModalElement>(null);
 
   return (

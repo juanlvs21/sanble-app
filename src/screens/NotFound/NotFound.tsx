@@ -9,7 +9,7 @@ export type ComponentProps = {
   setDisplayLocation: () => void;
 };
 
-export const NotFound: React.FC<ComponentProps> = ({ setDisplayLocation }) => {
+export const NotFound = ({ setDisplayLocation }: ComponentProps) => {
   useDocumentTitle("¡Ups! Página no encontrada 😢");
 
   useEffect(() => {

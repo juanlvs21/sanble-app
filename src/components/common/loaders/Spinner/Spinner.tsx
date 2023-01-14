@@ -38,7 +38,7 @@ export type ComponentProps = {
   style?: CSSProperties;
 };
 
-export const Spinner: React.FC<ComponentProps> = ({
+export const Spinner = ({
   color = "primary",
   size = 35,
   className = "",
@@ -46,7 +46,7 @@ export const Spinner: React.FC<ComponentProps> = ({
   marginTop,
   marginBottom,
   center,
-}) => {
+}: ComponentProps) => {
   let styleContainer: CSSProperties = {
     marginTop,
     marginBottom,

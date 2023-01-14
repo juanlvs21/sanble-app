@@ -30,7 +30,7 @@ import { AppRoutes } from "@/router";
 
 setupIonicReact();
 
-const App: React.FC = () => (
+const App = () => (
   <AppProvider>
     <IonApp className="animate__animated animate__fadeIn">
       <BrowserRouter>

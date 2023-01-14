@@ -21,10 +21,10 @@ export type ComponentProps = {
   onAnimationEnd: () => void;
 };
 
-export const HomeLayout: React.FC<ComponentProps> = ({
+export const HomeLayout = ({
   transitionStage,
   onAnimationEnd,
-}) => {
+}: ComponentProps) => {
   const [transitionStageLayout, setTransitionStageLayout] =
     useState(navFadeUpEnd);
 

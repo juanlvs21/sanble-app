@@ -46,14 +46,14 @@ export type ComponentProps = Omit<TButton, "color"> & {
     | "dark";
 };
 
-export const ButtonFav: React.FC<ComponentProps> = ({
+export const ButtonFav = ({
   isActive = false,
   sizeIcon = 22,
   color,
   spinnerColor,
   className,
   ...rest
-}) => (
+}: ComponentProps) => (
   <Button
     color={color || (isActive ? "primary" : "medium")}
     className={`${styles.buttonFav} ${className}`}

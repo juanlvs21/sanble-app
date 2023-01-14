@@ -32,7 +32,7 @@ import styles from "./FairDetails.module.css";
 const MODAL_INFO_ID = "fair-info-open-modal";
 const MODAL_MAP_ID = "fair-map-open-modal";
 
-export const FairDetails: React.FC = () => {
+export const FairDetails = () => {
   const navigate = useNavigate();
   const { fairID } = useParams();
   const { state } = useLocation();

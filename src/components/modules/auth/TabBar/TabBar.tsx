@@ -2,7 +2,7 @@ import { useMatch, Link, useLocation } from "react-router-dom";
 
 import styles from "./TabBar.module.css";
 
-export const TabBar: React.FC = () => {
+export const TabBar = () => {
   const location = useLocation();
   const matchSignin = useMatch("/app/sesion/entrar");
   const matchSignup = useMatch("/app/sesion/registrarse");

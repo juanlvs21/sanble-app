@@ -4,8 +4,10 @@ import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 
+import { Offline } from "@/components/common/Offline";
 import { useApp } from "@/hooks/useApp";
 import { useAuth } from "@/hooks/useAuth";
+import { useOnline } from "@/hooks/useOnline";
 import { useStatusBar } from "@/hooks/useStatusBar";
 import { useUser } from "@/hooks/useUser";
 import { Splash } from "@/screens/Splash";
@@ -18,7 +20,7 @@ export type ComponentProps = {
   children: React.ReactElement | React.ReactElement[];
 };
 
-export const DataProvider: React.FC<ComponentProps> = ({ children }) => {
+export const DataProvider = ({ children }: ComponentProps) => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const [presentAlert] = useIonAlert();
@@ -26,6 +28,7 @@ export const DataProvider: React.FC<ComponentProps> = ({ children }) => {
   const { handleGetSession } = useAuth();
   const { user } = useUser();
   const { overlaysStatusBar } = useStatusBar();
+  const { online } = useOnline();
 
   useEffect(() => {
     handleLoadData();
@@ -85,6 +88,7 @@ export const DataProvider: React.FC<ComponentProps> = ({ children }) => {
           isMobile ? toast.POSITION.BOTTOM_CENTER : toast.POSITION.BOTTOM_RIGHT
         }
       />
+      {!online && <Offline />}
     </>
   ) : (
     <Splash />

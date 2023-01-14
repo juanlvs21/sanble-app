@@ -1,6 +1,6 @@
 import styles from "./Splash.module.css";
 
-export const Splash: React.FC = () => (
+export const Splash = () => (
   <div
     className={`${styles.splashContainer} animate__animated animate__fadeIn`}
   >

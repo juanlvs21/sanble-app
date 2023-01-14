@@ -4,7 +4,7 @@ import { useApp } from "@/hooks/useApp";
 import { useUser } from "@/hooks/useUser";
 import styles from "./TopBarUserBtn.module.css";
 
-export const TopBarUserBtn: React.FC = () => {
+export const TopBarUserBtn = () => {
   const { handleShowSidebar } = useApp();
   const { user } = useUser();
 

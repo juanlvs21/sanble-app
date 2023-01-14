@@ -47,13 +47,13 @@ export type ComponentProps = {
   classNameSpinner?: string;
 };
 
-export const Map: React.FC<ComponentProps> = ({
+export const Map = ({
   center,
   errorMsg,
   markers = [],
   isLoading = false,
   classNameSpinner = "",
-}) => {
+}: ComponentProps) => {
   const { userPosition, isGettingPosition, error, getCurrentPosition } =
     useGeolocation();
   const [mapReady, setMapReady] = useState(false);

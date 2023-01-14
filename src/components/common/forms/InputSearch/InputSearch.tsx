@@ -18,13 +18,13 @@ export type ComponentProps = TInput & {
   classNameItem?: string;
 };
 
-export const InputSearch: React.FC<ComponentProps> = ({
+export const InputSearch = ({
   inputmode = "search",
   classNameItem = "",
   helper,
   helperIsError,
   ...rest
-}) => (
+}: ComponentProps) => (
   <IonItem fill="outline" className={`${classNameItem} inputItem withoutStart`}>
     <IonInput {...rest} inputmode={inputmode} />
     <IonButton

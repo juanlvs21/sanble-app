@@ -31,13 +31,13 @@ export type ComponentProps = {
   contactEmail?: string;
 };
 
-export const InfoModal: React.FC<ComponentProps> = ({
+export const InfoModal = ({
   trigger,
   address,
   contactPhone,
   contactEmail,
   className = "",
-}) => {
+}: ComponentProps) => {
   const { toast, toastDismiss } = useToast();
   const modalInfo = useRef<HTMLIonModalElement>(null);
 

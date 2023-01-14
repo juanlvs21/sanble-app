@@ -28,10 +28,10 @@ export type ComponentProps = {
   onAnimationEnd: () => void;
 };
 
-export const AuthLayout: React.FC<ComponentProps> = ({
+export const AuthLayout = ({
   onAnimationEnd,
   transitionStage,
-}) => {
+}: ComponentProps) => {
   const { isLoadingFull } = useApp();
 
   return (

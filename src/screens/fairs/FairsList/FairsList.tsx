@@ -10,7 +10,7 @@ import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 import { useFairsList } from "@/hooks/fairs/useFairsList";
 import styles from "./FairsList.module.css";
 
-export const FairsList: React.FC = () => {
+export const FairsList = () => {
   useDocumentTitle("Lista de Ferias 🛍️");
   const [present] = useIonActionSheet();
   const {

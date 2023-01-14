@@ -50,7 +50,7 @@ export type ComponentProps = {
   infiniteSpinnerColor?: TColor;
 };
 
-export const Fetcher: React.FC<ComponentProps> = ({
+export const Fetcher = ({
   children,
   classNameSection = "",
   classNameContent = "",
@@ -58,7 +58,7 @@ export const Fetcher: React.FC<ComponentProps> = ({
   infiniteSpinnerColor = "primary",
   handleRefresh,
   handleInfiniteScroll,
-}) => {
+}: ComponentProps) => {
   const { handleSetScrollTop } = useApp();
 
   const doRefresh = async (event: CustomEvent<RefresherEventDetail>) => {

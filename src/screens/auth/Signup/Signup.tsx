@@ -13,7 +13,7 @@ import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 import { TAuthSignupForm } from "@/types/TUser";
 import styles from "../Auth.module.css";
 
-export const Signup: React.FC = () => {
+export const Signup = () => {
   useDocumentTitle("Registrarse");
   const { handleSignup, handleSigninGoogle } = useAuth();
   const {

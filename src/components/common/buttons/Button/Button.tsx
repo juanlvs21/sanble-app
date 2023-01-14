@@ -40,7 +40,7 @@ export type ComponentProps = TButton & {
   spinnerStyle?: CSSProperties;
 };
 
-export const Button: React.FC<ComponentProps> = ({
+export const Button = ({
   children,
   isLoading,
   disabled,
@@ -48,7 +48,7 @@ export const Button: React.FC<ComponentProps> = ({
   spinnerSize = 25,
   spinnerColor = "light",
   ...rest
-}) => (
+}: ComponentProps) => (
   <IonButton {...rest} disabled={disabled || isLoading}>
     {isLoading ? (
       <Spinner

@@ -11,9 +11,7 @@ export type ComponentProps = {
   productType: TProductType;
 };
 
-export const ProductCarouselCard: React.FC<ComponentProps> = ({
-  productType,
-}) => {
+export const ProductCarouselCard = ({ productType }: ComponentProps) => {
   return (
     <Link
       to={`/app/productos/${productType.id}`}

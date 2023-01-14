@@ -20,11 +20,11 @@ export type ComponentProps = {
   className?: string;
 };
 
-export const ReviewsList: React.FC<ComponentProps> = ({
+export const ReviewsList = ({
   reviews,
   isLoading,
   className = "",
-}) => {
+}: ComponentProps) => {
   return (
     <ul className={`${styles.reviewsList} ${className}`}>
       {isLoading

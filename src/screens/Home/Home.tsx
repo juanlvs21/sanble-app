@@ -13,7 +13,7 @@ import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 import { useHome } from "@/hooks/useHome";
 import styles from "./Home.module.css";
 
-export const Home: React.FC = () => {
+export const Home = () => {
   useDocumentTitle("Inicio 🏠");
   const {
     handleLoadFairsBest,

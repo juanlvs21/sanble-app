@@ -30,12 +30,12 @@ export type ComponentProps = {
   className?: string;
 };
 
-export const ReviewForm: React.FC<ComponentProps> = ({
+export const ReviewForm = ({
   review,
   isLoading,
   handleSave,
   className = "",
-}) => {
+}: ComponentProps) => {
   const {
     handleSubmit,
     handleChange,

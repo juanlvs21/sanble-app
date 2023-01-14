@@ -21,12 +21,12 @@ export type ComponentProps = {
   style?: CSSProperties;
 };
 
-export const Skeleton: React.FC<ComponentProps> = ({
+export const Skeleton = ({
   width,
   height,
   style,
   className = "",
-}) => (
+}: ComponentProps) => (
   <div
     className={`${styles.skeleton} ${className}`}
     style={{ width, height, ...style }}

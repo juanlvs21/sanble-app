@@ -25,7 +25,7 @@ type TWelcomeSlide = {
   actions: React.ReactElement;
 };
 
-export const WelcomeSlides: React.FC = () => {
+export const WelcomeSlides = () => {
   const navigate = useNavigate();
   const { hideMobileWelcome } = useApp();
   const { user } = useUser();
