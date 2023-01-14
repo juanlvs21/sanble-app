@@ -31,6 +31,15 @@ export const useUser = () => {
           ...user,
           ...newFavorites,
         });
+
+        const existFav = favorites.includes(favoriteID);
+
+        toast(
+          existFav
+            ? "Se ha agregado a favoritos"
+            : "Se ha eliminado de favoritos",
+          { type: "info" }
+        );
       }
     } catch (error) {
       toast("Ha ocurrido un error al guardar el favorito", { type: "error" });
