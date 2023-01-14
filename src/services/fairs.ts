@@ -14,10 +14,10 @@ export const getFairListRequest = (
     .get<AxiosResponse<TResponseList<TFair[]>>>("/fairs", {
       ...config,
       params: {
-        page: params?.page || 1,
-        perPage: params?.perPage || 10,
         orderBy: params?.orderBy || "stars",
         orderDir: params?.orderDir || "desc",
+        lastIndex: params?.lastIndex || 0,
+        limit: params?.limit || 9,
       },
     })
     .then(({ data }) => data.data);
@@ -46,8 +46,8 @@ export const getFairReviewsRequest = (
       {
         ...config,
         params: {
-          page: params?.page || 1,
-          perPage: params?.perPage || 10,
+          lastIndex: params?.lastIndex || 0,
+          limit: params?.limit || 9,
         },
       }
     )

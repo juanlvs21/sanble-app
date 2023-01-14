@@ -11,11 +11,10 @@ import { TReview, TReviewForm } from "@/types/TReview";
 import { TGetListParams } from "@/types/TRequest";
 import { infiteScrollData } from "@/helpers/infiniteScrollData";
 
-const DEFAULT_PAGE_REVIEWS = 1;
-const DEFAULT_PER_PAGE_REVIEWS = 10;
-const DEFAULT_TOTAL_PAGE_REVIEWS = 0;
+const DEFAULT_LAST_INDEX_REVIEWS = 0;
+const DEFAULT_LIMIT_REVIEWS = 9;
 
-export const useFairDetails = (fairID: string, params?: TGetListParams) => {
+export const useFairDetails = (fairID: string) => {
   const { toast } = useToast();
   const [fair, setFair] = useState<TFair>();
   const [review, setReview] = useState<TReview>();
@@ -23,13 +22,10 @@ export const useFairDetails = (fairID: string, params?: TGetListParams) => {
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
   const [isLoadingReviews, setIsLoadingReviews] = useState(true);
-  const [pageReviews, setPageReviews] = useState(DEFAULT_PAGE_REVIEWS);
-  const [perPageReviews, setPerPageReviews] = useState(
-    DEFAULT_PER_PAGE_REVIEWS
+  const [lastIndexReviews, setLastIndexReviews] = useState(
+    DEFAULT_LAST_INDEX_REVIEWS
   );
-  const [totalPagesReviews, setTotalPagesReviews] = useState(
-    DEFAULT_TOTAL_PAGE_REVIEWS
-  );
+  const [limitReviews, setLimitReviews] = useState(DEFAULT_LIMIT_REVIEWS);
 
   useEffect(() => {
     handleLoadDetails();
@@ -55,22 +51,21 @@ export const useFairDetails = (fairID: string, params?: TGetListParams) => {
     setIsLoadingReviews(true);
 
     try {
-      const pageReq = params?.page || DEFAULT_PAGE_REVIEWS;
-      const perPageReq = params?.perPage || DEFAULT_PER_PAGE_REVIEWS;
+      const lastIndexReq = params?.lastIndex || DEFAULT_LAST_INDEX_REVIEWS;
+      const limitReq = params?.limit || DEFAULT_LIMIT_REVIEWS;
 
       const { form, list, pagination } = await getFairReviewsRequest(fairID, {
-        page: pageReq,
-        perPage: perPageReq,
+        lastIndex: lastIndexReq,
+        limit: limitReq,
       });
 
-      if (pagination.page === DEFAULT_PAGE_REVIEWS) {
+      if (pagination.lastIndex === DEFAULT_LAST_INDEX_REVIEWS) {
         setReviews(infiteScrollData("id", list, []));
       } else setReviews(infiteScrollData("id", list, reviews));
 
       setReview(form);
-      setPageReviews(pagination.page);
-      setPerPageReviews(pagination.perPage);
-      setTotalPagesReviews(pagination.totalPages);
+      setLastIndexReviews(pagination.lastIndex);
+      setLimitReviews(pagination.limit);
     } catch (error: any) {
       toast("Error al cargar el listado de opiniones", {
         type: "error",
@@ -104,12 +99,10 @@ export const useFairDetails = (fairID: string, params?: TGetListParams) => {
   };
 
   const handleInfiniteReviews = async () => {
-    const nextPage = pageReviews + 1;
-    const currentPage = totalPagesReviews;
-
-    if (nextPage <= currentPage) {
-      await handleLoadReviews({ page: nextPage, perPage: perPageReviews });
-    }
+    await handleLoadReviews({
+      lastIndex: lastIndexReviews,
+      limit: limitReviews,
+    });
   };
 
   return {

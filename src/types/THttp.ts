@@ -9,9 +9,8 @@ export type TAxiosResp<T> = AxiosResponse<TAxiosResult<T>>;
 
 export type TPagination = {
   total: number;
-  page: number;
-  perPage: number;
-  totalPages: number;
+  lastIndex: number;
+  limit: number;
 };
 
 export type TFormatError422 = {
