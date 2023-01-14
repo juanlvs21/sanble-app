@@ -143,7 +143,7 @@
 
 .fairCoverBtnClose {
   position: fixed;
-  top: 30px;
+  top: 60px;
   right: 30px;
   width: 30px;
   height: 30px;
@@ -192,7 +192,7 @@
 }
 
 .fairCover img.fairCoverOpen {
-  height: 100%;
+  height: calc(100% - 60px);
   z-index: 3000;
   transition: all 500ms ease-in-out;
 }

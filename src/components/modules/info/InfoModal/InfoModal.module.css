@@ -29,6 +29,13 @@
   align-items: center;
   margin: 0;
   margin-top: 12px;
+  cursor: pointer;
+  transition: all 400ms ease-in-out;
+}
+
+.infoContent p:hover {
+  color: var(--ion-color-primary);
+  transition: all 400ms ease-in-out;
 }
 
 .infoContent p span {

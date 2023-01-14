@@ -5,6 +5,7 @@ import { BiEnvelope } from "react-icons/bi";
 import { FiMapPin, FiPhone } from "react-icons/fi";
 
 import { Button } from "@/components/common/buttons/Button";
+import { useToast } from "@/hooks/useToast";
 import styles from "./InfoModal.module.css";
 
 export type ComponentProps = {
@@ -37,7 +38,22 @@ export const InfoModal: React.FC<ComponentProps> = ({
   contactEmail,
   className = "",
 }) => {
+  const { toast, toastDismiss } = useToast();
   const modalInfo = useRef<HTMLIonModalElement>(null);
+
+  const handleCopyClipBoard = (text: string, message = "Texto copiado") => {
+    toastDismiss();
+
+    navigator.clipboard.writeText(text);
+
+    setTimeout(() => {
+      toast(message, {
+        type: "info",
+        hideProgressBar: true,
+        closeButton: <i />,
+      });
+    }, 400);
+  };
 
   return (
     <IonModal
@@ -58,19 +74,32 @@ export const InfoModal: React.FC<ComponentProps> = ({
           <h1>Información de Contacto</h1>
 
           {address && (
-            <p>
+            <p
+              onClick={() => handleCopyClipBoard(address, "Dirección copiada")}
+            >
               <FiMapPin size={20} />
               <span>{address}</span>
             </p>
           )}
           {contactPhone && (
-            <p>
+            <p
+              onClick={() =>
+                handleCopyClipBoard(contactPhone, "Número de teléfono copiado")
+              }
+            >
               <FiPhone size={20} />
               <span>{contactPhone}</span>
             </p>
           )}
           {contactEmail && (
-            <p>
+            <p
+              onClick={() =>
+                handleCopyClipBoard(
+                  contactEmail,
+                  "Dirección de correo electrónico copiado"
+                )
+              }
+            >
               <BiEnvelope size={20} />
               <span>{contactEmail}</span>
             </p>
