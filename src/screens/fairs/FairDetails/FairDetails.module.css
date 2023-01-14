@@ -81,7 +81,7 @@
   margin-top: -160px !important;
   margin: auto;
   padding: 120px 16px 50px;
-  transition: all 500ms ease-in-out;
+  transition: all 400ms ease-in-out;
 }
 
 .fairContent.fairCoverOpen {
@@ -130,20 +130,9 @@
   color: var(--ion-color-primary);
 }
 
-.fairCoverOverlay {
-  position: fixed;
-  background: rgb(0 0 0 / 46%);
-  height: 100vh;
-  width: 100%;
-  z-index: -100;
-  opacity: 0;
-  top: 0;
-  transition: all 500ms ease-in-out;
-}
-
 .fairCoverBtnClose {
   position: fixed;
-  top: 60px;
+  top: 30px;
   right: 30px;
   width: 30px;
   height: 30px;
@@ -163,12 +152,6 @@
   color: black;
 }
 
-.fairCoverOverlay.fairCoverOpen {
-  z-index: 600;
-  opacity: 1;
-  transition: all 500ms ease-in-out;
-}
-
 .fairFetcherSection.fairCoverOpen {
   transition: all 500ms ease-in-out;
 }
@@ -179,20 +162,20 @@
 }
 
 .fairCover.fairCoverOpen {
+  height: 100%;
   width: 100%;
-  height: 100vh;
   z-index: 700;
   position: fixed;
-  border-radius: 0;
   top: 0;
-  margin: 0;
+  border-radius: 0;
+  margin: auto;
   padding: 20px;
-  background-color: transparent;
+  background-color: rgba(0, 0, 0, 0.4);
   transition: all 400ms ease-in-out;
 }
 
 .fairCover img.fairCoverOpen {
-  height: calc(100% - 60px);
+  height: 100%;
   z-index: 3000;
   transition: all 500ms ease-in-out;
 }
@@ -257,6 +240,15 @@
   color: var(--sanble-gray-color-2);
   font-weight: 500;
   font-size: 12px;
+}
+
+.fairFloatBtn {
+  transition: all 500ms ease-in-out;
+}
+
+.fairFloatBtn.fairCoverOpen {
+  bottom: -100px;
+  transition: all 500ms ease-in-out;
 }
 
 @media (max-width: 375px) {

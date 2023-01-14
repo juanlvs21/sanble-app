@@ -99,18 +99,13 @@ export const FairDetails: React.FC = () => {
           openCover ? styles.fairCoverOpen : ""
         }`}
       >
-        <div
-          className={`${styles.fairCoverOverlay} ${
-            openCover ? styles.fairCoverOpen : ""
-          }`}
-        />
         <div className={styles.fairCoverContainer}>
           {openCover && (
             <Button
               fill="solid"
               color="light"
               size="small"
-              onClick={() => setOpenCover((state) => !state)}
+              onClick={() => setOpenCover(false)}
               className={`${styles.fairCoverBtnClose} animate__animated animate__zoomIn`}
             >
               <IoIosCloseCircleOutline size={24} />
@@ -233,7 +228,9 @@ export const FairDetails: React.FC = () => {
           slot="fixed"
           vertical="bottom"
           horizontal="end"
-          className="animate__animated animate__fadeIn"
+          className={`${styles.fairFloatBtn} ${
+            openCover ? styles.fairCoverOpen : ""
+          } animate__animated animate__fadeIn`}
         >
           <IonFabButton color="primary">
             <IoIosArrowUp size={28} />
