@@ -10,6 +10,8 @@ http://ionicframework.com/docs/theming/ */
   --ion-font-family: Poppins, sans-serif;
   --ion-text-color: #232020;
 
+  --ion-safe-area-right: 10px;
+
   /** primary **/
   --ion-color-primary: #ff8634;
   --ion-color-primary-rgb: 255, 134, 52;

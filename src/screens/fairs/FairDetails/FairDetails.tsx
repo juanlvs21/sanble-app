@@ -1,8 +1,12 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { AiOutlineInfoCircle } from "react-icons/ai";
-import { FiMapPin } from "react-icons/fi";
+import { FiEdit2, FiMapPin } from "react-icons/fi";
 import { HiOutlinePhotograph } from "react-icons/hi";
-import { IoIosArrowBack, IoIosCloseCircleOutline } from "react-icons/io";
+import {
+  IoIosArrowBack,
+  IoIosArrowUp,
+  IoIosCloseCircleOutline,
+} from "react-icons/io";
 import { MdOutlineStorefront } from "react-icons/md";
 import { TiStar } from "react-icons/ti";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
@@ -22,6 +26,7 @@ import { getNavStateText } from "@/helpers/navigation";
 import { useFairDetails } from "@/hooks/fairs/useFairDetails";
 import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 import { useUser } from "@/hooks/useUser";
+import { IonFab, IonFabButton, IonFabList } from "@ionic/react";
 import styles from "./FairDetails.module.css";
 
 const MODAL_INFO_ID = "fair-info-open-modal";
@@ -222,6 +227,27 @@ export const FairDetails: React.FC = () => {
           </div>
         </section>
       </Fetcher>
+
+      {user?.uid === fair?.owner.id && (
+        <IonFab
+          slot="fixed"
+          vertical="bottom"
+          horizontal="end"
+          className="animate__animated animate__fadeIn"
+        >
+          <IonFabButton color="primary">
+            <IoIosArrowUp size={28} />
+          </IonFabButton>
+          <IonFabList side="top">
+            <IonFabButton color="primary">
+              <FiEdit2 size={22} />
+            </IonFabButton>
+            <IonFabButton color="primary">
+              <MdOutlineStorefront size={22} />
+            </IonFabButton>
+          </IonFabList>
+        </IonFab>
+      )}
 
       <InfoModal
         className={styles.infoModal}
