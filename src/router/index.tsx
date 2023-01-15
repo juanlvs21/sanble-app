@@ -38,6 +38,11 @@ const FairDetailsScreen = lazy(() =>
     default: FairDetails,
   }))
 );
+const StandsListScreen = lazy(() =>
+  import("@/screens/stands/StandsList").then(({ StandsList }) => ({
+    default: StandsList,
+  }))
+);
 const FavoritesListScreen = lazy(() =>
   import("@/screens/favorites/FavoritesList").then(({ FavoritesList }) => ({
     default: FavoritesList,
@@ -114,7 +119,7 @@ export const AppRoutes = () => {
             path="stands"
             element={
               <Suspense fallback={<LoadingSuspense />}>
-                <FavoritesListScreen />
+                <StandsListScreen />
               </Suspense>
             }
           />
