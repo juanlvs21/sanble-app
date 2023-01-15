@@ -41,14 +41,18 @@ export const useFairsList = () => {
         orderBy: orderByReq,
         orderDir: orderDirReq,
       });
-      if (pagination.lastIndex === DEFAULT_LAST_INDEX) {
-        setList(infiteScrollData("id", listRes, []));
-      } else setList(infiteScrollData("id", listRes, list));
 
-      setLastIndex(pagination.lastIndex);
-      setLimit(pagination.limit);
+      const newList = infiteScrollData(
+        "id",
+        listRes,
+        lastIndexReq === DEFAULT_LAST_INDEX ? [] : list
+      );
+
+      setList(newList);
       setOrderBy(orderByReq);
       setOrderDir(orderDirReq);
+      setLastIndex(pagination.lastIndex);
+      setLimit(pagination.limit);
     } catch (error: any) {
       toast("Error al cargar el listado de ferias", {
         type: "error",
@@ -59,7 +63,7 @@ export const useFairsList = () => {
   };
 
   const handleRefresh = async () => {
-    await handleLoad();
+    await handleLoad({ orderBy, orderDir });
   };
 
   const handleInfinite = async () => {

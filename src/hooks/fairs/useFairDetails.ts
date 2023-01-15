@@ -59,10 +59,13 @@ export const useFairDetails = (fairID: string) => {
         limit: limitReq,
       });
 
-      if (pagination.lastIndex === DEFAULT_LAST_INDEX_REVIEWS) {
-        setReviews(infiteScrollData("id", list, []));
-      } else setReviews(infiteScrollData("id", list, reviews));
+      const newList = infiteScrollData(
+        "id",
+        list,
+        lastIndexReq === DEFAULT_LAST_INDEX_REVIEWS ? [] : reviews
+      );
 
+      setReviews(newList);
       setReview(form);
       setLastIndexReviews(pagination.lastIndex);
       setLimitReviews(pagination.limit);
