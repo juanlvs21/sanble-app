@@ -1,7 +1,4 @@
-import { dayjs } from "@/helpers/time";
-import { HiOutlineCalendar } from "react-icons/hi";
 import { Link } from "react-router-dom";
-import { useMediaQuery } from "usehooks-ts";
 
 import { ButtonFav } from "@/components/common/buttons/ButtonFav";
 import { ImageExtended } from "@/components/common/ImageExtended";
@@ -18,7 +15,6 @@ export type ComponentProps = {
 };
 
 export const StandCardList = ({ stand }: ComponentProps) => {
-  const isMobileS = useMediaQuery("(max-width: 320px)");
   const { user, loadingSetFav, handleSetFavoriteStand } = useUser();
 
   return (
