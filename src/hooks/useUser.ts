@@ -52,10 +52,15 @@ export const useUser = () => {
     await setFavorite(EUserFav.FAIR, favoriteID);
   };
 
+  const handleSetFavoriteStand = async (favoriteID: string) => {
+    await setFavorite(EUserFav.STAND, favoriteID);
+  };
+
   return {
     user,
     loadingSetFav,
     setUser,
     handleSetFavoriteFair,
+    handleSetFavoriteStand,
   };
 };

@@ -1,4 +1,4 @@
-.fairListCard {
+.standListCard {
   background-color: var(--ion-color-light);
   border-radius: var(--sanble-border-radius);
   margin-bottom: 20px;
@@ -10,26 +10,26 @@
   box-shadow: 0px 0px 5px 5px rgba(200, 200, 200, 0.05);
 }
 
-.fairListCard .fairListCardPicture {
+.standListCard .standListCardPicture {
   display: contents;
 }
 
-.fairListCard .fairListCardImg {
+.standListCard .standListCardImg {
   border-radius: var(--sanble-border-radius);
-  width: 100px;
+  width: 130px;
   height: 100%;
   object-fit: cover;
   object-position: center;
 }
 
-.fairListCardContent {
+.standListCardContent {
   margin: 15px 20px;
-  width: calc(100% - 60px);
+  width: calc(100% - 130px);
   display: flex;
   flex-direction: column;
 }
 
-.fairListCardContent h1 {
+.standListCardContent h1 {
   font-weight: 600;
   font-size: 18px;
   margin: 0;
@@ -42,8 +42,9 @@
   text-overflow: ellipsis;
 }
 
-.fairListCardContent .fairListCardType {
+.standListCardContent .standListCardSlogan {
   color: var(--sanble-gray-color-2);
+  margin-top: 8px;
   font-weight: 500;
   font-size: 13px;
   height: 15px;
@@ -53,68 +54,50 @@
   text-overflow: ellipsis;
 }
 
-.fairListCardContent .fairListCardDate {
-  display: flex;
-  width: 100%;
-  align-items: center;
-  margin-top: 10px;
-}
-
-.fairListCardContent .fairListCardDate svg {
-  color: var(--ion-text-color, #000);
-}
-
-.fairListCardContent .fairListCardDate span {
-  color: var(--ion-text-color, #000);
-  font-weight: 600;
-  font-size: 12px;
-  margin-top: 3px;
-  margin-left: 5px;
-}
-
-.fairListCard .fairListCardBtnFav {
+.standListCard .standListCardBtnFav {
   position: absolute;
-  right: 6px;
-  bottom: 0;
+  margin: 0;
+  bottom: -6px;
+  right: -1px;
 }
 
-.fairListCardLink {
+.standListCardLink {
   display: flex;
   width: 100%;
   color: var(--ion-text-color, #000);
 }
 
 @media (min-width: 768px) {
-  .fairListCard {
+  .standListCard {
     margin: 20px;
   }
-  .fairListCardContent {
+  .standListCardContent {
     width: cal(100% - 80px);
   }
 }
 
 @media (max-width: 380px) {
-  .fairListCardBtnFav {
+  .standListCardBtnFav {
     bottom: -5px;
     width: 30px;
     height: 30px;
   }
-  .fairListCardBtnFav::part(native) {
+  .standListCardBtnFav::part(native) {
     width: 30px;
     height: 30px;
   }
 }
 
 @media (max-width: 330px) {
-  .fairListCard img {
+  .standListCard img {
     width: 80px;
   }
 
-  .fairListCardContent {
+  .standListCardContent {
     width: cal(100% - 100px);
   }
 
-  .fairListCardContent h1 {
+  .standListCardContent h1 {
     font-size: 14px;
     height: 16px;
   }

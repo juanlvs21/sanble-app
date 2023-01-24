@@ -5,7 +5,7 @@ import { Button } from "@/components/common/buttons/Button";
 import { Fetcher } from "@/components/common/Fetcher";
 import { Skeleton } from "@/components/common/Skeleton";
 import { TopBar } from "@/components/common/TopBar";
-// import { StandCardList } from "@/components/modules/stands/StandCardList";
+import { StandCardList } from "@/components/modules/stands/StandCardList";
 import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 import { useStandsList } from "@/hooks/stands/useStandsList";
 import styles from "./StandsList.module.css";
@@ -36,12 +36,12 @@ export const StandsList = () => {
   return (
     <>
       <TopBar
-        title="Ferias"
+        title="Stands"
         end={
           <Button
             onClick={() =>
               present({
-                header: "Ordenar Ferias",
+                header: "Ordenar Stands",
                 buttons: [
                   {
                     text: "Mejor puntuadas",
@@ -58,14 +58,6 @@ export const StandsList = () => {
                       orderDir === "asc"
                     ),
                     handler: () => handleShorting("stars", "asc"),
-                  },
-                  {
-                    text: "Fechas cercanas",
-                    cssClass: actionCssClasses(
-                      orderBy === "celebrationDate",
-                      orderDir === "desc"
-                    ),
-                    handler: () => handleShorting("celebrationDate", "desc"),
                   },
                   {
                     text: "Limpiar filtro",
@@ -107,11 +99,8 @@ export const StandsList = () => {
                   />
                 ))
             : list.map((stand) => (
-                <div key={stand.id}>
-                  <h1>{stand.name}</h1>
-                </div>
+                <StandCardList key={stand.id} stand={stand} />
               ))}
-          {/* : list.map((stand) => <StandCardList key={stand.id} stand={stand} />)} */}
         </div>
       </Fetcher>
     </>
