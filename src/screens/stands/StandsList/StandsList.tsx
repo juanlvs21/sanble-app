@@ -60,6 +60,14 @@ export const StandsList = () => {
                     handler: () => handleShorting("stars", "asc"),
                   },
                   {
+                    text: "Por nombre",
+                    cssClass: actionCssClasses(
+                      orderBy === "name",
+                      orderDir === "asc"
+                    ),
+                    handler: () => handleShorting("name", "asc"),
+                  },
+                  {
                     text: "Limpiar filtro",
                     cssClass: actionCssClasses(),
                     handler: () => handleShorting("stars", "desc"),
