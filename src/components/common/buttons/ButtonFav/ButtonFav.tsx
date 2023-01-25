@@ -1,6 +1,7 @@
 import { Button } from "@/components/common/buttons/Button";
 import { TButton } from "@/types/TComponents";
-import { IoMdHeart, IoMdHeartEmpty } from "react-icons/io";
+import { FiHeart } from "react-icons/fi";
+import { FaHeart } from "react-icons/fa";
 import styles from "./ButtonFav.module.css";
 
 export type ComponentProps = Omit<TButton, "color"> & {
@@ -63,12 +64,12 @@ export const ButtonFav = ({
     {...rest}
   >
     {isActive ? (
-      <IoMdHeart
+      <FaHeart
         className="animate__animated animate__bounceIn"
         size={sizeIcon}
       />
     ) : (
-      <IoMdHeartEmpty
+      <FiHeart
         className="animate__animated animate__bounceIn"
         size={sizeIcon}
       />

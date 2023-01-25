@@ -53,7 +53,7 @@
 
 @media (max-width: 768px) {
   .mainContainer.showSidebar {
-    left: 200px;
+    left: 220px;
     margin: 25px 0;
     height: calc(100% - 50px);
     border-radius: var(--sanble-border-radius);

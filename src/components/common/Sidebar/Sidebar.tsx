@@ -8,8 +8,7 @@ import {
   useIonAlert,
 } from "@ionic/react";
 import { useMemo } from "react";
-import { FaDoorClosed, FaHeart, FaMapMarkedAlt, FaUser } from "react-icons/fa";
-import { FiHome } from "react-icons/fi";
+import { FiHeart, FiHome, FiLogOut, FiMapPin, FiUser } from "react-icons/fi";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import { Link, useLocation, useMatch } from "react-router-dom";
 
@@ -48,7 +47,7 @@ export const Sidebar = () => {
       {
         label: "Favoritos",
         path: "/app/favoritos",
-        icon: <FaHeart size={28} />,
+        icon: <FiHeart size={28} />,
         active: matchFavorites,
       },
       {
@@ -65,7 +64,7 @@ export const Sidebar = () => {
       {
         label: "Cerca de ti",
         path: "/app/cerca",
-        icon: <FaMapMarkedAlt size={28} />,
+        icon: <FiMapPin size={28} />,
         active: matchNearYou,
       },
       // {
@@ -77,7 +76,7 @@ export const Sidebar = () => {
       {
         label: "Perfil",
         path: "/app/perfil",
-        icon: <FaUser size={28} />,
+        icon: <FiUser size={28} />,
         active: matchProfile,
       },
     ],
@@ -162,7 +161,7 @@ export const Sidebar = () => {
             button
           >
             <IonAvatar slot="start" className={styles.sidebarItemIcon}>
-              <FaDoorClosed size={28} />
+              <FiLogOut size={28} />
             </IonAvatar>
             <IonLabel className={styles.sidebarItemLabel}>Salir</IonLabel>
           </IonItem>
