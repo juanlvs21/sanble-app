@@ -7,6 +7,9 @@ http://ionicframework.com/docs/theming/ */
   --sanble-gray-color-1: #d1d1d1;
   --sanble-gray-color-2: #d6d6d6;
 
+  --toastify-icon-color-info: #ff8634 !important;
+  --toastify-color-progress-info: #ff8634 !important;
+
   --ion-font-family: Poppins, sans-serif;
   --ion-text-color: #232020;
 
