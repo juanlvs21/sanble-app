@@ -28,9 +28,11 @@ import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 import { useUser } from "@/hooks/useUser";
 import { IonFab, IonFabButton, IonFabList } from "@ionic/react";
 import styles from "./FairDetails.module.css";
+import { FairModalStands } from "@/components/modules/fairs/FairModalStands";
 
 const MODAL_INFO_ID = "fair-info-open-modal";
 const MODAL_MAP_ID = "fair-map-open-modal";
+const MODAL_STANDS_ID = "fair-stands-open-modal";
 
 export const FairDetails = () => {
   const navigate = useNavigate();
@@ -200,7 +202,7 @@ export const FairDetails = () => {
                 <HiOutlinePhotograph size={35} />
                 <h5>Fotos</h5>
               </div>
-              <div className={styles.fairInfoCard}>
+              <div className={styles.fairInfoCard} id={MODAL_STANDS_ID}>
                 <MdOutlineStorefront size={35} />
                 <h5>Stands </h5>
               </div>
@@ -255,6 +257,11 @@ export const FairDetails = () => {
       />
 
       <FairModalMap trigger={MODAL_MAP_ID} fair={fair} isLoading={isLoading} />
+      <FairModalStands
+        trigger={MODAL_STANDS_ID}
+        stands={[]}
+        isLoading={isLoading}
+      />
     </>
   );
 };

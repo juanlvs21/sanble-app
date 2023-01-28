@@ -10,15 +10,13 @@ import {
 import { useRef } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 
-import { Map } from "@/components/modules/geolocation/Map";
-import { formatFairsMarks } from "@/helpers/mapFormatMarkers";
-import { TFair } from "@/types/TFair";
+import { TStand } from "@/types/TStand";
 
 export type ComponentProps = {
   /**
-   * Fair Details
+   * Stands list
    */
-  fair?: TFair;
+  stands?: TStand[];
   /**
    * Trigger open modal
    */
@@ -33,8 +31,8 @@ export type ComponentProps = {
   isLoading?: boolean;
 };
 
-export const FairModalMap = ({
-  fair,
+export const FairModalStands = ({
+  stands,
   isLoading,
   trigger,
   className = "",
@@ -54,30 +52,11 @@ export const FairModalMap = ({
               <AiOutlineClose size={24} />
             </Button>
           </IonButtons>
-          <IonTitle>Ubicación</IonTitle>
+          <IonTitle>Stands Participantes</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent>
-        {fair && (
-          <Map
-            center={fair.geopoint}
-            markers={formatFairsMarks([
-              {
-                id: fair.id,
-                name: fair.name,
-                geopoint: fair.geopoint,
-                stars: fair.stars,
-                type: fair.type,
-              },
-            ])}
-            isLoading={isLoading}
-            errorMsg={
-              !fair?.geopoint
-                ? `${fair?.name || "Esta Feria"} no posee ubicación geográfica`
-                : undefined
-            }
-          />
-        )}
+        <h1>Stands list </h1>
       </IonContent>
     </IonModal>
   );
