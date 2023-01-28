@@ -1,6 +1,11 @@
-.fairStandsModalFetcher::part(scroll) {
+.fairStandsModalFetcherContent::part(scroll) {
   padding-top: 30px;
   padding-bottom: 30px;
+}
+
+.fairStandsModalFetcherSection {
+  height: 100%;
+  margin-top: 0;
 }
 
 .fairStandsModalRefresh {
@@ -9,10 +14,4 @@
 
 .fairStandsCardSkeleton {
   margin-bottom: 20px;
-}
-
-@media (min-width: 768px) {
-  .fairStandsCardSkeleton {
-    margin: 20px;
-  }
 }

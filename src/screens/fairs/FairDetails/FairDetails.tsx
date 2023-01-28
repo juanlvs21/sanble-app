@@ -1,3 +1,9 @@
+import {
+  IonFab,
+  IonFabButton,
+  IonFabList,
+  useIonActionSheet,
+} from "@ionic/react";
 import { useState } from "react";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import { FiEdit2, FiMapPin } from "react-icons/fi";
@@ -18,25 +24,27 @@ import { ImageExtended } from "@/components/common/ImageExtended";
 import { Skeleton } from "@/components/common/Skeleton";
 import { TopBar } from "@/components/common/TopBar";
 import { FairModalMap } from "@/components/modules/fairs/FairModalMap";
+import { FairModalStands } from "@/components/modules/fairs/FairModalStands";
+import { ModalGallery } from "@/components/modules/gallery/ModalGallery";
 import { InfoModal } from "@/components/modules/info/InfoModal";
 import { ReviewForm } from "@/components/modules/reviews/ReviewForm";
 import { ReviewsList } from "@/components/modules/reviews/ReviewsList";
 import { fairType } from "@/helpers/fairs";
 import { getNavStateText } from "@/helpers/navigation";
 import { useFairDetails } from "@/hooks/fairs/useFairDetails";
+import { useFairDetailsStands } from "@/hooks/fairs/useFairDetailsStands";
 import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 import { useUser } from "@/hooks/useUser";
-import { IonFab, IonFabButton, IonFabList } from "@ionic/react";
 import styles from "./FairDetails.module.css";
-import { FairModalStands } from "@/components/modules/fairs/FairModalStands";
-import { useFairDetailsStands } from "@/hooks/fairs/useFairDetailsStands";
 
 const MODAL_INFO_ID = "fair-info-open-modal";
 const MODAL_MAP_ID = "fair-map-open-modal";
 const MODAL_STANDS_ID = "fair-stands-open-modal";
+const MODAL_PHOTOS_ID = "fair-photos-open-modal";
 
 export const FairDetails = () => {
   const navigate = useNavigate();
+  const [present] = useIonActionSheet();
   const { fairID } = useParams();
   const { state } = useLocation();
   const { user, loadingSetFav, handleSetFavoriteFair } = useUser();
@@ -66,6 +74,32 @@ export const FairDetails = () => {
       "Feria"
     } 🛍️`
   );
+
+  const handleGalleryAction = (photoID: string) => {
+    present({
+      header: "Acciones",
+      buttons: [
+        {
+          text: "Establecer como fotografía de perfil",
+          handler: () => alert("Configurado como foto de perfil"),
+        },
+        {
+          text: "Eliminar",
+          cssClass: "danger-color",
+          handler: () => alert("Eliminar Fotografia"),
+        },
+        {
+          text: "Cancelar",
+          cssClass: "danger-color",
+          role: "cancel",
+          data: {
+            action: "cancel",
+          },
+        },
+      ],
+      onDidDismiss: ({ detail }) => console.log(detail),
+    });
+  };
 
   return (
     <>
@@ -205,7 +239,7 @@ export const FairDetails = () => {
                 <FiMapPin size={35} />
                 <h5>Localización en Mapa</h5>
               </div>
-              <div className={styles.fairInfoCard}>
+              <div className={styles.fairInfoCard} id={MODAL_PHOTOS_ID}>
                 <HiOutlinePhotograph size={35} />
                 <h5>Fotos</h5>
               </div>
@@ -262,7 +296,11 @@ export const FairDetails = () => {
         contactPhone={fair?.contactPhone}
         contactEmail={fair?.contactEmail}
       />
-
+      <ModalGallery
+        trigger={MODAL_PHOTOS_ID}
+        photographs={fair?.photographs || []}
+        handleAction={handleGalleryAction}
+      />
       <FairModalMap trigger={MODAL_MAP_ID} fair={fair} isLoading={isLoading} />
       <FairModalStands
         trigger={MODAL_STANDS_ID}

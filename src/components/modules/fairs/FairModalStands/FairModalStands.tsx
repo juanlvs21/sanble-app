@@ -73,10 +73,11 @@ export const FairModalStands = ({
         <Fetcher
           handleRefresh={handleRefresh}
           handleInfiniteScroll={handleInfinite}
-          classNameContent={styles.fairStandsModalFetcher}
+          classNameContent={styles.fairStandsModalFetcherContent}
+          classNameSection={styles.fairStandsModalFetcherSection}
           classNameRefresh={styles.fairStandsModalRefresh}
         >
-          <div className="dataListContainer">
+          <div className="dataListContainer col-1">
             {isLoading && !stands.length
               ? Array(5)
                   .fill(0)

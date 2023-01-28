@@ -229,6 +229,10 @@ form {
   grid-template-columns: repeat(1, minmax(0, 1fr));
 }
 
+.dataListContainer.col-1 {
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+}
+
 .Toastify__toast {
   margin: 10px;
   border-radius: var(--sanble-border-radius);

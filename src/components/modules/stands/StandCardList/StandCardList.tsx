@@ -12,14 +12,18 @@ export type ComponentProps = {
    * Stand Details
    */
   stand: TStand;
+  /**
+   * Custom className component
+   */
+  className?: string;
 };
 
-export const StandCardList = ({ stand }: ComponentProps) => {
+export const StandCardList = ({ stand, className = "" }: ComponentProps) => {
   const { user, loadingSetFav, handleSetFavoriteStand } = useUser();
 
   return (
     <article
-      className={`animate__animated animate__fadeIn ${styles.standListCard}`}
+      className={`animate__animated animate__fadeIn ${styles.standListCard} ${className}`}
     >
       <Link
         to={`/app/stands/${stand.id}`}
