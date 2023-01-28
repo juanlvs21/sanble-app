@@ -29,6 +29,7 @@ import { useUser } from "@/hooks/useUser";
 import { IonFab, IonFabButton, IonFabList } from "@ionic/react";
 import styles from "./FairDetails.module.css";
 import { FairModalStands } from "@/components/modules/fairs/FairModalStands";
+import { useFairDetailsStands } from "@/hooks/fairs/useFairDetailsStands";
 
 const MODAL_INFO_ID = "fair-info-open-modal";
 const MODAL_MAP_ID = "fair-map-open-modal";
@@ -50,6 +51,12 @@ export const FairDetails = () => {
     handleRefreshReviews,
     handleInfiniteReviews,
   } = useFairDetails(fairID || "");
+  const {
+    stands,
+    isLoading: isLoadingStands,
+    handleLoad: handleRefreshStands,
+    handleInfinite: handleInfiniteStands,
+  } = useFairDetailsStands(fairID || "");
   const [openCover, setOpenCover] = useState(false);
 
   useDocumentTitle(
@@ -259,8 +266,10 @@ export const FairDetails = () => {
       <FairModalMap trigger={MODAL_MAP_ID} fair={fair} isLoading={isLoading} />
       <FairModalStands
         trigger={MODAL_STANDS_ID}
-        stands={[]}
-        isLoading={isLoading}
+        stands={stands}
+        handleRefresh={handleRefreshStands}
+        handleInfinite={handleInfiniteStands}
+        isLoading={isLoadingStands}
       />
     </>
   );

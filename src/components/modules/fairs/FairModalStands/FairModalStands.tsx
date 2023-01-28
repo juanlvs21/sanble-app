@@ -1,4 +1,3 @@
-import { Button } from "@/components/common/buttons/Button";
 import {
   IonButtons,
   IonContent,
@@ -10,13 +9,26 @@ import {
 import { useRef } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 
+import { Button } from "@/components/common/buttons/Button";
+import { Fetcher } from "@/components/common/Fetcher";
+import { Skeleton } from "@/components/common/Skeleton";
+import { StandCardList } from "@/components/modules/stands/StandCardList";
 import { TStand } from "@/types/TStand";
+import styles from "./FairModalStands.module.css";
 
 export type ComponentProps = {
   /**
    * Stands list
    */
-  stands?: TStand[];
+  stands: TStand[];
+  /**
+   * Handle refresh get more Stands
+   */
+  handleRefresh: () => Promise<any>;
+  /**
+   * Handle infinite scroll get more Stands
+   */
+  handleInfinite: () => Promise<any>;
   /**
    * Trigger open modal
    */
@@ -36,6 +48,8 @@ export const FairModalStands = ({
   isLoading,
   trigger,
   className = "",
+  handleRefresh,
+  handleInfinite,
 }: ComponentProps) => {
   const modalRef = useRef<HTMLIonModalElement>(null);
 
@@ -56,7 +70,28 @@ export const FairModalStands = ({
         </IonToolbar>
       </IonHeader>
       <IonContent>
-        <h1>Stands list </h1>
+        <Fetcher
+          handleRefresh={handleRefresh}
+          handleInfiniteScroll={handleInfinite}
+          classNameContent={styles.fairStandsModalFetcher}
+          classNameRefresh={styles.fairStandsModalRefresh}
+        >
+          <div className="dataListContainer">
+            {isLoading && !stands.length
+              ? Array(5)
+                  .fill(0)
+                  .map((_, i) => (
+                    <Skeleton
+                      key={i}
+                      height={130}
+                      className={styles.fairStandsCardSkeleton}
+                    />
+                  ))
+              : stands.map((stand) => (
+                  <StandCardList key={stand.id} stand={stand} />
+                ))}
+          </div>
+        </Fetcher>
       </IonContent>
     </IonModal>
   );

@@ -1,4 +1,3 @@
-import { Button } from "@/components/common/buttons/Button";
 import {
   IonButtons,
   IonContent,
@@ -10,6 +9,7 @@ import {
 import { useRef } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 
+import { Button } from "@/components/common/buttons/Button";
 import { Map } from "@/components/modules/geolocation/Map";
 import { formatFairsMarks } from "@/helpers/mapFormatMarkers";
 import { TFair } from "@/types/TFair";

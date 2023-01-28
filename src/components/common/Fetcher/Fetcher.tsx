@@ -37,6 +37,10 @@ export type ComponentProps = {
    */
   classNameContent?: string;
   /**
+   * Custom className for content component
+   */
+  classNameRefresh?: string;
+  /**
    * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
    *
    * @default 'primary'
@@ -54,6 +58,7 @@ export const Fetcher = ({
   children,
   classNameSection = "",
   classNameContent = "",
+  classNameRefresh = "",
   refreshSpinnerColor = "primary",
   infiniteSpinnerColor = "primary",
   handleRefresh,
@@ -82,7 +87,7 @@ export const Fetcher = ({
           slot="fixed"
           onIonRefresh={doRefresh}
           disabled={!handleRefresh}
-          className={styles.fetcherRefresh}
+          className={`${styles.fetcherRefresh} ${classNameRefresh}`}
         >
           <IonRefresherContent
             pullingIcon={undefined}

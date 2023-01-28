@@ -1,0 +1,18 @@
+.fairStandsModalFetcher::part(scroll) {
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+.fairStandsModalRefresh {
+  padding-top: 20px;
+}
+
+.fairStandsCardSkeleton {
+  margin-bottom: 20px;
+}
+
+@media (min-width: 768px) {
+  .fairStandsCardSkeleton {
+    margin: 20px;
+  }
+}

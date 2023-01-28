@@ -5,6 +5,7 @@ import { TFair, TFairGeo } from "@/types/TFair";
 import { TResponseList } from "@/types/THttp";
 import { TGetListParams } from "@/types/TRequest";
 import { TReview, TReviewForm } from "@/types/TReview";
+import { TStand } from "@/types/TStand";
 
 const URL_PREFIX = "/fairs";
 
@@ -37,6 +38,26 @@ export const getFairDetailsRequest = (fairID: string) =>
 export const getFairListGeolocationRequest = () =>
   api
     .get<AxiosResponse<TFairGeo[]>>(`${URL_PREFIX}/geolocation`)
+    .then(({ data }) => data.data);
+
+export const getFairStandsListRequest = (
+  fairID: string,
+  params?: TGetListParams,
+  config?: AxiosRequestConfig
+) =>
+  api
+    .get<AxiosResponse<TResponseList<TStand[]>>>(
+      `${URL_PREFIX}/${fairID}/stands`,
+      {
+        ...config,
+        params: {
+          orderBy: params?.orderBy || "name",
+          orderDir: params?.orderDir || "desc",
+          lastIndex: params?.lastIndex || 0,
+          limit: params?.limit || 10,
+        },
+      }
+    )
     .then(({ data }) => data.data);
 
 export const getFairReviewsRequest = (
