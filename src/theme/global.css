@@ -151,6 +151,16 @@ ion-item.inputItem.textareItem textarea {
   height: auto;
 }
 
+ion-item.inputItem.inputCheckbox {
+  --background: transparent;
+  --border-color: transparent;
+}
+
+ion-item.inputItem.inputCheckbox ion-label {
+  color: #8e8d8d;
+  margin-top: 13px !important;
+}
+
 ion-button.button-block {
   width: 100% !important;
   color: #57bbc1;

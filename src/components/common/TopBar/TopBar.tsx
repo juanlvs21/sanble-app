@@ -1,8 +1,10 @@
 import { IonButtons, IonProgressBar, IonTitle, IonToolbar } from "@ionic/react";
+import { IoIosArrowBack } from "react-icons/io";
+import { useNavigate } from "react-router-dom";
 
-import { useApp } from "@/hooks/useApp";
+import { Button } from "@/components/common/buttons/Button";
 import { TopBarUserBtn } from "@/components/common/TopBarUserBtn";
-
+import { useApp } from "@/hooks/useApp";
 import styles from "./TopBar.module.css";
 
 export type ComponentProps = {
@@ -29,9 +31,13 @@ export type ComponentProps = {
    */
   end?: React.ReactElement;
   /**
-   * If true, the user's profile picture will be found in the "start" slot. This key has priority over the "start" key.
+   * If true, the user's profile picture will be found in the "start" slot. This prop has priority over the "start" and "startGoBack" props.
    */
   startUser?: boolean;
+  /**
+   * Navigate to the previous screen. This prop has priority over the "start" prop.
+   */
+  startGoBack?: boolean;
   /**
    * If true, an infinite progressbar representing the state of loading will be displayed.
    */
@@ -53,6 +59,7 @@ export type ComponentProps = {
 export const TopBar = ({
   title,
   startUser,
+  startGoBack,
   start,
   end,
   isLoading,
@@ -62,6 +69,7 @@ export const TopBar = ({
   titleSize = 28,
   className = "",
 }: ComponentProps) => {
+  const navigate = useNavigate();
   const { scrollTop, isCapacitor } = useApp();
 
   return (
@@ -79,9 +87,21 @@ export const TopBar = ({
         />
       )}
 
-      {(start || startUser) && (
+      {(start || startUser || startGoBack) && (
         <IonButtons slot="start" className={styles.topBarStart}>
-          {startUser ? <TopBarUserBtn /> : start}
+          {startUser ? (
+            <TopBarUserBtn />
+          ) : (
+            <>
+              {startGoBack ? (
+                <Button onClick={() => navigate(-1)}>
+                  <IoIosArrowBack size={24} />
+                </Button>
+              ) : (
+                start
+              )}
+            </>
+          )}
         </IonButtons>
       )}
       {title && (

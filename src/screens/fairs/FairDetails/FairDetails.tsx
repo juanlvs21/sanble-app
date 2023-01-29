@@ -8,11 +8,7 @@ import { useState } from "react";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import { FiEdit2, FiMapPin } from "react-icons/fi";
 import { HiOutlinePhotograph } from "react-icons/hi";
-import {
-  IoIosArrowBack,
-  IoIosArrowUp,
-  IoIosCloseCircleOutline,
-} from "react-icons/io";
+import { IoIosArrowUp, IoIosCloseCircleOutline } from "react-icons/io";
 import { MdOutlineStorefront } from "react-icons/md";
 import { TiStar } from "react-icons/ti";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
@@ -25,14 +21,14 @@ import { Skeleton } from "@/components/common/Skeleton";
 import { TopBar } from "@/components/common/TopBar";
 import { FairModalMap } from "@/components/modules/fairs/FairModalMap";
 import { FairModalStands } from "@/components/modules/fairs/FairModalStands";
-import { ModalGallery } from "@/components/modules/gallery/ModalGallery";
 import { InfoModal } from "@/components/modules/info/InfoModal";
+import { ModalPhotos } from "@/components/modules/photo/ModalPhotos";
 import { ReviewForm } from "@/components/modules/reviews/ReviewForm";
 import { ReviewsList } from "@/components/modules/reviews/ReviewsList";
 import { fairType } from "@/helpers/fairs";
 import { getNavStateText } from "@/helpers/navigation";
 import { useFairDetails } from "@/hooks/fairs/useFairDetails";
-import { useFairDetailsStands } from "@/hooks/fairs/useFairDetailsStands";
+import { useFairStands } from "@/hooks/fairs/useFairStands";
 import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 import { useUser } from "@/hooks/useUser";
 import styles from "./FairDetails.module.css";
@@ -64,7 +60,7 @@ export const FairDetails = () => {
     isLoading: isLoadingStands,
     handleLoad: handleRefreshStands,
     handleInfinite: handleInfiniteStands,
-  } = useFairDetailsStands(fairID || "");
+  } = useFairStands(fairID || "");
   const [openCover, setOpenCover] = useState(false);
 
   useDocumentTitle(
@@ -75,18 +71,30 @@ export const FairDetails = () => {
     } 🛍️`
   );
 
-  const handleGalleryAction = (photoID: string) => {
+  const handleGalleryAction = (
+    photoID: string,
+    handleDismiss?: () => Promise<boolean> | undefined
+  ) => {
+    const navPhoto = (path: string) => {
+      if (handleDismiss) handleDismiss();
+      setTimeout(() => navigate(path), 200);
+    };
+
     present({
       header: "Acciones",
       buttons: [
         {
-          text: "Establecer como fotografía de perfil",
-          handler: () => alert("Configurado como foto de perfil"),
+          text: "Publicar Nueva Fotografía",
+          handler: () => navPhoto(`/app/ferias/${fairID}/foto`),
         },
         {
-          text: "Eliminar",
+          text: "Editar Fotografía",
+          handler: () => navPhoto(`/app/ferias/${fairID}/foto/${photoID}`),
+        },
+        {
+          text: "Eliminar Fotografía",
           cssClass: "danger-color",
-          handler: () => alert("Eliminar Fotografia"),
+          handler: () => alert(`Eliminar Fotografía: ${photoID}`),
         },
         {
           text: "Cancelar",
@@ -97,7 +105,6 @@ export const FairDetails = () => {
           },
         },
       ],
-      onDidDismiss: ({ detail }) => console.log(detail),
     });
   };
 
@@ -105,11 +112,7 @@ export const FairDetails = () => {
     <>
       <TopBar
         title="Detalles"
-        start={
-          <Button onClick={() => navigate(-1)}>
-            <IoIosArrowBack size={24} />
-          </Button>
-        }
+        startGoBack
         end={
           <ButtonFav
             isLoading={loadingSetFav}
@@ -296,7 +299,7 @@ export const FairDetails = () => {
         contactPhone={fair?.contactPhone}
         contactEmail={fair?.contactEmail}
       />
-      <ModalGallery
+      <ModalPhotos
         trigger={MODAL_PHOTOS_ID}
         photographs={fair?.photographs || []}
         handleAction={handleGalleryAction}

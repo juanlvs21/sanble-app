@@ -38,6 +38,11 @@ const FairDetailsScreen = lazy(() =>
     default: FairDetails,
   }))
 );
+const FairPhotoNewScreen = lazy(() =>
+  import("@/screens/fairs/FairPhotoNew").then(({ FairPhotoNew }) => ({
+    default: FairPhotoNew,
+  }))
+);
 const StandsListScreen = lazy(() =>
   import("@/screens/stands/StandsList").then(({ StandsList }) => ({
     default: StandsList,
@@ -174,12 +179,19 @@ export const AppRoutes = () => {
             </Suspense>
           }
         />
-
         <Route
           path="/app/ferias/:fairID"
           element={
             <Suspense fallback={<LoadingSuspense />}>
               <FairDetailsScreen />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/app/ferias/:fairID/foto"
+          element={
+            <Suspense fallback={<LoadingSuspense />}>
+              <FairPhotoNewScreen />
             </Suspense>
           }
         />

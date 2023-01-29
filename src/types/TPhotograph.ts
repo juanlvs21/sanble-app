@@ -1,7 +1,12 @@
-export type TPhotograph = {
+export type TPhotographBase = {
   id: string;
   url: string;
+  image: string;
   description: string;
   creationTime: string;
   isCover: boolean;
 };
+
+export type TPhotograph = Omit<TPhotographBase, "image">;
+
+export type TPhotographForm = Omit<TPhotographBase, "creationTime" | "url">;

@@ -4,7 +4,7 @@ import { Button } from "@/components/common/buttons/Button";
 import { Input } from "@/components/common/forms/Input";
 import { Stars } from "@/components/common/Stars";
 import { getErrorMessage } from "@/helpers/getFormikErrorMsg";
-import { reviewSchema } from "@/helpers/validator/schema";
+import { reviewSchema } from "@/helpers/validator/review";
 import { TReview, TReviewForm } from "@/types/TReview";
 import styles from "./ReviewForm.module.css";
 

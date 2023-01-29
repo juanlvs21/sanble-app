@@ -17,7 +17,7 @@ import { Button } from "@/components/common/buttons/Button";
 import { ImageExtended } from "@/components/common/ImageExtended";
 import { dayjs } from "@/helpers/time";
 import { TPhotograph } from "@/types/TPhotograph";
-import styles from "./ModalGallery.module.css";
+import styles from "./ModalPhotos.module.css";
 
 export type ComponentProps = {
   /**
@@ -41,7 +41,10 @@ export type ComponentProps = {
   /**
    * Callback for the action button. If this parameter is not sent, the button will not be show
    */
-  handleAction?: (id: string) => void;
+  handleAction?: (
+    id: string,
+    handleDismiss?: () => Promise<boolean> | undefined
+  ) => void;
   /**
    * Icon for the action button
    *
@@ -58,7 +61,7 @@ export type ComponentProps = {
   classNameItem?: string;
 };
 
-export const ModalGallery = ({
+export const ModalPhotos = ({
   photographs,
   trigger,
   handleAction,
@@ -80,6 +83,8 @@ export const ModalGallery = ({
     }),
     []
   );
+
+  const handleDismiss = () => modalRef.current?.dismiss();
 
   const handleToggleShowDescription = () => {
     setShowDescription((state) => !state);
@@ -111,7 +116,7 @@ export const ModalGallery = ({
           {handleAction && (
             <IonButtons slot="start">
               <Button
-                onClick={() => handleAction(activeID)}
+                onClick={() => handleAction(activeID, handleDismiss)}
                 fill="clear"
                 color="medium"
               >
@@ -120,11 +125,7 @@ export const ModalGallery = ({
             </IonButtons>
           )}
           <IonButtons slot="end">
-            <Button
-              onClick={() => modalRef.current?.dismiss()}
-              fill="clear"
-              color="medium"
-            >
+            <Button onClick={handleDismiss} fill="clear" color="medium">
               <AiOutlineClose size={24} />
             </Button>
           </IonButtons>
@@ -152,7 +153,7 @@ export const ModalGallery = ({
                   className: styles.galleryImage,
                 }}
               />
-              {/* <div
+              <div
                 className={`${styles.galleryDescription} ${
                   showDescription ? styles.show : ""
                 }`}
@@ -161,7 +162,7 @@ export const ModalGallery = ({
                 <small>
                   {dayjs(photo.creationTime).format("DD MMM hh:mm a")}
                 </small>
-              </div> */}
+              </div>
             </IonSlide>
           ))}
         </IonSlides>

@@ -1,4 +1,7 @@
-import { TextareaChangeEventDetail } from "@ionic/react";
+import {
+  CheckboxChangeEventDetail,
+  TextareaChangeEventDetail,
+} from "@ionic/react";
 import { DOMAttributes } from "react";
 
 export interface InputChangeEventDetail {
@@ -19,6 +22,12 @@ export interface IonButtonCustomEvent<T> extends CustomEvent<T> {
   detail: T;
   target: HTMLIonButtonElement;
 }
+
+export interface IonCheckboxCustomEvent<T> extends CustomEvent<T> {
+  detail: T;
+  target: HTMLIonCheckboxElement;
+}
+
 export interface IonicReactProps {
   class?: string;
   className?: string;
@@ -368,6 +377,51 @@ export type TTextareaBase = {
 };
 
 export type TInput = IonicReactProps & TInputBase & TTextareaBase;
+
+export type TCheckbox = {
+  /**
+   * If `true`, the checkbox is selected.
+   */
+  checked?: boolean;
+  /**
+   * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
+   */
+  color?: TColor;
+  /**
+   * If `true`, the user cannot interact with the checkbox.
+   */
+  disabled?: boolean;
+  /**
+   * If `true`, the checkbox will visually appear as indeterminate.
+   */
+  indeterminate?: boolean;
+  /**
+   * The mode determines which platform styles to use.
+   */
+  mode?: "ios" | "md";
+  /**
+   * The name of the control, which is submitted with the form data.
+   */
+  name?: string;
+  /**
+   * Emitted when the checkbox loses focus.
+   */
+  onIonBlur?: (event: IonCheckboxCustomEvent<void>) => void;
+  /**
+   * Emitted when the checked property has changed.
+   */
+  onIonChange?: (
+    event: IonCheckboxCustomEvent<CheckboxChangeEventDetail>
+  ) => void;
+  /**
+   * Emitted when the checkbox has focus.
+   */
+  onIonFocus?: (event: IonCheckboxCustomEvent<void>) => void;
+  /**
+   * The value of the checkbox does not mean if it's checked or not, use the `checked` property for that.  The value of a checkbox is analogous to the value of an `<input type="checkbox">`, it's only used when the checkbox participates in a native `<form>`.
+   */
+  value?: any | null;
+};
 
 export type TButton<T = any> = IonicReactProps &
   DOMAttributes<T> & {

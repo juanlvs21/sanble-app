@@ -4,12 +4,10 @@ export const useOnline = () => {
   const [online, setOnline] = useState(navigator.onLine);
 
   const handleOnline = () => {
-    console.log("We are online!");
     setOnline(true);
   };
 
   const handleOffline = () => {
-    console.log("We are offline!");
     setOnline(false);
   };
 

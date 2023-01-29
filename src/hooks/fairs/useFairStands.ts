@@ -9,7 +9,7 @@ import { infiteScrollData } from "@/helpers/infiniteScrollData";
 const DEFAULT_LAST_INDEX = 0;
 const DEFAULT_LIMIT = 10;
 
-export const useFairDetailsStands = (fairID: string) => {
+export const useFairStands = (fairID: string) => {
   const { toast } = useToast();
   const [stands, setStands] = useState<TStand[]>([]);
   const [isLoading, setIsLoading] = useState(true);

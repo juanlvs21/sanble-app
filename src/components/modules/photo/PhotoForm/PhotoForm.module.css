@@ -1,0 +1,76 @@
+.photoFormContainer {
+  padding: 90px 30px;
+  margin-top: 76px;
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  gap: 30px;
+  overflow-y: scroll;
+  height: calc(100vh - 76px);
+}
+
+.photoFormFileSection {
+  width: 100%;
+}
+
+.photoFormFileContainer {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center !important;
+  border-radius: var(--sanble-border-radius);
+  transition: all 400ms ease-in-out;
+}
+
+.photoFormFileContainer:hover {
+  background-position: top !important;
+  transition: all 400ms ease-in-out;
+}
+
+.photoFormFile {
+  border: 2px dashed var(--sanble-gray-color-1);
+  border-radius: var(--sanble-border-radius);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 20px 10px;
+  height: 300px;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.5) !important;
+  transition: all 400ms ease-in-out;
+}
+
+.photoFormFile p {
+  margin-bottom: 0;
+}
+
+.photoFormFile:hover {
+  border-color: var(--ion-color-primary);
+  background-color: rgba(0, 0, 0, 0.7) !important;
+  color: var(--ion-color-light) !important;
+  transition: all 400ms ease-in-out;
+}
+
+.photoFormFileError {
+  color: var(--ion-color-danger);
+}
+
+.photoFormBtn {
+  margin-top: 50px;
+}
+
+@media (min-width: 768px) {
+  .photoFormContainer {
+    padding: 90px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .photoFormFile {
+    padding: 30px;
+  }
+  .photoFormBtn {
+    margin-top: 68px;
+  }
+}
