@@ -1,6 +1,6 @@
 import * as yup from "yup";
 
-const lengthMax = 300;
+const lengthMax = 500;
 
 export const photoSchema = yup.object({
   description: yup

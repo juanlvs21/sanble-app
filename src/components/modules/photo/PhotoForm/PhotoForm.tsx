@@ -158,7 +158,7 @@ export const PhotoForm = ({
           disabled={isSubmitting}
           value={values.description}
           helper={getErrorMessage("description", touched, errors)}
-          maxlength={300}
+          maxlength={500}
           max={5}
           helperIsError
           textarea
