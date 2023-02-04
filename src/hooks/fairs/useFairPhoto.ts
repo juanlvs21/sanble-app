@@ -20,7 +20,7 @@ export const useFairPhoto = (fairID: string) => {
 
       const { photograph } = await uploadFairPhotoRequest(fairID, formData);
     } catch (error) {
-      toast("Error al cargar la fotografía", {
+      toast(error, {
         type: "error",
       });
     }

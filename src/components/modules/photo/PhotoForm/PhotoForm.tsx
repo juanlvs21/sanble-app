@@ -137,7 +137,8 @@ export const PhotoForm = ({
               <MdOutlineAddPhotoAlternate size={52} />
               <p>Haga clic o arrastre y suelte una fotografía aquí</p>
               <small>
-                Máximo {fileMaxSize}mb | Tipos permitidos {fileTypes.join(", ")}
+                Máximo {fileMaxSize}mb | Tipos de archivos permitidos{" "}
+                {fileTypes.join(", ")}
               </small>
             </div>
           </div>
