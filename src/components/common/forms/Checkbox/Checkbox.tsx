@@ -11,12 +11,15 @@ export type ComponentProps = TCheckbox & {
   label?: string;
 };
 
-export const Checkbox = ({ label, helper, helperIsError }: ComponentProps) => {
-  return (
-    <IonItem fill="outline" className="inputItem inputCheckbox">
-      <IonCheckbox slot="start" />
-      {label && <IonLabel>{label}</IonLabel>}
-      <IonNote slot={helperIsError ? "error" : "helper"}>{helper}</IonNote>
-    </IonItem>
-  );
-};
+export const Checkbox = ({
+  label,
+  helper,
+  helperIsError,
+  ...rest
+}: ComponentProps) => (
+  <IonItem fill="outline" className="inputItem inputCheckbox">
+    <IonCheckbox slot="start" {...rest} />
+    {label && <IonLabel>{label}</IonLabel>}
+    <IonNote slot={helperIsError ? "error" : "helper"}>{helper}</IonNote>
+  </IonItem>
+);

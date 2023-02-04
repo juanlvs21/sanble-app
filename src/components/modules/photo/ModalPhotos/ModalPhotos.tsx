@@ -108,7 +108,7 @@ export const ModalPhotos = ({
     <IonModal
       ref={modalRef}
       trigger={trigger}
-      className={className}
+      className={`${styles.photoModal} ${className}`}
       onWillPresent={handleModalWillPresent}
     >
       <IonHeader>
@@ -135,7 +135,7 @@ export const ModalPhotos = ({
       <IonContent>
         <IonSlides
           options={slideOpts}
-          className={styles.galleryContainer}
+          className={styles.photoContainer}
           onIonSlideWillChange={handleSlideDidChange}
         >
           {photographs.map((photo, i) => (
@@ -147,14 +147,14 @@ export const ModalPhotos = ({
               <ImageExtended
                 src={photo.url}
                 alt={photo.id}
-                classNamePicture={styles.galleryPicture}
-                className={styles.galleryImage}
+                classNamePicture={styles.photoPicture}
+                className={styles.photoImage}
                 skeletonProps={{
-                  className: styles.galleryImage,
+                  className: styles.photoImage,
                 }}
               />
               <div
-                className={`${styles.galleryDescription} ${
+                className={`${styles.photoDescription} ${
                   showDescription ? styles.show : ""
                 }`}
               >

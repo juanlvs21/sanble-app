@@ -13,6 +13,7 @@ import { Button } from "@/components/common/buttons/Button";
 import { Map } from "@/components/modules/geolocation/Map";
 import { formatFairsMarks } from "@/helpers/mapFormatMarkers";
 import { TFair } from "@/types/TFair";
+import styles from "./FairModalMap.module.css";
 
 export type ComponentProps = {
   /**
@@ -42,7 +43,11 @@ export const FairModalMap = ({
   const modalRef = useRef<HTMLIonModalElement>(null);
 
   return (
-    <IonModal ref={modalRef} trigger={trigger} className={className}>
+    <IonModal
+      ref={modalRef}
+      trigger={trigger}
+      className={`${styles.fairMapModal} ${className}`}
+    >
       <IonHeader>
         <IonToolbar>
           <IonButtons slot="end">

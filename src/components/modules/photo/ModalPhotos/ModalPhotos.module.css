@@ -1,17 +1,25 @@
-.galleryContainer {
+.photoModal {
+  --width: 100%;
+  --height: 100%;
+  --border-radius: 0;
+}
+
+.photoContainer {
   height: 100%;
 }
 
-.galleryPicture {
+.photoPicture {
+  width: 100%;
   height: 100%;
   display: flex;
 }
 
-.galleryImage {
+.photoPicture .photoImage {
+  width: 100%;
   height: 100%;
 }
 
-.galleryDescription {
+.photoDescription {
   position: absolute;
   width: 100%;
   height: 350px;
@@ -33,7 +41,7 @@
   transition: all 400ms ease-in-out;
 }
 
-.galleryDescription.show {
+.photoDescription.show {
   opacity: 1;
   transition: all 400ms ease-in-out;
 }

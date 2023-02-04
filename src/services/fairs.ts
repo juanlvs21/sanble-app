@@ -6,6 +6,7 @@ import { TResponseList } from "@/types/THttp";
 import { TGetListParams } from "@/types/TRequest";
 import { TReview, TReviewForm } from "@/types/TReview";
 import { TStand } from "@/types/TStand";
+import { TPhotograph } from "@/types/TPhotograph";
 
 const URL_PREFIX = "/fairs";
 
@@ -83,5 +84,18 @@ export const saveFairReviewRequest = (fairID: string, data: TReviewForm) =>
     .post<AxiosResponse<{ review: TReview; fairStars: number }>>(
       `${URL_PREFIX}/${fairID}/reviews`,
       data
+    )
+    .then(({ data }) => data.data);
+
+export const uploadFairPhotoRequest = (fairID: string, formData: FormData) =>
+  api
+    .post<AxiosResponse<{ photograph: TPhotograph }>>(
+      `${URL_PREFIX}/${fairID}/photograph`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
     )
     .then(({ data }) => data.data);

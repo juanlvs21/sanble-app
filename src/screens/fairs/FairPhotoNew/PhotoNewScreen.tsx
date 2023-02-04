@@ -1,9 +1,12 @@
+import { useParams } from "react-router-dom";
+
 import { TopBar } from "@/components/common/TopBar";
 import { PhotoForm } from "@/components/modules/photo/PhotoForm";
 import { useFairPhoto } from "@/hooks/fairs/useFairPhoto";
 
 export const FairPhotoNew = () => {
-  const { handleSavePhoto } = useFairPhoto();
+  const { fairID } = useParams();
+  const { handleUploadPhoto } = useFairPhoto(fairID || "");
 
   return (
     <>
@@ -15,7 +18,7 @@ export const FairPhotoNew = () => {
         stickyNoScroll
       />
 
-      <PhotoForm handleSave={handleSavePhoto} />
+      <PhotoForm handleSave={handleUploadPhoto} />
     </>
   );
 };

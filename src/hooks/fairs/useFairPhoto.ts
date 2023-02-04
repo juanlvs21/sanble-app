@@ -1,11 +1,33 @@
+import { useState } from "react";
+
+import { useToast } from "@/hooks/useToast";
+import { uploadFairPhotoRequest } from "@/services";
 import { TPhotographForm } from "@/types/TPhotograph";
 
-export const useFairPhoto = () => {
-  const handleSavePhoto = (data: TPhotographForm) => {
-    console.log(data);
+export const useFairPhoto = (fairID: string) => {
+  const { toast } = useToast();
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleUploadPhoto = async (data: TPhotographForm) => {
+    setIsLoading(true);
+
+    try {
+      const formData = new FormData();
+
+      formData.append("image", data.image);
+      formData.append("description", data.description);
+      formData.append("isCover", `${data.isCover}`);
+
+      const { photograph } = await uploadFairPhotoRequest(fairID, formData);
+    } catch (error) {
+      toast("Error al cargar la fotografía", {
+        type: "error",
+      });
+    }
   };
 
   return {
-    handleSavePhoto,
+    handleUploadPhoto,
+    isLoading,
   };
 };

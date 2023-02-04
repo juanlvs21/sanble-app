@@ -1,4 +1,4 @@
-import { IonNote } from "@ionic/react";
+import { CheckboxChangeEventDetail, IonNote } from "@ionic/react";
 import { FormikHelpers, useFormik } from "formik";
 import { useState } from "react";
 import { FileUploader } from "react-drag-drop-files";
@@ -9,6 +9,7 @@ import { Checkbox } from "@/components/common/forms/Checkbox";
 import { Input } from "@/components/common/forms/Input";
 import { getErrorMessage } from "@/helpers/getFormikErrorMsg";
 import { photoSchema } from "@/helpers/validator/photo";
+import { IonCheckboxCustomEvent } from "@/types/TComponents";
 import { TPhotograph, TPhotographForm } from "@/types/TPhotograph";
 import styles from "./PhotoForm.module.css";
 
@@ -85,7 +86,10 @@ export const PhotoForm = ({
     onSubmit: handleSave,
   });
 
-  // const handleChangeStars = (value: number) => setFieldValue("stars", value);
+  const handleChangeCheck = (
+    event: IonCheckboxCustomEvent<CheckboxChangeEventDetail>
+  ) => setTimeout(() => setFieldValue("isCover", event.detail.checked), 100);
+
   const handleChangeFile = (file: any) => {
     setReviewSrc("");
     setFieldValue("image", file);
@@ -163,10 +167,10 @@ export const PhotoForm = ({
         <Checkbox
           label="Fotografía de perfil"
           name="isCover"
-          onIonChange={handleChange}
+          onIonChange={handleChangeCheck}
           onIonBlur={handleBlur}
           disabled={isSubmitting}
-          value={values.isCover}
+          checked={values.isCover}
           helper={getErrorMessage("isCover", touched, errors)}
           helperIsError
         />
