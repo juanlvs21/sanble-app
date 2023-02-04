@@ -305,7 +305,9 @@ export const FairDetails = () => {
       <ModalPhotos
         trigger={MODAL_PHOTOS_ID}
         photographs={fair?.photographs || []}
-        handleAction={handleGalleryAction}
+        handleAction={
+          user?.uid === fair?.owner.id ? handleGalleryAction : undefined
+        }
       />
       <FairModalMap trigger={MODAL_MAP_ID} fair={fair} isLoading={isLoading} />
       <FairModalStands
