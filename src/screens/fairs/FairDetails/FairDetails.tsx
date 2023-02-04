@@ -263,7 +263,10 @@ export const FairDetails = () => {
                 handleSave={handleSaveReview}
                 isLoading={isSaving || isLoadingReviews}
               />
-              <ReviewsList reviews={reviews} isLoading={isLoadingReviews} />
+              <ReviewsList
+                reviews={reviews}
+                isLoading={isLoadingReviews && !reviews?.length}
+              />
             </section>
           </div>
         </section>
