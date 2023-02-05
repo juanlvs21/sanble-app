@@ -39,14 +39,16 @@ const FairDetailsScreen = lazy(() =>
   }))
 );
 const FairPhotoNewScreen = lazy(() =>
-  import("@/screens/fairs/FairPhotoNew").then(({ FairPhotoNew }) => ({
+  import("@/screens/fairs/photo/FairPhotoNew").then(({ FairPhotoNew }) => ({
     default: FairPhotoNew,
   }))
 );
-const FairPhotoUploadedScreen = lazy(() =>
-  import("@/screens/fairs/FairPhotoUploaded").then(({ FairPhotoUploaded }) => ({
-    default: FairPhotoUploaded,
-  }))
+const FairPhotoSuccessScreen = lazy(() =>
+  import("@/screens/fairs/photo/FairPhotoSuccess").then(
+    ({ FairPhotoSuccess }) => ({
+      default: FairPhotoSuccess,
+    })
+  )
 );
 const StandsListScreen = lazy(() =>
   import("@/screens/stands/StandsList").then(({ StandsList }) => ({
@@ -188,7 +190,7 @@ export const AppRoutes = () => {
           path="/app/ferias/foto"
           element={
             <Suspense fallback={<LoadingSuspense />}>
-              <FairPhotoUploadedScreen />
+              <FairPhotoSuccessScreen />
             </Suspense>
           }
         />

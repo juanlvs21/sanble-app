@@ -5,10 +5,10 @@ import { ImageExtended } from "@/components/common/ImageExtended";
 import { TopBar } from "@/components/common/TopBar";
 import { imageKitURL } from "@/helpers/imageKit";
 import { IoIosArrowBack } from "react-icons/io";
-import styles from "./FairPhotoUploaded.module.css";
+import styles from "./FairPhotoSuccess.module.css";
 import { useEffect } from "react";
 
-export const FairPhotoUploaded = () => {
+export const FairPhotoSuccess = () => {
   const [searchParams] = useSearchParams();
   const { state } = useLocation();
   const navigate = useNavigate();
