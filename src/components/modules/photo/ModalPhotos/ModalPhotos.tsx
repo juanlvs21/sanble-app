@@ -10,7 +10,7 @@ import {
 } from "@ionic/react";
 import { useMemo, useRef, useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
-import { IconType } from "react-icons/lib";
+import { BsFillBookmarkStarFill } from "react-icons/bs";
 import { FiMenu } from "react-icons/fi";
 
 import { Button } from "@/components/common/buttons/Button";
@@ -24,6 +24,12 @@ export type ComponentProps = {
    * photographs list
    */
   photographs: TPhotograph[];
+  /**
+   * Text that is displayed when the photo is isCover: true
+   *
+   * @default "Fotografía Destacada"
+   */
+  isCoverText?: string;
   /**
    * Trigger open modal
    */
@@ -65,6 +71,7 @@ export const ModalPhotos = ({
   photographs,
   trigger,
   handleAction,
+  isCoverText = "Fotografía Destacada",
   ActionIcon = <FiMenu size={24} />,
   slidesPerView = 1,
   className = "",
@@ -162,6 +169,12 @@ export const ModalPhotos = ({
                 <small>
                   {dayjs(photo.creationTime).format("DD MMM hh:mm a")}
                 </small>
+                {photo.isCover && (
+                  <p className={styles.photoDescriptionCover}>
+                    <BsFillBookmarkStarFill size={20} />
+                    {isCoverText}
+                  </p>
+                )}
               </div>
             </IonSlide>
           ))}

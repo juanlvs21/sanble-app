@@ -310,6 +310,7 @@ export const FairDetails = () => {
         handleAction={
           user?.uid === fair?.owner.id ? handleGalleryAction : undefined
         }
+        isCoverText="Fotografía de Perfil"
       />
       <FairModalMap trigger={MODAL_MAP_ID} fair={fair} isLoading={isLoading} />
       <FairModalStands
