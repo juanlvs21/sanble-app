@@ -1,11 +1,11 @@
-.photoUploadedPicture {
+.photoSuccessPicture {
   width: 100%;
   height: calc(100% - 62px);
   margin-top: 62px;
   display: flex;
 }
 
-.photoUploadedImg {
+.photoSuccessImg {
   width: 100%;
   height: 100%;
 }

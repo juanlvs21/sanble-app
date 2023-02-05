@@ -42,10 +42,10 @@ export const FairPhotoSuccess = () => {
       <ImageExtended
         src={`${imageKitURL}${photoName}`}
         alt={photoName}
-        classNamePicture={styles.photoUploadedPicture}
-        className={styles.photoUploadedImg}
+        classNamePicture={styles.photoSuccessPicture}
+        className={styles.photoSuccessImg}
         skeletonProps={{
-          className: styles.photoUploadedImg,
+          className: styles.photoSuccessImg,
         }}
       />
     </>
