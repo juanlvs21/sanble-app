@@ -37,9 +37,13 @@ export type ComponentProps = {
    */
   classNameContent?: string;
   /**
-   * Custom className for content component
+   * Custom className for refresh component
    */
   classNameRefresh?: string;
+  /**
+   * Custom className for infinite scroll component
+   */
+  classNameInfinite?: string;
   /**
    * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
    *
@@ -59,6 +63,7 @@ export const Fetcher = ({
   classNameSection = "",
   classNameContent = "",
   classNameRefresh = "",
+  classNameInfinite = "",
   refreshSpinnerColor = "primary",
   infiniteSpinnerColor = "primary",
   handleRefresh,
@@ -109,7 +114,7 @@ export const Fetcher = ({
           onIonInfinite={infiniteFetch}
           disabled={!handleInfiniteScroll}
           threshold="100px"
-          className={styles.fetcherInfiniteScroll}
+          className={`${styles.fetcherInfiniteScroll} ${classNameInfinite}`}
         >
           <IonInfiniteScrollContent loadingSpinner={undefined} loadingText="">
             <div className={`${styles.infiniteScrollSpinner} infinite-loading`}>

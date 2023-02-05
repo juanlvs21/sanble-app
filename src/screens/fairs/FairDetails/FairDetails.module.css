@@ -242,6 +242,10 @@
   font-size: 12px;
 }
 
+.fairReviewsList {
+  margin-top: 50px;
+}
+
 .fairFloatBtn {
   transition: all 500ms ease-in-out;
 }
@@ -262,6 +266,10 @@
   .fairFetcherSection {
     height: calc(100% - 62px) !important;
     transition: all 500ms ease-in-out;
+  }
+
+  .fairFetcherInfinite {
+    margin-top: -80px;
   }
 
   .fairCoverBg {

@@ -144,6 +144,7 @@ export const FairDetails = () => {
         classNameContent={`${styles.fairFetcherContent} ${
           openCover ? styles.fairCoverOpen : ""
         }`}
+        classNameInfinite={styles.fairFetcherInfinite}
       >
         <div className={styles.fairCoverContainer}>
           {openCover && (
@@ -261,11 +262,12 @@ export const FairDetails = () => {
               <ReviewForm
                 review={review}
                 handleSave={handleSaveReview}
-                isLoading={isSaving || isLoadingReviews}
+                isLoading={isSaving || isLoading}
               />
               <ReviewsList
                 reviews={reviews}
                 isLoading={isLoadingReviews && !reviews?.length}
+                className={styles.fairReviewsList}
               />
             </section>
           </div>
