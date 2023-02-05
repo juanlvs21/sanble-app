@@ -1,0 +1,11 @@
+.photoEditForm {
+  margin: 0;
+  height: 100%;
+}
+
+@media (min-width: 768px) {
+  .photoEditModal {
+    --width: 90%;
+    --height: 80%;
+  }
+}

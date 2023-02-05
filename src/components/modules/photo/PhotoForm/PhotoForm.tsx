@@ -53,18 +53,23 @@ export type ComponentProps = {
    * Form Loading
    */
   isLoading?: boolean;
+  /**
+   * Custom className for form component
+   */
+  className?: string;
 };
 
 export const PhotoForm = ({
   photo,
   isLoading,
   handleSave,
+  className = "",
   fileTypes = ["jpg", "png", "jpeg"],
   fileHoverTitle = "Suelte una fotografía aquí",
   fileMaxSize = 10,
 }: ComponentProps) => {
   const [errorFile, setErrorFile] = useState("");
-  const [reviewSrc, setReviewSrc] = useState("");
+  const [reviewSrc, setReviewSrc] = useState(photo?.url ?? "");
   const {
     handleSubmit,
     handleChange,
@@ -79,6 +84,7 @@ export const PhotoForm = ({
     initialValues: {
       id: photo?.id || "",
       description: photo?.description || "",
+      url: photo?.url || "",
       image: "",
       isCover: photo?.isCover || false,
     },
@@ -105,7 +111,7 @@ export const PhotoForm = ({
 
   return (
     <form
-      className={styles.photoFormContainer}
+      className={`${styles.photoFormContainer} ${className}`}
       onSubmit={handleSubmit}
       onKeyUp={(e) => e.key === "Enter" && handleSubmit()}
     >
@@ -161,6 +167,7 @@ export const PhotoForm = ({
           helper={getErrorMessage("description", touched, errors)}
           maxlength={500}
           max={5}
+          className={styles.photoFormTextarea}
           helperIsError
           textarea
           multiple

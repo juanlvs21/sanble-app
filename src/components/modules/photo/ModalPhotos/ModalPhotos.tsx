@@ -10,12 +10,10 @@ import {
 } from "@ionic/react";
 import { useMemo, useRef, useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
-import { BsFillBookmarkStarFill } from "react-icons/bs";
 import { FiMenu } from "react-icons/fi";
 
 import { Button } from "@/components/common/buttons/Button";
-import { ImageExtended } from "@/components/common/ImageExtended";
-import { dayjs } from "@/helpers/time";
+import { PhotoDescription } from "@/components/modules/photo/PhotoDescription";
 import { TPhotograph } from "@/types/TPhotograph";
 import styles from "./ModalPhotos.module.css";
 
@@ -146,36 +144,13 @@ export const ModalPhotos = ({
           onIonSlideWillChange={handleSlideDidChange}
         >
           {photographs.map((photo, i) => (
-            <IonSlide
-              key={i}
-              className={classNameItem}
-              onClick={handleToggleShowDescription}
-            >
-              <ImageExtended
-                src={photo.url}
-                alt={photo.id}
-                classNamePicture={styles.photoPicture}
-                className={styles.photoImage}
-                skeletonProps={{
-                  className: styles.photoImage,
-                }}
+            <IonSlide key={i} className={classNameItem}>
+              <PhotoDescription
+                photo={photo}
+                isCoverText={isCoverText}
+                showDescription={showDescription}
+                onClick={handleToggleShowDescription}
               />
-              <div
-                className={`${styles.photoDescription} ${
-                  showDescription ? styles.show : ""
-                }`}
-              >
-                <p>{photo.description}</p>
-                <small>
-                  {dayjs(photo.creationTime).format("DD MMM hh:mm a")}
-                </small>
-                {photo.isCover && (
-                  <p className={styles.photoDescriptionCover}>
-                    <BsFillBookmarkStarFill size={20} />
-                    {isCoverText}
-                  </p>
-                )}
-              </div>
             </IonSlide>
           ))}
         </IonSlides>

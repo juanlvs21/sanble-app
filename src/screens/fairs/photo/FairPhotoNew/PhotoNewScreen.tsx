@@ -6,7 +6,7 @@ import { useFairPhoto } from "@/hooks/fairs/useFairPhoto";
 
 export const FairPhotoNew = () => {
   const { fairID } = useParams();
-  const { handleUploadPhoto } = useFairPhoto(fairID || "");
+  const { handleUploadPhoto, isSubmit } = useFairPhoto(fairID || "");
 
   return (
     <>
@@ -18,7 +18,7 @@ export const FairPhotoNew = () => {
         stickyNoScroll
       />
 
-      <PhotoForm handleSave={handleUploadPhoto} />
+      <PhotoForm handleSave={handleUploadPhoto} isLoading={isSubmit} />
     </>
   );
 };

@@ -149,6 +149,23 @@ ion-item.inputItem.textareItem {
 ion-item.inputItem.textareItem::part(native),
 ion-item.inputItem.textareItem textarea {
   height: auto;
+  overflow-y: auto;
+}
+
+ion-item.inputItem.textareItem {
+  --padding-top: 0;
+  --padding-bottom: 0;
+  --padding-start: 0;
+  --padding-end: 0;
+}
+
+ion-item.inputItem.textareItem::part(native) {
+  --ion-safe-area-right: 0;
+  --inner-padding-end: 0;
+}
+
+ion-item.inputItem.textareItem textarea {
+  padding: 10px;
 }
 
 ion-item.inputItem.inputCheckbox {
@@ -241,6 +258,10 @@ form {
 
 .dataListContainer.col-1 {
   grid-template-columns: repeat(1, minmax(0, 1fr));
+}
+
+.Toastify {
+  z-index: 9999999;
 }
 
 .Toastify__toast {

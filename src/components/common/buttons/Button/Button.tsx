@@ -38,6 +38,10 @@ export type ComponentProps = TButton & {
    * Spinner online styles
    */
   spinnerStyle?: CSSProperties;
+  /**
+   * Element identifier
+   */
+  id?: string;
 };
 
 export const Button = ({

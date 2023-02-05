@@ -99,3 +99,27 @@ export const uploadFairPhotoRequest = (fairID: string, formData: FormData) =>
       }
     )
     .then(({ data }) => data.data);
+
+export const updateFairPhotoRequest = (
+  fairID: string,
+  photoID: string,
+  formData: FormData
+) =>
+  api
+    .post<AxiosResponse<{ photograph: TPhotograph }>>(
+      `${URL_PREFIX}/${fairID}/photograph/${photoID}`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    )
+    .then(({ data }) => data.data);
+
+export const getFairPhotoRequest = (fairID: string, photoID: string) =>
+  api
+    .get<AxiosResponse<{ photograph: TPhotograph }>>(
+      `${URL_PREFIX}/${fairID}/photograph/${photoID}`
+    )
+    .then(({ data }) => data.data);

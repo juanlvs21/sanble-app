@@ -10,7 +10,4 @@ export type TPhotographBase = {
 
 export type TPhotograph = Omit<TPhotographBase, "image">;
 
-export type TPhotographForm = Omit<
-  TPhotographBase,
-  "creationTime" | "url" | "name"
->;
+export type TPhotographForm = Omit<TPhotographBase, "creationTime" | "name">;
