@@ -16,7 +16,7 @@ export const NearYou = () => {
       <TopBar title="Cerca de ti" startUser stickyNoScroll />
       <section className={styles.mapSection}>
         <Map
-          markers={prepareListMapPin(list)}
+          markers={prepareListMapPin(list, "/app/cerca")}
           isLoading={isLoading}
           classNameSpinner={`${styles.nearYouSpinner} ${
             isCapacitor ? styles.isCapacitor : ""

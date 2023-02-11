@@ -113,6 +113,7 @@ export const FairDetails = () => {
       <TopBar
         title="Detalles"
         startGoBack
+        startGoBackUrl={state?.goBackUrl || "/app/ferias"}
         end={
           <ButtonFav
             isLoading={loadingSetFav}

@@ -21,7 +21,7 @@ export const FairCardBest = ({ fair }: ComponentProps) => {
   return (
     <Link
       to={`/app/ferias/${fair.id}`}
-      state={{ fairID: fair.id, fairName: fair.name }}
+      state={{ fairID: fair.id, fairName: fair.name, goBackUrl: "/app" }}
     >
       <article
         className={`${styles.fairBestCard} animate__animated animate__fadeIn`}

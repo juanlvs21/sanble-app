@@ -16,12 +16,13 @@ export const useFairsListGeo = () => {
     handleLoad();
   }, []);
 
-  const prepareListMapPin = (list: TFairGeo[]) =>
+  const prepareListMapPin = (list: TFairGeo[], goBackUrl?: string) =>
     formatFairsMarks(list || [], (id, name) =>
       navigate(`/app/ferias/${id}`, {
         state: {
           fairID: id,
           fairName: name,
+          goBackUrl,
         },
       })
     );

@@ -1,0 +1,14 @@
+.emptyAlertContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  height: 100%;
+  padding: 20px;
+}
+
+.emptyAlertContainer svg {
+  color: var(--ion-color-danger);
+}

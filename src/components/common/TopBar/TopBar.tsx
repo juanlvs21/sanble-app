@@ -39,6 +39,10 @@ export type ComponentProps = {
    */
   startGoBack?: boolean;
   /**
+   * Url that you will navigate to when using the back button. If this key is not used it will default to the previous screen.
+   */
+  startGoBackUrl?: string;
+  /**
    * If true, an infinite progressbar representing the state of loading will be displayed.
    */
   isLoading?: boolean;
@@ -60,6 +64,7 @@ export const TopBar = ({
   title,
   startUser,
   startGoBack,
+  startGoBackUrl,
   start,
   end,
   isLoading,
@@ -71,6 +76,9 @@ export const TopBar = ({
 }: ComponentProps) => {
   const navigate = useNavigate();
   const { scrollTop, isCapacitor } = useApp();
+
+  const navigateToBack = () =>
+    startGoBackUrl ? navigate(startGoBackUrl) : navigate(-1);
 
   return (
     <IonToolbar
@@ -94,7 +102,7 @@ export const TopBar = ({
           ) : (
             <>
               {startGoBack ? (
-                <Button onClick={() => navigate(-1)}>
+                <Button onClick={navigateToBack}>
                   <IoIosArrowBack size={24} />
                 </Button>
               ) : (

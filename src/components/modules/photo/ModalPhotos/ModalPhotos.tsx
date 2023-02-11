@@ -13,6 +13,7 @@ import { AiOutlineClose } from "react-icons/ai";
 import { FiMenu } from "react-icons/fi";
 
 import { Button } from "@/components/common/buttons/Button";
+import { EmptyAlert } from "@/components/common/EmptyAlert";
 import { PhotoDescription } from "@/components/modules/photo/PhotoDescription";
 import { TPhotograph } from "@/types/TPhotograph";
 import styles from "./ModalPhotos.module.css";
@@ -138,22 +139,26 @@ export const ModalPhotos = ({
         </IonToolbar>
       </IonHeader>
       <IonContent>
-        <IonSlides
-          options={slideOpts}
-          className={styles.photoContainer}
-          onIonSlideWillChange={handleSlideDidChange}
-        >
-          {photographs.map((photo, i) => (
-            <IonSlide key={i} className={classNameItem}>
-              <PhotoDescription
-                photo={photo}
-                isCoverText={isCoverText}
-                showDescription={showDescription}
-                onClick={handleToggleShowDescription}
-              />
-            </IonSlide>
-          ))}
-        </IonSlides>
+        {photographs.length ? (
+          <IonSlides
+            options={slideOpts}
+            className={styles.photoContainer}
+            onIonSlideWillChange={handleSlideDidChange}
+          >
+            {photographs.map((photo, i) => (
+              <IonSlide key={i} className={classNameItem}>
+                <PhotoDescription
+                  photo={photo}
+                  isCoverText={isCoverText}
+                  showDescription={showDescription}
+                  onClick={handleToggleShowDescription}
+                />
+              </IonSlide>
+            ))}
+          </IonSlides>
+        ) : (
+          <EmptyAlert message={`No hay fotografías publicadas`} />
+        )}
       </IonContent>
     </IonModal>
   );

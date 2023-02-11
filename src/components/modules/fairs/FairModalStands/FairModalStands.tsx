@@ -10,6 +10,7 @@ import { useRef } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 
 import { Button } from "@/components/common/buttons/Button";
+import { EmptyAlert } from "@/components/common/EmptyAlert";
 import { Fetcher } from "@/components/common/Fetcher";
 import { Skeleton } from "@/components/common/Skeleton";
 import { StandCardList } from "@/components/modules/stands/StandCardList";
@@ -70,29 +71,33 @@ export const FairModalStands = ({
         </IonToolbar>
       </IonHeader>
       <IonContent>
-        <Fetcher
-          handleRefresh={handleRefresh}
-          handleInfiniteScroll={handleInfinite}
-          classNameContent={styles.fairStandsModalFetcherContent}
-          classNameSection={styles.fairStandsModalFetcherSection}
-          classNameRefresh={styles.fairStandsModalRefresh}
-        >
-          <div className="dataListContainer col-1">
-            {isLoading && !stands.length
-              ? Array(5)
-                  .fill(0)
-                  .map((_, i) => (
-                    <Skeleton
-                      key={i}
-                      height={130}
-                      className={styles.fairStandsCardSkeleton}
-                    />
-                  ))
-              : stands.map((stand) => (
-                  <StandCardList key={stand.id} stand={stand} />
-                ))}
-          </div>
-        </Fetcher>
+        {!stands.length && !isLoading ? (
+          <EmptyAlert message={`No hay Stands participantes`} />
+        ) : (
+          <Fetcher
+            handleRefresh={handleRefresh}
+            handleInfiniteScroll={handleInfinite}
+            classNameContent={styles.fairStandsModalFetcherContent}
+            classNameSection={styles.fairStandsModalFetcherSection}
+            classNameRefresh={styles.fairStandsModalRefresh}
+          >
+            <div className="dataListContainer col-1">
+              {isLoading && !stands.length
+                ? Array(5)
+                    .fill(0)
+                    .map((_, i) => (
+                      <Skeleton
+                        key={i}
+                        height={130}
+                        className={styles.fairStandsCardSkeleton}
+                      />
+                    ))
+                : stands.map((stand) => (
+                    <StandCardList key={stand.id} stand={stand} />
+                  ))}
+            </div>
+          </Fetcher>
+        )}
       </IonContent>
     </IonModal>
   );
