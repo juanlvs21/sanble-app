@@ -6,7 +6,7 @@ import { TResponseList } from "@/types/THttp";
 import { TGetListParams } from "@/types/TRequest";
 import { TReview, TReviewForm } from "@/types/TReview";
 import { TStand } from "@/types/TStand";
-import { TPhotograph } from "@/types/TPhotograph";
+import { TPhotograph, TPhotographDetails } from "@/types/TPhotograph";
 
 const URL_PREFIX = "/fairs";
 
@@ -89,7 +89,7 @@ export const saveFairReviewRequest = (fairID: string, data: TReviewForm) =>
 
 export const uploadFairPhotoRequest = (fairID: string, formData: FormData) =>
   api
-    .post<AxiosResponse<{ photograph: TPhotograph }>>(
+    .post<AxiosResponse<TPhotographDetails>>(
       `${URL_PREFIX}/${fairID}/photograph`,
       formData,
       {
@@ -106,7 +106,7 @@ export const updateFairPhotoRequest = (
   formData: FormData
 ) =>
   api
-    .post<AxiosResponse<{ photograph: TPhotograph }>>(
+    .post<AxiosResponse<TPhotographDetails>>(
       `${URL_PREFIX}/${fairID}/photograph/${photoID}`,
       formData,
       {
@@ -119,7 +119,7 @@ export const updateFairPhotoRequest = (
 
 export const getFairPhotoRequest = (fairID: string, photoID: string) =>
   api
-    .get<AxiosResponse<{ photograph: TPhotograph }>>(
+    .get<AxiosResponse<TPhotographDetails>>(
       `${URL_PREFIX}/${fairID}/photograph/${photoID}`
     )
     .then(({ data }) => data.data);

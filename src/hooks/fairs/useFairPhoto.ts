@@ -7,21 +7,21 @@ import {
   updateFairPhotoRequest,
   uploadFairPhotoRequest,
 } from "@/services";
-import { TPhotograph, TPhotographForm } from "@/types/TPhotograph";
+import { TPhotographDetails, TPhotographForm } from "@/types/TPhotograph";
 
 export const useFairPhoto = (fairID: string) => {
   const { toast } = useToast();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [isSubmit, setIsSubmit] = useState(false);
-  const [details, setDetails] = useState<TPhotograph>();
+  const [details, setDetails] = useState<TPhotographDetails>();
 
   const handleGetPhoto = async (photoID: string) => {
     setIsLoading(true);
 
     try {
-      const { photograph } = await getFairPhotoRequest(fairID, photoID);
-      setDetails(photograph);
+      const res = await getFairPhotoRequest(fairID, photoID);
+      setDetails(res);
     } catch (error) {
       toast(error, {
         type: "error",
@@ -47,7 +47,7 @@ export const useFairPhoto = (fairID: string) => {
         type: "success",
       });
 
-      navigate(`/app/ferias/${fairID}foto?n=${photograph.id}`);
+      navigate(`/app/ferias/${fairID}/foto/${photograph.id}`);
     } catch (error) {
       toast(error, {
         type: "error",

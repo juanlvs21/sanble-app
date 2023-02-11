@@ -18,6 +18,7 @@ import { PhotoDescription } from "@/components/modules/photo/PhotoDescription";
 import { PhotoForm } from "@/components/modules/photo/PhotoForm";
 import { useFairPhoto } from "@/hooks/fairs/useFairPhoto";
 import styles from "./FairPhotoDetails.module.css";
+import { useUser } from "@/hooks/useUser";
 
 const MODAL_PHOTO_DESCRIPTION_ID = "photo-description-open-modal";
 
@@ -27,6 +28,7 @@ export const FairPhotoDetails = () => {
   const modalRef = useRef<HTMLIonModalElement>(null);
   const { details, handleGetPhoto, handleUpdatePhoto, isLoading, isSubmit } =
     useFairPhoto(fairID || "");
+  const { user } = useUser();
   const [showDescription, setShowDescription] = useState(true);
 
   useEffect(() => {
@@ -53,13 +55,15 @@ export const FairPhotoDetails = () => {
           </Button>
         }
         end={
-          <Button
-            isLoading={isLoading}
-            spinnerColor="primary"
-            id={MODAL_PHOTO_DESCRIPTION_ID}
-          >
-            <FiEdit2 size={24} />
-          </Button>
+          user?.uid === details?.ownerID ? (
+            <Button
+              isLoading={isLoading}
+              spinnerColor="primary"
+              id={MODAL_PHOTO_DESCRIPTION_ID}
+            >
+              <FiEdit2 size={24} />
+            </Button>
+          ) : undefined
         }
         titleSize={24}
         sticky
@@ -67,7 +71,7 @@ export const FairPhotoDetails = () => {
       />
 
       <PhotoDescription
-        photo={details}
+        photo={details?.photograph}
         isCoverText="Fotografía de Perfil"
         showDescription={showDescription}
         onClick={handleToggleShowDescription}
@@ -84,7 +88,8 @@ export const FairPhotoDetails = () => {
             <IonButtons slot="end">
               <IonButton
                 onClick={() => modalRef.current?.dismiss()}
-                color="secondary"
+                fill="clear"
+                color="medium"
               >
                 <AiOutlineClose size={24} />
               </IonButton>
@@ -95,7 +100,7 @@ export const FairPhotoDetails = () => {
           <PhotoForm
             handleSave={handleUpdatePhoto}
             className={styles.photoEditForm}
-            photo={details}
+            photo={details?.photograph}
             isLoading={isSubmit}
           />
         </IonContent>
