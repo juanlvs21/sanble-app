@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import { useToast } from "@/hooks/useToast";
 import {
+  deleteFairPhotoRequest,
   getFairPhotoRequest,
   updateFairPhotoRequest,
   uploadFairPhotoRequest,
@@ -90,6 +91,28 @@ export const useFairPhoto = (fairID: string) => {
     }
   };
 
+  const handleDeletePhoto = async (
+    photoID: string,
+    callbackSucces: () => void
+  ) => {
+    callbackSucces();
+    // setIsLoading(true);
+
+    // try {
+    //   await deleteFairPhotoRequest(fairID, photoID);
+    //   toast("Fotografía eliminada con éxito", {
+    //     type: "success",
+    //   });
+    //   callbackSucces();
+    // } catch (error) {
+    //   toast(error, {
+    //     type: "error",
+    //   });
+    // } finally {
+    //   setIsLoading(false);
+    // }
+  };
+
   return {
     isLoading,
     isSubmit,
@@ -97,5 +120,6 @@ export const useFairPhoto = (fairID: string) => {
     handleUploadPhoto,
     handleGetPhoto,
     handleUpdatePhoto,
+    handleDeletePhoto,
   };
 };

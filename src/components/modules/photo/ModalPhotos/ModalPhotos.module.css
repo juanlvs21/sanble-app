@@ -7,3 +7,7 @@
 .photoContainer {
   height: 100%;
 }
+
+.photoModalSpinner {
+  z-index: 1000000;
+}

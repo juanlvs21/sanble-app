@@ -3,6 +3,7 @@ import {
   IonFabButton,
   IonFabList,
   useIonActionSheet,
+  useIonAlert,
 } from "@ionic/react";
 import { useState } from "react";
 import { AiOutlineInfoCircle } from "react-icons/ai";
@@ -32,6 +33,7 @@ import { useFairStands } from "@/hooks/fairs/useFairStands";
 import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 import { useUser } from "@/hooks/useUser";
 import styles from "./FairDetails.module.css";
+import { useFairPhoto } from "@/hooks/fairs/useFairPhoto";
 
 const MODAL_INFO_ID = "fair-info-open-modal";
 const MODAL_MAP_ID = "fair-map-open-modal";
@@ -41,6 +43,7 @@ const MODAL_PHOTOS_ID = "fair-photos-open-modal";
 export const FairDetails = () => {
   const navigate = useNavigate();
   const [present] = useIonActionSheet();
+  const [presentAlert] = useIonAlert();
   const { fairID } = useParams();
   const { state } = useLocation();
   const { user, loadingSetFav, handleSetFavoriteFair } = useUser();
@@ -51,6 +54,7 @@ export const FairDetails = () => {
     isLoading,
     isSaving,
     isLoadingReviews,
+    handleLoadAll,
     handleSaveReview,
     handleRefreshReviews,
     handleInfiniteReviews,
@@ -61,6 +65,9 @@ export const FairDetails = () => {
     handleLoad: handleRefreshStands,
     handleInfinite: handleInfiniteStands,
   } = useFairStands(fairID || "");
+  const { handleDeletePhoto, isLoading: isLoadingPhoto } = useFairPhoto(
+    fairID || ""
+  );
   const [openCover, setOpenCover] = useState(false);
 
   useDocumentTitle(
@@ -80,22 +87,48 @@ export const FairDetails = () => {
       setTimeout(() => navigate(path), 200);
     };
 
-    present({
-      header: "Acciones",
-      buttons: [
-        {
-          text: "Publicar Nueva Fotografía",
-          handler: () => navPhoto(`/app/ferias/${fairID}/foto`),
-        },
+    const buttons = [
+      {
+        text: "Publicar Nueva Fotografía",
+        cssClass: "",
+        handler: () => navPhoto(`/app/ferias/${fairID}/foto`),
+      },
+    ];
+
+    if (fair?.photographs.length) {
+      buttons.push(
         {
           text: "Editar Fotografía",
+          cssClass: "",
           handler: () => navPhoto(`/app/ferias/${fairID}/foto/${photoID}`),
         },
         {
           text: "Eliminar Fotografía",
           cssClass: "danger-color",
-          handler: () => alert(`Eliminar Fotografía: ${photoID}`),
-        },
+          handler: () =>
+            presentAlert({
+              header:
+                "¿Estás seguro de eliminar permanentemente esta fotografía?",
+              buttons: [
+                {
+                  text: "Cancelar",
+                  role: "cancel",
+                },
+                {
+                  text: "Eliminar",
+                  role: "confirm",
+                  handler: () => handleDeletePhoto(photoID, handleLoadAll),
+                },
+              ],
+            }),
+        }
+      );
+    }
+
+    present({
+      header: "Acciones",
+      buttons: [
+        ...buttons,
         {
           text: "Cancelar",
           cssClass: "danger-color",
@@ -308,6 +341,7 @@ export const FairDetails = () => {
       <ModalPhotos
         trigger={MODAL_PHOTOS_ID}
         photographs={fair?.photographs || []}
+        isLoading={isLoadingPhoto}
         handleAction={
           user?.uid === fair?.owner.id ? handleGalleryAction : undefined
         }

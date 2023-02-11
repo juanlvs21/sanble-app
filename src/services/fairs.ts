@@ -123,3 +123,10 @@ export const getFairPhotoRequest = (fairID: string, photoID: string) =>
       `${URL_PREFIX}/${fairID}/photograph/${photoID}`
     )
     .then(({ data }) => data.data);
+
+export const deleteFairPhotoRequest = (fairID: string, photoID: string) =>
+  api
+    .delete<AxiosResponse<{ photographID: string }>>(
+      `${URL_PREFIX}/${fairID}/photograph/${photoID}`
+    )
+    .then(({ data }) => data.data);

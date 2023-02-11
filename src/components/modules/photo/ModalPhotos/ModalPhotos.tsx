@@ -14,6 +14,7 @@ import { FiMenu } from "react-icons/fi";
 
 import { Button } from "@/components/common/buttons/Button";
 import { EmptyAlert } from "@/components/common/EmptyAlert";
+import { SpinnerFullScreen } from "@/components/common/loaders/SpinnerFullScreen";
 import { PhotoDescription } from "@/components/modules/photo/PhotoDescription";
 import { TPhotograph } from "@/types/TPhotograph";
 import styles from "./ModalPhotos.module.css";
@@ -57,6 +58,10 @@ export type ComponentProps = {
    */
   ActionIcon?: JSX.Element;
   /**
+   * Component Loading
+   */
+  isLoading?: boolean;
+  /**
    * Custom className component
    */
   className?: string;
@@ -67,9 +72,10 @@ export type ComponentProps = {
 };
 
 export const ModalPhotos = ({
+  handleAction,
   photographs,
   trigger,
-  handleAction,
+  isLoading,
   isCoverText = "Fotografía Destacada",
   ActionIcon = <FiMenu size={24} />,
   slidesPerView = 1,
@@ -117,6 +123,11 @@ export const ModalPhotos = ({
       className={`${styles.photoModal} ${className}`}
       onWillPresent={handleModalWillPresent}
     >
+      <SpinnerFullScreen
+        show={Boolean(isLoading)}
+        borderRadius
+        className={styles.photoModalSpinner}
+      />
       <IonHeader>
         <IonToolbar>
           {handleAction && (

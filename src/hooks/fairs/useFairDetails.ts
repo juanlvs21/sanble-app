@@ -27,18 +27,12 @@ export const useFairDetails = (fairID: string) => {
   );
   const [limitReviews, setLimitReviews] = useState(DEFAULT_LIMIT_REVIEWS);
 
-  useEffect(() => {
-    handleLoadDetails();
-    handleLoadReviews();
-  }, []);
-
   const handleLoadDetails = async () => {
     setIsLoading(true);
-
     try {
       const fairRes = await getFairDetailsRequest(fairID);
       setFair(fairRes);
-    } catch (error: any) {
+    } catch (error) {
       toast("Error al cargar informacion de la feria", {
         type: "error",
       });
@@ -108,6 +102,15 @@ export const useFairDetails = (fairID: string) => {
     });
   };
 
+  const handleLoadAll = () => {
+    handleLoadDetails();
+    handleLoadReviews();
+  };
+
+  useEffect(() => {
+    handleLoadAll();
+  }, []);
+
   return {
     fair,
     review,
@@ -115,6 +118,7 @@ export const useFairDetails = (fairID: string) => {
     isSaving,
     isLoading,
     isLoadingReviews,
+    handleLoadAll,
     handleLoadDetails,
     handleLoadReviews,
     handleRefreshReviews,
