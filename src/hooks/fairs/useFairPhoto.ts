@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { useToast } from "@/hooks/useToast";
@@ -8,21 +8,28 @@ import {
   updateFairPhotoRequest,
   uploadFairPhotoRequest,
 } from "@/services";
-import { TPhotographDetails, TPhotographForm } from "@/types/TPhotograph";
+import { TPhotograph, TPhotographForm } from "@/types/TPhotograph";
 
 export const useFairPhoto = (fairID: string) => {
   const { toast } = useToast();
   const navigate = useNavigate();
+  const modalRef = useRef<HTMLIonModalElement>(null);
+  const [photograph, setPhotograph] = useState<TPhotograph>();
+  const [ownerID, setOwnerID] = useState<string>();
   const [isLoading, setIsLoading] = useState(false);
   const [isSubmit, setIsSubmit] = useState(false);
-  const [details, setDetails] = useState<TPhotographDetails>();
+  const [isChangingPhoto, setIsChangingPhoto] = useState(false);
 
   const handleGetPhoto = async (photoID: string) => {
     setIsLoading(true);
 
     try {
-      const res = await getFairPhotoRequest(fairID, photoID);
-      setDetails(res);
+      const { photograph, ownerID } = await getFairPhotoRequest(
+        fairID,
+        photoID
+      );
+      setPhotograph(photograph);
+      setOwnerID(ownerID);
     } catch (error) {
       toast(error, {
         type: "error",
@@ -67,21 +74,21 @@ export const useFairPhoto = (fairID: string) => {
       formData.append("description", data.description);
       formData.append("isCover", `${data.isCover}`);
 
-      if (data.image) {
-        formData.append("image", data.image);
-      }
+      if (data.image) formData.append("image", data.image);
 
-      const { photograph } = await updateFairPhotoRequest(
-        fairID,
-        data.id,
-        formData
-      );
+      const { photograph: photographRes, ownerID } =
+        await updateFairPhotoRequest(fairID, data.id, formData);
 
       toast("Fotografía actualizada con éxito", {
         type: "success",
       });
 
-      await handleGetPhoto(photograph.id);
+      setPhotograph(photographRes);
+      setOwnerID(ownerID);
+
+      if (photograph?.url !== photographRes.url) {
+        setIsChangingPhoto(true);
+      }
     } catch (error) {
       toast(error, {
         type: "error",
@@ -113,10 +120,23 @@ export const useFairPhoto = (fairID: string) => {
     // }
   };
 
+  useEffect(() => {
+    if (!isSubmit && modalRef?.current) {
+      modalRef?.current?.dismiss();
+    }
+  }, [isSubmit]);
+
+  useEffect(() => {
+    if (isChangingPhoto) setIsChangingPhoto(false);
+  }, [isChangingPhoto]);
+
   return {
+    modalRef,
     isLoading,
     isSubmit,
-    details,
+    isChangingPhoto,
+    photograph,
+    ownerID,
     handleUploadPhoto,
     handleGetPhoto,
     handleUpdatePhoto,

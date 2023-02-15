@@ -66,6 +66,10 @@
   margin-top: 50px;
 }
 
+.photoFormSpinner {
+  border-radius: 0;
+}
+
 @media (min-width: 768px) {
   .photoFormContainer {
     padding: 90px;

@@ -6,7 +6,7 @@ import {
   IonModal,
   IonToolbar,
 } from "@ionic/react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import { FiEdit2 } from "react-icons/fi";
 import { IoIosArrowBack } from "react-icons/io";
@@ -17,17 +17,25 @@ import { TopBar } from "@/components/common/TopBar";
 import { PhotoDescription } from "@/components/modules/photo/PhotoDescription";
 import { PhotoForm } from "@/components/modules/photo/PhotoForm";
 import { useFairPhoto } from "@/hooks/fairs/useFairPhoto";
-import styles from "./FairPhotoDetails.module.css";
 import { useUser } from "@/hooks/useUser";
+import styles from "./FairPhotoDetails.module.css";
+import { SpinnerFullScreen } from "@/components/common/loaders/SpinnerFullScreen";
 
 const MODAL_PHOTO_DESCRIPTION_ID = "photo-description-open-modal";
 
 export const FairPhotoDetails = () => {
   const { fairID, photoID } = useParams();
   const navigate = useNavigate();
-  const modalRef = useRef<HTMLIonModalElement>(null);
-  const { details, handleGetPhoto, handleUpdatePhoto, isLoading, isSubmit } =
-    useFairPhoto(fairID || "");
+  const {
+    modalRef,
+    photograph,
+    ownerID,
+    isLoading,
+    isSubmit,
+    isChangingPhoto,
+    handleUpdatePhoto,
+    handleGetPhoto,
+  } = useFairPhoto(fairID || "");
   const { user } = useUser();
   const [showDescription, setShowDescription] = useState(true);
 
@@ -55,15 +63,18 @@ export const FairPhotoDetails = () => {
           </Button>
         }
         end={
-          user?.uid === details?.ownerID ? (
-            <Button
-              isLoading={isLoading}
-              spinnerColor="primary"
-              id={MODAL_PHOTO_DESCRIPTION_ID}
-            >
-              <FiEdit2 size={24} />
-            </Button>
-          ) : undefined
+          <>
+            {user?.uid === ownerID && (
+              <Button
+                isLoading={isLoading}
+                spinnerColor="primary"
+                id={MODAL_PHOTO_DESCRIPTION_ID}
+                className="animate__animated animate__fadeIn"
+              >
+                <FiEdit2 size={24} />
+              </Button>
+            )}
+          </>
         }
         titleSize={24}
         sticky
@@ -71,40 +82,50 @@ export const FairPhotoDetails = () => {
       />
 
       <PhotoDescription
-        photo={details?.photograph}
+        photo={photograph}
         isCoverText="Fotografía de Perfil"
         showDescription={showDescription}
-        onClick={handleToggleShowDescription}
-        isLoading={isLoading}
+        onClick={
+          !isLoading && !isSubmit ? handleToggleShowDescription : undefined
+        }
+        isLoading={isLoading || isChangingPhoto}
+        className="animate__animated animate__fadeIn"
       />
 
-      <IonModal
-        ref={modalRef}
-        trigger={MODAL_PHOTO_DESCRIPTION_ID}
-        className={styles.photoEditModal}
-      >
-        <IonHeader>
-          <IonToolbar>
-            <IonButtons slot="end">
-              <IonButton
-                onClick={() => modalRef.current?.dismiss()}
-                fill="clear"
-                color="medium"
-              >
-                <AiOutlineClose size={24} />
-              </IonButton>
-            </IonButtons>
-          </IonToolbar>
-        </IonHeader>
-        <IonContent>
-          <PhotoForm
-            handleSave={handleUpdatePhoto}
-            className={styles.photoEditForm}
-            photo={details?.photograph}
-            isLoading={isSubmit}
+      {user?.uid === ownerID && (
+        <IonModal
+          ref={modalRef}
+          trigger={MODAL_PHOTO_DESCRIPTION_ID}
+          className={styles.photoEditModal}
+          canDismiss={!isSubmit}
+        >
+          <IonHeader>
+            <IonToolbar>
+              <IonButtons slot="end">
+                <IonButton
+                  onClick={() => modalRef.current?.dismiss()}
+                  fill="clear"
+                  color="medium"
+                >
+                  <AiOutlineClose size={24} />
+                </IonButton>
+              </IonButtons>
+            </IonToolbar>
+          </IonHeader>
+          <IonContent>
+            <PhotoForm
+              handleSave={handleUpdatePhoto}
+              className={styles.photoEditForm}
+              photo={photograph}
+            />
+          </IonContent>
+
+          <SpinnerFullScreen
+            show={isLoading || isSubmit}
+            className={styles.photoEditFormSpinner}
           />
-        </IonContent>
-      </IonModal>
+        </IonModal>
+      )}
     </>
   );
 };

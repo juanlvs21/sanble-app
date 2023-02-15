@@ -19,12 +19,7 @@ export const errorsMessage = (errors: any) => {
         messageArray.push(err.msg);
       });
     }
-    if (getStatusCode(errors.response) == 401) {
-      if (errors.response.data?.message) {
-        messageArray.push(errors.response.data?.message);
-      }
-    }
-    if (getStatusCode(errors.response) == 400) {
+    if ([400, 401, 404].includes(getStatusCode(errors.response))) {
       if (errors.response.data?.message) {
         messageArray.push(errors.response.data?.message);
       }

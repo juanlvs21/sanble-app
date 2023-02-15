@@ -3,6 +3,10 @@
   height: 100%;
 }
 
+.photoEditFormSpinner {
+  z-index: 9999999;
+}
+
 @media (min-width: 768px) {
   .photoEditModal {
     --width: 90%;

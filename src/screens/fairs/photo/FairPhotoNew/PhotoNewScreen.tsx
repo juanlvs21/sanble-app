@@ -1,5 +1,6 @@
 import { useParams } from "react-router-dom";
 
+import { SpinnerFullScreen } from "@/components/common/loaders/SpinnerFullScreen";
 import { TopBar } from "@/components/common/TopBar";
 import { PhotoForm } from "@/components/modules/photo/PhotoForm";
 import { useFairPhoto } from "@/hooks/fairs/useFairPhoto";
@@ -19,6 +20,7 @@ export const FairPhotoNew = () => {
       />
 
       <PhotoForm handleSave={handleUploadPhoto} isLoading={isSubmit} />
+      <SpinnerFullScreen show={Boolean(isSubmit)} />
     </>
   );
 };
