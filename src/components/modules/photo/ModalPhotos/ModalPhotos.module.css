@@ -10,4 +10,5 @@
 
 .photoModalSpinner {
   z-index: 1000000;
+  border-radius: 0;
 }

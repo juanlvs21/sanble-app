@@ -19,6 +19,7 @@ export const useFairPhoto = (fairID: string) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isSubmit, setIsSubmit] = useState(false);
   const [isChangingPhoto, setIsChangingPhoto] = useState(false);
+  const [isDeletingPhoto, setIsDeletingPhoto] = useState(false);
 
   const handleGetPhoto = async (photoID: string) => {
     setIsLoading(true);
@@ -102,22 +103,22 @@ export const useFairPhoto = (fairID: string) => {
     photoID: string,
     callbackSucces: () => void
   ) => {
-    callbackSucces();
-    // setIsLoading(true);
+    setIsLoading(true);
 
-    // try {
-    //   await deleteFairPhotoRequest(fairID, photoID);
-    //   toast("Fotografía eliminada con éxito", {
-    //     type: "success",
-    //   });
-    //   callbackSucces();
-    // } catch (error) {
-    //   toast(error, {
-    //     type: "error",
-    //   });
-    // } finally {
-    //   setIsLoading(false);
-    // }
+    try {
+      await deleteFairPhotoRequest(fairID, photoID);
+      toast("Fotografía eliminada con éxito", {
+        type: "success",
+      });
+      setIsDeletingPhoto(true);
+      callbackSucces();
+    } catch (error) {
+      toast(error, {
+        type: "error",
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -127,14 +128,19 @@ export const useFairPhoto = (fairID: string) => {
   }, [isSubmit]);
 
   useEffect(() => {
-    if (isChangingPhoto) setIsChangingPhoto(false);
+    if (isChangingPhoto) setIsDeletingPhoto(false);
   }, [isChangingPhoto]);
+
+  useEffect(() => {
+    if (isDeletingPhoto) setIsDeletingPhoto(false);
+  }, [isDeletingPhoto]);
 
   return {
     modalRef,
     isLoading,
     isSubmit,
     isChangingPhoto,
+    isDeletingPhoto,
     photograph,
     ownerID,
     handleUploadPhoto,

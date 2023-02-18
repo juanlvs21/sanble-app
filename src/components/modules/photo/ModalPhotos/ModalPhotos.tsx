@@ -150,10 +150,10 @@ export const ModalPhotos = ({
         </IonToolbar>
       </IonHeader>
       <IonContent>
-        {photographs.length ? (
+        {photographs.length && !isLoading && (
           <IonSlides
             options={slideOpts}
-            className={styles.photoContainer}
+            className={`${styles.photoContainer} animate__animated animate__fadeIn`}
             onIonSlideWillChange={handleSlideDidChange}
           >
             {photographs.map((photo, i) => (
@@ -167,8 +167,12 @@ export const ModalPhotos = ({
               </IonSlide>
             ))}
           </IonSlides>
-        ) : (
-          <EmptyAlert message={`No hay fotografías publicadas`} />
+        )}
+        {!photographs.length && !isLoading && (
+          <EmptyAlert
+            message={`No hay fotografías publicadas`}
+            className="animate__animated animate__fadeIn"
+          />
         )}
       </IonContent>
     </IonModal>

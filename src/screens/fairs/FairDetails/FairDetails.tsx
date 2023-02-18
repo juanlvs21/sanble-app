@@ -65,9 +65,11 @@ export const FairDetails = () => {
     handleLoad: handleRefreshStands,
     handleInfinite: handleInfiniteStands,
   } = useFairStands(fairID || "");
-  const { handleDeletePhoto, isLoading: isLoadingPhoto } = useFairPhoto(
-    fairID || ""
-  );
+  const {
+    handleDeletePhoto,
+    isLoading: isLoadingPhoto,
+    isDeletingPhoto,
+  } = useFairPhoto(fairID || "");
   const [openCover, setOpenCover] = useState(false);
 
   useDocumentTitle(
@@ -117,7 +119,11 @@ export const FairDetails = () => {
                 {
                   text: "Eliminar",
                   role: "confirm",
-                  handler: () => handleDeletePhoto(photoID, handleLoadAll),
+                  handler: () =>
+                    handleDeletePhoto(photoID, () => {
+                      if (handleDismiss) handleDismiss();
+                      handleLoadAll();
+                    }),
                 },
               ],
             }),
@@ -196,7 +202,7 @@ export const FairDetails = () => {
           <ImageExtended
             src={fair?.coverUrl}
             alt={fair?.name}
-            isLoading={!fair}
+            isLoading={!fair || isLoading || isDeletingPhoto}
             onClick={() => setOpenCover((state) => !state)}
             className={`${openCover ? styles.fairCoverOpen : ""}`}
             classNamePicture={`${styles.fairCover} ${
@@ -341,7 +347,7 @@ export const FairDetails = () => {
       <ModalPhotos
         trigger={MODAL_PHOTOS_ID}
         photographs={fair?.photographs || []}
-        isLoading={isLoadingPhoto}
+        isLoading={isLoading || isLoadingPhoto || isDeletingPhoto}
         handleAction={
           user?.uid === fair?.owner.id ? handleGalleryAction : undefined
         }
