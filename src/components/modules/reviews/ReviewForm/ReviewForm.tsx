@@ -66,6 +66,7 @@ export const ReviewForm = ({
         value={values.stars}
         onChange={handleChangeStars}
         size={40}
+        disable={isLoading || isSubmitting}
         className={styles.stars}
       />
       <Input

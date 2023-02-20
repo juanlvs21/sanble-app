@@ -8,3 +8,9 @@
   color: var(--ion-color-primary);
   transition: all 400ms ease-in-out;
 }
+
+.star.disable {
+  color: var(--ion-color-medium-tint);
+  pointer-events: none;
+  transition: all 400ms ease-in-out;
+}

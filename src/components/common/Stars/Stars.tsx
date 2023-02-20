@@ -21,11 +21,16 @@ export type ComponentProps = {
    * Custom className for component
    */
   className?: string;
+  /**
+   * Disable
+   */
+  disable?: boolean;
 };
 
 export const Stars = ({
-  value,
   onChange,
+  value,
+  disable,
   size = 20,
   className = "",
 }: ComponentProps) => {
@@ -39,9 +44,11 @@ export const Stars = ({
         .map((_, i) => (
           <TiStarFullOutline
             key={i}
-            className={`${styles.star} ${i < value ? styles.starFull : ""}`}
+            className={`${styles.star} ${i < value ? styles.starFull : ""} ${
+              disable ? styles.disable : ""
+            }`}
             size={size}
-            onClick={onChange ? () => onChange(i + 1) : undefined}
+            onClick={onChange && !disable ? () => onChange(i + 1) : undefined}
           />
         ))}
     </div>

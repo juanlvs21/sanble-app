@@ -245,19 +245,39 @@ export const FairDetails = () => {
             </section>
 
             <section className={styles.fairInfo}>
-              <div className={styles.fairInfoCard} id={MODAL_INFO_ID}>
+              <div
+                className={`${styles.fairInfoCard} ${
+                  isLoading ? styles.isLoading : ""
+                }`}
+                id={MODAL_INFO_ID}
+              >
                 <AiOutlineInfoCircle size={35} />
                 <h5>Información de Contacto</h5>
               </div>
-              <div className={styles.fairInfoCard} id={MODAL_MAP_ID}>
+              <div
+                className={`${styles.fairInfoCard} ${
+                  isLoading ? styles.isLoading : ""
+                }`}
+                id={MODAL_MAP_ID}
+              >
                 <FiMapPin size={35} />
                 <h5>Localización en Mapa</h5>
               </div>
-              <div className={styles.fairInfoCard} id={MODAL_PHOTOS_ID}>
+              <div
+                className={`${styles.fairInfoCard} ${
+                  isLoading ? styles.isLoading : ""
+                }`}
+                id={MODAL_PHOTOS_ID}
+              >
                 <HiOutlinePhotograph size={35} />
                 <h5>Fotos</h5>
               </div>
-              <div className={styles.fairInfoCard} id={MODAL_STANDS_ID}>
+              <div
+                className={`${styles.fairInfoCard} ${
+                  isLoading ? styles.isLoading : ""
+                }`}
+                id={MODAL_STANDS_ID}
+              >
                 <MdOutlineStorefront size={35} />
                 <h5>Stands </h5>
               </div>

@@ -175,11 +175,18 @@
   padding: 15px;
   padding-top: 40px;
   cursor: pointer;
+  transition: all 400ms ease-in-out;
 }
 
 .fairInfo .fairInfoCard h5 {
   font-size: 18px;
   margin-top: 10px;
+}
+
+.fairInfo .fairInfoCard.isLoading {
+  background-color: var(--ion-color-medium-tint);
+  pointer-events: none;
+  transition: all 400ms ease-in-out;
 }
 
 .fairReviewsContainer {
