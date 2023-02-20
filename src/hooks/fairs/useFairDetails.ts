@@ -103,13 +103,13 @@ export const useFairDetails = (fairID: string) => {
     });
   };
 
-  const handleLoadAll = useMemo(() => {
+  const handleLoadAll = () => {
     handleLoadDetails();
     handleLoadReviews();
-  }, []);
+  };
 
   useEffect(() => {
-    handleLoadAll;
+    handleLoadAll();
   }, []);
 
   return {
