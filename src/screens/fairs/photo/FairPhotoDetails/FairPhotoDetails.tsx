@@ -2,7 +2,6 @@ import {
   IonButton,
   IonButtons,
   IonContent,
-  IonHeader,
   IonModal,
   IonToolbar,
 } from "@ionic/react";
@@ -13,6 +12,7 @@ import { IoIosArrowBack } from "react-icons/io";
 import { useNavigate, useParams } from "react-router-dom";
 
 import { Button } from "@/components/common/buttons/Button";
+import { HeaderModal } from "@/components/common/HeaderModal";
 import { SpinnerFullScreen } from "@/components/common/loaders/SpinnerFullScreen";
 import { TopBar } from "@/components/common/TopBar";
 import { PhotoDescription } from "@/components/modules/photo/PhotoDescription";
@@ -95,7 +95,6 @@ export const FairPhotoDetails = () => {
           !isLoading && !isSubmit ? handleToggleShowDescription : undefined
         }
         isLoading={isLoading || isChangingPhoto}
-        className="animate__animated animate__fadeIn"
       />
 
       {user?.uid === ownerID && (
@@ -107,7 +106,7 @@ export const FairPhotoDetails = () => {
           onWillPresent={() => setIsOpen(true)}
           onWillDismiss={() => setIsOpen(false)}
         >
-          <IonHeader>
+          <HeaderModal>
             <IonToolbar>
               <IonButtons slot="end">
                 <IonButton
@@ -119,7 +118,7 @@ export const FairPhotoDetails = () => {
                 </IonButton>
               </IonButtons>
             </IonToolbar>
-          </IonHeader>
+          </HeaderModal>
           <IonContent>
             <PhotoForm
               handleSave={handleUpdatePhoto}

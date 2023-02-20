@@ -1,5 +1,5 @@
 .photoFormContainer {
-  padding: 90px 30px;
+  padding: 60px 30px 90px;
   margin-top: 76px;
   display: grid;
   grid-template-columns: repeat(1, minmax(0, 1fr));

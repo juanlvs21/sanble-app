@@ -30,9 +30,17 @@ export type ComponentProps = {
    */
   isLoading?: boolean;
   /**
-   * Custom className component
+   * Custom className container
    */
-  className?: string;
+  classNameContainer?: string;
+  /**
+   * Custom className picture
+   */
+  classNamePicture?: string;
+  /**
+   * Custom className img
+   */
+  classNameImg?: string;
 };
 
 export const PhotoDescription = ({
@@ -41,16 +49,25 @@ export const PhotoDescription = ({
   onClick,
   isLoading,
   isCoverText = "Fotografía Destacada",
-  className = "",
+  classNameContainer = "",
+  classNamePicture = "",
+  classNameImg = "",
 }: ComponentProps) => (
-  <div className={`${styles.photoContainer} ${className}`} onClick={onClick}>
+  <div
+    onClick={onClick}
+    className={`${styles.photoContainer} ${classNameContainer} animate__animated animate__fadeIn`}
+  >
+    <div
+      style={{ backgroundImage: `url(${photo?.url})` }}
+      className={`${styles.photoBackground}`}
+    />
     <ImageExtended
       src={photo?.url ?? ""}
       alt={photo?.id ?? ""}
-      classNamePicture={styles.photoPicture}
-      className={styles.photoImage}
+      classNamePicture={`${styles.photoPicture} ${classNamePicture}`}
+      className={`${styles.photoImage} ${classNameImg}`}
       skeletonProps={{
-        className: styles.photoImage,
+        className: `${styles.photoImage} ${classNameImg}`,
       }}
       isLoading={isLoading}
     />

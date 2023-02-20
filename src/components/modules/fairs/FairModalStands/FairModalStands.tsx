@@ -1,7 +1,6 @@
 import {
   IonButtons,
   IonContent,
-  IonHeader,
   IonModal,
   IonTitle,
   IonToolbar,
@@ -12,6 +11,7 @@ import { AiOutlineClose } from "react-icons/ai";
 import { Button } from "@/components/common/buttons/Button";
 import { EmptyAlert } from "@/components/common/EmptyAlert";
 import { Fetcher } from "@/components/common/Fetcher";
+import { HeaderModal } from "@/components/common/HeaderModal";
 import { Skeleton } from "@/components/common/Skeleton";
 import { StandCardList } from "@/components/modules/stands/StandCardList";
 import { useModalGoBack } from "@/hooks/useModalGoBack";
@@ -68,7 +68,7 @@ export const FairModalStands = ({
       onWillPresent={() => setIsOpen(true)}
       onWillDismiss={() => setIsOpen(false)}
     >
-      <IonHeader>
+      <HeaderModal>
         <IonToolbar>
           <IonButtons slot="end">
             <Button onClick={handleDismiss} fill="clear" color="medium">
@@ -77,7 +77,7 @@ export const FairModalStands = ({
           </IonButtons>
           <IonTitle>Stands Participantes</IonTitle>
         </IonToolbar>
-      </IonHeader>
+      </HeaderModal>
       <IonContent>
         {!stands.length && !isLoading ? (
           <EmptyAlert message={`No hay Stands participantes`} />

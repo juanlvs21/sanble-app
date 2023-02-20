@@ -1,7 +1,6 @@
 import {
   IonButtons,
   IonContent,
-  IonHeader,
   IonModal,
   IonSlide,
   IonSlides,
@@ -14,6 +13,7 @@ import { FiMenu } from "react-icons/fi";
 
 import { Button } from "@/components/common/buttons/Button";
 import { EmptyAlert } from "@/components/common/EmptyAlert";
+import { HeaderModal } from "@/components/common/HeaderModal";
 import { SpinnerFullScreen } from "@/components/common/loaders/SpinnerFullScreen";
 import { PhotoDescription } from "@/components/modules/photo/PhotoDescription";
 import { useModalGoBack } from "@/hooks/useModalGoBack";
@@ -134,7 +134,7 @@ export const ModalPhotos = ({
         borderRadius
         className={styles.photoModalSpinner}
       />
-      <IonHeader>
+      <HeaderModal>
         <IonToolbar>
           {handleAction && (
             <IonButtons slot="start">
@@ -154,7 +154,7 @@ export const ModalPhotos = ({
           </IonButtons>
           <IonTitle>Fotografías</IonTitle>
         </IonToolbar>
-      </IonHeader>
+      </HeaderModal>
       <IonContent>
         {Boolean(photographs.length) && !isLoading && (
           <IonSlides
@@ -163,12 +163,16 @@ export const ModalPhotos = ({
             onIonSlideWillChange={handleSlideDidChange}
           >
             {photographs.map((photo, i) => (
-              <IonSlide key={i} className={classNameItem}>
+              <IonSlide
+                key={i}
+                className={`${classNameItem} ${styles.photoSlide}`}
+              >
                 <PhotoDescription
                   photo={photo}
                   isCoverText={isCoverText}
                   showDescription={showDescription}
                   onClick={handleToggleShowDescription}
+                  classNamePicture={styles.photoPicture}
                 />
               </IonSlide>
             ))}

@@ -13,3 +13,9 @@
     --height: 80%;
   }
 }
+
+@media (max-width: 768px) {
+  .photoEditForm {
+    padding-top: 30px;
+  }
+}

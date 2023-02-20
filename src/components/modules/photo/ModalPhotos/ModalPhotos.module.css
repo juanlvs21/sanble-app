@@ -8,6 +8,10 @@
   height: 100%;
 }
 
+.photoPicture {
+  padding-bottom: 80px;
+}
+
 .photoModalSpinner {
   z-index: 1000000;
   border-radius: 0;

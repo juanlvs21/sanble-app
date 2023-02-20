@@ -1,7 +1,6 @@
 import {
   IonButtons,
   IonContent,
-  IonHeader,
   IonModal,
   IonTitle,
   IonToolbar,
@@ -10,6 +9,7 @@ import { useRef, useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 
 import { Button } from "@/components/common/buttons/Button";
+import { HeaderModal } from "@/components/common/HeaderModal";
 import { Map } from "@/components/modules/geolocation/Map";
 import { formatFairsMarks } from "@/helpers/mapFormatMarkers";
 import { useModalGoBack } from "@/hooks/useModalGoBack";
@@ -56,7 +56,7 @@ export const FairModalMap = ({
       onWillPresent={() => setIsOpen(true)}
       onWillDismiss={() => setIsOpen(false)}
     >
-      <IonHeader>
+      <HeaderModal>
         <IonToolbar>
           <IonButtons slot="end">
             <Button onClick={handleDismiss} fill="clear" color="medium">
@@ -65,7 +65,7 @@ export const FairModalMap = ({
           </IonButtons>
           <IonTitle>Ubicación</IonTitle>
         </IonToolbar>
-      </IonHeader>
+      </HeaderModal>
       <IonContent>
         {fair && (
           <Map

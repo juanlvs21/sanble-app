@@ -268,6 +268,10 @@ form {
   z-index: 9999999;
 }
 
+.Toastify__toast-container {
+  margin-bottom: 30px;
+}
+
 .Toastify__toast {
   margin: 10px;
   border-radius: var(--sanble-border-radius);
