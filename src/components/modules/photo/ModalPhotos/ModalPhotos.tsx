@@ -172,7 +172,6 @@ export const ModalPhotos = ({
                   isCoverText={isCoverText}
                   showDescription={showDescription}
                   onClick={handleToggleShowDescription}
-                  classNamePicture={styles.photoPicture}
                 />
               </IonSlide>
             ))}
