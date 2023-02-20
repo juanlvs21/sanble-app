@@ -13,13 +13,14 @@ import { IoIosArrowBack } from "react-icons/io";
 import { useNavigate, useParams } from "react-router-dom";
 
 import { Button } from "@/components/common/buttons/Button";
+import { SpinnerFullScreen } from "@/components/common/loaders/SpinnerFullScreen";
 import { TopBar } from "@/components/common/TopBar";
 import { PhotoDescription } from "@/components/modules/photo/PhotoDescription";
 import { PhotoForm } from "@/components/modules/photo/PhotoForm";
 import { useFairPhoto } from "@/hooks/fairs/useFairPhoto";
+import { useModalGoBack } from "@/hooks/useModalGoBack";
 import { useUser } from "@/hooks/useUser";
 import styles from "./FairPhotoDetails.module.css";
-import { SpinnerFullScreen } from "@/components/common/loaders/SpinnerFullScreen";
 
 const MODAL_PHOTO_DESCRIPTION_ID = "photo-description-open-modal";
 
@@ -38,6 +39,7 @@ export const FairPhotoDetails = () => {
   } = useFairPhoto(fairID || "");
   const { user } = useUser();
   const [showDescription, setShowDescription] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     handleGetPhoto(photoID || "");
@@ -46,6 +48,10 @@ export const FairPhotoDetails = () => {
   const handleToggleShowDescription = () => {
     setShowDescription((state) => !state);
   };
+
+  const handleDismiss = () => modalRef.current?.dismiss();
+
+  useModalGoBack(isOpen, handleDismiss);
 
   return (
     <>
@@ -98,6 +104,8 @@ export const FairPhotoDetails = () => {
           trigger={MODAL_PHOTO_DESCRIPTION_ID}
           className={styles.photoEditModal}
           canDismiss={!isSubmit}
+          onWillPresent={() => setIsOpen(true)}
+          onWillDismiss={() => setIsOpen(false)}
         >
           <IonHeader>
             <IonToolbar>

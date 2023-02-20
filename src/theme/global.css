@@ -246,6 +246,10 @@ ion-modal ion-toolbar {
   --background: transparent;
 }
 
+ion-action-sheet .action-sheet-wrapper {
+  padding-bottom: 30px;
+}
+
 form {
   width: 100%;
 }

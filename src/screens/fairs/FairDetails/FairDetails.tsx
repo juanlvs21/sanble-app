@@ -323,14 +323,14 @@ export const FairDetails = () => {
             openCover ? styles.fairCoverOpen : ""
           } animate__animated animate__fadeIn`}
         >
-          <IonFabButton color="primary">
+          <IonFabButton color="secondary">
             <IoIosArrowUp size={28} />
           </IonFabButton>
           <IonFabList side="top">
-            <IonFabButton color="primary">
+            <IonFabButton color="secondary">
               <FiEdit2 size={22} />
             </IonFabButton>
-            <IonFabButton color="primary">
+            <IonFabButton color="secondary">
               <MdOutlineStorefront size={22} />
             </IonFabButton>
           </IonFabList>

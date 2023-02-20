@@ -16,6 +16,7 @@ import { Button } from "@/components/common/buttons/Button";
 import { EmptyAlert } from "@/components/common/EmptyAlert";
 import { SpinnerFullScreen } from "@/components/common/loaders/SpinnerFullScreen";
 import { PhotoDescription } from "@/components/modules/photo/PhotoDescription";
+import { useModalGoBack } from "@/hooks/useModalGoBack";
 import { TPhotograph } from "@/types/TPhotograph";
 import styles from "./ModalPhotos.module.css";
 
@@ -85,6 +86,7 @@ export const ModalPhotos = ({
   const modalRef = useRef<HTMLIonModalElement>(null);
   const [showDescription, setShowDescription] = useState(true);
   const [activeID, setActiveID] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
 
   const slideOpts = useMemo(
     () => ({
@@ -104,6 +106,7 @@ export const ModalPhotos = ({
 
   const handleModalWillPresent = () => {
     setShowDescription(true);
+    setIsOpen(true);
 
     if (photographs.length) {
       setActiveID(photographs[0].id);
@@ -116,12 +119,15 @@ export const ModalPhotos = ({
     });
   };
 
+  useModalGoBack(isOpen, handleDismiss);
+
   return (
     <IonModal
       ref={modalRef}
       trigger={trigger}
       className={`${styles.photoModal} ${className}`}
       onWillPresent={handleModalWillPresent}
+      onWillDismiss={() => setIsOpen(false)}
     >
       <SpinnerFullScreen
         show={Boolean(isLoading)}
@@ -150,7 +156,7 @@ export const ModalPhotos = ({
         </IonToolbar>
       </IonHeader>
       <IonContent>
-        {photographs.length && !isLoading && (
+        {Boolean(photographs.length) && !isLoading && (
           <IonSlides
             options={slideOpts}
             className={`${styles.photoContainer} animate__animated animate__fadeIn`}
@@ -168,7 +174,7 @@ export const ModalPhotos = ({
             ))}
           </IonSlides>
         )}
-        {!photographs.length && !isLoading && (
+        {!Boolean(photographs.length) && !isLoading && (
           <EmptyAlert
             message={`No hay fotografías publicadas`}
             className="animate__animated animate__fadeIn"

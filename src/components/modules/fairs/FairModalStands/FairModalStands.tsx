@@ -6,7 +6,7 @@ import {
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 
 import { Button } from "@/components/common/buttons/Button";
@@ -14,6 +14,7 @@ import { EmptyAlert } from "@/components/common/EmptyAlert";
 import { Fetcher } from "@/components/common/Fetcher";
 import { Skeleton } from "@/components/common/Skeleton";
 import { StandCardList } from "@/components/modules/stands/StandCardList";
+import { useModalGoBack } from "@/hooks/useModalGoBack";
 import { TStand } from "@/types/TStand";
 import styles from "./FairModalStands.module.css";
 
@@ -53,17 +54,24 @@ export const FairModalStands = ({
   handleInfinite,
 }: ComponentProps) => {
   const modalRef = useRef<HTMLIonModalElement>(null);
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleDismiss = () => modalRef.current?.dismiss();
+
+  useModalGoBack(isOpen, handleDismiss);
 
   return (
-    <IonModal ref={modalRef} trigger={trigger} className={className}>
+    <IonModal
+      ref={modalRef}
+      trigger={trigger}
+      className={className}
+      onWillPresent={() => setIsOpen(true)}
+      onWillDismiss={() => setIsOpen(false)}
+    >
       <IonHeader>
         <IonToolbar>
           <IonButtons slot="end">
-            <Button
-              onClick={() => modalRef.current?.dismiss()}
-              fill="clear"
-              color="medium"
-            >
+            <Button onClick={handleDismiss} fill="clear" color="medium">
               <AiOutlineClose size={24} />
             </Button>
           </IonButtons>
