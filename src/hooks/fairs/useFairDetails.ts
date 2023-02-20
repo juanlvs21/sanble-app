@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 
 import { useToast } from "@/hooks/useToast";
 import {
@@ -15,7 +15,7 @@ const DEFAULT_LAST_INDEX_REVIEWS = 0;
 const DEFAULT_LIMIT_REVIEWS = 9;
 
 export const useFairDetails = (fairID: string) => {
-  const { toast } = useToast();
+  const { toast, toastDismiss } = useToast();
   const [fair, setFair] = useState<TFair>();
   const [review, setReview] = useState<TReview>();
   const [reviews, setReviews] = useState<TReview[]>();
@@ -33,7 +33,8 @@ export const useFairDetails = (fairID: string) => {
       const fairRes = await getFairDetailsRequest(fairID);
       setFair(fairRes);
     } catch (error) {
-      toast("Error al cargar informacion de la feria", {
+      toastDismiss();
+      toast(error, {
         type: "error",
       });
     } finally {
@@ -102,13 +103,13 @@ export const useFairDetails = (fairID: string) => {
     });
   };
 
-  const handleLoadAll = () => {
+  const handleLoadAll = useMemo(() => {
     handleLoadDetails();
     handleLoadReviews();
-  };
+  }, []);
 
   useEffect(() => {
-    handleLoadAll();
+    handleLoadAll;
   }, []);
 
   return {
