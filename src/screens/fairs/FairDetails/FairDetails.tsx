@@ -79,7 +79,7 @@ export const FairDetails = () => {
     } 🛍️`
   );
 
-  const handleGalleryAction = (
+  const handleGalleryActions = (
     photoID: string,
     handleDismiss?: () => Promise<boolean> | undefined
   ) => {
@@ -337,7 +337,7 @@ export const FairDetails = () => {
         photographs={fair?.photographs || []}
         isLoading={isLoading || isLoadingPhoto || isDeletingPhoto}
         handleAction={
-          user?.uid === fair?.owner.id ? handleGalleryAction : undefined
+          user?.uid === fair?.owner.id ? handleGalleryActions : undefined
         }
         isCoverText="Fotografía de Perfil"
       />

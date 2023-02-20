@@ -4,6 +4,8 @@ import {
   IonContent,
   IonModal,
   IonToolbar,
+  useIonActionSheet,
+  useIonAlert,
 } from "@ionic/react";
 import { useEffect, useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
@@ -27,6 +29,8 @@ const MODAL_PHOTO_DESCRIPTION_ID = "photo-description-open-modal";
 export const FairPhotoDetails = () => {
   const { fairID, photoID } = useParams();
   const navigate = useNavigate();
+  const [present] = useIonActionSheet();
+  const [presentAlert] = useIonAlert();
   const {
     modalRef,
     photograph,
@@ -37,6 +41,7 @@ export const FairPhotoDetails = () => {
     handleUpdatePhoto,
     handleGetPhoto,
   } = useFairPhoto(fairID || "");
+  const { handleDeletePhoto, isDeletingPhoto } = useFairPhoto(fairID || "");
   const { user } = useUser();
   const [showDescription, setShowDescription] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
@@ -45,9 +50,52 @@ export const FairPhotoDetails = () => {
     handleGetPhoto(photoID || "");
   }, []);
 
-  const handleToggleShowDescription = () => {
-    setShowDescription((state) => !state);
+  const handleActions = () => {
+    present({
+      header: "Acciones",
+      buttons: [
+        {
+          text: "Editar Fotografía",
+          cssClass: "",
+          handler: () => modalRef.current?.present(),
+        },
+        {
+          text: "Eliminar Fotografía",
+          cssClass: "danger-color",
+          handler: () =>
+            presentAlert({
+              header:
+                "¿Estás seguro de eliminar permanentemente esta fotografía?",
+              buttons: [
+                {
+                  text: "Cancelar",
+                  role: "cancel",
+                },
+                {
+                  text: "Eliminar",
+                  role: "confirm",
+                  handler: () =>
+                    handleDeletePhoto(photograph?.id || "", () => {
+                      navigate(`/app/ferias/${fairID}`);
+                    }),
+                },
+              ],
+            }),
+        },
+        {
+          text: "Cancelar",
+          cssClass: "danger-color",
+          role: "cancel",
+          data: {
+            action: "cancel",
+          },
+        },
+      ],
+    });
   };
+
+  const handleToggleShowDescription = () =>
+    setShowDescription((state) => !state);
 
   const handleDismiss = () => modalRef.current?.dismiss();
 
@@ -74,7 +122,7 @@ export const FairPhotoDetails = () => {
               <Button
                 isLoading={isLoading}
                 spinnerColor="primary"
-                id={MODAL_PHOTO_DESCRIPTION_ID}
+                onClick={handleActions}
                 className="animate__animated animate__fadeIn"
               >
                 <FiEdit2 size={24} />
@@ -94,7 +142,7 @@ export const FairPhotoDetails = () => {
         onClick={
           !isLoading && !isSubmit ? handleToggleShowDescription : undefined
         }
-        isLoading={isLoading || isChangingPhoto}
+        isLoading={isLoading || isChangingPhoto || isDeletingPhoto}
       />
 
       {user?.uid === ownerID && (
@@ -128,7 +176,7 @@ export const FairPhotoDetails = () => {
           </IonContent>
 
           <SpinnerFullScreen
-            show={isLoading || isSubmit}
+            show={isLoading || isSubmit || isDeletingPhoto}
             className={styles.photoEditFormSpinner}
           />
         </IonModal>

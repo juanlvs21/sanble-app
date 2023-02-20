@@ -85,7 +85,7 @@ export const PhotoForm = ({
       id: photo?.id ?? "",
       description: photo?.description ?? "",
       image: "",
-      isCover: photo?.isCover ?? false,
+      isCover: photo?.isCover || false,
     },
     validationSchema: photoSchema,
     onSubmit: handleSave,
