@@ -29,11 +29,11 @@ import { ReviewsList } from "@/components/modules/reviews/ReviewsList";
 import { fairType } from "@/helpers/fairs";
 import { getNavStateText } from "@/helpers/navigation";
 import { useFairDetails } from "@/hooks/fairs/useFairDetails";
+import { useFairPhoto } from "@/hooks/fairs/useFairPhoto";
 import { useFairStands } from "@/hooks/fairs/useFairStands";
 import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 import { useUser } from "@/hooks/useUser";
 import styles from "./FairDetails.module.css";
-import { useFairPhoto } from "@/hooks/fairs/useFairPhoto";
 
 const MODAL_INFO_ID = "fair-info-open-modal";
 const MODAL_MAP_ID = "fair-map-open-modal";
@@ -70,7 +70,6 @@ export const FairDetails = () => {
     isLoading: isLoadingPhoto,
     isDeletingPhoto,
   } = useFairPhoto(fairID || "");
-  const [openCover, setOpenCover] = useState(false);
 
   useDocumentTitle(
     `${
@@ -162,62 +161,33 @@ export const FairDetails = () => {
             onClick={() => (fair ? handleSetFavoriteFair(fair.id) : undefined)}
           />
         }
-        className={`${openCover ? styles.fairTopBarCoverOpen : ""}`}
         titleSize={24}
         titleLight
         sticky
       />
 
-      <div
-        className={`${styles.fairCoverBg} ${
-          openCover ? styles.fairCoverOpen : ""
-        }`}
-      />
+      <div className={`${styles.fairCoverBg}`} />
 
       <Fetcher
         handleRefresh={handleRefreshReviews}
         handleInfiniteScroll={handleInfiniteReviews}
         refreshSpinnerColor="medium"
-        classNameSection={`${styles.fairFetcherSection} ${
-          openCover ? styles.fairCoverOpen : ""
-        }`}
-        classNameContent={`${styles.fairFetcherContent} ${
-          openCover ? styles.fairCoverOpen : ""
-        }`}
+        classNameSection={`${styles.fairFetcherSection}`}
+        classNameContent={`${styles.fairFetcherContent}`}
         classNameInfinite={styles.fairFetcherInfinite}
       >
         <div className={styles.fairCoverContainer}>
-          {openCover && (
-            <Button
-              fill="solid"
-              color="light"
-              size="small"
-              onClick={() => setOpenCover(false)}
-              className={`${styles.fairCoverBtnClose} animate__animated animate__zoomIn`}
-            >
-              <IoIosCloseCircleOutline size={24} />
-            </Button>
-          )}
-
           <ImageExtended
             src={fair?.coverUrl}
             alt={fair?.name}
             isLoading={!fair || isLoading || isDeletingPhoto}
-            onClick={() => setOpenCover((state) => !state)}
-            className={`${openCover ? styles.fairCoverOpen : ""}`}
-            classNamePicture={`${styles.fairCover} ${
-              openCover ? styles.fairCoverOpen : ""
-            }`}
+            classNamePicture={`${styles.fairCover}`}
             skeletonProps={{
               className: styles.fairSkeleton,
             }}
           />
         </div>
-        <section
-          className={`${styles.fairContent} ${
-            openCover ? styles.fairCoverOpen : ""
-          }`}
-        >
+        <section className={`${styles.fairContent}`}>
           <div className={styles.fairNameContainer}>
             {getNavStateText(fairID, state?.fairID, state?.fairName) ? (
               <h1>{getNavStateText(fairID, state?.fairID, state?.fairName)}</h1>
@@ -319,9 +289,7 @@ export const FairDetails = () => {
           slot="fixed"
           vertical="bottom"
           horizontal="end"
-          className={`${styles.fairFloatBtn} ${
-            openCover ? styles.fairCoverOpen : ""
-          } animate__animated animate__fadeIn`}
+          className={`${styles.fairFloatBtn} animate__animated animate__fadeIn`}
         >
           <IonFabButton color="secondary">
             <IoIosArrowUp size={28} />
