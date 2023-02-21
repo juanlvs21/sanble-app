@@ -1,9 +1,18 @@
 .mapSection {
   position: relative;
-  margin-top: 75px;
-  height: calc(100% - 75px);
+  margin-top: 60px;
+  height: calc(100% - 60px);
+  transition: all 400ms ease-in-out;
 }
 
 .nearYouSpinner.isCapacitor {
   top: 25px;
+}
+
+@media (max-width: 768px) {
+  .mapSection {
+    margin-top: 95px;
+    height: calc(100% - 95px);
+    transition: all 400ms ease-in-out;
+  }
 }

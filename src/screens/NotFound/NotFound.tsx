@@ -1,24 +1,18 @@
-import { useEffect } from "react";
+import { IonPage } from "@ionic/react";
+import { RouteComponentProps } from "react-router";
 
 import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 
-export type ComponentProps = {
-  /**
-   * Function to set location in displayLocation
-   */
-  setDisplayLocation: () => void;
-};
+type TPageProps = RouteComponentProps<{}>;
 
-export const NotFound = ({ setDisplayLocation }: ComponentProps) => {
+export const NotFound: React.FC<TPageProps> = () => {
   useDocumentTitle("¡Ups! Página no encontrada 😢");
 
-  useEffect(() => {
-    setDisplayLocation();
-  }, []);
-
   return (
-    <div className="animate__animated animate__fadeIn">
-      Página no encontrada
-    </div>
+    <IonPage className="animate__animated animate__screenInUp">
+      <div className="animate__animated animate__fadeIn">
+        <h1>Página no encontrada</h1>
+      </div>
+    </IonPage>
   );
 };

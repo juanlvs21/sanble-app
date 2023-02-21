@@ -1,35 +1,16 @@
-import { useEffect } from "react";
-import { Outlet, useLocation } from "react-router-dom";
-
 import { Sidebar } from "@/components/common/Sidebar";
 import { useApp } from "@/hooks/useApp";
 import styles from "./Main.module.css";
 
 export type ComponentProps = {
   /**
-   * CSS transition className
-   *
-   * @default ""
+   * Children element
    */
-  transitionStage?: string;
-  /**
-   * Function to set transitionStage
-   */
-  onAnimationEnd?: () => void;
+  children: React.ReactElement | React.ReactElement[];
 };
 
-export const MainLayout = ({
-  transitionStage = "",
-  onAnimationEnd,
-}: ComponentProps) => {
-  const location = useLocation();
-  const { isCapacitor, showSidebar, handleShowSidebar, handleSetScrollTop } =
-    useApp();
-
-  useEffect(() => {
-    handleSetScrollTop();
-    handleShowSidebar(false);
-  }, [location]);
+export const MainLayout = ({ children }: ComponentProps) => {
+  const { isCapacitor, showSidebar, handleShowSidebar } = useApp();
 
   return (
     <div
@@ -41,8 +22,7 @@ export const MainLayout = ({
       <main
         className={`${styles.mainContainer} ${
           showSidebar ? styles.showSidebar : ""
-        } ${isCapacitor ? styles.isCapacitor : ""} ${transitionStage}`}
-        onAnimationEnd={onAnimationEnd}
+        } ${isCapacitor ? styles.isCapacitor : ""} `}
       >
         <div
           className={`${styles.mainOverlay} ${
@@ -50,7 +30,8 @@ export const MainLayout = ({
           }`}
           onClick={() => handleShowSidebar(false)}
         />
-        <Outlet />
+
+        {children}
       </main>
     </div>
   );

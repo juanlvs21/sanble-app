@@ -1,50 +1,41 @@
-import { IonContent } from "@ionic/react";
-import { useEffect, useState } from "react";
-import { Outlet } from "react-router-dom";
-
 import { BottomBar } from "@/components/modules/home/BottomBar";
-import {
-  navFadeUpEnd,
-  navFadeUpStart,
-} from "@/helpers/constTransitionsClasses";
-import { useApp } from "@/hooks/useApp";
+import { useRouteMatch } from "react-router";
 import styles from "./Home.module.css";
 
 export type ComponentProps = {
   /**
-   * CSS transition className
+   * Children element
    */
-  transitionStage: string;
-  /**
-   * Function to set transitionStage
-   */
-  onAnimationEnd: () => void;
+  children: React.ReactElement | React.ReactElement[];
 };
 
-export const HomeLayout = ({
-  transitionStage,
-  onAnimationEnd,
-}: ComponentProps) => {
-  const [transitionStageLayout, setTransitionStageLayout] =
-    useState(navFadeUpEnd);
+export const HomeLayout = ({ children }: ComponentProps) => {
+  const matchApp = useRouteMatch({
+    path: "/app",
+    exact: true,
+  });
+  const matchAppFairs = useRouteMatch({
+    path: "/app/ferias",
+    exact: true,
+  });
+  const matchAppStands = useRouteMatch({
+    path: "/app/stands",
+    exact: true,
+  });
+  const matchAppProducts = useRouteMatch({
+    path: "/app/productos",
+    exact: true,
+  });
 
-  useEffect(() => {
-    setTransitionStageLayout(navFadeUpStart);
+  const showBottomBar =
+    matchApp || matchAppFairs || matchAppStands || matchAppProducts;
 
-    return () => {
-      setTransitionStageLayout(navFadeUpEnd);
-    };
-  }, []);
-
-  return (
-    <div className={`${styles.homeContainer} ${transitionStageLayout}`}>
-      <section
-        className={`${styles.homeContent} ${transitionStage}`}
-        onAnimationEnd={onAnimationEnd}
-      >
-        <Outlet />
-      </section>
+  return showBottomBar ? (
+    <div className={`${styles.homeContainer} `}>
+      <section className={`${styles.homeContent}`}>{children}</section>
       <BottomBar />
     </div>
+  ) : (
+    <>{children}</>
   );
 };

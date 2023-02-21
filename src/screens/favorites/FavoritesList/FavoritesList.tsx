@@ -1,15 +1,18 @@
-import { useLocation } from "react-router-dom";
+import { IonPage } from "@ionic/react";
+import { RouteComponentProps, useLocation } from "react-router-dom";
 
 import { useApp } from "@/hooks/useApp";
 import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 
-export const FavoritesList = () => {
+type TPageProps = RouteComponentProps<{}>;
+
+export const FavoritesList: React.FC<TPageProps> = () => {
   const { pathname } = useLocation();
   const { handleShowSidebar, showSidebar } = useApp();
   useDocumentTitle("Lista de Favoritos");
 
   return (
-    <div>
+    <IonPage className="animate__animated animate__screenInUp">
       <h1>{pathname}</h1>
       <button onClick={() => handleShowSidebar()}>
         {showSidebar ? "Hide Sidebar" : "Show Sidebar"}
@@ -35,6 +38,6 @@ export const FavoritesList = () => {
         <li>Item 9</li>
         <li>Item 10</li>
       </ul>
-    </div>
+    </IonPage>
   );
 };

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useHistory } from "react-router";
 
 import { getFairListGeolocationRequest } from "@/services";
 import { TFairGeo } from "@/types/TFair";
@@ -8,7 +8,7 @@ import { formatFairsMarks } from "@/helpers/mapFormatMarkers";
 
 export const useFairsListGeo = () => {
   const { toast } = useToast();
-  const navigate = useNavigate();
+  const history = useHistory();
   const [list, setList] = useState<TFairGeo[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -18,12 +18,10 @@ export const useFairsListGeo = () => {
 
   const prepareListMapPin = (list: TFairGeo[], goBackUrl?: string) =>
     formatFairsMarks(list || [], (id, name) =>
-      navigate(`/app/ferias/${id}`, {
-        state: {
-          fairID: id,
-          fairName: name,
-          goBackUrl,
-        },
+      history.push(`/app/ferias/${id}`, {
+        fairID: id,
+        fairName: name,
+        goBackUrl,
       })
     );
 

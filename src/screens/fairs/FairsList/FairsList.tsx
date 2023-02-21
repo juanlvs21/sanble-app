@@ -1,16 +1,19 @@
-import { useIonActionSheet } from "@ionic/react";
+import { IonPage, useIonActionSheet } from "@ionic/react";
 import { BiFilterAlt } from "react-icons/bi";
+import { RouteComponentProps } from "react-router";
 
 import { Button } from "@/components/common/buttons/Button";
 import { Fetcher } from "@/components/common/Fetcher";
 import { Skeleton } from "@/components/common/Skeleton";
 import { TopBar } from "@/components/common/TopBar";
 import { FairCardList } from "@/components/modules/fairs/FairCardList";
-import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 import { useFairsList } from "@/hooks/fairs/useFairsList";
+import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 import styles from "./FairsList.module.css";
 
-export const FairsList = () => {
+type TPageProps = RouteComponentProps<{}>;
+
+export const FairsList: React.FC<TPageProps> = () => {
   useDocumentTitle("Lista de Ferias 🛍️");
   const [present] = useIonActionSheet();
   const {
@@ -34,7 +37,7 @@ export const FairsList = () => {
   };
 
   return (
-    <>
+    <IonPage>
       <TopBar
         title="Ferias"
         end={
@@ -102,6 +105,7 @@ export const FairsList = () => {
       <Fetcher
         handleRefresh={handleRefresh}
         handleInfiniteScroll={handleInfinite}
+        classNameSection="animate__animated animate__screenInUp"
       >
         <div className="dataListContainer">
           {(isLoading && !list.length) || isSorting
@@ -117,6 +121,6 @@ export const FairsList = () => {
             : list.map((fair) => <FairCardList key={fair.id} fair={fair} />)}
         </div>
       </Fetcher>
-    </>
+    </IonPage>
   );
 };

@@ -1,12 +1,11 @@
+import { IonRouterOutlet, IonSplitPane, isPlatform } from "@ionic/react";
 import { lazy, Suspense } from "react";
-import { Navigate, Route, Routes } from "react-router-dom";
-import { isPlatform } from "@ionic/react";
+import { Route, Redirect } from "react-router-dom";
 
 import { LoadingSuspense } from "@/components/common/loaders/LoadingSuspense";
 import { AuthLayout } from "@/components/layouts/Auth";
-import { MainLayout } from "@/components/layouts/Main";
 import { HomeLayout } from "@/components/layouts/Home";
-import { useTransitionsScreen } from "@/hooks/useTransitionsScreen";
+import { MainLayout } from "@/components/layouts/Main";
 
 const NotFoundScreen = lazy(() =>
   import("@/screens/NotFound").then(({ NotFound }) => ({ default: NotFound }))
@@ -66,186 +65,180 @@ const NearYouScreen = lazy(() =>
   }))
 );
 
-export const AppRoutes = () => {
-  const {
-    setDefaultLocation,
-    displayLocation,
-    onAnimationEnd,
-    transitionStage,
-  } = useTransitionsScreen();
-
-  return (
-    <Routes location={displayLocation}>
+export const AppRoutes = () => (
+  <IonSplitPane contentId="main">
+    <IonRouterOutlet id="main">
+      {/* ------ LANDING ----- */}
       <Route
         path="/"
-        element={
-          <MainLayout
-            onAnimationEnd={onAnimationEnd}
-            transitionStage={transitionStage}
-          />
-        }
-      >
-        <Route
-          index
-          element={
+        exact
+        render={(props) => (
+          <Suspense fallback={<LoadingSuspense />}>
             <>
               {isPlatform("capacitor") ? (
-                <WelcomeSlidesScreen />
+                <WelcomeSlidesScreen {...props} />
               ) : (
-                <LandingScreen
-                  onAnimationEnd={onAnimationEnd}
-                  transitionStage={transitionStage}
-                />
+                <LandingScreen {...props} />
               )}
             </>
-          }
-        />
-      </Route>
-      <Route path="/app" element={<MainLayout />}>
+          </Suspense>
+        )}
+      />
+
+      <MainLayout>
+        {/* ------ MAIN (SIDEBAR) ----- */}
         <Route
-          path=""
-          element={
-            <HomeLayout
-              onAnimationEnd={onAnimationEnd}
-              transitionStage={transitionStage}
-            />
-          }
-        >
-          <Route
-            index
-            element={
-              <Suspense fallback={<LoadingSuspense />}>
-                <HomeScreen />
-              </Suspense>
-            }
-          />
-          <Route
-            path="ferias"
-            element={
-              <Suspense fallback={<LoadingSuspense />}>
-                <FairsListScreen />
-              </Suspense>
-            }
-          />
-          <Route
-            path="stands"
-            element={
-              <Suspense fallback={<LoadingSuspense />}>
-                <StandsListScreen />
-              </Suspense>
-            }
-          />
-          <Route
-            path="productos"
-            element={
-              <Suspense fallback={<LoadingSuspense />}>
-                <FavoritesListScreen />
-              </Suspense>
-            }
-          />
-        </Route>
-      </Route>
+          path="/app/cerca"
+          exact
+          render={(props) => (
+            <Suspense fallback={<LoadingSuspense />}>
+              <NearYouScreen {...props} />
+            </Suspense>
+          )}
+        />
+        <Route
+          path="/app/favoritos"
+          exact
+          render={(props) => (
+            <Suspense fallback={<LoadingSuspense />}>
+              <FavoritesListScreen {...props} />
+            </Suspense>
+          )}
+        />
+        <Route
+          path="/app/misanble"
+          exact
+          render={(props) => (
+            <Suspense fallback={<LoadingSuspense />}>
+              <FavoritesListScreen {...props} />
+            </Suspense>
+          )}
+        />
+        <Route
+          path="/app/cerca"
+          exact
+          render={(props) => (
+            <Suspense fallback={<LoadingSuspense />}>
+              <NearYouScreen {...props} />
+            </Suspense>
+          )}
+        />
+        <Route
+          path="/app/perfil"
+          exact
+          render={(props) => (
+            <Suspense fallback={<LoadingSuspense />}>
+              <FavoritesListScreen {...props} />
+            </Suspense>
+          )}
+        />
+
+        {/* ------ HOME ----- */}
+        <Route
+          path="/app"
+          render={() => (
+            <HomeLayout>
+              <Route
+                path="/app"
+                exact
+                render={(props) => (
+                  <Suspense fallback={<LoadingSuspense />}>
+                    <HomeScreen {...props} />
+                  </Suspense>
+                )}
+              />
+              <Route
+                path="/app/ferias"
+                exact
+                render={(props) => (
+                  <Suspense fallback={<LoadingSuspense />}>
+                    <FairsListScreen {...props} />
+                  </Suspense>
+                )}
+              />
+              <Route
+                path="/app/stands"
+                exact
+                render={(props) => (
+                  <Suspense fallback={<LoadingSuspense />}>
+                    <StandsListScreen {...props} />
+                  </Suspense>
+                )}
+              />
+              <Route
+                path="/app/productos"
+                exact
+                render={(props) => (
+                  <Suspense fallback={<LoadingSuspense />}>
+                    <FavoritesListScreen {...props} />
+                  </Suspense>
+                )}
+              />
+            </HomeLayout>
+          )}
+        />
+      </MainLayout>
+
+      {/* ------ FAIR ----- */}
       <Route
-        path="/app"
-        element={
-          <MainLayout
-            onAnimationEnd={onAnimationEnd}
-            transitionStage={transitionStage}
-          />
-        }
-      >
-        <Route
-          path="favoritos"
-          element={
-            <Suspense fallback={<LoadingSuspense />}>
-              <FavoritesListScreen />
-            </Suspense>
-          }
-        />
-        <Route
-          path="misanble"
-          element={
-            <Suspense fallback={<LoadingSuspense />}>
-              <FavoritesListScreen />
-            </Suspense>
-          }
-        />
-        <Route
-          path="cerca"
-          element={
-            <Suspense fallback={<LoadingSuspense />}>
-              <NearYouScreen />
-            </Suspense>
-          }
-        />
-        <Route
-          path="perfil"
-          element={
-            <Suspense fallback={<LoadingSuspense />}>
-              <FavoritesListScreen />
-            </Suspense>
-          }
-        />
-        <Route
-          path="/app/ferias/:fairID"
-          element={
-            <Suspense fallback={<LoadingSuspense />}>
-              <FairDetailsScreen />
-            </Suspense>
-          }
-        />
-        <Route
-          path="/app/ferias/:fairID/foto"
-          element={
-            <Suspense fallback={<LoadingSuspense />}>
-              <FairPhotoNewScreen />
-            </Suspense>
-          }
-        />
-        <Route
-          path="/app/ferias/:fairID/foto/:photoID"
-          element={
-            <Suspense fallback={<LoadingSuspense />}>
-              <FairPhotoDetailsScreen />
-            </Suspense>
-          }
-        />
-      </Route>
+        path="/app/ferias/:fairID"
+        exact
+        render={(props) => (
+          <Suspense fallback={<LoadingSuspense />}>
+            <FairDetailsScreen {...props} />
+          </Suspense>
+        )}
+      />
+      <Route
+        path="/app/ferias/:fairID/foto"
+        exact
+        render={(props) => (
+          <Suspense fallback={<LoadingSuspense />}>
+            <FairPhotoNewScreen {...props} />
+          </Suspense>
+        )}
+      />
+      <Route
+        path="/app/ferias/:fairID/foto/:photoID"
+        exact
+        render={(props) => (
+          <Suspense fallback={<LoadingSuspense />}>
+            <FairPhotoDetailsScreen {...props} />
+          </Suspense>
+        )}
+      />
+
+      {/* ------ SESSION ----- */}
       <Route
         path="/app/sesion"
-        element={
-          <AuthLayout
-            onAnimationEnd={onAnimationEnd}
-            transitionStage={transitionStage}
-          />
-        }
-      >
-        <Route index element={<Navigate to="/app/sesion/entrar" replace />} />
-        <Route
-          path="entrar"
-          element={
-            <Suspense fallback={<LoadingSuspense />}>
-              <SigninScreen />
-            </Suspense>
-          }
-        />
-        <Route
-          path="registrarse"
-          element={
-            <Suspense fallback={<LoadingSuspense />}>
-              <SignupScreen />
-            </Suspense>
-          }
-        />
-      </Route>
-      <Route
-        path="*"
-        element={
-          <Suspense fallback={<LoadingSuspense />}>
-            <NotFoundScreen setDisplayLocation={setDefaultLocation} />
-          </Suspense>
-        }
+        render={() => (
+          <AuthLayout>
+            <Route
+              path="/app/sesion/entrar"
+              exact
+              render={(props) => (
+                <Suspense fallback={<LoadingSuspense />}>
+                  <SigninScreen {...props} />
+                </Suspense>
+              )}
+            />
+            <Route
+              path="/app/sesion/registrarse"
+              exact
+              render={(props) => (
+                <Suspense fallback={<LoadingSuspense />}>
+                  <SignupScreen {...props} />
+                </Suspense>
+              )}
+            />
+            <Route
+              path="/app/sesion"
+              exact
+              render={() => <Redirect to="/app/sesion/entrar" />}
+            />
+          </AuthLayout>
+        )}
       />
-    </Routes>
-  );
-};
+    </IonRouterOutlet>
+  </IonSplitPane>
+);

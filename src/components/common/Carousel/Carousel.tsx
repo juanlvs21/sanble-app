@@ -80,12 +80,17 @@ export const Carousel = ({
       {title && <h2 className={styles.carouselTitle}>{title}</h2>}
 
       {isLoading ? (
-        <Skeleton {...skeletonProps} />
+        <Skeleton
+          {...skeletonProps}
+          className="animate__animated animate__fadeIn"
+        />
       ) : (
         <IonSlides options={slideOpts}>
           {items.map((item, i) => (
             <IonSlide key={i}>
-              <div className={`${styles.slidesItem} ${classNameItem}`}>
+              <div
+                className={`${styles.slidesItem} ${classNameItem} animate__animated animate__fadeIn`}
+              >
                 {item}
               </div>
             </IonSlide>

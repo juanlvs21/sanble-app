@@ -10,7 +10,7 @@ import {
 import { useMemo } from "react";
 import { FiHeart, FiHome, FiLogOut, FiMapPin, FiUser } from "react-icons/fi";
 import { IoIosCloseCircleOutline } from "react-icons/io";
-import { Link, useLocation, useMatch } from "react-router-dom";
+import { useLocation, useRouteMatch } from "react-router";
 
 import { ImageExtended } from "@/components/common/ImageExtended";
 import { useApp } from "@/hooks/useApp";
@@ -25,15 +25,42 @@ export const Sidebar = () => {
   const { handleSignOut } = useAuth();
   const { user } = useUser();
 
-  const matchHome = useMatch("/app");
-  const matchFairsList = useMatch("/app/ferias");
-  const matchStandsList = useMatch("/app/stands");
-  const matchProductsList = useMatch("/app/productos");
-  const matchFavorites = useMatch("/app/favoritos");
-  const matchMySanble = useMatch("/app/misanble");
-  const matchNearYou = useMatch("/app/cerca");
-  // const matchMessages = useMatch("/app/mensajes");
-  const matchProfile = useMatch("/app/perfil");
+  const matchHome = useRouteMatch({
+    path: "/app",
+    exact: true,
+  });
+  const matchFairsList = useRouteMatch({
+    path: "/app/ferias",
+    exact: true,
+  });
+  const matchStandsList = useRouteMatch({
+    path: "/app/stands",
+    exact: true,
+  });
+  const matchProductsList = useRouteMatch({
+    path: "/app/productos",
+    exact: true,
+  });
+  const matchFavorites = useRouteMatch({
+    path: "/app/favoritos",
+    exact: true,
+  });
+  const matchMySanble = useRouteMatch({
+    path: "/app/misanble",
+    exact: true,
+  });
+  const matchNearYou = useRouteMatch({
+    path: "/app/cerca",
+    exact: true,
+  });
+  // const matchMessages = useRouteMatch({
+  //   path: "/app/mensajes",
+  //   exact: true,
+  // });
+  const matchProfile = useRouteMatch({
+    path: "/app/perfil",
+    exact: true,
+  });
 
   const items = useMemo(
     () => [
@@ -137,22 +164,22 @@ export const Sidebar = () => {
       <section className={styles.sidebarListContainer}>
         <IonList className={styles.sidebarList}>
           {items.map((item) => (
-            <Link to={item.path} key={item.path}>
-              <IonItem
-                className={`${styles.sidebarItem} ${
-                  item.active ? styles.sidebarItemActive : ""
-                }`}
-                detail={false}
-                button
-              >
-                <IonAvatar slot="start" className={styles.sidebarItemIcon}>
-                  {item.icon}
-                </IonAvatar>
-                <IonLabel className={styles.sidebarItemLabel}>
-                  {item.label}
-                </IonLabel>
-              </IonItem>
-            </Link>
+            <IonItem
+              key={item.path}
+              routerLink={item.path}
+              className={`${styles.sidebarItem} ${
+                item.active ? styles.sidebarItemActive : ""
+              }`}
+              detail={false}
+              button
+            >
+              <IonAvatar slot="start" className={styles.sidebarItemIcon}>
+                {item.icon}
+              </IonAvatar>
+              <IonLabel className={styles.sidebarItemLabel}>
+                {item.label}
+              </IonLabel>
+            </IonItem>
           ))}
           <IonItem
             className={`${styles.sidebarItem} ${styles.sidebarItemLogout}`}

@@ -14,16 +14,16 @@ export type ComponentProps = {
 export const ProductCarouselCard = ({ productType }: ComponentProps) => {
   return (
     <Link
-      to={`/app/productos/${productType.id}`}
-      state={{
-        productTypeID: productType.id,
-        productTypeName: productType.name,
+      to={{
+        pathname: `/app/productos/${productType.id}`,
+        state: {
+          productTypeID: productType.id,
+          productTypeName: productType.name,
+        },
       }}
       className={styles.productTypeCardLink}
     >
-      <article
-        className={`${styles.productTypeCard} animate__animated animate__fadeIn`}
-      >
+      <article className={styles.productTypeCard}>
         <ImageExtended
           src={`/assets/images/products/${productType.key}.png`}
           alt={productType.name}

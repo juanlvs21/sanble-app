@@ -2,19 +2,23 @@ import {
   IonFab,
   IonFabButton,
   IonFabList,
+  IonPage,
   useIonActionSheet,
   useIonAlert,
 } from "@ionic/react";
-import { useState } from "react";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import { FiEdit2, FiMapPin } from "react-icons/fi";
 import { HiOutlinePhotograph } from "react-icons/hi";
-import { IoIosArrowUp, IoIosCloseCircleOutline } from "react-icons/io";
+import { IoIosArrowUp } from "react-icons/io";
 import { MdOutlineStorefront } from "react-icons/md";
 import { TiStar } from "react-icons/ti";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import {
+  RouteComponentProps,
+  useHistory,
+  useLocation,
+  useParams,
+} from "react-router";
 
-import { Button } from "@/components/common/buttons/Button";
 import { ButtonFav } from "@/components/common/buttons/ButtonFav";
 import { Fetcher } from "@/components/common/Fetcher";
 import { ImageExtended } from "@/components/common/ImageExtended";
@@ -33,6 +37,7 @@ import { useFairPhoto } from "@/hooks/fairs/useFairPhoto";
 import { useFairStands } from "@/hooks/fairs/useFairStands";
 import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 import { useUser } from "@/hooks/useUser";
+import { TFairRouteState } from "@/types/TFair";
 import styles from "./FairDetails.module.css";
 
 const MODAL_INFO_ID = "fair-info-open-modal";
@@ -40,13 +45,17 @@ const MODAL_MAP_ID = "fair-map-open-modal";
 const MODAL_STANDS_ID = "fair-stands-open-modal";
 const MODAL_PHOTOS_ID = "fair-photos-open-modal";
 
-export const FairDetails = () => {
-  const navigate = useNavigate();
+type TRouteParams = { fairID: string };
+
+type TPageProps = RouteComponentProps<{}>;
+
+export const FairDetails: React.FC<TPageProps> = (props) => {
+  const history = useHistory();
   const [present] = useIonActionSheet();
   const [presentAlert] = useIonAlert();
-  const { fairID } = useParams();
-  const { state } = useLocation();
-  const { user, loadingSetFav, handleSetFavoriteFair } = useUser();
+  const { fairID } = useParams<TRouteParams>();
+  const { state } = useLocation<TFairRouteState>();
+  const finalFairID = fairID || state?.fairID || "";
   const {
     fair,
     review,
@@ -58,18 +67,19 @@ export const FairDetails = () => {
     handleSaveReview,
     handleRefreshReviews,
     handleInfiniteReviews,
-  } = useFairDetails(fairID || "");
+  } = useFairDetails(finalFairID);
   const {
     stands,
     isLoading: isLoadingStands,
     handleLoad: handleRefreshStands,
     handleInfinite: handleInfiniteStands,
-  } = useFairStands(fairID || "");
+  } = useFairStands(finalFairID);
   const {
     handleDeletePhoto,
     isLoading: isLoadingPhoto,
     isDeletingPhoto,
-  } = useFairPhoto(fairID || "");
+  } = useFairPhoto(finalFairID);
+  const { user, loadingSetFav, handleSetFavoriteFair } = useUser();
 
   useDocumentTitle(
     `${
@@ -83,16 +93,16 @@ export const FairDetails = () => {
     photoID: string,
     handleDismiss?: () => Promise<boolean> | undefined
   ) => {
-    const navPhoto = (path: string) => {
+    const navPhoto = (path: string, state: Record<string, string> = {}) => {
       if (handleDismiss) handleDismiss();
-      setTimeout(() => navigate(path), 200);
+      setTimeout(() => history.push(path, state), 200);
     };
 
     const buttons = [
       {
         text: "Publicar Nueva Fotografía",
         cssClass: "",
-        handler: () => navPhoto(`/app/ferias/${fairID}/foto`),
+        handler: () => navPhoto(`/app/ferias/${finalFairID}/foto`),
       },
     ];
 
@@ -101,7 +111,11 @@ export const FairDetails = () => {
         {
           text: "Editar Fotografía",
           cssClass: "",
-          handler: () => navPhoto(`/app/ferias/${fairID}/foto/${photoID}`),
+          handler: () =>
+            navPhoto(`/app/ferias/${finalFairID}/foto/${photoID}`, {
+              fairID: finalFairID,
+              photoID,
+            }),
         },
         {
           text: "Eliminar Fotografía",
@@ -147,7 +161,7 @@ export const FairDetails = () => {
   };
 
   return (
-    <>
+    <IonPage>
       <TopBar
         title="Detalles"
         startGoBack
@@ -166,13 +180,15 @@ export const FairDetails = () => {
         sticky
       />
 
-      <div className={`${styles.fairCoverBg}`} />
+      <div
+        className={`${styles.fairCoverBg} animate__animated animate__fadeIn`}
+      />
 
       <Fetcher
         handleRefresh={handleRefreshReviews}
         handleInfiniteScroll={handleInfiniteReviews}
         refreshSpinnerColor="medium"
-        classNameSection={`${styles.fairFetcherSection}`}
+        classNameSection={`${styles.fairFetcherSection} animate__animated animate__screenInUp `}
         classNameContent={`${styles.fairFetcherContent}`}
         classNameInfinite={styles.fairFetcherInfinite}
       >
@@ -349,6 +365,6 @@ export const FairDetails = () => {
         handleInfinite={handleInfiniteStands}
         isLoading={isLoadingStands}
       />
-    </>
+    </IonPage>
   );
 };
