@@ -3,6 +3,7 @@ import {
   IonButtons,
   IonContent,
   IonModal,
+  IonPage,
   IonToolbar,
   useIonActionSheet,
   useIonAlert,
@@ -11,7 +12,12 @@ import { useEffect, useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import { FiEdit2 } from "react-icons/fi";
 import { IoIosArrowBack } from "react-icons/io";
-import { useNavigate, useParams } from "react-router-dom";
+import {
+  RouteComponentProps,
+  useHistory,
+  useLocation,
+  useParams,
+} from "react-router";
 
 import { Button } from "@/components/common/buttons/Button";
 import { HeaderModal } from "@/components/common/HeaderModal";
@@ -22,15 +28,23 @@ import { PhotoForm } from "@/components/modules/photo/PhotoForm";
 import { useFairPhoto } from "@/hooks/fairs/useFairPhoto";
 import { useModalGoBack } from "@/hooks/useModalGoBack";
 import { useUser } from "@/hooks/useUser";
+import { TFairPhotoRouteState } from "@/types/TFair";
 import styles from "./FairPhotoDetails.module.css";
 
 const MODAL_PHOTO_DESCRIPTION_ID = "photo-description-open-modal";
 
-export const FairPhotoDetails = () => {
-  const { fairID, photoID } = useParams();
-  const navigate = useNavigate();
+type TRouteParams = { fairID: string; photoID: string };
+type TPageProps = RouteComponentProps<{}>;
+
+export const FairPhotoDetails: React.FC<TPageProps> = () => {
+  const history = useHistory();
   const [present] = useIonActionSheet();
   const [presentAlert] = useIonAlert();
+  const { fairID, photoID } = useParams<TRouteParams>();
+  const { state } = useLocation<TFairPhotoRouteState>();
+  const finalFairID = fairID || state?.fairID || "";
+  const finalPhotoID = photoID || state?.photoID || "";
+
   const {
     modalRef,
     photograph,
@@ -40,14 +54,14 @@ export const FairPhotoDetails = () => {
     isChangingPhoto,
     handleUpdatePhoto,
     handleGetPhoto,
-  } = useFairPhoto(fairID || "");
-  const { handleDeletePhoto, isDeletingPhoto } = useFairPhoto(fairID || "");
+  } = useFairPhoto(finalFairID);
+  const { handleDeletePhoto, isDeletingPhoto } = useFairPhoto(finalFairID);
   const { user } = useUser();
   const [showDescription, setShowDescription] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
-    handleGetPhoto(photoID || "");
+    handleGetPhoto(finalPhotoID);
   }, []);
 
   const handleActions = () => {
@@ -76,7 +90,9 @@ export const FairPhotoDetails = () => {
                   role: "confirm",
                   handler: () =>
                     handleDeletePhoto(photograph?.id || "", () => {
-                      navigate(`/app/ferias/${fairID}`);
+                      history.replace(`/app/ferias/${finalFairID}`, {
+                        fairID: finalFairID,
+                      });
                     }),
                 },
               ],
@@ -102,15 +118,17 @@ export const FairPhotoDetails = () => {
   useModalGoBack(isOpen, handleDismiss);
 
   return (
-    <>
+    <IonPage>
       <TopBar
         title="Fotografía"
         start={
           <Button
             onClick={() =>
-              fairID
-                ? navigate(`/app/ferias/${fairID}`)
-                : navigate("/app/ferias")
+              finalFairID
+                ? history.replace(`/app/ferias/${finalFairID}`, {
+                    fairID: finalFairID,
+                  })
+                : history.replace("/app/ferias")
             }
           >
             <IoIosArrowBack size={24} />
@@ -143,6 +161,7 @@ export const FairPhotoDetails = () => {
           !isLoading && !isSubmit ? handleToggleShowDescription : undefined
         }
         isLoading={isLoading || isChangingPhoto || isDeletingPhoto}
+        classNameContainer="animate__animated animate__screenInUp "
       />
 
       {user?.uid === ownerID && (
@@ -181,6 +200,6 @@ export const FairPhotoDetails = () => {
           />
         </IonModal>
       )}
-    </>
+    </IonPage>
   );
 };

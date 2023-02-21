@@ -4,6 +4,7 @@
   left: 0;
   padding: 0 16px 10px 16px;
   width: 100%;
+  z-index: 1000;
 }
 
 .homeBarList {

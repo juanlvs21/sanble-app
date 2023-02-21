@@ -1,7 +1,7 @@
 import { App } from "@capacitor/app";
 import { useIonAlert } from "@ionic/react";
 import { useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useHistory } from "react-router";
 import { toast, ToastContainer } from "react-toastify";
 
 import { Offline } from "@/components/common/Offline";
@@ -21,14 +21,26 @@ export type ComponentProps = {
 };
 
 export const DataProvider = ({ children }: ComponentProps) => {
-  const { pathname } = useLocation();
-  const navigate = useNavigate();
+  const location = useLocation();
+  const history = useHistory();
   const [presentAlert] = useIonAlert();
-  const { readyToUse, isMobile, handleSetReady, handleLoadData } = useApp();
+  const {
+    readyToUse,
+    isMobile,
+    handleSetReady,
+    handleLoadData,
+    handleShowSidebar,
+    handleSetScrollTop,
+  } = useApp();
   const { handleGetSession } = useAuth();
   const { user } = useUser();
   const { overlaysStatusBar } = useStatusBar();
   const { online } = useOnline();
+
+  useEffect(() => {
+    handleSetScrollTop();
+    handleShowSidebar(false);
+  }, [location]);
 
   useEffect(() => {
     handleLoadData();
@@ -45,7 +57,7 @@ export const DataProvider = ({ children }: ComponentProps) => {
   useEffect(() => {
     App.addListener("backButton", ({ canGoBack }) => {
       if (canGoBack) {
-        navigate(-1);
+        history.go(-1);
       } else {
         presentAlert({
           header: "¿Cerrar ahora?",
@@ -72,10 +84,10 @@ export const DataProvider = ({ children }: ComponentProps) => {
   useEffect(() => {
     overlaysStatusBar(true);
 
-    if (!pathname.includes("/app/sesion") && readyToUse && !user) {
-      navigate("/app/sesion/entrar", { replace: true });
+    if (!location.pathname.includes("/app/sesion") && readyToUse && !user) {
+      history.replace("/app/sesion/entrar");
     }
-  }, [pathname]);
+  }, [location.pathname]);
 
   return readyToUse ? (
     <>

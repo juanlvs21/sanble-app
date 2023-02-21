@@ -23,7 +23,7 @@
   overflow: hidden;
   /* overflow: auto; */
   transition: all 400ms ease-in-out;
-  z-index: 50;
+  z-index: 200;
 }
 
 .mainContainer.showSidebar {
@@ -46,7 +46,7 @@
 }
 
 .mainOverlay.showSidebar {
-  z-index: 100;
+  z-index: 100000;
   opacity: 100%;
   transition: opacity 500ms ease-in-out;
 }

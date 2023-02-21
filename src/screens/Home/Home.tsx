@@ -1,6 +1,8 @@
+import { IonPage } from "@ionic/react";
 import { useEffect } from "react";
 import { BiBell } from "react-icons/bi";
 import { useMediaQuery } from "usehooks-ts";
+import { RouteComponentProps } from "react-router";
 
 import { Button } from "@/components/common/buttons/Button";
 import { Carousel } from "@/components/common/Carousel";
@@ -13,7 +15,9 @@ import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 import { useHome } from "@/hooks/useHome";
 import styles from "./Home.module.css";
 
-export const Home = () => {
+type TPageProps = RouteComponentProps<{}>;
+
+export const Home: React.FC<TPageProps> = () => {
   useDocumentTitle("Inicio 🏠");
   const {
     handleLoadFairsBest,
@@ -41,7 +45,7 @@ export const Home = () => {
   }, []);
 
   return (
-    <>
+    <IonPage>
       <TopBar
         title="Sanble"
         end={
@@ -57,6 +61,7 @@ export const Home = () => {
       <Fetcher
         handleRefresh={handleLoadData}
         classNameContent={styles.homeContainer}
+        classNameSection="animate__animated animate__screenInUp"
       >
         <InputSearch
           placeholder="Buscar Ferias, Stands, etc..."
@@ -128,6 +133,6 @@ export const Home = () => {
           className={styles.homeCarousel}
         />
       </Fetcher>
-    </>
+    </IonPage>
   );
 };

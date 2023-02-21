@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useHistory } from "react-router";
 
 import { useToast } from "@/hooks/useToast";
 import {
@@ -12,7 +12,7 @@ import { TPhotograph, TPhotographForm } from "@/types/TPhotograph";
 
 export const useFairPhoto = (fairID: string) => {
   const { toast } = useToast();
-  const navigate = useNavigate();
+  const history = useHistory();
   const modalRef = useRef<HTMLIonModalElement>(null);
   const [photograph, setPhotograph] = useState<TPhotograph>();
   const [ownerID, setOwnerID] = useState<string>();
@@ -56,7 +56,10 @@ export const useFairPhoto = (fairID: string) => {
         type: "success",
       });
 
-      navigate(`/app/ferias/${fairID}/foto/${photograph.id}`);
+      history.replace(`/app/ferias/${fairID}/foto/${photograph.id}`, {
+        fairID,
+        photoID: photograph.id,
+      });
     } catch (error) {
       toast(error, {
         type: "error",

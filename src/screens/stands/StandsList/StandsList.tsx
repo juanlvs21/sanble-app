@@ -1,16 +1,19 @@
-import { useIonActionSheet } from "@ionic/react";
+import { IonPage, useIonActionSheet } from "@ionic/react";
 import { BiFilterAlt } from "react-icons/bi";
+import { RouteComponentProps } from "react-router";
 
 import { Button } from "@/components/common/buttons/Button";
 import { Fetcher } from "@/components/common/Fetcher";
 import { Skeleton } from "@/components/common/Skeleton";
 import { TopBar } from "@/components/common/TopBar";
 import { StandCardList } from "@/components/modules/stands/StandCardList";
-import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 import { useStandsList } from "@/hooks/stands/useStandsList";
+import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 import styles from "./StandsList.module.css";
 
-export const StandsList = () => {
+type TPageProps = RouteComponentProps<{}>;
+
+export const StandsList: React.FC<TPageProps> = () => {
   useDocumentTitle("Lista de Stands 🛒");
   const [present] = useIonActionSheet();
   const {
@@ -34,7 +37,7 @@ export const StandsList = () => {
   };
 
   return (
-    <>
+    <IonPage>
       <TopBar
         title="Stands"
         end={
@@ -94,6 +97,7 @@ export const StandsList = () => {
       <Fetcher
         handleRefresh={handleRefresh}
         handleInfiniteScroll={handleInfinite}
+        classNameSection="animate__animated animate__screenInUp"
       >
         <div className="dataListContainer">
           {(isLoading && !list.length) || isSorting
@@ -111,6 +115,6 @@ export const StandsList = () => {
               ))}
         </div>
       </Fetcher>
-    </>
+    </IonPage>
   );
 };

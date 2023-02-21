@@ -1,3 +1,5 @@
+import { RouteComponentProps } from "react-router";
+
 import styles from "./Splash.module.css";
 
 export const Splash = () => (

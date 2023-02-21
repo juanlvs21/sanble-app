@@ -193,123 +193,36 @@
 }
 
 /* --------- Navigation --------- */
-
-/* navFade  */
-.navFadeStart {
-  animation: 500ms navFadeStart forwards;
+/* ScreenInUp  */
+.animate__screenInUp {
+  -webkit-animation-name: screenInUp;
+  animation-name: screenInUp;
 }
-
-.navFadeEnd {
-  animation: 200ms navFadeEnd forwards;
-}
-
-@keyframes navFadeStart {
+@-webkit-keyframes screenInUp {
   from {
+    -webkit-transform: translate3d(0, 20px, 0);
+    transform: translate3d(0, 20px, 0);
+    visibility: visible;
     opacity: 0;
   }
+
   to {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
     opacity: 1;
   }
 }
-
-@keyframes navFadeEnd {
+@keyframes screenInUp {
   from {
-    opacity: 1;
-  }
-  to {
+    -webkit-transform: translate3d(0, 20px, 0);
+    transform: translate3d(0, 20px, 0);
+    visibility: visible;
     opacity: 0;
   }
-}
 
-/* navFadeUp  */
-.navFadeUpStart {
-  animation: 500ms navFadeUpStart forwards;
-}
-
-.navFadeUpEnd {
-  animation: 300ms navFadeUpEnd forwards;
-}
-
-@keyframes navFadeUpStart {
-  from {
-    transform: translate(0, 10px);
-    opacity: 0;
-  }
   to {
-    transform: translate(0px, 0px);
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
     opacity: 1;
-  }
-}
-
-@keyframes navFadeUpEnd {
-  from {
-    transform: translate(0px, 0px);
-    opacity: 1;
-  }
-  to {
-    transform: translate(0, 10px);
-    opacity: 0;
-  }
-}
-
-/* navFadeLeft  */
-.navFadeLeftStart {
-  animation: 0.5s navFadeLeftStart forwards;
-}
-
-.navFadeLeftEnd {
-  animation: 0.5s navFadeLeftEnd forwards;
-}
-
-@keyframes navFadeLeftStart {
-  from {
-    opacity: 0;
-    transform: translate(-50px, 0);
-  }
-  to {
-    opacity: 1;
-    transform: translate(0px, 0px);
-  }
-}
-
-@keyframes navFadeLeftEnd {
-  from {
-    opacity: 1;
-    transform: translate(0px, 0px);
-  }
-  to {
-    transform: translate(-50px, 0);
-    opacity: 0;
-  }
-}
-
-/* navFadeRight  */
-.navFadeRightStart {
-  animation: 0.5s navFadeRightStart forwards;
-}
-
-.navFadeRightEnd {
-  animation: 0.5s navFadeRightEnd forwards;
-}
-
-@keyframes navFadeRightStart {
-  from {
-    opacity: 0;
-    transform: translate(50px, 0);
-  }
-  to {
-    opacity: 1;
-    transform: translate(0px, 0px);
-  }
-}
-
-@keyframes navFadeRightEnd {
-  from {
-    opacity: 1;
-    transform: translate(0px, 0px);
-  }
-  to {
-    transform: translate(50px, 0);
-    opacity: 0;
   }
 }

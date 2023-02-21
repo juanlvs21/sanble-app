@@ -1,5 +1,5 @@
 import { IonApp, setupIonicReact } from "@ionic/react";
-import { BrowserRouter } from "react-router-dom";
+import { IonReactRouter } from "@ionic/react-router";
 
 import "react-toastify/dist/ReactToastify.css";
 
@@ -20,9 +20,9 @@ import "@ionic/react/css/text-alignment.css";
 import "@ionic/react/css/text-transformation.css";
 
 /* Theme variables */
-import "@/theme/global.css";
-import "@/theme/transitions.css";
-import "@/theme/variables.css";
+import "./theme/global.css";
+import "./theme/transitions.css";
+import "./theme/variables.css";
 
 import { AppProvider } from "@/context";
 import { DataProvider } from "@/providers/DataProvider";
@@ -31,15 +31,15 @@ import { AppRoutes } from "@/router";
 setupIonicReact();
 
 const App = () => (
-  <AppProvider>
-    <IonApp className="animate__animated animate__fadeIn">
-      <BrowserRouter>
+  <IonApp className="animate__animated animate__fadeIn">
+    <IonReactRouter>
+      <AppProvider>
         <DataProvider>
           <AppRoutes />
         </DataProvider>
-      </BrowserRouter>
-    </IonApp>
-  </AppProvider>
+      </AppProvider>
+    </IonReactRouter>
+  </IonApp>
 );
 
 export default App;

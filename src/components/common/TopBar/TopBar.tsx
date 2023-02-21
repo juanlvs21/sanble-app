@@ -1,6 +1,6 @@
 import { IonButtons, IonProgressBar, IonTitle, IonToolbar } from "@ionic/react";
 import { IoIosArrowBack } from "react-icons/io";
-import { useNavigate } from "react-router-dom";
+import { useHistory } from "react-router";
 
 import { Button } from "@/components/common/buttons/Button";
 import { TopBarUserBtn } from "@/components/common/TopBarUserBtn";
@@ -74,11 +74,11 @@ export const TopBar = ({
   titleSize = 28,
   className = "",
 }: ComponentProps) => {
-  const navigate = useNavigate();
+  const history = useHistory();
   const { scrollTop, isCapacitor } = useApp();
 
   const navigateToBack = () =>
-    startGoBackUrl ? navigate(startGoBackUrl) : navigate(-1);
+    startGoBackUrl ? history.replace(startGoBackUrl) : history.go(-1);
 
   return (
     <IonToolbar
@@ -86,7 +86,7 @@ export const TopBar = ({
         isCapacitor ? styles.isCapacitor : ""
       } ${
         (sticky && scrollTop > 25) || stickyNoScroll ? styles.sticky : ""
-      } ${className}`}
+      } ${className} animate__animated animate__fadeIn`}
     >
       {isLoading && (
         <IonProgressBar

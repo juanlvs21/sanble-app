@@ -1,16 +1,16 @@
-import { IonContent, IonSlide, IonSlides } from "@ionic/react";
+import { IonContent, IonPage, IonSlide, IonSlides } from "@ionic/react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { IoIosArrowBack } from "react-icons/io";
-import { useNavigate } from "react-router-dom";
 import { MdKeyboardArrowRight } from "react-icons/md";
+import { RouteComponentProps, useHistory } from "react-router";
 
 import { Button } from "@/components/common/buttons/Button";
-import { useUser } from "@/hooks/useUser";
-import styles from "./WelcomeSlides.module.css";
+import { SpinnerFullScreen } from "@/components/common/loaders/SpinnerFullScreen";
 import { setStorage } from "@/helpers/storage";
 import { StorageHideMobileWelcomeKey } from "@/helpers/storageKeys";
 import { useApp } from "@/hooks/useApp";
-import { SpinnerFullScreen } from "@/components/common/loaders/SpinnerFullScreen";
+import { useUser } from "@/hooks/useUser";
+import styles from "./WelcomeSlides.module.css";
 
 const slideOpts = {
   initialSlide: 0,
@@ -25,8 +25,10 @@ type TWelcomeSlide = {
   actions: React.ReactElement;
 };
 
-export const WelcomeSlides = () => {
-  const navigate = useNavigate();
+type TPageProps = RouteComponentProps<{}>;
+
+export const WelcomeSlides: React.FC<TPageProps> = () => {
+  const history = useHistory();
   const { hideMobileWelcome } = useApp();
   const { user } = useUser();
   const slideRef = useRef<any>(null);
@@ -35,11 +37,8 @@ export const WelcomeSlides = () => {
 
   useEffect(() => {
     if (hideMobileWelcome) {
-      if (user) {
-        navigate("/app", { replace: true });
-      } else {
-        navigate("/app/sesion/registrarse", { replace: true });
-      }
+      if (user) history.replace("/app");
+      else history.replace("/app/sesion/registrarse");
     }
     setTimeout(() => {
       setIsLoading(false);
@@ -49,11 +48,8 @@ export const WelcomeSlides = () => {
   const handleGoSignup = async () => {
     await setStorage(StorageHideMobileWelcomeKey, true);
 
-    if (user) {
-      navigate("/app", { replace: true });
-    } else {
-      navigate("/app/sesion/registrarse", { replace: true });
-    }
+    if (user) history.replace("/app");
+    else history.replace("/app/sesion/registrarse");
   };
 
   const onBtnClicked = async (direction: "next" | "prev") => {
@@ -147,57 +143,63 @@ export const WelcomeSlides = () => {
   return isLoading ? (
     <SpinnerFullScreen show />
   ) : (
-    <IonContent className={styles.slidesWelcomeContent} fullscreen>
-      {active > 1 && (
-        <Button
-          color="primary"
-          onClick={() => onBtnClicked("prev")}
-          className={`${styles.slidesWelcomePrev} animate__animated animate__zoomIn`}
+    <IonPage className="animate__animated animate__fadeIn">
+      <IonContent className={styles.slidesWelcomeContent} fullscreen>
+        {active > 1 && (
+          <Button
+            color="primary"
+            onClick={() => onBtnClicked("prev")}
+            className={`${styles.slidesWelcomePrev} animate__animated animate__zoomIn`}
+          >
+            <IoIosArrowBack size={24} />
+          </Button>
+        )}
+        <IonSlides
+          ref={slideRef}
+          options={slideOpts}
+          className={styles.slidesWelcomeContainer}
+          onIonSlideDidChange={async (e) => {
+            const slideActive = await e.target.getActiveIndex();
+            setActive(slideActive + 1);
+          }}
         >
-          <IoIosArrowBack size={24} />
-        </Button>
-      )}
-      <IonSlides
-        ref={slideRef}
-        options={slideOpts}
-        className={styles.slidesWelcomeContainer}
-        onIonSlideDidChange={async (e) => {
-          const slideActive = await e.target.getActiveIndex();
-          setActive(slideActive + 1);
-        }}
-      >
-        {items.map((item, i) => (
-          <IonSlide key={i}>
-            <div
-              className={`${styles.slideWelcomeDataContent} animate__animated animate__fadeIn`}
-              style={{
-                backgroundImage: `url("/assets/images/welcome/${item.bg}.svg")`,
-              }}
-            >
-              <section className={styles.slideWelcomeImgContainer}>
-                <img
-                  src={`/assets/images/welcome/${item.img}.svg`}
-                  className="animate__animated animate__zoomIn"
-                />
-              </section>
-              <section
-                className={`${styles.slideWelcomeDescriptionContainer} animate__animated animate__fadeIn`}
+          {items.map((item, i) => (
+            <IonSlide key={i}>
+              <div
+                className={`${styles.slideWelcomeDataContent} animate__animated animate__fadeIn`}
+                style={{
+                  backgroundImage: `url("/assets/images/welcome/${item.bg}.svg")`,
+                }}
               >
-                <h1 className={`${!item.description ? styles.onlyTitle : ""}`}>
-                  {item.title}
-                </h1>
-                <p>{item.description}</p>
-                <div className={styles.slideWelcomeActions}>{item.actions}</div>
-              </section>
-            </div>
-          </IonSlide>
-        ))}
-      </IonSlides>
-      <div
-        className={`${styles.slidesWelcomeProgress} animate__animated animate__slideInUp`}
-      >
-        <div style={{ width: `${(active / items.length) * 100}%` }} />
-      </div>
-    </IonContent>
+                <section className={styles.slideWelcomeImgContainer}>
+                  <img
+                    src={`/assets/images/welcome/${item.img}.svg`}
+                    className="animate__animated animate__zoomIn"
+                  />
+                </section>
+                <section
+                  className={`${styles.slideWelcomeDescriptionContainer} animate__animated animate__fadeIn`}
+                >
+                  <h1
+                    className={`${!item.description ? styles.onlyTitle : ""}`}
+                  >
+                    {item.title}
+                  </h1>
+                  <p>{item.description}</p>
+                  <div className={styles.slideWelcomeActions}>
+                    {item.actions}
+                  </div>
+                </section>
+              </div>
+            </IonSlide>
+          ))}
+        </IonSlides>
+        <div
+          className={`${styles.slidesWelcomeProgress} animate__animated animate__slideInUp`}
+        >
+          <div style={{ width: `${(active / items.length) * 100}%` }} />
+        </div>
+      </IonContent>
+    </IonPage>
   );
 };

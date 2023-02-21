@@ -2,6 +2,7 @@ import { IonCol, IonGrid, IonRow } from "@ionic/react";
 import { useFormik } from "formik";
 import { BiEnvelope, BiUser } from "react-icons/bi";
 import { FcGoogle } from "react-icons/fc";
+import { RouteComponentProps } from "react-router";
 
 import { Button } from "@/components/common/buttons/Button";
 import { Input } from "@/components/common/forms/Input";
@@ -13,7 +14,9 @@ import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 import { TAuthSignupForm } from "@/types/TUser";
 import styles from "../Auth.module.css";
 
-export const Signup = () => {
+type TPageProps = RouteComponentProps<{}>;
+
+export const Signup: React.FC<TPageProps> = () => {
   useDocumentTitle("Registrarse");
   const { handleSignup, handleSigninGoogle } = useAuth();
   const {
