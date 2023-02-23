@@ -1,5 +1,6 @@
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState } from "react";
 
+import { infiteScrollData } from "@/helpers/infiniteScrollData";
 import { useToast } from "@/hooks/useToast";
 import {
   getFairDetailsRequest,
@@ -7,9 +8,8 @@ import {
   saveFairReviewRequest,
 } from "@/services";
 import { TFair } from "@/types/TFair";
-import { TReview, TReviewForm } from "@/types/TReview";
 import { TGetListParams } from "@/types/TRequest";
-import { infiteScrollData } from "@/helpers/infiniteScrollData";
+import { TReview, TReviewForm } from "@/types/TReview";
 
 const DEFAULT_LAST_INDEX_REVIEWS = 0;
 const DEFAULT_LIMIT_REVIEWS = 9;
