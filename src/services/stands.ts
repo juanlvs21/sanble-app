@@ -54,7 +54,7 @@ export const getStandReviewsRequest = (
 
 export const saveStandReviewRequest = (standID: string, data: TReviewForm) =>
   api
-    .post<AxiosResponse<{ review: TReview; stansStars: number }>>(
+    .post<AxiosResponse<{ review: TReview; standStars: number }>>(
       `${URL_PREFIX}/${standID}/reviews`,
       data
     )

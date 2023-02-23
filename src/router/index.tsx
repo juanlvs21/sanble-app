@@ -7,9 +7,9 @@ import { AuthLayout } from "@/components/layouts/Auth";
 import { HomeLayout } from "@/components/layouts/Home";
 import { MainLayout } from "@/components/layouts/Main";
 
-const NotFoundScreen = lazy(() =>
-  import("@/screens/NotFound").then(({ NotFound }) => ({ default: NotFound }))
-);
+// const NotFoundScreen = lazy(() =>
+//   import("@/screens/NotFound").then(({ NotFound }) => ({ default: NotFound }))
+// );
 const LandingScreen = lazy(() =>
   import("@/screens/Landing").then(({ Landing }) => ({ default: Landing }))
 );
@@ -52,6 +52,11 @@ const FairPhotoDetailsScreen = lazy(() =>
 const StandsListScreen = lazy(() =>
   import("@/screens/stands/StandsList").then(({ StandsList }) => ({
     default: StandsList,
+  }))
+);
+const StandDetailsScreen = lazy(() =>
+  import("@/screens/stands/StandDetails").then(({ StandDetails }) => ({
+    default: StandDetails,
   }))
 );
 const FavoritesListScreen = lazy(() =>
@@ -204,6 +209,17 @@ export const AppRoutes = () => (
         render={(props) => (
           <Suspense fallback={<LoadingSuspense />}>
             <FairPhotoDetailsScreen {...props} />
+          </Suspense>
+        )}
+      />
+
+      {/* ------ FAIR ----- */}
+      <Route
+        path="/app/stands/:standID"
+        exact
+        render={(props) => (
+          <Suspense fallback={<LoadingSuspense />}>
+            <StandDetailsScreen {...props} />
           </Suspense>
         )}
       />

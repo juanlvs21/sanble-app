@@ -1,0 +1,282 @@
+.standFetcherContent {
+  --padding-top: 0 !important;
+  --padding-bottom: 0 !important;
+  --padding-start: 0 !important;
+  --padding-end: 0 !important;
+  transition: all 500ms ease-in-out;
+}
+
+.standFetcherSection {
+  height: 100% !important;
+  transition: all 500ms ease-in-out;
+}
+
+.standCoverBg {
+  background-color: var(--ion-color-primary);
+  background-image: url("/assets/images/fairs/details-bg.svg");
+  background-size: contain;
+  width: 100%;
+  height: 400px;
+  position: absolute;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  transition: all 500ms ease-in-out;
+  z-index: -1;
+}
+
+.standCoverContainer {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  height: 400px;
+}
+
+.standCover {
+  position: relative;
+  width: calc(100% - 32px);
+  height: 220px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 100px;
+  background-color: var(--ion-color-light);
+  border-radius: var(--sanble-border-radius);
+  transition: all 400ms ease-in-out;
+}
+
+.standCover .standSkeleton {
+  border-radius: var(--sanble-border-radius);
+  box-shadow: 0px 0px 5px 5px rgba(200, 200, 200, 0.1);
+  width: 100%;
+  height: 220px;
+  transition: all 500ms ease-in-out;
+}
+
+.standCover img {
+  position: relative;
+  border-radius: var(--sanble-border-radius);
+  object-fit: cover;
+  object-position: center;
+  -webkit-box-shadow: 0px 0px 5px 5px rgba(200, 200, 200, 0.1);
+  box-shadow: 0px 0px 5px 5px rgba(200, 200, 200, 0.1);
+  height: 220px;
+  width: 100%;
+  z-index: 50;
+  transition: all 500ms ease-in-out;
+}
+
+.standContent {
+  border-top-left-radius: var(--sanble-border-radius);
+  border-top-right-radius: var(--sanble-border-radius);
+  background-color: #fff;
+  margin-top: -160px !important;
+  margin: auto;
+  padding: 120px 16px 50px;
+  transition: all 400ms ease-in-out;
+}
+
+.standNameContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  word-break: break-all;
+  font-size: 20px;
+  min-height: 35px;
+}
+
+.standNameContainer h1 {
+  font-size: 22px;
+  font-weight: 600;
+  text-align: start;
+  margin: 0;
+}
+
+.standNameStars {
+  width: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 20px;
+  font-weight: 500;
+  font-size: 20px;
+  color: var(--sanble-gray-color-2);
+}
+
+.standNameStars .standNameStarsIcon {
+  width: 25px;
+  height: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 5px;
+}
+
+.standNameStars .standNameStarsIcon svg {
+  color: var(--ion-color-primary);
+}
+
+.standCoverBtnClose {
+  position: fixed;
+  top: 30px;
+  right: 30px;
+  width: 30px;
+  height: 30px;
+  border-radius: 30px;
+  z-index: 1000;
+}
+
+.standCoverBtnClose::part(native) {
+  padding: 0;
+  width: 30px;
+  height: 30px;
+  border-radius: 30px;
+  z-index: 1000;
+}
+
+.standCoverBtnClose svg {
+  color: black;
+}
+
+.standSlogan {
+  min-height: 20px;
+  margin: 5px 0;
+  color: var(--sanble-gray-color-2);
+}
+
+.standDescription {
+  margin-top: 10px;
+}
+
+.standDescription p {
+  margin: 5px 0px;
+}
+
+.standInfo {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 15px;
+  row-gap: 15px;
+  margin-top: 30px;
+}
+
+.standInfo .standInfoCard {
+  background-color: var(--ion-color-primary);
+  border-radius: var(--sanble-border-radius);
+  color: var(--ion-color-light);
+  width: 100%;
+  height: 150px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 15px;
+  padding-top: 40px;
+  cursor: pointer;
+  transition: all 400ms ease-in-out;
+}
+
+.standInfo .standInfoCard h5 {
+  font-size: 18px;
+  margin-top: 10px;
+}
+
+.standInfo .standInfoCard.isLoading {
+  background-color: var(--ion-color-medium-tint);
+  pointer-events: none;
+  transition: all 400ms ease-in-out;
+}
+
+.standReviewsContainer {
+  margin-top: 40px;
+}
+
+.standReviewsContainer h3 {
+  font-weight: 600;
+  font-size: 18px;
+}
+
+.standReviewsContainer p {
+  color: var(--sanble-gray-color-2);
+  font-weight: 500;
+  font-size: 12px;
+}
+
+.standReviewsList {
+  margin-top: 50px;
+}
+
+.standFloatBtn {
+  transition: all 500ms ease-in-out;
+}
+
+@media (max-width: 375px) {
+  .standInfo .standInfoCard h5 {
+    font-size: 14px;
+    margin-top: 10px;
+  }
+}
+
+@media (min-width: 768px) {
+  .standFetcherSection {
+    height: calc(100% - 62px) !important;
+    transition: all 500ms ease-in-out;
+  }
+
+  .standFetcherInfinite {
+    margin-top: -80px;
+  }
+
+  .standCoverBg {
+    height: 500px;
+    transition: all 500ms ease-in-out;
+  }
+
+  .standCover {
+    width: calc(100% - 20px);
+    margin-top: 15px;
+    height: 380px;
+    transition: all 500ms ease-in-out;
+  }
+
+  .standCover img {
+    height: 380px;
+    transition: all 500ms ease-in-out;
+  }
+
+  .standCover .standSkeleton {
+    height: 380px;
+    transition: all 500ms ease-in-out;
+  }
+
+  .standContent {
+    margin-top: -60px !important;
+    padding: 100px 100px 120px;
+    transition: all 500ms ease-in-out;
+  }
+}
+
+@media (min-width: 1100px) {
+  .standCoverBg {
+    height: 100%;
+  }
+  .standContent {
+    width: 1100px;
+    border-radius: var(--sanble-border-radius);
+  }
+
+  .standInfo {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .standCoverContainer {
+    width: 1100px;
+    margin: auto;
+    padding: 0;
+  }
+  .standCover {
+    width: 100%;
+  }
+}
