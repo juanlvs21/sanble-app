@@ -11,18 +11,19 @@ import { useEffect, useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import { FiEdit2 } from "react-icons/fi";
 import { IoIosArrowBack } from "react-icons/io";
-import { useNavigate, useLocation, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 import { Button } from "@/components/common/buttons/Button";
 import { HeaderModal } from "@/components/common/HeaderModal";
 import { SpinnerFullScreen } from "@/components/common/loaders/SpinnerFullScreen";
-import { TopBar } from "@/components/common/TopBar";
 import { PhotoDescription } from "@/components/modules/photo/PhotoDescription";
 import { PhotoForm } from "@/components/modules/photo/PhotoForm";
 import { useFairPhoto } from "@/hooks/fairs/useFairPhoto";
 import { useModalGoBack } from "@/hooks/useModalGoBack";
+import { useTopBarMain } from "@/hooks/useTopBarMain";
 import { useUser } from "@/hooks/useUser";
 import styles from "./FairPhotoDetails.module.css";
+import { ERoutesName } from "@/types/TRoutes";
 
 const MODAL_PHOTO_DESCRIPTION_ID = "photo-description-open-modal";
 
@@ -36,7 +37,7 @@ export const FairPhotoDetails = () => {
   const { state } = useLocation();
   const finalFairID = fairID || state?.fairID || "";
   const finalPhotoID = photoID || state?.photoID || "";
-
+  const { renderTopBarActionStart, renderTopBarActionEnd } = useTopBarMain();
   const {
     modalRef,
     photograph,
@@ -82,7 +83,7 @@ export const FairPhotoDetails = () => {
                   role: "confirm",
                   handler: () =>
                     handleDeletePhoto(photograph?.id || "", () => {
-                      navigate(`/app/ferias/${finalFairID}`, {
+                      navigate(`${ERoutesName.FAIRS_LIST}/${finalFairID}`, {
                         state: {
                           fairID: finalFairID,
                         },
@@ -114,40 +115,32 @@ export const FairPhotoDetails = () => {
 
   return (
     <>
-      <TopBar
-        title="Fotografía"
-        start={
+      {renderTopBarActionStart(
+        <Button
+          onClick={() =>
+            finalFairID
+              ? navigate(`${ERoutesName.FAIRS_LIST}/${finalFairID}`, {
+                  state: { fairID: finalFairID },
+                  replace: true,
+                })
+              : navigate(ERoutesName.FAIRS_LIST, { replace: true })
+          }
+        >
+          <IoIosArrowBack size={24} />
+        </Button>
+      )}
+
+      {user?.uid === ownerID &&
+        renderTopBarActionEnd(
           <Button
-            onClick={() =>
-              finalFairID
-                ? navigate(`/app/ferias/${finalFairID}`, {
-                    state: { fairID: finalFairID },
-                    replace: true,
-                  })
-                : navigate("/app/ferias", { replace: true })
-            }
+            isLoading={isLoading}
+            spinnerColor="primary"
+            onClick={handleActions}
+            className="animate__animated animate__fadeIn"
           >
-            <IoIosArrowBack size={24} />
+            <FiEdit2 size={24} />
           </Button>
-        }
-        end={
-          <>
-            {user?.uid === ownerID && (
-              <Button
-                isLoading={isLoading}
-                spinnerColor="primary"
-                onClick={handleActions}
-                className="animate__animated animate__fadeIn"
-              >
-                <FiEdit2 size={24} />
-              </Button>
-            )}
-          </>
-        }
-        titleSize={24}
-        sticky
-        stickyNoScroll
-      />
+        )}
 
       <PhotoDescription
         photo={photograph}

@@ -6,10 +6,11 @@ import styles from "./Auth.module.css";
 import { SpinnerFullScreen } from "@/components/common/loaders/SpinnerFullScreen";
 import { TabBar } from "@/components/modules/auth/TabBar";
 import { useApp } from "@/hooks/useApp";
+import { ERoutesName } from "@/types/TRoutes";
 
 const bgImage: Record<string, string> = {
-  "/app/sesion/entrar": "signinRoute",
-  "/app/sesion/registrarse": "signupRoute",
+  [ERoutesName.SESSION_SIGNIN]: "signinRoute",
+  [ERoutesName.SESSION_SIGNUP]: "signupRoute",
 };
 
 const getWavesClass = (pathname: string) => {

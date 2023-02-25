@@ -25,22 +25,38 @@ import "./theme/global.css";
 import "./theme/transitions.css";
 import "./theme/variables.css";
 
+import { SuspenseComponent } from "@/components/common/SuspenseComponent";
 import { AppProvider } from "@/context";
-import { AppRoutes } from "@/router";
 import { DataProvider } from "@/providers/DataProvider";
+import { Splash } from "@/screens/Splash";
+import { useStatusBar } from "@/hooks/useStatusBar";
+
+const AppRoutes = lazy(() =>
+  import("@/router").then(({ AppRoutes }) => ({
+    default: AppRoutes,
+  }))
+);
 
 setupIonicReact();
 
-const App = () => (
-  <IonApp className="animate__animated animate__fadeIn">
-    <BrowserRouter>
-      <AppProvider>
-        <DataProvider>
-          <AppRoutes />
-        </DataProvider>
-      </AppProvider>
-    </BrowserRouter>
-  </IonApp>
-);
+const App = () => {
+  const { overlaysStatusBar } = useStatusBar();
+
+  overlaysStatusBar(true);
+
+  return (
+    <IonApp className="animate__animated animate__fadeIn">
+      <BrowserRouter>
+        <AppProvider>
+          <DataProvider>
+            <SuspenseComponent LoadingComponent={Splash}>
+              <AppRoutes />
+            </SuspenseComponent>
+          </DataProvider>
+        </AppProvider>
+      </BrowserRouter>
+    </IonApp>
+  );
+};
 
 export default App;

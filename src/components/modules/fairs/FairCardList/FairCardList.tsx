@@ -1,7 +1,7 @@
 import { dayjs } from "@/helpers/time";
 import { HiOutlineCalendar } from "react-icons/hi";
-import { useMediaQuery } from "usehooks-ts";
 import { Link } from "react-router-dom";
+import { useMediaQuery } from "usehooks-ts";
 
 import { fairType } from "@/helpers/fairs";
 import { TFair } from "@/types/TFair";
@@ -10,6 +10,7 @@ import { ButtonFav } from "@/components/common/buttons/ButtonFav";
 import { ImageExtended } from "@/components/common/ImageExtended";
 import { Stars } from "@/components/common/Stars";
 import { useUser } from "@/hooks/useUser";
+import { ERoutesName } from "@/types/TRoutes";
 import styles from "./FairCardList.module.css";
 
 export type ComponentProps = {
@@ -28,7 +29,7 @@ export const FairCardList = ({ fair }: ComponentProps) => {
       className={`animate__animated animate__fadeIn ${styles.fairListCard}`}
     >
       <Link
-        to={`/app/ferias/${fair.id}`}
+        to={`${ERoutesName.FAIRS_LIST}/${fair.id}`}
         state={{ fairID: fair.id, fairName: fair.name }}
         className={styles.fairListCardLink}
       >

@@ -2,11 +2,14 @@ import { IonPage } from "@ionic/react";
 import { Outlet } from "react-router-dom";
 
 import { Sidebar } from "@/components/common/Sidebar";
+import { TopBarMain } from "@/components/modules/main/TopBarMain";
 import { useApp } from "@/hooks/useApp";
+import { useTopBarMain } from "@/hooks/useTopBarMain";
 import styles from "./Main.module.css";
 
 export const MainLayout = () => {
   const { isCapacitor, showSidebar, handleShowSidebar } = useApp();
+  const { props } = useTopBarMain();
 
   return (
     <IonPage
@@ -27,7 +30,7 @@ export const MainLayout = () => {
           onClick={() => handleShowSidebar(false)}
         />
 
-        <div id="sanble-main-topbar" />
+        {props && <TopBarMain />}
 
         <Outlet />
       </main>

@@ -10,12 +10,13 @@ import {
 import { useMemo } from "react";
 import { FiHeart, FiHome, FiLogOut, FiMapPin, FiUser } from "react-icons/fi";
 import { IoIosCloseCircleOutline } from "react-icons/io";
-import { useLocation, useMatch } from "react-router-dom";
+import { Link, useLocation, useMatch } from "react-router-dom";
 
 import { ImageExtended } from "@/components/common/ImageExtended";
 import { useApp } from "@/hooks/useApp";
 import { useAuth } from "@/hooks/useAuth";
 import { useUser } from "@/hooks/useUser";
+import { ERoutesName } from "@/types/TRoutes";
 import styles from "./Sidebar.module.css";
 
 export const Sidebar = () => {
@@ -25,34 +26,34 @@ export const Sidebar = () => {
   const { handleSignOut } = useAuth();
   const { user } = useUser();
 
-  const matchHome = useMatch("/app");
-  const matchFairsList = useMatch("/app/ferias");
-  const matchStandsList = useMatch("/app/stands");
-  const matchProductsList = useMatch("/app/productos");
-  const matchFavorites = useMatch("/app/favoritos");
-  const matchMySanble = useMatch("/app/misanble");
-  const matchNearYou = useMatch("/app/cerca");
+  const matchHome = useMatch(ERoutesName.APP);
+  const matchFairsList = useMatch(ERoutesName.FAIRS_LIST);
+  const matchStandsList = useMatch(ERoutesName.STANDS_LIST);
+  const matchProductsList = useMatch(ERoutesName.PRODUCTS_LIST);
+  const matchFavorites = useMatch(ERoutesName.FAVORITES_LIST);
+  const matchMySanble = useMatch(ERoutesName.MY_SANBLE);
+  const matchNearYou = useMatch(ERoutesName.NEAR_YOU);
   // const matchMessages = useMatch("/app/mensajes");
-  const matchProfile = useMatch("/app/perfil");
+  const matchProfile = useMatch(ERoutesName.PROFILE);
 
   const items = useMemo(
     () => [
       {
         label: "Inicio",
-        path: "/app",
+        path: ERoutesName.APP,
         icon: <FiHome size={28} />,
         active:
           matchHome || matchFairsList || matchStandsList || matchProductsList,
       },
       {
         label: "Favoritos",
-        path: "/app/favoritos",
+        path: ERoutesName.FAVORITES_LIST,
         icon: <FiHeart size={28} />,
         active: matchFavorites,
       },
       {
         label: "Mi Sanble",
-        path: "/app/misanble",
+        path: ERoutesName.MY_SANBLE,
         icon: (
           <img
             src={`/assets/icon/${matchMySanble ? "logo" : "logoWhite"}.png`}
@@ -63,7 +64,7 @@ export const Sidebar = () => {
       },
       {
         label: "Cerca de ti",
-        path: "/app/cerca",
+        path: ERoutesName.NEAR_YOU,
         icon: <FiMapPin size={28} />,
         active: matchNearYou,
       },
@@ -75,7 +76,7 @@ export const Sidebar = () => {
       // },
       {
         label: "Perfil",
-        path: "/app/perfil",
+        path: ERoutesName.PROFILE,
         icon: <FiUser size={28} />,
         active: matchProfile,
       },
@@ -137,22 +138,22 @@ export const Sidebar = () => {
       <section className={styles.sidebarListContainer}>
         <IonList className={styles.sidebarList}>
           {items.map((item) => (
-            <IonItem
-              key={item.path}
-              routerLink={item.path}
-              className={`${styles.sidebarItem} ${
-                item.active ? styles.sidebarItemActive : ""
-              }`}
-              detail={false}
-              button
-            >
-              <IonAvatar slot="start" className={styles.sidebarItemIcon}>
-                {item.icon}
-              </IonAvatar>
-              <IonLabel className={styles.sidebarItemLabel}>
-                {item.label}
-              </IonLabel>
-            </IonItem>
+            <Link key={item.path} to={item.path}>
+              <IonItem
+                className={`${styles.sidebarItem} ${
+                  item.active ? styles.sidebarItemActive : ""
+                }`}
+                detail={false}
+                button
+              >
+                <IonAvatar slot="start" className={styles.sidebarItemIcon}>
+                  {item.icon}
+                </IonAvatar>
+                <IonLabel className={styles.sidebarItemLabel}>
+                  {item.label}
+                </IonLabel>
+              </IonItem>
+            </Link>
           ))}
           <IonItem
             className={`${styles.sidebarItem} ${styles.sidebarItemLogout}`}

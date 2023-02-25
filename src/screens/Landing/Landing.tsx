@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/common/buttons/Button";
 import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 import { useLanding } from "@/hooks/useLanding";
+import { ERoutesName } from "@/types/TRoutes";
 import styles from "./Landing.module.css";
 
 export const Landing = () => {
@@ -26,7 +27,7 @@ export const Landing = () => {
           </h1>
 
           <div className={styles.btnContainer}>
-            <Link to="/app">
+            <Link to={ERoutesName.APP}>
               <Button color="secondary" className={styles.btn}>
                 Ir a la aplicación
               </Button>

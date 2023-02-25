@@ -10,6 +10,7 @@ import { setStorage } from "@/helpers/storage";
 import { StorageHideMobileWelcomeKey } from "@/helpers/storageKeys";
 import { useApp } from "@/hooks/useApp";
 import { useUser } from "@/hooks/useUser";
+import { ERoutesName } from "@/types/TRoutes";
 import styles from "./WelcomeSlides.module.css";
 
 const slideOpts = {
@@ -35,8 +36,8 @@ export const WelcomeSlides = () => {
 
   useEffect(() => {
     if (hideMobileWelcome) {
-      if (user) navigate("/app", { replace: true });
-      else navigate("/app/sesion/registrarse", { replace: true });
+      if (user) navigate(ERoutesName.APP, { replace: true });
+      else navigate(ERoutesName.SESSION_SIGNUP, { replace: true });
     }
     setTimeout(() => {
       setIsLoading(false);
@@ -46,8 +47,8 @@ export const WelcomeSlides = () => {
   const handleGoSignup = async () => {
     await setStorage(StorageHideMobileWelcomeKey, true);
 
-    if (user) navigate("/app", { replace: true });
-    else navigate("/app/sesion/registrarse", { replace: true });
+    if (user) navigate(ERoutesName.APP, { replace: true });
+    else navigate(ERoutesName.SESSION_SIGNUP, { replace: true });
   };
 
   const onBtnClicked = async (direction: "next" | "prev") => {

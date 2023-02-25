@@ -264,6 +264,10 @@ form {
   grid-template-columns: repeat(1, minmax(0, 1fr));
 }
 
+.dataListContainer.isCapacitor {
+  margin-top: 20px;
+}
+
 .Toastify {
   z-index: 9999999;
 }

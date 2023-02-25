@@ -7,6 +7,7 @@ import { FairCardBest } from "@/components/modules/fairs/FairCardBest";
 import { ProductCarouselCard } from "@/components/modules/products/ProductCard";
 import { TFair } from "@/types/TFair";
 import { TProductType } from "@/types/TProduct";
+import { useApp } from "@/hooks/useApp";
 import { TStand } from "@/types/TStand";
 import styles from "./HomeScreenContent.module.css";
 
@@ -51,6 +52,7 @@ export const HomeScreenContent = ({
   isLoadingProductTypes,
 }: ComponentProps) => {
   const isLaptop = useMediaQuery("(min-width: 1024px)");
+  const { isCapacitor } = useApp();
 
   return (
     <Fetcher
@@ -60,7 +62,9 @@ export const HomeScreenContent = ({
     >
       <InputSearch
         placeholder="Buscar Ferias, Stands, etc..."
-        classNameItem={styles.homeSearchInput}
+        classNameItem={`${styles.homeSearchInput} ${
+          isCapacitor ? styles.homeSearchInputCapacitor : ""
+        }`}
       />
       <Carousel
         title="Mejores Ferias"

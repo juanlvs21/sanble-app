@@ -11,13 +11,12 @@ import { HiOutlinePhotograph } from "react-icons/hi";
 import { IoIosArrowUp } from "react-icons/io";
 import { MdOutlineStorefront } from "react-icons/md";
 import { TiStar } from "react-icons/ti";
-import { useNavigate, useLocation, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 import { ButtonFav } from "@/components/common/buttons/ButtonFav";
 import { Fetcher } from "@/components/common/Fetcher";
 import { ImageExtended } from "@/components/common/ImageExtended";
 import { Skeleton } from "@/components/common/Skeleton";
-import { TopBar } from "@/components/common/TopBar";
 import { FairModalMap } from "@/components/modules/fairs/FairModalMap";
 import { FairModalStands } from "@/components/modules/fairs/FairModalStands";
 import { InfoModal } from "@/components/modules/info/InfoModal";
@@ -29,8 +28,11 @@ import { getNavStateText } from "@/helpers/navigation";
 import { useFairDetails } from "@/hooks/fairs/useFairDetails";
 import { useFairPhoto } from "@/hooks/fairs/useFairPhoto";
 import { useFairStands } from "@/hooks/fairs/useFairStands";
+import { useApp } from "@/hooks/useApp";
 import { useDocumentTitle } from "@/hooks/useDocumentTitle";
+import { useTopBarMain } from "@/hooks/useTopBarMain";
 import { useUser } from "@/hooks/useUser";
+import { ERoutesName } from "@/types/TRoutes";
 import styles from "./FairDetails.module.css";
 
 const MODAL_INFO_ID = "fair-info-open-modal";
@@ -46,6 +48,8 @@ export const FairDetails = () => {
   const [presentAlert] = useIonAlert();
   const { fairID } = useParams<TRouteParams>();
   const { state } = useLocation();
+  const { renderTopBarActionEnd } = useTopBarMain();
+  const { isCapacitor } = useApp();
   const finalFairID = fairID || state?.fairID || "";
   const {
     fair,
@@ -93,7 +97,8 @@ export const FairDetails = () => {
       {
         text: "Publicar Nueva Fotografía",
         cssClass: "",
-        handler: () => navPhoto(`/app/ferias/${finalFairID}/foto`),
+        handler: () =>
+          navPhoto(`${ERoutesName.FAIRS_LIST}/${finalFairID}/foto`),
       },
     ];
 
@@ -103,10 +108,13 @@ export const FairDetails = () => {
           text: "Editar Fotografía",
           cssClass: "",
           handler: () =>
-            navPhoto(`/app/ferias/${finalFairID}/foto/${photoID}`, {
-              fairID: finalFairID,
-              photoID,
-            }),
+            navPhoto(
+              `${ERoutesName.FAIRS_LIST}/${finalFairID}/foto/${photoID}`,
+              {
+                fairID: finalFairID,
+                photoID,
+              }
+            ),
         },
         {
           text: "Eliminar Fotografía",
@@ -153,23 +161,16 @@ export const FairDetails = () => {
 
   return (
     <>
-      <TopBar
-        title="Detalles"
-        startGoBack
-        startGoBackUrl={state?.goBackUrl || "/app/ferias"}
-        end={
-          <ButtonFav
-            isLoading={loadingSetFav}
-            color="light"
-            spinnerColor="dark"
-            isActive={user?.favoriteFairs.includes(fair?.id || "")}
-            onClick={() => (fair ? handleSetFavoriteFair(fair.id) : undefined)}
-          />
-        }
-        titleSize={24}
-        titleLight
-        sticky
-      />
+      {renderTopBarActionEnd(
+        <ButtonFav
+          isLoading={loadingSetFav}
+          color="light"
+          spinnerColor="dark"
+          isActive={user?.favoriteFairs.includes(fair?.id || "")}
+          onClick={() => (fair ? handleSetFavoriteFair(fair.id) : undefined)}
+          className="animate__animated animate__fadeIn"
+        />
+      )}
 
       <div
         className={`${styles.fairCoverBg} animate__animated animate__fadeIn`}
@@ -179,7 +180,9 @@ export const FairDetails = () => {
         handleRefresh={handleRefreshReviews}
         handleInfiniteScroll={handleInfiniteReviews}
         refreshSpinnerColor="medium"
-        classNameSection={`${styles.fairFetcherSection} animate__animated animate__screenInUp `}
+        classNameSection={`${styles.fairFetcherSection} ${
+          isCapacitor ? styles.isCapacitor : ""
+        } animate__animated animate__screenInUp `}
         classNameContent={`${styles.fairFetcherContent}`}
         classNameInfinite={styles.fairFetcherInfinite}
       >

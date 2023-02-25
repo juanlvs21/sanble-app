@@ -1,12 +1,13 @@
 import { Link } from "react-router-dom";
 import { useMediaQuery } from "usehooks-ts";
 
-import { fairType } from "@/helpers/fairs";
-import { TFair } from "@/types/TFair";
-import styles from "./FairCardBest.module.css";
-import { HiOutlineCalendar } from "react-icons/hi";
-import { dayjs } from "@/helpers/time";
 import { ImageExtended } from "@/components/common/ImageExtended";
+import { fairType } from "@/helpers/fairs";
+import { dayjs } from "@/helpers/time";
+import { TFair } from "@/types/TFair";
+import { ERoutesName } from "@/types/TRoutes";
+import { HiOutlineCalendar } from "react-icons/hi";
+import styles from "./FairCardBest.module.css";
 
 export type ComponentProps = {
   /**
@@ -20,8 +21,12 @@ export const FairCardBest = ({ fair }: ComponentProps) => {
 
   return (
     <Link
-      to={`/app/ferias/${fair.id}`}
-      state={{ fairID: fair.id, fairName: fair.name, goBackUrl: "/app" }}
+      to={`${ERoutesName.FAIRS_LIST}/${fair.id}`}
+      state={{
+        fairID: fair.id,
+        fairName: fair.name,
+        goBackUrl: ERoutesName.APP,
+      }}
     >
       <article className={styles.fairBestCard}>
         <ImageExtended

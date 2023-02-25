@@ -1,11 +1,12 @@
-import { lazy, Suspense } from "react";
+import { lazy } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { isPlatform } from "@ionic/react";
 
-import { LoadingSuspense } from "@/components/common/loaders/LoadingSuspense";
+import { SuspenseComponent } from "@/components/common/SuspenseComponent";
 import { AuthLayout } from "@/components/layouts/Auth";
 import { MainLayout } from "@/components/layouts/Main";
 import { HomeLayout } from "@/components/layouts/Home";
+import { ERoutesName } from "@/types/TRoutes";
 
 const NotFoundScreen = lazy(() =>
   import("@/screens/NotFound").then(({ NotFound }) => ({ default: NotFound }))
@@ -27,6 +28,17 @@ const SignupScreen = lazy(() =>
 const HomeScreen = lazy(() =>
   import("@/screens/Home").then(({ Home }) => ({ default: Home }))
 );
+const FavoritesListScreen = lazy(() =>
+  import("@/screens/favorites/FavoritesList").then(({ FavoritesList }) => ({
+    default: FavoritesList,
+  }))
+);
+const NearYouScreen = lazy(() =>
+  import("@/screens/NearYou").then(({ NearYou }) => ({
+    default: NearYou,
+  }))
+);
+
 const FairsListScreen = lazy(() =>
   import("@/screens/fairs/FairsList").then(({ FairsList }) => ({
     default: FairsList,
@@ -54,21 +66,15 @@ const StandsListScreen = lazy(() =>
     default: StandsList,
   }))
 );
-const FavoritesListScreen = lazy(() =>
-  import("@/screens/favorites/FavoritesList").then(({ FavoritesList }) => ({
-    default: FavoritesList,
+const StandDetailsScreen = lazy(() =>
+  import("@/screens/stands/StandDetails").then(({ StandDetails }) => ({
+    default: StandDetails,
   }))
 );
-const NearYouScreen = lazy(() =>
-  import("@/screens/NearYou").then(({ NearYou }) => ({
-    default: NearYou,
-  }))
-);
-
 export const AppRoutes = () => {
   return (
     <Routes>
-      <Route path="/" element={<MainLayout />}>
+      <Route path={ERoutesName.ROOT} element={<MainLayout />}>
         <Route
           index
           element={
@@ -82,125 +88,134 @@ export const AppRoutes = () => {
           }
         />
       </Route>
-      <Route path="/app" element={<MainLayout />}>
-        <Route path="" element={<HomeLayout />}>
+      <Route path={ERoutesName.APP} element={<MainLayout />}>
+        <Route path={ERoutesName.APP} element={<HomeLayout />}>
           <Route
             index
             element={
-              <Suspense fallback={<LoadingSuspense />}>
+              <SuspenseComponent>
                 <HomeScreen />
-              </Suspense>
+              </SuspenseComponent>
             }
           />
           <Route
-            path="ferias"
+            path={ERoutesName.FAIRS_LIST}
             element={
-              <Suspense fallback={<LoadingSuspense />}>
+              <SuspenseComponent>
                 <FairsListScreen />
-              </Suspense>
+              </SuspenseComponent>
             }
           />
           <Route
-            path="stands"
+            path={ERoutesName.STANDS_LIST}
             element={
-              <Suspense fallback={<LoadingSuspense />}>
+              <SuspenseComponent>
                 <StandsListScreen />
-              </Suspense>
+              </SuspenseComponent>
             }
           />
           <Route
-            path="productos"
+            path={ERoutesName.PRODUCTS_LIST}
             element={
-              <Suspense fallback={<LoadingSuspense />}>
+              <SuspenseComponent>
                 <FavoritesListScreen />
-              </Suspense>
+              </SuspenseComponent>
             }
           />
         </Route>
-      </Route>
-      <Route path="/app" element={<MainLayout />}>
         <Route
-          path="favoritos"
+          path={ERoutesName.FAVORITES_LIST}
           element={
-            <Suspense fallback={<LoadingSuspense />}>
+            <SuspenseComponent>
               <FavoritesListScreen />
-            </Suspense>
+            </SuspenseComponent>
           }
         />
         <Route
-          path="misanble"
+          path={ERoutesName.MY_SANBLE}
           element={
-            <Suspense fallback={<LoadingSuspense />}>
+            <SuspenseComponent>
               <FavoritesListScreen />
-            </Suspense>
+            </SuspenseComponent>
           }
         />
         <Route
-          path="cerca"
+          path={ERoutesName.NEAR_YOU}
           element={
-            <Suspense fallback={<LoadingSuspense />}>
+            <SuspenseComponent>
               <NearYouScreen />
-            </Suspense>
+            </SuspenseComponent>
           }
         />
         <Route
-          path="perfil"
+          path={ERoutesName.PROFILE}
           element={
-            <Suspense fallback={<LoadingSuspense />}>
+            <SuspenseComponent>
               <FavoritesListScreen />
-            </Suspense>
+            </SuspenseComponent>
           }
         />
         <Route
-          path="/app/ferias/:fairID"
+          path={ERoutesName.FAIR_DETAILS}
           element={
-            <Suspense fallback={<LoadingSuspense />}>
+            <SuspenseComponent>
               <FairDetailsScreen />
-            </Suspense>
+            </SuspenseComponent>
           }
         />
         <Route
-          path="/app/ferias/:fairID/foto"
+          path={ERoutesName.FAIR_DETAILS_PHOTO_NEW}
           element={
-            <Suspense fallback={<LoadingSuspense />}>
+            <SuspenseComponent>
               <FairPhotoNewScreen />
-            </Suspense>
+            </SuspenseComponent>
           }
         />
         <Route
-          path="/app/ferias/:fairID/foto/:photoID"
+          path={ERoutesName.FAIR_DETAILS_PHOTO}
           element={
-            <Suspense fallback={<LoadingSuspense />}>
+            <SuspenseComponent>
               <FairPhotoDetailsScreen />
-            </Suspense>
+            </SuspenseComponent>
+          }
+        />
+        <Route
+          path={ERoutesName.STAND_DETAILS}
+          element={
+            <SuspenseComponent>
+              <StandDetailsScreen />
+            </SuspenseComponent>
           }
         />
       </Route>
-      <Route path="/app/sesion" element={<AuthLayout />}>
-        <Route index element={<Navigate to="/app/sesion/entrar" replace />} />
+      <Route path={ERoutesName.SESSION} element={<AuthLayout />}>
         <Route
-          path="entrar"
+          index
+          element={<Navigate to={ERoutesName.SESSION_SIGNIN} replace />}
+        />
+        <Route
+          path={ERoutesName.SESSION_SIGNIN}
           element={
-            <Suspense fallback={<LoadingSuspense />}>
+            <SuspenseComponent>
               <SigninScreen />
-            </Suspense>
+            </SuspenseComponent>
           }
         />
         <Route
-          path="registrarse"
+          path={ERoutesName.SESSION_SIGNUP}
           element={
-            <Suspense fallback={<LoadingSuspense />}>
+            <SuspenseComponent>
               <SignupScreen />
-            </Suspense>
+            </SuspenseComponent>
           }
         />
       </Route>
       <Route
         path="*"
         element={
-          <Suspense fallback={<LoadingSuspense />}>
+          <SuspenseComponent>
             <NotFoundScreen />
-          </Suspense>
+          </SuspenseComponent>
         }
       />
     </Routes>

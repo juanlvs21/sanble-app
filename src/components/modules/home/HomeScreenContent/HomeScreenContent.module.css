@@ -23,6 +23,10 @@
   position: relative;
 }
 
+.homeSearchInputCapacitor {
+  margin-top: 20px;
+}
+
 .homeCarousel {
   margin-top: 25px;
 }

@@ -8,10 +8,10 @@ import { Offline } from "@/components/common/Offline";
 import { useApp } from "@/hooks/useApp";
 import { useAuth } from "@/hooks/useAuth";
 import { useOnline } from "@/hooks/useOnline";
-import { useStatusBar } from "@/hooks/useStatusBar";
 import { useUser } from "@/hooks/useUser";
 import { Splash } from "@/screens/Splash";
 import { getSessionRequest } from "@/services";
+import { ERoutesName } from "@/types/TRoutes";
 
 export type ComponentProps = {
   /**
@@ -34,7 +34,6 @@ export const DataProvider = ({ children }: ComponentProps) => {
   } = useApp();
   const { handleGetSession } = useAuth();
   const { user } = useUser();
-  const { overlaysStatusBar } = useStatusBar();
   const { online } = useOnline();
 
   useEffect(() => {
@@ -82,10 +81,12 @@ export const DataProvider = ({ children }: ComponentProps) => {
   }, []);
 
   useEffect(() => {
-    overlaysStatusBar(true);
-
-    if (!location.pathname.includes("/app/sesion") && readyToUse && !user) {
-      navigate("/app/sesion/entrar", { replace: true });
+    if (
+      !location.pathname.includes(ERoutesName.SESSION) &&
+      readyToUse &&
+      !user
+    ) {
+      navigate(ERoutesName.SESSION_SIGNIN, { replace: true });
     }
   }, [location.pathname]);
 

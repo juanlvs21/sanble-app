@@ -30,7 +30,9 @@ import { useStandDetails } from "@/hooks/stands/useStandDetails";
 // import { useStandFairs } from "@/hooks/stands/useStandFairs";
 import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 import { useUser } from "@/hooks/useUser";
+import { useTopBarMain } from "@/hooks/useTopBarMain";
 import styles from "./StandDetails.module.css";
+import { useApp } from "@/hooks/useApp";
 
 const MODAL_INFO_ID = "stand-info-open-modal";
 const MODAL_STANDS_ID = "stand-stands-open-modal";
@@ -44,6 +46,8 @@ export const StandDetails = () => {
   const [presentAlert] = useIonAlert();
   const { standID } = useParams<TRouteParams>();
   const { state } = useLocation();
+  const { renderTopBarActionEnd } = useTopBarMain();
+  const { isCapacitor } = useApp();
   const finalStandID = standID || state?.standID || "";
   const {
     stand,
@@ -80,25 +84,15 @@ export const StandDetails = () => {
 
   return (
     <>
-      <TopBar
-        title="Detalles"
-        startGoBack
-        startGoBackUrl={state?.goBackUrl || "/app/stands"}
-        end={
-          <ButtonFav
-            isLoading={loadingSetFav}
-            color="light"
-            spinnerColor="dark"
-            isActive={user?.favoriteStands.includes(stand?.id || "")}
-            onClick={() =>
-              stand ? handleSetFavoriteStand(stand.id) : undefined
-            }
-          />
-        }
-        titleSize={24}
-        titleLight
-        sticky
-      />
+      {renderTopBarActionEnd(
+        <ButtonFav
+          isLoading={loadingSetFav}
+          color="light"
+          spinnerColor="dark"
+          isActive={user?.favoriteStands.includes(stand?.id || "")}
+          onClick={() => (stand ? handleSetFavoriteStand(stand.id) : undefined)}
+        />
+      )}
 
       <div
         className={`${styles.standCoverBg} animate__animated animate__fadeIn`}
@@ -108,7 +102,9 @@ export const StandDetails = () => {
         handleRefresh={handleRefreshReviews}
         handleInfiniteScroll={handleInfiniteReviews}
         refreshSpinnerColor="medium"
-        classNameSection={`${styles.standFetcherSection} animate__animated animate__screenInUp `}
+        classNameSection={`${styles.standFetcherSection} ${
+          isCapacitor ? styles.isCapacitor : ""
+        } animate__animated animate__screenInUp `}
         classNameContent={`${styles.standFetcherContent}`}
         classNameInfinite={styles.standFetcherInfinite}
       >

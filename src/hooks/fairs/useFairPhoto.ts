@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { useToast } from "@/hooks/useToast";
@@ -9,6 +9,7 @@ import {
   uploadFairPhotoRequest,
 } from "@/services";
 import { TPhotograph, TPhotographForm } from "@/types/TPhotograph";
+import { ERoutesName } from "@/types/TRoutes";
 
 export const useFairPhoto = (fairID: string) => {
   const { toast } = useToast();
@@ -56,7 +57,7 @@ export const useFairPhoto = (fairID: string) => {
         type: "success",
       });
 
-      navigate(`/app/ferias/${fairID}/foto/${photograph.id}`, {
+      navigate(`${ERoutesName.FAIRS_LIST}/${fairID}/foto/${photograph.id}`, {
         state: {
           fairID,
           photoID: photograph.id,
