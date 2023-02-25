@@ -3,7 +3,6 @@ import {
   IonButtons,
   IonContent,
   IonModal,
-  IonPage,
   IonToolbar,
   useIonActionSheet,
   useIonAlert,
@@ -118,7 +117,7 @@ export const FairPhotoDetails: React.FC<TPageProps> = () => {
   useModalGoBack(isOpen, handleDismiss);
 
   return (
-    <IonPage>
+    <>
       <TopBar
         title="Fotografía"
         start={
@@ -200,6 +199,6 @@ export const FairPhotoDetails: React.FC<TPageProps> = () => {
           />
         </IonModal>
       )}
-    </IonPage>
+    </>
   );
 };

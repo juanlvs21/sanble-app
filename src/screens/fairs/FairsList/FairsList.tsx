@@ -1,4 +1,5 @@
-import { IonPage, useIonActionSheet } from "@ionic/react";
+import { useIonActionSheet } from "@ionic/react";
+import { createPortal } from "react-dom";
 import { BiFilterAlt } from "react-icons/bi";
 import { RouteComponentProps } from "react-router";
 
@@ -10,12 +11,14 @@ import { FairCardList } from "@/components/modules/fairs/FairCardList";
 import { useFairsList } from "@/hooks/fairs/useFairsList";
 import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 import styles from "./FairsList.module.css";
+import { useTopBar } from "@/hooks/useTopBar";
 
 type TPageProps = RouteComponentProps<{}>;
 
 export const FairsList: React.FC<TPageProps> = () => {
   useDocumentTitle("Lista de Ferias 🛍️");
   const [present] = useIonActionSheet();
+  const { renderTopBar } = useTopBar();
   const {
     list,
     orderBy,
@@ -37,70 +40,72 @@ export const FairsList: React.FC<TPageProps> = () => {
   };
 
   return (
-    <IonPage>
-      <TopBar
-        title="Ferias"
-        end={
-          <Button
-            onClick={() =>
-              present({
-                header: "Ordenar Ferias",
-                buttons: [
-                  {
-                    text: "Mejor puntuadas",
-                    cssClass: actionCssClasses(
-                      orderBy === "stars",
-                      orderDir === "desc"
-                    ),
-                    handler: () => handleShorting("stars", "desc"),
-                  },
-                  {
-                    text: "Menor puntuadas",
-                    cssClass: actionCssClasses(
-                      orderBy === "stars",
-                      orderDir === "asc"
-                    ),
-                    handler: () => handleShorting("stars", "asc"),
-                  },
-                  {
-                    text: "Fechas cercanas",
-                    cssClass: actionCssClasses(
-                      orderBy === "celebrationDate",
-                      orderDir === "desc"
-                    ),
-                    handler: () => handleShorting("celebrationDate", "desc"),
-                  },
-                  {
-                    text: "Por nombre",
-                    cssClass: actionCssClasses(
-                      orderBy === "name",
-                      orderDir === "asc"
-                    ),
-                    handler: () => handleShorting("name", "asc"),
-                  },
-                  {
-                    text: "Limpiar filtro",
-                    cssClass: actionCssClasses(),
-                    handler: () => handleShorting("stars", "desc"),
-                  },
-                  {
-                    text: "Cancel",
-                    cssClass: "danger-color",
-                    role: "cancel",
-                    data: {
-                      action: "cancel",
+    <>
+      {renderTopBar(
+        <TopBar
+          title="Ferias"
+          end={
+            <Button
+              onClick={() =>
+                present({
+                  header: "Ordenar Ferias",
+                  buttons: [
+                    {
+                      text: "Mejor puntuadas",
+                      cssClass: actionCssClasses(
+                        orderBy === "stars",
+                        orderDir === "desc"
+                      ),
+                      handler: () => handleShorting("stars", "desc"),
                     },
-                  },
-                ],
-              })
-            }
-          >
-            <BiFilterAlt size={24} />
-          </Button>
-        }
-        startUser
-        sticky
-      />
+                    {
+                      text: "Menor puntuadas",
+                      cssClass: actionCssClasses(
+                        orderBy === "stars",
+                        orderDir === "asc"
+                      ),
+                      handler: () => handleShorting("stars", "asc"),
+                    },
+                    {
+                      text: "Fechas cercanas",
+                      cssClass: actionCssClasses(
+                        orderBy === "celebrationDate",
+                        orderDir === "desc"
+                      ),
+                      handler: () => handleShorting("celebrationDate", "desc"),
+                    },
+                    {
+                      text: "Por nombre",
+                      cssClass: actionCssClasses(
+                        orderBy === "name",
+                        orderDir === "asc"
+                      ),
+                      handler: () => handleShorting("name", "asc"),
+                    },
+                    {
+                      text: "Limpiar filtro",
+                      cssClass: actionCssClasses(),
+                      handler: () => handleShorting("stars", "desc"),
+                    },
+                    {
+                      text: "Cancel",
+                      cssClass: "danger-color",
+                      role: "cancel",
+                      data: {
+                        action: "cancel",
+                      },
+                    },
+                  ],
+                })
+              }
+            >
+              <BiFilterAlt size={24} />
+            </Button>
+          }
+          startUser
+          sticky
+        />
+      )}
 
       <Fetcher
         handleRefresh={handleRefresh}
@@ -121,6 +126,6 @@ export const FairsList: React.FC<TPageProps> = () => {
             : list.map((fair) => <FairCardList key={fair.id} fair={fair} />)}
         </div>
       </Fetcher>
-    </IonPage>
+    </>
   );
 };

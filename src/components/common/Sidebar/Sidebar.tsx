@@ -26,7 +26,7 @@ export const Sidebar = () => {
   const { user } = useUser();
 
   const matchHome = useRouteMatch({
-    path: "/app",
+    path: "/app/inicio",
     exact: true,
   });
   const matchFairsList = useRouteMatch({
@@ -66,7 +66,7 @@ export const Sidebar = () => {
     () => [
       {
         label: "Inicio",
-        path: "/app",
+        path: "/app/inicio",
         icon: <FiHome size={28} />,
         active:
           matchHome || matchFairsList || matchStandsList || matchProductsList,

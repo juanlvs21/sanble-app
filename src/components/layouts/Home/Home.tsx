@@ -11,7 +11,7 @@ export type ComponentProps = {
 
 export const HomeLayout = ({ children }: ComponentProps) => {
   const matchApp = useRouteMatch({
-    path: "/app",
+    path: "/app/inicio",
     exact: true,
   });
   const matchAppFairs = useRouteMatch({

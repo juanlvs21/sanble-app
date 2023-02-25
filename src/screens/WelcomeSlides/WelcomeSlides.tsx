@@ -37,7 +37,7 @@ export const WelcomeSlides: React.FC<TPageProps> = () => {
 
   useEffect(() => {
     if (hideMobileWelcome) {
-      if (user) history.replace("/app");
+      if (user) history.replace("/app/inicio");
       else history.replace("/app/sesion/registrarse");
     }
     setTimeout(() => {
@@ -48,7 +48,7 @@ export const WelcomeSlides: React.FC<TPageProps> = () => {
   const handleGoSignup = async () => {
     await setStorage(StorageHideMobileWelcomeKey, true);
 
-    if (user) history.replace("/app");
+    if (user) history.replace("/app/inicio");
     else history.replace("/app/sesion/registrarse");
   };
 

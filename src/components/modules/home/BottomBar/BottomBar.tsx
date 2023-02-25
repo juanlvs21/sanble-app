@@ -13,7 +13,7 @@ export const BottomBar = () => {
   const { pathname } = useLocation();
 
   const matchHome = useRouteMatch({
-    path: "/app",
+    path: "/app/inicio",
     exact: true,
   });
   const matchFairsList = useRouteMatch({
@@ -32,7 +32,7 @@ export const BottomBar = () => {
   const items = useMemo(
     () => [
       {
-        path: "/app",
+        path: "/app/inicio",
         icon: <FiHome size={26} />,
         active: matchHome,
       },

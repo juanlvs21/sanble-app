@@ -2,7 +2,6 @@ import {
   IonFab,
   IonFabButton,
   IonFabList,
-  IonPage,
   useIonActionSheet,
   useIonAlert,
 } from "@ionic/react";
@@ -161,7 +160,7 @@ export const FairDetails: React.FC<TPageProps> = (props) => {
   };
 
   return (
-    <IonPage>
+    <>
       <TopBar
         title="Detalles"
         startGoBack
@@ -365,6 +364,6 @@ export const FairDetails: React.FC<TPageProps> = (props) => {
         handleInfinite={handleInfiniteStands}
         isLoading={isLoadingStands}
       />
-    </IonPage>
+    </>
   );
 };

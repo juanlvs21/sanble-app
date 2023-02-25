@@ -79,7 +79,7 @@ export const useAuth = () => {
       try {
         await signinRequest(userForm);
         await handleLoadUser();
-        history.replace("/app");
+        history.replace("/app/inicio");
       } catch (error) {
         await signOutRequest();
         await clearSessionRedirect({ withLogout: true });
@@ -96,7 +96,7 @@ export const useAuth = () => {
 
       await signinRequest(userForm);
       await handleLoadUser();
-      history.replace("/app");
+      history.replace("/app/inicio");
     } catch (error: any) {
       await signOutRequest();
       setIsLoadingFull(false);
@@ -120,7 +120,7 @@ export const useAuth = () => {
 
       await handleLoadUser();
 
-      history.replace("/app");
+      history.replace("/app/inicio");
     } catch (error) {
       await signOutRequest();
       setIsLoadingFull(false);
@@ -153,7 +153,7 @@ export const useAuth = () => {
         await handleLoadUser();
 
         if (pathname.includes("/sesion")) {
-          history.replace("/app");
+          history.replace("/app/inicio");
         }
       } catch (error) {
         await clearSessionRedirect({ withLogout: true });

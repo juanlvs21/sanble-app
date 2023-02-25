@@ -1,4 +1,3 @@
-import { IonPage } from "@ionic/react";
 import { RouteComponentProps } from "react-router";
 
 import { TopBar } from "@/components/common/TopBar";
@@ -16,7 +15,7 @@ export const NearYou: React.FC<TPageProps> = () => {
   const { isCapacitor } = useApp();
 
   return (
-    <IonPage>
+    <>
       <TopBar title="Cerca de ti" startUser stickyNoScroll />
       <section
         className={`${styles.mapSection} animate__animated animate__screenInUp`}
@@ -29,6 +28,6 @@ export const NearYou: React.FC<TPageProps> = () => {
           }`}
         />
       </section>
-    </IonPage>
+    </>
   );
 };

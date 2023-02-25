@@ -9,7 +9,11 @@ export const TopBarUserBtn = () => {
   const { user } = useUser();
 
   return (
-    <Button onClick={() => handleShowSidebar()} icon-only>
+    <Button
+      onClick={() => handleShowSidebar()}
+      icon-only
+      className=" animate__animated animate__fadeIn"
+    >
       <ImageExtended
         src={user?.photoURL}
         alt="Perfil"

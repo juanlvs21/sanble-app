@@ -1,15 +1,33 @@
 import { IonRouterOutlet, IonSplitPane, isPlatform } from "@ionic/react";
-import { lazy, Suspense } from "react";
-import { Route, Redirect } from "react-router-dom";
+import { lazy } from "react";
+import { Redirect, Route } from "react-router-dom";
 
-import { LoadingSuspense } from "@/components/common/loaders/LoadingSuspense";
-import { AuthLayout } from "@/components/layouts/Auth";
-import { HomeLayout } from "@/components/layouts/Home";
-import { MainLayout } from "@/components/layouts/Main";
+// import {NotFound} from "@/screens/NotFound"
+import { FairDetails } from "@/screens/fairs/FairDetails";
+import { FairsList } from "@/screens/fairs/FairsList";
+import { FairPhotoDetails } from "@/screens/fairs/photo/FairPhotoDetails";
+import { FairPhotoNew } from "@/screens/fairs/photo/FairPhotoNew";
+import { FavoritesList } from "@/screens/favorites/FavoritesList";
+import { Home } from "@/screens/Home";
+import { NearYou } from "@/screens/NearYou";
+import { StandDetails } from "@/screens/stands/StandDetails";
+import { StandsList } from "@/screens/stands/StandsList";
 
-// const NotFoundScreen = lazy(() =>
-//   import("@/screens/NotFound").then(({ NotFound }) => ({ default: NotFound }))
-// );
+const MainLayout = lazy(() =>
+  import("@/components/layouts/Main").then(({ MainLayout }) => ({
+    default: MainLayout,
+  }))
+);
+const HomeLayout = lazy(() =>
+  import("@/components/layouts/Home").then(({ HomeLayout }) => ({
+    default: HomeLayout,
+  }))
+);
+const AuthLayout = lazy(() =>
+  import("@/components/layouts/Auth").then(({ AuthLayout }) => ({
+    default: AuthLayout,
+  }))
+);
 const LandingScreen = lazy(() =>
   import("@/screens/Landing").then(({ Landing }) => ({ default: Landing }))
 );
@@ -24,51 +42,6 @@ const SigninScreen = lazy(() =>
 const SignupScreen = lazy(() =>
   import("@/screens/auth/Signup").then(({ Signup }) => ({ default: Signup }))
 );
-const HomeScreen = lazy(() =>
-  import("@/screens/Home").then(({ Home }) => ({ default: Home }))
-);
-const FairsListScreen = lazy(() =>
-  import("@/screens/fairs/FairsList").then(({ FairsList }) => ({
-    default: FairsList,
-  }))
-);
-const FairDetailsScreen = lazy(() =>
-  import("@/screens/fairs/FairDetails").then(({ FairDetails }) => ({
-    default: FairDetails,
-  }))
-);
-const FairPhotoNewScreen = lazy(() =>
-  import("@/screens/fairs/photo/FairPhotoNew").then(({ FairPhotoNew }) => ({
-    default: FairPhotoNew,
-  }))
-);
-const FairPhotoDetailsScreen = lazy(() =>
-  import("@/screens/fairs/photo/FairPhotoDetails").then(
-    ({ FairPhotoDetails }) => ({
-      default: FairPhotoDetails,
-    })
-  )
-);
-const StandsListScreen = lazy(() =>
-  import("@/screens/stands/StandsList").then(({ StandsList }) => ({
-    default: StandsList,
-  }))
-);
-const StandDetailsScreen = lazy(() =>
-  import("@/screens/stands/StandDetails").then(({ StandDetails }) => ({
-    default: StandDetails,
-  }))
-);
-const FavoritesListScreen = lazy(() =>
-  import("@/screens/favorites/FavoritesList").then(({ FavoritesList }) => ({
-    default: FavoritesList,
-  }))
-);
-const NearYouScreen = lazy(() =>
-  import("@/screens/NearYou").then(({ NearYou }) => ({
-    default: NearYou,
-  }))
-);
 
 export const AppRoutes = () => (
   <IonSplitPane contentId="main">
@@ -78,152 +51,102 @@ export const AppRoutes = () => (
         path="/"
         exact
         render={(props) => (
-          <Suspense fallback={<LoadingSuspense />}>
-            <>
-              {isPlatform("capacitor") ? (
-                <WelcomeSlidesScreen {...props} />
-              ) : (
-                <LandingScreen {...props} />
+          <>
+            {isPlatform("capacitor") ? (
+              <WelcomeSlidesScreen {...props} />
+            ) : (
+              <LandingScreen {...props} />
+            )}
+          </>
+        )}
+      />
+
+      <Route
+        path="/app"
+        render={() => (
+          <MainLayout>
+            {/* ------ MAIN (SIDEBAR) ----- */}
+            <Route
+              path="/app/favoritos"
+              exact
+              render={(props) => <FavoritesList {...props} />}
+            />
+            <Route
+              path="/app/misanble"
+              exact
+              render={(props) => <FavoritesList {...props} />}
+            />
+            <Route
+              path="/app/cerca"
+              exact
+              render={(props) => <NearYou {...props} />}
+            />
+            <Route
+              path="/app/perfil"
+              exact
+              render={(props) => <FavoritesList {...props} />}
+            />
+
+            {/* ------ HOME ----- */}
+            <Route
+              path="/app"
+              render={() => (
+                <HomeLayout>
+                  <Route
+                    path="/app/inicio"
+                    exact
+                    render={(props) => <Home {...props} />}
+                  />
+                  <Route
+                    path="/app/ferias"
+                    exact
+                    render={(props) => <FairsList {...props} />}
+                  />
+                  <Route
+                    path="/app/stands"
+                    exact
+                    render={(props) => <StandsList {...props} />}
+                  />
+                  <Route
+                    path="/app/productos"
+                    exact
+                    render={(props) => <FavoritesList {...props} />}
+                  />
+                  <Route
+                    path="/app"
+                    exact
+                    render={() => <Redirect to="/app/inicio" />}
+                  />
+                </HomeLayout>
               )}
-            </>
-          </Suspense>
+            />
+
+            {/* ------ FAIR ----- */}
+            <Route
+              path="/app/ferias/:fairID"
+              exact
+              render={(props) => <FairDetails {...props} />}
+            />
+            <Route
+              path="/app/ferias/:fairID/foto"
+              exact
+              render={(props) => <FairPhotoNew {...props} />}
+            />
+            <Route
+              path="/app/ferias/:fairID/foto/:photoID"
+              exact
+              render={(props) => <FairPhotoDetails {...props} />}
+            />
+
+            {/* ------ FAIR ----- */}
+            <Route
+              path="/app/stands/:standID"
+              exact
+              render={(props) => <StandDetails {...props} />}
+            />
+          </MainLayout>
         )}
       />
-
-      <MainLayout>
-        {/* ------ MAIN (SIDEBAR) ----- */}
-        <Route
-          path="/app/cerca"
-          exact
-          render={(props) => (
-            <Suspense fallback={<LoadingSuspense />}>
-              <NearYouScreen {...props} />
-            </Suspense>
-          )}
-        />
-        <Route
-          path="/app/favoritos"
-          exact
-          render={(props) => (
-            <Suspense fallback={<LoadingSuspense />}>
-              <FavoritesListScreen {...props} />
-            </Suspense>
-          )}
-        />
-        <Route
-          path="/app/misanble"
-          exact
-          render={(props) => (
-            <Suspense fallback={<LoadingSuspense />}>
-              <FavoritesListScreen {...props} />
-            </Suspense>
-          )}
-        />
-        <Route
-          path="/app/cerca"
-          exact
-          render={(props) => (
-            <Suspense fallback={<LoadingSuspense />}>
-              <NearYouScreen {...props} />
-            </Suspense>
-          )}
-        />
-        <Route
-          path="/app/perfil"
-          exact
-          render={(props) => (
-            <Suspense fallback={<LoadingSuspense />}>
-              <FavoritesListScreen {...props} />
-            </Suspense>
-          )}
-        />
-
-        {/* ------ HOME ----- */}
-        <Route
-          path="/app"
-          render={() => (
-            <HomeLayout>
-              <Route
-                path="/app"
-                exact
-                render={(props) => (
-                  <Suspense fallback={<LoadingSuspense />}>
-                    <HomeScreen {...props} />
-                  </Suspense>
-                )}
-              />
-              <Route
-                path="/app/ferias"
-                exact
-                render={(props) => (
-                  <Suspense fallback={<LoadingSuspense />}>
-                    <FairsListScreen {...props} />
-                  </Suspense>
-                )}
-              />
-              <Route
-                path="/app/stands"
-                exact
-                render={(props) => (
-                  <Suspense fallback={<LoadingSuspense />}>
-                    <StandsListScreen {...props} />
-                  </Suspense>
-                )}
-              />
-              <Route
-                path="/app/productos"
-                exact
-                render={(props) => (
-                  <Suspense fallback={<LoadingSuspense />}>
-                    <FavoritesListScreen {...props} />
-                  </Suspense>
-                )}
-              />
-            </HomeLayout>
-          )}
-        />
-      </MainLayout>
-
-      {/* ------ FAIR ----- */}
-      <Route
-        path="/app/ferias/:fairID"
-        exact
-        render={(props) => (
-          <Suspense fallback={<LoadingSuspense />}>
-            <FairDetailsScreen {...props} />
-          </Suspense>
-        )}
-      />
-      <Route
-        path="/app/ferias/:fairID/foto"
-        exact
-        render={(props) => (
-          <Suspense fallback={<LoadingSuspense />}>
-            <FairPhotoNewScreen {...props} />
-          </Suspense>
-        )}
-      />
-      <Route
-        path="/app/ferias/:fairID/foto/:photoID"
-        exact
-        render={(props) => (
-          <Suspense fallback={<LoadingSuspense />}>
-            <FairPhotoDetailsScreen {...props} />
-          </Suspense>
-        )}
-      />
-
-      {/* ------ FAIR ----- */}
-      <Route
-        path="/app/stands/:standID"
-        exact
-        render={(props) => (
-          <Suspense fallback={<LoadingSuspense />}>
-            <StandDetailsScreen {...props} />
-          </Suspense>
-        )}
-      />
-
       {/* ------ SESSION ----- */}
       <Route
         path="/app/sesion"
@@ -232,20 +155,12 @@ export const AppRoutes = () => (
             <Route
               path="/app/sesion/entrar"
               exact
-              render={(props) => (
-                <Suspense fallback={<LoadingSuspense />}>
-                  <SigninScreen {...props} />
-                </Suspense>
-              )}
+              render={(props) => <SigninScreen {...props} />}
             />
             <Route
               path="/app/sesion/registrarse"
               exact
-              render={(props) => (
-                <Suspense fallback={<LoadingSuspense />}>
-                  <SignupScreen {...props} />
-                </Suspense>
-              )}
+              render={(props) => <SignupScreen {...props} />}
             />
             <Route
               path="/app/sesion"

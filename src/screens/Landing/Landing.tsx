@@ -28,13 +28,11 @@ export const Landing: React.FC<TPageProps> = () => {
           </h1>
 
           <div className={styles.btnContainer}>
-            {/* <a href="/app"> */}
-            <Link to="/app">
+            <Link to="/app/inicio">
               <Button color="secondary" className={styles.btn}>
                 Ir a la aplicación
               </Button>
             </Link>
-            {/* </a> */}
 
             <Button
               onClick={handleGetDownloadAppLink}

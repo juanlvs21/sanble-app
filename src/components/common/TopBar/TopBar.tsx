@@ -86,12 +86,12 @@ export const TopBar = ({
         isCapacitor ? styles.isCapacitor : ""
       } ${
         (sticky && scrollTop > 25) || stickyNoScroll ? styles.sticky : ""
-      } ${className} animate__animated animate__fadeIn`}
+      } ${className}`}
     >
       {isLoading && (
         <IonProgressBar
           type="indeterminate"
-          className={styles.topBarProgressBar}
+          className={`${styles.topBarProgressBar}  animate__animated animate__fadeIn`}
         />
       )}
 
@@ -102,7 +102,10 @@ export const TopBar = ({
           ) : (
             <>
               {startGoBack ? (
-                <Button onClick={navigateToBack}>
+                <Button
+                  onClick={navigateToBack}
+                  className="animate__animated animate__fadeIn"
+                >
                   <IoIosArrowBack size={24} />
                 </Button>
               ) : (
@@ -118,14 +121,17 @@ export const TopBar = ({
             titleLight ? styles.topBarTitleLight : ""
           } ${
             (sticky && scrollTop > 25) || stickyNoScroll ? styles.sticky : ""
-          }`}
+          }  animate__animated animate__fadeIn`}
           style={{ fontSize: titleSize }}
         >
           {title}
         </IonTitle>
       )}
       {end && (
-        <IonButtons slot="end" className={styles.topBarEnd}>
+        <IonButtons
+          slot="end"
+          className={`${styles.topBarEnd}  animate__animated animate__fadeIn`}
+        >
           {end}
         </IonButtons>
       )}

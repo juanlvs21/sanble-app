@@ -1,4 +1,4 @@
-import { IonCol, IonContent } from "@ionic/react";
+import { IonCol, IonContent, IonPage } from "@ionic/react";
 
 import styles from "./Auth.module.css";
 
@@ -35,17 +35,10 @@ export const AuthLayout = ({ children }: ComponentProps) => {
           location.pathname
         )}`}
       >
-        <div>
-          <IonCol className={styles.logoContainer}>
-            <img
-              src="/assets/images/logo-full.png"
-              className={styles.logoImg}
-            />
-          </IonCol>
-        </div>
-        <div>
-          <TabBar />
-        </div>
+        <IonCol className={styles.logoContainer}>
+          <img src="/assets/images/logo-full.png" className={styles.logoImg} />
+        </IonCol>
+        <TabBar />
 
         <main>{children}</main>
         <SpinnerFullScreen show={isLoadingFull} borderRadius />

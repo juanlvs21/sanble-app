@@ -1,4 +1,3 @@
-import { IonPage } from "@ionic/react";
 import { RouteComponentProps, useParams } from "react-router-dom";
 
 import { SpinnerFullScreen } from "@/components/common/loaders/SpinnerFullScreen";
@@ -14,7 +13,7 @@ export const FairPhotoNew: React.FC<TPageProps> = () => {
   const { handleUploadPhoto, isSubmit } = useFairPhoto(fairID || "");
 
   return (
-    <IonPage>
+    <>
       <TopBar
         title="Fotografía"
         startGoBack
@@ -29,6 +28,6 @@ export const FairPhotoNew: React.FC<TPageProps> = () => {
         className="animate__animated animate__screenInUp "
       />
       <SpinnerFullScreen show={Boolean(isSubmit)} />
-    </IonPage>
+    </>
   );
 };
