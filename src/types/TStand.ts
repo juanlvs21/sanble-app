@@ -20,9 +20,3 @@ export type TStand = {
   promotions: any[];
   slogan?: string;
 };
-
-export type TStandRouteState = {
-  standID: string;
-  standName: string;
-  goBackUrl: string;
-};

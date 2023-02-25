@@ -1,7 +1,5 @@
 import { lazy, useEffect } from "react";
-import { createPortal } from "react-dom";
 import { BiBell } from "react-icons/bi";
-import { RouteComponentProps } from "react-router";
 
 import { Button } from "@/components/common/buttons/Button";
 import { TopBar } from "@/components/common/TopBar";
@@ -17,9 +15,7 @@ const HomeScreenContent = lazy(() =>
   )
 );
 
-type TPageProps = RouteComponentProps<{}>;
-
-export const Home: React.FC<TPageProps> = () => {
+export const Home = () => {
   useDocumentTitle("Inicio 🏠");
   const { renderTopBar } = useTopBar();
   const {

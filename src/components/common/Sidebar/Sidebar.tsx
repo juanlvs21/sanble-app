@@ -10,7 +10,7 @@ import {
 import { useMemo } from "react";
 import { FiHeart, FiHome, FiLogOut, FiMapPin, FiUser } from "react-icons/fi";
 import { IoIosCloseCircleOutline } from "react-icons/io";
-import { useLocation, useRouteMatch } from "react-router";
+import { useLocation, useMatch } from "react-router-dom";
 
 import { ImageExtended } from "@/components/common/ImageExtended";
 import { useApp } from "@/hooks/useApp";
@@ -25,48 +25,21 @@ export const Sidebar = () => {
   const { handleSignOut } = useAuth();
   const { user } = useUser();
 
-  const matchHome = useRouteMatch({
-    path: "/app/inicio",
-    exact: true,
-  });
-  const matchFairsList = useRouteMatch({
-    path: "/app/ferias",
-    exact: true,
-  });
-  const matchStandsList = useRouteMatch({
-    path: "/app/stands",
-    exact: true,
-  });
-  const matchProductsList = useRouteMatch({
-    path: "/app/productos",
-    exact: true,
-  });
-  const matchFavorites = useRouteMatch({
-    path: "/app/favoritos",
-    exact: true,
-  });
-  const matchMySanble = useRouteMatch({
-    path: "/app/misanble",
-    exact: true,
-  });
-  const matchNearYou = useRouteMatch({
-    path: "/app/cerca",
-    exact: true,
-  });
-  // const matchMessages = useRouteMatch({
-  //   path: "/app/mensajes",
-  //   exact: true,
-  // });
-  const matchProfile = useRouteMatch({
-    path: "/app/perfil",
-    exact: true,
-  });
+  const matchHome = useMatch("/app");
+  const matchFairsList = useMatch("/app/ferias");
+  const matchStandsList = useMatch("/app/stands");
+  const matchProductsList = useMatch("/app/productos");
+  const matchFavorites = useMatch("/app/favoritos");
+  const matchMySanble = useMatch("/app/misanble");
+  const matchNearYou = useMatch("/app/cerca");
+  // const matchMessages = useMatch("/app/mensajes");
+  const matchProfile = useMatch("/app/perfil");
 
   const items = useMemo(
     () => [
       {
         label: "Inicio",
-        path: "/app/inicio",
+        path: "/app",
         icon: <FiHome size={28} />,
         active:
           matchHome || matchFairsList || matchStandsList || matchProductsList,

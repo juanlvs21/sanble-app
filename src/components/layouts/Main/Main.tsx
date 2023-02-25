@@ -1,23 +1,12 @@
 import { IonPage } from "@ionic/react";
-import { useEffect } from "react";
+import { Outlet } from "react-router-dom";
 
 import { Sidebar } from "@/components/common/Sidebar";
 import { useApp } from "@/hooks/useApp";
 import styles from "./Main.module.css";
 
-export type ComponentProps = {
-  /**
-   * Children element
-   */
-  children: React.ReactElement | React.ReactElement[];
-};
-
-export const MainLayout = ({ children }: ComponentProps) => {
+export const MainLayout = () => {
   const { isCapacitor, showSidebar, handleShowSidebar } = useApp();
-
-  useEffect(() => {
-    console.log("Main Layout");
-  }, []);
 
   return (
     <IonPage
@@ -40,7 +29,7 @@ export const MainLayout = ({ children }: ComponentProps) => {
 
         <div id="sanble-main-topbar" />
 
-        {children}
+        <Outlet />
       </main>
     </IonPage>
   );

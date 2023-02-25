@@ -11,12 +11,7 @@ import { useEffect, useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import { FiEdit2 } from "react-icons/fi";
 import { IoIosArrowBack } from "react-icons/io";
-import {
-  RouteComponentProps,
-  useHistory,
-  useLocation,
-  useParams,
-} from "react-router";
+import { useNavigate, useLocation, useParams } from "react-router-dom";
 
 import { Button } from "@/components/common/buttons/Button";
 import { HeaderModal } from "@/components/common/HeaderModal";
@@ -27,20 +22,18 @@ import { PhotoForm } from "@/components/modules/photo/PhotoForm";
 import { useFairPhoto } from "@/hooks/fairs/useFairPhoto";
 import { useModalGoBack } from "@/hooks/useModalGoBack";
 import { useUser } from "@/hooks/useUser";
-import { TFairPhotoRouteState } from "@/types/TFair";
 import styles from "./FairPhotoDetails.module.css";
 
 const MODAL_PHOTO_DESCRIPTION_ID = "photo-description-open-modal";
 
 type TRouteParams = { fairID: string; photoID: string };
-type TPageProps = RouteComponentProps<{}>;
 
-export const FairPhotoDetails: React.FC<TPageProps> = () => {
-  const history = useHistory();
+export const FairPhotoDetails = () => {
+  const navigate = useNavigate();
   const [present] = useIonActionSheet();
   const [presentAlert] = useIonAlert();
   const { fairID, photoID } = useParams<TRouteParams>();
-  const { state } = useLocation<TFairPhotoRouteState>();
+  const { state } = useLocation();
   const finalFairID = fairID || state?.fairID || "";
   const finalPhotoID = photoID || state?.photoID || "";
 
@@ -89,8 +82,11 @@ export const FairPhotoDetails: React.FC<TPageProps> = () => {
                   role: "confirm",
                   handler: () =>
                     handleDeletePhoto(photograph?.id || "", () => {
-                      history.replace(`/app/ferias/${finalFairID}`, {
-                        fairID: finalFairID,
+                      navigate(`/app/ferias/${finalFairID}`, {
+                        state: {
+                          fairID: finalFairID,
+                        },
+                        replace: true,
                       });
                     }),
                 },
@@ -124,10 +120,11 @@ export const FairPhotoDetails: React.FC<TPageProps> = () => {
           <Button
             onClick={() =>
               finalFairID
-                ? history.replace(`/app/ferias/${finalFairID}`, {
-                    fairID: finalFairID,
+                ? navigate(`/app/ferias/${finalFairID}`, {
+                    state: { fairID: finalFairID },
+                    replace: true,
                   })
-                : history.replace("/app/ferias")
+                : navigate("/app/ferias", { replace: true })
             }
           >
             <IoIosArrowBack size={24} />

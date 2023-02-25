@@ -26,10 +26,8 @@ export const StandCardList = ({ stand, className = "" }: ComponentProps) => {
       className={`animate__animated animate__fadeIn ${styles.standListCard} ${className}`}
     >
       <Link
-        to={{
-          pathname: `/app/stands/${stand.id}`,
-          state: { standID: stand.id, standName: stand.name },
-        }}
+        to={`/app/stands/${stand.id}`}
+        state={{ standID: stand.id, standName: stand.name }}
         className={styles.standListCardLink}
       >
         <div className={styles.standListCardContent}>

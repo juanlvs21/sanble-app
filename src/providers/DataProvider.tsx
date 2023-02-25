@@ -1,7 +1,7 @@
 import { App } from "@capacitor/app";
 import { useIonAlert } from "@ionic/react";
 import { useEffect } from "react";
-import { useLocation, useHistory } from "react-router";
+import { useLocation, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 
 import { Offline } from "@/components/common/Offline";
@@ -22,7 +22,7 @@ export type ComponentProps = {
 
 export const DataProvider = ({ children }: ComponentProps) => {
   const location = useLocation();
-  const history = useHistory();
+  const navigate = useNavigate();
   const [presentAlert] = useIonAlert();
   const {
     readyToUse,
@@ -85,7 +85,7 @@ export const DataProvider = ({ children }: ComponentProps) => {
     overlaysStatusBar(true);
 
     if (!location.pathname.includes("/app/sesion") && readyToUse && !user) {
-      history.replace("/app/sesion/entrar");
+      navigate("/app/sesion/entrar", { replace: true });
     }
   }, [location.pathname]);
 

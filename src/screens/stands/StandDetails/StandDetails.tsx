@@ -11,12 +11,7 @@ import { HiOutlinePhotograph } from "react-icons/hi";
 import { IoIosArrowUp } from "react-icons/io";
 import { MdOutlineStorefront } from "react-icons/md";
 import { TiStar } from "react-icons/ti";
-import {
-  RouteComponentProps,
-  useHistory,
-  useLocation,
-  useParams,
-} from "react-router";
+import { useNavigate, useLocation, useParams } from "react-router-dom";
 import { BiStoreAlt } from "react-icons/bi";
 
 import { ButtonFav } from "@/components/common/buttons/ButtonFav";
@@ -35,7 +30,6 @@ import { useStandDetails } from "@/hooks/stands/useStandDetails";
 // import { useStandFairs } from "@/hooks/stands/useStandFairs";
 import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 import { useUser } from "@/hooks/useUser";
-import { TStandRouteState } from "@/types/TStand";
 import styles from "./StandDetails.module.css";
 
 const MODAL_INFO_ID = "stand-info-open-modal";
@@ -44,14 +38,12 @@ const MODAL_PHOTOS_ID = "stand-photos-open-modal";
 
 type TRouteParams = { standID: string };
 
-type TPageProps = RouteComponentProps<{}>;
-
-export const StandDetails: React.FC<TPageProps> = (props) => {
-  const history = useHistory();
+export const StandDetails = () => {
+  const navigate = useNavigate();
   const [present] = useIonActionSheet();
   const [presentAlert] = useIonAlert();
   const { standID } = useParams<TRouteParams>();
-  const { state } = useLocation<TStandRouteState>();
+  const { state } = useLocation();
   const finalStandID = standID || state?.standID || "";
   const {
     stand,

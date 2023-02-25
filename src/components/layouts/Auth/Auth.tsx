@@ -1,4 +1,5 @@
-import { IonCol, IonContent, IonPage } from "@ionic/react";
+import { IonCol, IonContent } from "@ionic/react";
+import { Outlet } from "react-router-dom";
 
 import styles from "./Auth.module.css";
 
@@ -16,14 +17,7 @@ const getWavesClass = (pathname: string) => {
   return cssClassName ? styles[cssClassName] : "";
 };
 
-export type ComponentProps = {
-  /**
-   * Children element
-   */
-  children: React.ReactElement | React.ReactElement[];
-};
-
-export const AuthLayout = ({ children }: ComponentProps) => {
+export const AuthLayout = () => {
   const { isLoadingFull } = useApp();
 
   return (
@@ -40,8 +34,14 @@ export const AuthLayout = ({ children }: ComponentProps) => {
         </IonCol>
         <TabBar />
 
-        <main>{children}</main>
-        <SpinnerFullScreen show={isLoadingFull} borderRadius />
+        <main>
+          <Outlet />
+        </main>
+        <SpinnerFullScreen
+          show={isLoadingFull}
+          borderRadius
+          className={styles.authLoading}
+        />
       </div>
     </IonContent>
   );

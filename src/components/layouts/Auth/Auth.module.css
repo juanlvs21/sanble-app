@@ -46,17 +46,25 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 50px;
 }
 
 .logoImg {
   width: 250px;
 }
 
+.authLoading {
+  margin-top: -5px;
+}
+
 @media (max-height: 620px) {
   .layoutContainer {
     background-size: cover;
     transition: all 400ms ease-in-out;
+  }
+}
+@media (max-width: 768px) {
+  .logoContainer {
+    margin-top: 50px;
   }
 }
 

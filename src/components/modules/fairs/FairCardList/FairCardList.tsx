@@ -28,10 +28,8 @@ export const FairCardList = ({ fair }: ComponentProps) => {
       className={`animate__animated animate__fadeIn ${styles.fairListCard}`}
     >
       <Link
-        to={{
-          pathname: `/app/ferias/${fair.id}`,
-          state: { fairID: fair.id, fairName: fair.name },
-        }}
+        to={`/app/ferias/${fair.id}`}
+        state={{ fairID: fair.id, fairName: fair.name }}
         className={styles.fairListCardLink}
       >
         <ImageExtended

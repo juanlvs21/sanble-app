@@ -1,6 +1,5 @@
 import { useIonActionSheet } from "@ionic/react";
 import { BiFilterAlt } from "react-icons/bi";
-import { RouteComponentProps } from "react-router";
 
 import { Button } from "@/components/common/buttons/Button";
 import { Fetcher } from "@/components/common/Fetcher";
@@ -12,9 +11,7 @@ import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 import { useTopBar } from "@/hooks/useTopBar";
 import styles from "./StandsList.module.css";
 
-type TPageProps = RouteComponentProps<{}>;
-
-export const StandsList: React.FC<TPageProps> = () => {
+export const StandsList = () => {
   useDocumentTitle("Lista de Stands 🛒");
   const [present] = useIonActionSheet();
   const { renderTopBar } = useTopBar();

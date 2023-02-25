@@ -1,11 +1,8 @@
 import { IonPage } from "@ionic/react";
-import { RouteComponentProps } from "react-router";
 
 import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 
-type TPageProps = RouteComponentProps<{}>;
-
-export const NotFound: React.FC<TPageProps> = () => {
+export const NotFound = () => {
   useDocumentTitle("¡Ups! Página no encontrada 😢");
 
   return (

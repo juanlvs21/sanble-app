@@ -1,7 +1,5 @@
 import { useIonActionSheet } from "@ionic/react";
-import { createPortal } from "react-dom";
 import { BiFilterAlt } from "react-icons/bi";
-import { RouteComponentProps } from "react-router";
 
 import { Button } from "@/components/common/buttons/Button";
 import { Fetcher } from "@/components/common/Fetcher";
@@ -13,9 +11,7 @@ import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 import styles from "./FairsList.module.css";
 import { useTopBar } from "@/hooks/useTopBar";
 
-type TPageProps = RouteComponentProps<{}>;
-
-export const FairsList: React.FC<TPageProps> = () => {
+export const FairsList = () => {
   useDocumentTitle("Lista de Ferias 🛍️");
   const [present] = useIonActionSheet();
   const { renderTopBar } = useTopBar();

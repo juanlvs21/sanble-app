@@ -11,12 +11,7 @@ import { HiOutlinePhotograph } from "react-icons/hi";
 import { IoIosArrowUp } from "react-icons/io";
 import { MdOutlineStorefront } from "react-icons/md";
 import { TiStar } from "react-icons/ti";
-import {
-  RouteComponentProps,
-  useHistory,
-  useLocation,
-  useParams,
-} from "react-router";
+import { useNavigate, useLocation, useParams } from "react-router-dom";
 
 import { ButtonFav } from "@/components/common/buttons/ButtonFav";
 import { Fetcher } from "@/components/common/Fetcher";
@@ -36,7 +31,6 @@ import { useFairPhoto } from "@/hooks/fairs/useFairPhoto";
 import { useFairStands } from "@/hooks/fairs/useFairStands";
 import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 import { useUser } from "@/hooks/useUser";
-import { TFairRouteState } from "@/types/TFair";
 import styles from "./FairDetails.module.css";
 
 const MODAL_INFO_ID = "fair-info-open-modal";
@@ -46,14 +40,12 @@ const MODAL_PHOTOS_ID = "fair-photos-open-modal";
 
 type TRouteParams = { fairID: string };
 
-type TPageProps = RouteComponentProps<{}>;
-
-export const FairDetails: React.FC<TPageProps> = (props) => {
-  const history = useHistory();
+export const FairDetails = () => {
+  const navigate = useNavigate();
   const [present] = useIonActionSheet();
   const [presentAlert] = useIonAlert();
   const { fairID } = useParams<TRouteParams>();
-  const { state } = useLocation<TFairRouteState>();
+  const { state } = useLocation();
   const finalFairID = fairID || state?.fairID || "";
   const {
     fair,
@@ -94,7 +86,7 @@ export const FairDetails: React.FC<TPageProps> = (props) => {
   ) => {
     const navPhoto = (path: string, state: Record<string, string> = {}) => {
       if (handleDismiss) handleDismiss();
-      setTimeout(() => history.push(path, state), 200);
+      setTimeout(() => navigate(path, state), 200);
     };
 
     const buttons = [

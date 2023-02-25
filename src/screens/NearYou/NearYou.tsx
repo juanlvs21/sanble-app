@@ -1,5 +1,3 @@
-import { RouteComponentProps } from "react-router";
-
 import { TopBar } from "@/components/common/TopBar";
 import { Map } from "@/components/modules/geolocation/Map";
 import { useFairsListGeo } from "@/hooks/fairs/useFairsListGeo";
@@ -7,9 +5,7 @@ import { useApp } from "@/hooks/useApp";
 import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 import styles from "./NearYou.module.css";
 
-type TPageProps = RouteComponentProps<{}>;
-
-export const NearYou: React.FC<TPageProps> = () => {
+export const NearYou = () => {
   useDocumentTitle("Cerca de ti 📌");
   const { list, isLoading, prepareListMapPin } = useFairsListGeo();
   const { isCapacitor } = useApp();

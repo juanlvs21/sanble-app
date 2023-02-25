@@ -1,5 +1,5 @@
 import { GoogleAuth } from "@codetrix-studio/capacitor-google-auth";
-import { useLocation, useRouteMatch, useHistory } from "react-router";
+import { useLocation, useMatch, useNavigate } from "react-router-dom";
 
 import {
   auth,
@@ -27,23 +27,14 @@ type TClearSessionFuncParams = {
 
 export const useAuth = () => {
   const { pathname } = useLocation();
-  const history = useHistory();
+  const navigate = useNavigate();
   const { toast } = useToast();
   const { user, setUser } = useUser();
   const { isCapacitor, setIsLoadingFull } = useApp();
 
-  const matchLanding = useRouteMatch({
-    path: "/",
-    exact: true,
-  });
-  const matchSignin = useRouteMatch({
-    path: "/app/sesion/entrar",
-    exact: true,
-  });
-  const matchSignup = useRouteMatch({
-    path: "/app/sesion/registrarse",
-    exact: true,
-  });
+  const matchLanding = useMatch("/");
+  const matchSignin = useMatch("/app/sesion/entrar");
+  const matchSignup = useMatch("/app/sesion/registrarse");
 
   const handleLoadUser = async () => {
     setIsLoadingFull(true);
@@ -56,7 +47,7 @@ export const useAuth = () => {
       toast("Error al obtener la información del usuario", {
         type: "error",
       });
-      history.replace("/app/sesion/entrar");
+      navigate("/app/sesion/entrar", { replace: true });
     } finally {
       setIsLoadingFull(false);
     }
@@ -66,7 +57,7 @@ export const useAuth = () => {
     await removeStorage(StorageUserKey);
 
     if (!matchLanding && !matchSignin && !matchSignup)
-      history.replace("/app/sesion/entrar");
+      navigate("/app/sesion/entrar", { replace: true });
 
     if (params?.withLogout) await signOutRequest();
   };
@@ -79,7 +70,7 @@ export const useAuth = () => {
       try {
         await signinRequest(userForm);
         await handleLoadUser();
-        history.replace("/app/inicio");
+        navigate("/app", { replace: true });
       } catch (error) {
         await signOutRequest();
         await clearSessionRedirect({ withLogout: true });
@@ -96,7 +87,7 @@ export const useAuth = () => {
 
       await signinRequest(userForm);
       await handleLoadUser();
-      history.replace("/app/inicio");
+      navigate("/app", { replace: true });
     } catch (error: any) {
       await signOutRequest();
       setIsLoadingFull(false);
@@ -120,7 +111,7 @@ export const useAuth = () => {
 
       await handleLoadUser();
 
-      history.replace("/app/inicio");
+      navigate("/app", { replace: true });
     } catch (error) {
       await signOutRequest();
       setIsLoadingFull(false);
@@ -153,7 +144,7 @@ export const useAuth = () => {
         await handleLoadUser();
 
         if (pathname.includes("/sesion")) {
-          history.replace("/app/inicio");
+          navigate("/app", { replace: true });
         }
       } catch (error) {
         await clearSessionRedirect({ withLogout: true });

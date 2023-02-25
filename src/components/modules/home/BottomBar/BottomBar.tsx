@@ -4,35 +4,22 @@ import { BiStoreAlt } from "react-icons/bi";
 import { FiHome } from "react-icons/fi";
 import { HiOutlineShoppingBag } from "react-icons/hi";
 import { MdOutlineStorefront } from "react-icons/md";
-import { useLocation, useRouteMatch } from "react-router";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useMatch } from "react-router-dom";
 
 import styles from "./BottomBar.module.css";
 
 export const BottomBar = () => {
   const { pathname } = useLocation();
 
-  const matchHome = useRouteMatch({
-    path: "/app/inicio",
-    exact: true,
-  });
-  const matchFairsList = useRouteMatch({
-    path: "/app/ferias",
-    exact: true,
-  });
-  const matchStandsList = useRouteMatch({
-    path: "/app/stands",
-    exact: true,
-  });
-  const matchProductsList = useRouteMatch({
-    path: "/app/productos",
-    exact: true,
-  });
+  const matchHome = useMatch("/app");
+  const matchFairsList = useMatch("/app/ferias");
+  const matchStandsList = useMatch("/app/stands");
+  const matchProductsList = useMatch("/app/productos");
 
   const items = useMemo(
     () => [
       {
-        path: "/app/inicio",
+        path: "/app",
         icon: <FiHome size={26} />,
         active: matchHome,
       },

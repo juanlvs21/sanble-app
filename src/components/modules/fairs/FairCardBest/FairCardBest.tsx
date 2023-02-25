@@ -20,10 +20,8 @@ export const FairCardBest = ({ fair }: ComponentProps) => {
 
   return (
     <Link
-      to={{
-        pathname: `/app/ferias/${fair.id}`,
-        state: { fairID: fair.id, fairName: fair.name, goBackUrl: "/app" },
-      }}
+      to={`/app/ferias/${fair.id}`}
+      state={{ fairID: fair.id, fairName: fair.name, goBackUrl: "/app" }}
     >
       <article className={styles.fairBestCard}>
         <ImageExtended
