@@ -6,10 +6,10 @@ import { Fetcher } from "@/components/common/Fetcher";
 import { Skeleton } from "@/components/common/Skeleton";
 import { FairCardList } from "@/components/modules/fairs/FairCardList";
 import { useFairsList } from "@/hooks/fairs/useFairsList";
+import { useApp } from "@/hooks/useApp";
 import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 import { useTopBarMain } from "@/hooks/useTopBarMain";
 import styles from "./FairsList.module.css";
-import { useApp } from "@/hooks/useApp";
 
 export const FairsList = () => {
   useDocumentTitle("Lista de Ferias 🛍️");
