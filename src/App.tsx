@@ -1,6 +1,6 @@
 import { IonApp, setupIonicReact } from "@ionic/react";
 import { lazy } from "react";
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, RouterProvider } from "react-router-dom";
 
 import "react-toastify/dist/ReactToastify.css";
 
@@ -25,17 +25,8 @@ import "./theme/global.css";
 import "./theme/transitions.css";
 import "./theme/variables.css";
 
-import { SuspenseComponent } from "@/components/common/SuspenseComponent";
-import { AppProvider } from "@/context";
-import { DataProvider } from "@/providers/DataProvider";
-import { Splash } from "@/screens/Splash";
 import { useStatusBar } from "@/hooks/useStatusBar";
-
-const AppRoutes = lazy(() =>
-  import("@/router").then(({ AppRoutes }) => ({
-    default: AppRoutes,
-  }))
-);
+import { router } from "@/router";
 
 setupIonicReact();
 
@@ -46,15 +37,7 @@ const App = () => {
 
   return (
     <IonApp className="animate__animated animate__fadeIn">
-      <BrowserRouter>
-        <AppProvider>
-          <DataProvider>
-            <SuspenseComponent LoadingComponent={Splash}>
-              <AppRoutes />
-            </SuspenseComponent>
-          </DataProvider>
-        </AppProvider>
-      </BrowserRouter>
+      <RouterProvider router={router} />
     </IonApp>
   );
 };

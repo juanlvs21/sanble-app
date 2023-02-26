@@ -1,11 +1,12 @@
 import { lazy } from "react";
-import { Navigate, Route, Routes } from "react-router-dom";
+import { createBrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { isPlatform } from "@ionic/react";
 
 import { SuspenseComponent } from "@/components/common/SuspenseComponent";
 import { AuthLayout } from "@/components/layouts/Auth";
 import { MainLayout } from "@/components/layouts/Main";
 import { HomeLayout } from "@/components/layouts/Home";
+import { ProvidersLayout } from "@/components/layouts/Providers";
 import { ERoutesName } from "@/types/TRoutes";
 
 const NotFoundScreen = lazy(() =>
@@ -71,153 +72,213 @@ const StandDetailsScreen = lazy(() =>
     default: StandDetails,
   }))
 );
-export const AppRoutes = () => {
-  return (
-    <Routes>
-      <Route path={ERoutesName.ROOT} element={<MainLayout />}>
-        <Route
-          index
-          element={
-            <>
-              {isPlatform("capacitor") ? (
-                <WelcomeSlidesScreen />
-              ) : (
-                <LandingScreen />
-              )}
-            </>
-          }
-        />
-      </Route>
-      <Route path={ERoutesName.APP} element={<MainLayout />}>
-        <Route path={ERoutesName.APP} element={<HomeLayout />}>
-          <Route
-            index
-            element={
-              <SuspenseComponent>
-                <HomeScreen />
-              </SuspenseComponent>
-            }
-          />
-          <Route
-            path={ERoutesName.FAIRS_LIST}
-            element={
-              <SuspenseComponent>
-                <FairsListScreen />
-              </SuspenseComponent>
-            }
-          />
-          <Route
-            path={ERoutesName.STANDS_LIST}
-            element={
-              <SuspenseComponent>
-                <StandsListScreen />
-              </SuspenseComponent>
-            }
-          />
-          <Route
-            path={ERoutesName.PRODUCTS_LIST}
-            element={
-              <SuspenseComponent>
-                <FavoritesListScreen />
-              </SuspenseComponent>
-            }
-          />
-        </Route>
-        <Route
-          path={ERoutesName.FAVORITES_LIST}
-          element={
-            <SuspenseComponent>
-              <FavoritesListScreen />
-            </SuspenseComponent>
-          }
-        />
-        <Route
-          path={ERoutesName.MY_SANBLE}
-          element={
-            <SuspenseComponent>
-              <FavoritesListScreen />
-            </SuspenseComponent>
-          }
-        />
-        <Route
-          path={ERoutesName.NEAR_YOU}
-          element={
-            <SuspenseComponent>
-              <NearYouScreen />
-            </SuspenseComponent>
-          }
-        />
-        <Route
-          path={ERoutesName.PROFILE}
-          element={
-            <SuspenseComponent>
-              <FavoritesListScreen />
-            </SuspenseComponent>
-          }
-        />
-        <Route
-          path={ERoutesName.FAIR_DETAILS}
-          element={
-            <SuspenseComponent>
-              <FairDetailsScreen />
-            </SuspenseComponent>
-          }
-        />
-        <Route
-          path={ERoutesName.FAIR_DETAILS_PHOTO_NEW}
-          element={
-            <SuspenseComponent>
-              <FairPhotoNewScreen />
-            </SuspenseComponent>
-          }
-        />
-        <Route
-          path={ERoutesName.FAIR_DETAILS_PHOTO}
-          element={
-            <SuspenseComponent>
-              <FairPhotoDetailsScreen />
-            </SuspenseComponent>
-          }
-        />
-        <Route
-          path={ERoutesName.STAND_DETAILS}
-          element={
-            <SuspenseComponent>
-              <StandDetailsScreen />
-            </SuspenseComponent>
-          }
-        />
-      </Route>
-      <Route path={ERoutesName.SESSION} element={<AuthLayout />}>
-        <Route
-          index
-          element={<Navigate to={ERoutesName.SESSION_SIGNIN} replace />}
-        />
-        <Route
-          path={ERoutesName.SESSION_SIGNIN}
-          element={
-            <SuspenseComponent>
-              <SigninScreen />
-            </SuspenseComponent>
-          }
-        />
-        <Route
-          path={ERoutesName.SESSION_SIGNUP}
-          element={
-            <SuspenseComponent>
-              <SignupScreen />
-            </SuspenseComponent>
-          }
-        />
-      </Route>
-      <Route
-        path="*"
-        element={
-          <SuspenseComponent>
-            <NotFoundScreen />
-          </SuspenseComponent>
-        }
-      />
-    </Routes>
-  );
-};
+
+export const router = createBrowserRouter([
+  {
+    path: ERoutesName.ROOT,
+    element: <ProvidersLayout />,
+    children: [
+      {
+        index: true,
+        element: (
+          <>
+            {isPlatform("capacitor") ? (
+              <WelcomeSlidesScreen />
+            ) : (
+              <LandingScreen />
+            )}
+          </>
+        ),
+      },
+      {
+        path: ERoutesName.APP,
+        element: <MainLayout />,
+        children: [
+          {
+            path: ERoutesName.APP,
+            element: <HomeLayout />,
+            children: [
+              {
+                index: true,
+                element: (
+                  <SuspenseComponent>
+                    <HomeScreen />
+                  </SuspenseComponent>
+                ),
+              },
+              {
+                path: ERoutesName.FAIRS_LIST,
+                errorElement: <h1 style={{ marginTop: 300 }}>Error :c</h1>,
+                element: (
+                  <SuspenseComponent>
+                    <FairsListScreen />
+                  </SuspenseComponent>
+                ),
+              },
+              {
+                path: ERoutesName.STANDS_LIST,
+                errorElement: <h1 style={{ marginTop: 300 }}>Error :c</h1>,
+                element: (
+                  <SuspenseComponent>
+                    <StandsListScreen />
+                  </SuspenseComponent>
+                ),
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+]);
+
+// export const AppRoutes = () => {
+//   return (
+//     <Routes>
+//       <Route path={ERoutesName.ROOT} element={<MainLayout />}>
+//         <Route
+//           index
+//           element={
+//             <>
+//               {isPlatform("capacitor") ? (
+//                 <WelcomeSlidesScreen />
+//               ) : (
+//                 <LandingScreen />
+//               )}
+//             </>
+//           }
+//         />
+//       </Route>
+//       <Route path={ERoutesName.APP} element={<MainLayout />}>
+//         <Route path={ERoutesName.APP} element={<HomeLayout />}>
+//           <Route
+//             index
+//             element={
+//               <SuspenseComponent>
+//                 <HomeScreen />
+//               </SuspenseComponent>
+//             }
+//           />
+//           <Route
+//             path={ERoutesName.FAIRS_LIST}
+//             element={
+//               <SuspenseComponent>
+//                 <FairsListScreen />
+//               </SuspenseComponent>
+//             }
+//           />
+//           <Route
+//             path={ERoutesName.STANDS_LIST}
+//             element={
+//               <SuspenseComponent>
+//                 <StandsListScreen />
+//               </SuspenseComponent>
+//             }
+//           />
+//           <Route
+//             path={ERoutesName.PRODUCTS_LIST}
+//             element={
+//               <SuspenseComponent>
+//                 <FavoritesListScreen />
+//               </SuspenseComponent>
+//             }
+//           />
+//         </Route>
+//         <Route
+//           path={ERoutesName.FAVORITES_LIST}
+//           element={
+//             <SuspenseComponent>
+//               <FavoritesListScreen />
+//             </SuspenseComponent>
+//           }
+//         />
+//         <Route
+//           path={ERoutesName.MY_SANBLE}
+//           element={
+//             <SuspenseComponent>
+//               <FavoritesListScreen />
+//             </SuspenseComponent>
+//           }
+//         />
+//         <Route
+//           path={ERoutesName.NEAR_YOU}
+//           element={
+//             <SuspenseComponent>
+//               <NearYouScreen />
+//             </SuspenseComponent>
+//           }
+//         />
+//         <Route
+//           path={ERoutesName.PROFILE}
+//           element={
+//             <SuspenseComponent>
+//               <FavoritesListScreen />
+//             </SuspenseComponent>
+//           }
+//         />
+//         <Route
+//           path={ERoutesName.FAIR_DETAILS}
+//           element={
+//             <SuspenseComponent>
+//               <FairDetailsScreen />
+//             </SuspenseComponent>
+//           }
+//         />
+//         <Route
+//           path={ERoutesName.FAIR_DETAILS_PHOTO_NEW}
+//           element={
+//             <SuspenseComponent>
+//               <FairPhotoNewScreen />
+//             </SuspenseComponent>
+//           }
+//         />
+//         <Route
+//           path={ERoutesName.FAIR_DETAILS_PHOTO}
+//           element={
+//             <SuspenseComponent>
+//               <FairPhotoDetailsScreen />
+//             </SuspenseComponent>
+//           }
+//         />
+//         <Route
+//           path={ERoutesName.STAND_DETAILS}
+//           element={
+//             <SuspenseComponent>
+//               <StandDetailsScreen />
+//             </SuspenseComponent>
+//           }
+//         />
+//       </Route>
+//       <Route path={ERoutesName.SESSION} element={<AuthLayout />}>
+//         <Route
+//           index
+//           element={<Navigate to={ERoutesName.SESSION_SIGNIN} replace />}
+//         />
+//         <Route
+//           path={ERoutesName.SESSION_SIGNIN}
+//           element={
+//             <SuspenseComponent>
+//               <SigninScreen />
+//             </SuspenseComponent>
+//           }
+//         />
+//         <Route
+//           path={ERoutesName.SESSION_SIGNUP}
+//           element={
+//             <SuspenseComponent>
+//               <SignupScreen />
+//             </SuspenseComponent>
+//           }
+//         />
+//       </Route>
+//       <Route
+//         path="*"
+//         element={
+//           <SuspenseComponent>
+//             <NotFoundScreen />
+//           </SuspenseComponent>
+//         }
+//       />
+//     </Routes>
+//   );
+// };

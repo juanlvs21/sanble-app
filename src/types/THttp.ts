@@ -1,4 +1,5 @@
 import { AxiosResponse } from "axios";
+import { OrderByDirection } from "firebase/firestore";
 
 export type TAxiosResult<T> = {
   data: T;
@@ -13,6 +14,11 @@ export type TPagination = {
   limit: number;
 };
 
+export type TOrder = {
+  orderBy: string;
+  orderDir: OrderByDirection;
+};
+
 export type TFormatError422 = {
   value: string;
   msg: string;
@@ -23,4 +29,5 @@ export type TFormatError422 = {
 export type TResponseList<T> = {
   list: T;
   pagination: TPagination;
+  order?: TOrder;
 };
