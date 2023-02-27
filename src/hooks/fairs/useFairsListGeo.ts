@@ -1,49 +1,40 @@
-import { useEffect, useState } from "react";
-import { useHistory } from "react-router";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import useSWRMutation from "swr/immutable";
 
+import { formatFairsMarks } from "@/helpers/mapFormatMarkers";
+import { useToast } from "@/hooks/useToast";
 import { getFairListGeolocationRequest } from "@/services";
 import { TFairGeo } from "@/types/TFair";
-import { useToast } from "@/hooks/useToast";
-import { formatFairsMarks } from "@/helpers/mapFormatMarkers";
+import { ERoutesName } from "@/types/TRoutes";
 
 export const useFairsListGeo = () => {
   const { toast } = useToast();
-  const history = useHistory();
-  const [list, setList] = useState<TFairGeo[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    handleLoad();
-  }, []);
+  const { data, error, isLoading } = useSWRMutation(
+    "/fairs/geolocation",
+    getFairListGeolocationRequest
+  );
 
   const prepareListMapPin = (list: TFairGeo[], goBackUrl?: string) =>
     formatFairsMarks(list || [], (id, name) =>
-      history.push(`/app/ferias/${id}`, {
-        fairID: id,
-        fairName: name,
-        goBackUrl,
+      navigate(`${ERoutesName.FAIRS_LIST}/${id}`, {
+        state: {
+          fairID: id,
+          fairName: name,
+          goBackUrl,
+        },
       })
     );
 
-  const handleLoad = async () => {
-    setIsLoading(true);
-
-    try {
-      const listRes = await getFairListGeolocationRequest();
-      setList(listRes);
-    } catch (error: any) {
-      toast("Error al cargar el listado de ferias", {
-        type: "error",
-      });
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  useEffect(() => {
+    if (error) toast(error, { type: "error" });
+  }, [error]);
 
   return {
-    list,
+    list: data,
     isLoading,
-    handleLoad,
     prepareListMapPin,
   };
 };

@@ -1,5 +1,6 @@
 import { IonApp, setupIonicReact } from "@ionic/react";
-import { IonReactRouter } from "@ionic/react-router";
+import { lazy } from "react";
+import { BrowserRouter, RouterProvider } from "react-router-dom";
 
 import "react-toastify/dist/ReactToastify.css";
 
@@ -24,22 +25,21 @@ import "./theme/global.css";
 import "./theme/transitions.css";
 import "./theme/variables.css";
 
-import { AppProvider } from "@/context";
-import { DataProvider } from "@/providers/DataProvider";
-import { AppRoutes } from "@/router";
+import { useStatusBar } from "@/hooks/useStatusBar";
+import { router } from "@/router";
 
 setupIonicReact();
 
-const App = () => (
-  <IonApp className="animate__animated animate__fadeIn">
-    <IonReactRouter>
-      <AppProvider>
-        <DataProvider>
-          <AppRoutes />
-        </DataProvider>
-      </AppProvider>
-    </IonReactRouter>
-  </IonApp>
-);
+const App = () => {
+  const { overlaysStatusBar } = useStatusBar();
+
+  overlaysStatusBar(true);
+
+  return (
+    <IonApp className="animate__animated animate__fadeIn">
+      <RouterProvider router={router} />
+    </IonApp>
+  );
+};
 
 export default App;

@@ -4,50 +4,38 @@ import { BiStoreAlt } from "react-icons/bi";
 import { FiHome } from "react-icons/fi";
 import { HiOutlineShoppingBag } from "react-icons/hi";
 import { MdOutlineStorefront } from "react-icons/md";
-import { useLocation, useRouteMatch } from "react-router";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useMatch } from "react-router-dom";
 
+import { ERoutesName } from "@/types/TRoutes";
 import styles from "./BottomBar.module.css";
 
 export const BottomBar = () => {
   const { pathname } = useLocation();
 
-  const matchHome = useRouteMatch({
-    path: "/app",
-    exact: true,
-  });
-  const matchFairsList = useRouteMatch({
-    path: "/app/ferias",
-    exact: true,
-  });
-  const matchStandsList = useRouteMatch({
-    path: "/app/stands",
-    exact: true,
-  });
-  const matchProductsList = useRouteMatch({
-    path: "/app/productos",
-    exact: true,
-  });
+  const matchHome = useMatch(ERoutesName.APP);
+  const matchFairsList = useMatch(ERoutesName.FAIRS_LIST);
+  const matchStandsList = useMatch(ERoutesName.STANDS_LIST);
+  const matchProductsList = useMatch(ERoutesName.PRODUCTS_LIST);
 
   const items = useMemo(
     () => [
       {
-        path: "/app",
+        path: ERoutesName.APP,
         icon: <FiHome size={26} />,
         active: matchHome,
       },
       {
-        path: "/app/ferias",
+        path: ERoutesName.FAIRS_LIST,
         icon: <BiStoreAlt size={26} />,
         active: matchFairsList,
       },
       {
-        path: "/app/stands",
+        path: ERoutesName.STANDS_LIST,
         icon: <MdOutlineStorefront size={26} />,
         active: matchStandsList,
       },
       {
-        path: "/app/productos",
+        path: ERoutesName.PRODUCTS_LIST,
         icon: <HiOutlineShoppingBag size={26} />,
         active: matchProductsList,
       },

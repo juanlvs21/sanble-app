@@ -1,17 +1,17 @@
 import { App } from "@capacitor/app";
 import { useIonAlert } from "@ionic/react";
 import { useEffect } from "react";
-import { useLocation, useHistory } from "react-router";
+import { useLocation, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 
 import { Offline } from "@/components/common/Offline";
 import { useApp } from "@/hooks/useApp";
 import { useAuth } from "@/hooks/useAuth";
 import { useOnline } from "@/hooks/useOnline";
-import { useStatusBar } from "@/hooks/useStatusBar";
 import { useUser } from "@/hooks/useUser";
 import { Splash } from "@/screens/Splash";
 import { getSessionRequest } from "@/services";
+import { ERoutesName } from "@/types/TRoutes";
 
 export type ComponentProps = {
   /**
@@ -22,7 +22,7 @@ export type ComponentProps = {
 
 export const DataProvider = ({ children }: ComponentProps) => {
   const location = useLocation();
-  const history = useHistory();
+  const navigate = useNavigate();
   const [presentAlert] = useIonAlert();
   const {
     readyToUse,
@@ -34,7 +34,6 @@ export const DataProvider = ({ children }: ComponentProps) => {
   } = useApp();
   const { handleGetSession } = useAuth();
   const { user } = useUser();
-  const { overlaysStatusBar } = useStatusBar();
   const { online } = useOnline();
 
   useEffect(() => {
@@ -82,10 +81,12 @@ export const DataProvider = ({ children }: ComponentProps) => {
   }, []);
 
   useEffect(() => {
-    overlaysStatusBar(true);
-
-    if (!location.pathname.includes("/app/sesion") && readyToUse && !user) {
-      history.replace("/app/sesion/entrar");
+    if (
+      !location.pathname.includes(ERoutesName.SESSION) &&
+      readyToUse &&
+      !user
+    ) {
+      navigate(ERoutesName.SESSION_SIGNIN, { replace: true });
     }
   }, [location.pathname]);
 

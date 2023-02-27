@@ -79,16 +79,16 @@ export const FairModalStands = ({
         </IonToolbar>
       </HeaderModal>
       <IonContent>
-        {!stands.length && !isLoading ? (
-          <EmptyAlert message={`No hay Stands participantes`} />
-        ) : (
-          <Fetcher
-            handleRefresh={handleRefresh}
-            handleInfiniteScroll={handleInfinite}
-            classNameContent={styles.fairStandsModalFetcherContent}
-            classNameSection={styles.fairStandsModalFetcherSection}
-            classNameRefresh={styles.fairStandsModalRefresh}
-          >
+        <Fetcher
+          handleRefresh={handleRefresh}
+          handleInfiniteScroll={handleInfinite}
+          classNameContent={styles.fairStandsModalFetcherContent}
+          classNameSection={styles.fairStandsModalFetcherSection}
+          classNameRefresh={styles.fairStandsModalRefresh}
+        >
+          {!stands.length && !isLoading ? (
+            <EmptyAlert message={`No hay Stands participantes`} />
+          ) : (
             <div className="dataListContainer col-1">
               {isLoading && !stands.length
                 ? Array(5)
@@ -104,8 +104,8 @@ export const FairModalStands = ({
                     <StandCardList key={stand.id} stand={stand} />
                   ))}
             </div>
-          </Fetcher>
-        )}
+          )}
+        </Fetcher>
       </IonContent>
     </IonModal>
   );

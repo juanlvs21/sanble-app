@@ -3,66 +3,57 @@ import {
   IonButtons,
   IonContent,
   IonModal,
-  IonPage,
   IonToolbar,
   useIonActionSheet,
   useIonAlert,
 } from "@ionic/react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import { FiEdit2 } from "react-icons/fi";
 import { IoIosArrowBack } from "react-icons/io";
-import {
-  RouteComponentProps,
-  useHistory,
-  useLocation,
-  useParams,
-} from "react-router";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 import { Button } from "@/components/common/buttons/Button";
 import { HeaderModal } from "@/components/common/HeaderModal";
 import { SpinnerFullScreen } from "@/components/common/loaders/SpinnerFullScreen";
-import { TopBar } from "@/components/common/TopBar";
 import { PhotoDescription } from "@/components/modules/photo/PhotoDescription";
 import { PhotoForm } from "@/components/modules/photo/PhotoForm";
-import { useFairPhoto } from "@/hooks/fairs/useFairPhoto";
+import { useFairPhotoDelete } from "@/hooks/fairs/photo/useFairPhotoDelete";
+import { useFairPhotoDetails } from "@/hooks/fairs/photo/useFairPhotoDetails";
 import { useModalGoBack } from "@/hooks/useModalGoBack";
+import { useTopBarMain } from "@/hooks/useTopBarMain";
 import { useUser } from "@/hooks/useUser";
-import { TFairPhotoRouteState } from "@/types/TFair";
+import { ERoutesName } from "@/types/TRoutes";
 import styles from "./FairPhotoDetails.module.css";
 
 const MODAL_PHOTO_DESCRIPTION_ID = "photo-description-open-modal";
 
 type TRouteParams = { fairID: string; photoID: string };
-type TPageProps = RouteComponentProps<{}>;
 
-export const FairPhotoDetails: React.FC<TPageProps> = () => {
-  const history = useHistory();
+export const FairPhotoDetails = () => {
+  const navigate = useNavigate();
   const [present] = useIonActionSheet();
   const [presentAlert] = useIonAlert();
   const { fairID, photoID } = useParams<TRouteParams>();
-  const { state } = useLocation<TFairPhotoRouteState>();
+  const { state } = useLocation();
   const finalFairID = fairID || state?.fairID || "";
   const finalPhotoID = photoID || state?.photoID || "";
-
-  const {
-    modalRef,
-    photograph,
-    ownerID,
-    isLoading,
-    isSubmit,
-    isChangingPhoto,
-    handleUpdatePhoto,
-    handleGetPhoto,
-  } = useFairPhoto(finalFairID);
-  const { handleDeletePhoto, isDeletingPhoto } = useFairPhoto(finalFairID);
+  const { renderTopBarActionStart, renderTopBarActionEnd } = useTopBarMain();
+  const { handleDeletePhoto, isDeletingPhoto } =
+    useFairPhotoDelete(finalFairID);
   const { user } = useUser();
   const [showDescription, setShowDescription] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
 
-  useEffect(() => {
-    handleGetPhoto(finalPhotoID);
-  }, []);
+  const {
+    photograph,
+    ownerID,
+    isLoading,
+    modalRef,
+    isSubmit,
+    isChangingPhoto,
+    handleUpdatePhoto,
+  } = useFairPhotoDetails(finalFairID, finalPhotoID);
 
   const handleActions = () => {
     present({
@@ -90,8 +81,11 @@ export const FairPhotoDetails: React.FC<TPageProps> = () => {
                   role: "confirm",
                   handler: () =>
                     handleDeletePhoto(photograph?.id || "", () => {
-                      history.replace(`/app/ferias/${finalFairID}`, {
-                        fairID: finalFairID,
+                      navigate(`${ERoutesName.FAIRS_LIST}/${finalFairID}`, {
+                        state: {
+                          fairID: finalFairID,
+                        },
+                        replace: true,
                       });
                     }),
                 },
@@ -118,40 +112,33 @@ export const FairPhotoDetails: React.FC<TPageProps> = () => {
   useModalGoBack(isOpen, handleDismiss);
 
   return (
-    <IonPage>
-      <TopBar
-        title="Fotografía"
-        start={
+    <>
+      {renderTopBarActionStart(
+        <Button
+          onClick={() =>
+            finalFairID
+              ? navigate(`${ERoutesName.FAIRS_LIST}/${finalFairID}`, {
+                  state: { fairID: finalFairID },
+                  replace: true,
+                })
+              : navigate(ERoutesName.FAIRS_LIST, { replace: true })
+          }
+        >
+          <IoIosArrowBack size={24} />
+        </Button>
+      )}
+
+      {user?.uid === ownerID &&
+        renderTopBarActionEnd(
           <Button
-            onClick={() =>
-              finalFairID
-                ? history.replace(`/app/ferias/${finalFairID}`, {
-                    fairID: finalFairID,
-                  })
-                : history.replace("/app/ferias")
-            }
+            isLoading={isLoading}
+            spinnerColor="primary"
+            onClick={handleActions}
+            className="animate__animated animate__fadeIn"
           >
-            <IoIosArrowBack size={24} />
+            <FiEdit2 size={24} />
           </Button>
-        }
-        end={
-          <>
-            {user?.uid === ownerID && (
-              <Button
-                isLoading={isLoading}
-                spinnerColor="primary"
-                onClick={handleActions}
-                className="animate__animated animate__fadeIn"
-              >
-                <FiEdit2 size={24} />
-              </Button>
-            )}
-          </>
-        }
-        titleSize={24}
-        sticky
-        stickyNoScroll
-      />
+        )}
 
       <PhotoDescription
         photo={photograph}
@@ -160,7 +147,9 @@ export const FairPhotoDetails: React.FC<TPageProps> = () => {
         onClick={
           !isLoading && !isSubmit ? handleToggleShowDescription : undefined
         }
-        isLoading={isLoading || isChangingPhoto || isDeletingPhoto}
+        isLoading={
+          !photograph || isLoading || isChangingPhoto || isDeletingPhoto
+        }
         classNameContainer="animate__animated animate__screenInUp "
       />
 
@@ -200,6 +189,6 @@ export const FairPhotoDetails: React.FC<TPageProps> = () => {
           />
         </IonModal>
       )}
-    </IonPage>
+    </>
   );
 };

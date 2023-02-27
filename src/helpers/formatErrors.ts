@@ -1,5 +1,3 @@
-import { unknownErrorMsg } from "./constTexts";
-
 type TFormatError422 = {
   value: string;
   msg: string;
@@ -22,6 +20,9 @@ export const errorsMessage = (errors: any) => {
     if ([400, 401, 404].includes(getStatusCode(errors.response))) {
       if (errors.response.data?.message) {
         messageArray.push(errors.response.data?.message);
+      }
+      if (errors.response.data?.status) {
+        messageArray.push(errors.response.data?.status);
       }
     }
   }

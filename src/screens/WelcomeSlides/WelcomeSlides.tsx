@@ -2,7 +2,7 @@ import { IonContent, IonPage, IonSlide, IonSlides } from "@ionic/react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { IoIosArrowBack } from "react-icons/io";
 import { MdKeyboardArrowRight } from "react-icons/md";
-import { RouteComponentProps, useHistory } from "react-router";
+import { useNavigate } from "react-router-dom";
 
 import { Button } from "@/components/common/buttons/Button";
 import { SpinnerFullScreen } from "@/components/common/loaders/SpinnerFullScreen";
@@ -10,6 +10,7 @@ import { setStorage } from "@/helpers/storage";
 import { StorageHideMobileWelcomeKey } from "@/helpers/storageKeys";
 import { useApp } from "@/hooks/useApp";
 import { useUser } from "@/hooks/useUser";
+import { ERoutesName } from "@/types/TRoutes";
 import styles from "./WelcomeSlides.module.css";
 
 const slideOpts = {
@@ -25,10 +26,8 @@ type TWelcomeSlide = {
   actions: React.ReactElement;
 };
 
-type TPageProps = RouteComponentProps<{}>;
-
-export const WelcomeSlides: React.FC<TPageProps> = () => {
-  const history = useHistory();
+export const WelcomeSlides = () => {
+  const navigate = useNavigate();
   const { hideMobileWelcome } = useApp();
   const { user } = useUser();
   const slideRef = useRef<any>(null);
@@ -37,8 +36,8 @@ export const WelcomeSlides: React.FC<TPageProps> = () => {
 
   useEffect(() => {
     if (hideMobileWelcome) {
-      if (user) history.replace("/app");
-      else history.replace("/app/sesion/registrarse");
+      if (user) navigate(ERoutesName.APP, { replace: true });
+      else navigate(ERoutesName.SESSION_SIGNUP, { replace: true });
     }
     setTimeout(() => {
       setIsLoading(false);
@@ -48,8 +47,8 @@ export const WelcomeSlides: React.FC<TPageProps> = () => {
   const handleGoSignup = async () => {
     await setStorage(StorageHideMobileWelcomeKey, true);
 
-    if (user) history.replace("/app");
-    else history.replace("/app/sesion/registrarse");
+    if (user) navigate(ERoutesName.APP, { replace: true });
+    else navigate(ERoutesName.SESSION_SIGNUP, { replace: true });
   };
 
   const onBtnClicked = async (direction: "next" | "prev") => {

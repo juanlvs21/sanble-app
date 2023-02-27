@@ -1,6 +1,6 @@
 import { IonButtons, IonProgressBar, IonTitle, IonToolbar } from "@ionic/react";
 import { IoIosArrowBack } from "react-icons/io";
-import { useHistory } from "react-router";
+import { useNavigate } from "react-router-dom";
 
 import { Button } from "@/components/common/buttons/Button";
 import { TopBarUserBtn } from "@/components/common/TopBarUserBtn";
@@ -74,11 +74,13 @@ export const TopBar = ({
   titleSize = 28,
   className = "",
 }: ComponentProps) => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const { scrollTop, isCapacitor } = useApp();
 
   const navigateToBack = () =>
-    startGoBackUrl ? history.replace(startGoBackUrl) : history.go(-1);
+    startGoBackUrl
+      ? navigate(startGoBackUrl, { replace: true })
+      : history.go(-1);
 
   return (
     <IonToolbar
@@ -86,12 +88,12 @@ export const TopBar = ({
         isCapacitor ? styles.isCapacitor : ""
       } ${
         (sticky && scrollTop > 25) || stickyNoScroll ? styles.sticky : ""
-      } ${className} animate__animated animate__fadeIn`}
+      } ${className}`}
     >
       {isLoading && (
         <IonProgressBar
           type="indeterminate"
-          className={styles.topBarProgressBar}
+          className={`${styles.topBarProgressBar}  animate__animated animate__fadeIn`}
         />
       )}
 
@@ -102,7 +104,10 @@ export const TopBar = ({
           ) : (
             <>
               {startGoBack ? (
-                <Button onClick={navigateToBack}>
+                <Button
+                  onClick={navigateToBack}
+                  className="animate__animated animate__fadeIn"
+                >
                   <IoIosArrowBack size={24} />
                 </Button>
               ) : (
@@ -118,14 +123,17 @@ export const TopBar = ({
             titleLight ? styles.topBarTitleLight : ""
           } ${
             (sticky && scrollTop > 25) || stickyNoScroll ? styles.sticky : ""
-          }`}
+          }  animate__animated animate__fadeIn`}
           style={{ fontSize: titleSize }}
         >
           {title}
         </IonTitle>
       )}
       {end && (
-        <IonButtons slot="end" className={styles.topBarEnd}>
+        <IonButtons
+          slot="end"
+          className={`${styles.topBarEnd}  animate__animated animate__fadeIn`}
+        >
           {end}
         </IonButtons>
       )}

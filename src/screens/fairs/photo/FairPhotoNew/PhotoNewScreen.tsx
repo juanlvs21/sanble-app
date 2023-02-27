@@ -1,34 +1,23 @@
-import { IonPage } from "@ionic/react";
-import { RouteComponentProps, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 import { SpinnerFullScreen } from "@/components/common/loaders/SpinnerFullScreen";
-import { TopBar } from "@/components/common/TopBar";
 import { PhotoForm } from "@/components/modules/photo/PhotoForm";
-import { useFairPhoto } from "@/hooks/fairs/useFairPhoto";
+import { useFairPhotoNew } from "@/hooks/fairs/photo/useFairPhotoNew";
 
 type TRouteParams = { fairID: string };
-type TPageProps = RouteComponentProps<{}>;
 
-export const FairPhotoNew: React.FC<TPageProps> = () => {
+export const FairPhotoNew = () => {
   const { fairID } = useParams<TRouteParams>();
-  const { handleUploadPhoto, isSubmit } = useFairPhoto(fairID || "");
+  const { handleUploadPhoto, isLoading } = useFairPhotoNew(fairID || "");
 
   return (
-    <IonPage>
-      <TopBar
-        title="Fotografía"
-        startGoBack
-        titleSize={24}
-        sticky
-        stickyNoScroll
-      />
-
+    <>
       <PhotoForm
         handleSave={handleUploadPhoto}
-        isLoading={isSubmit}
+        isLoading={isLoading}
         className="animate__animated animate__screenInUp "
       />
-      <SpinnerFullScreen show={Boolean(isSubmit)} />
-    </IonPage>
+      <SpinnerFullScreen show={Boolean(isLoading)} />
+    </>
   );
 };

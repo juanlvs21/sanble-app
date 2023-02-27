@@ -1,21 +1,21 @@
-import { IonPage, useIonActionSheet } from "@ionic/react";
+import { useIonActionSheet } from "@ionic/react";
 import { BiFilterAlt } from "react-icons/bi";
-import { RouteComponentProps } from "react-router";
 
 import { Button } from "@/components/common/buttons/Button";
 import { Fetcher } from "@/components/common/Fetcher";
 import { Skeleton } from "@/components/common/Skeleton";
-import { TopBar } from "@/components/common/TopBar";
 import { StandCardList } from "@/components/modules/stands/StandCardList";
 import { useStandsList } from "@/hooks/stands/useStandsList";
+import { useApp } from "@/hooks/useApp";
 import { useDocumentTitle } from "@/hooks/useDocumentTitle";
+import { useTopBarMain } from "@/hooks/useTopBarMain";
 import styles from "./StandsList.module.css";
 
-type TPageProps = RouteComponentProps<{}>;
-
-export const StandsList: React.FC<TPageProps> = () => {
+export const StandsList = () => {
   useDocumentTitle("Lista de Stands 🛒");
   const [present] = useIonActionSheet();
+  const { renderTopBarActionEnd } = useTopBarMain();
+  const { isCapacitor } = useApp();
   const {
     list,
     orderBy,
@@ -37,69 +37,67 @@ export const StandsList: React.FC<TPageProps> = () => {
   };
 
   return (
-    <IonPage>
-      <TopBar
-        title="Stands"
-        end={
-          <Button
-            onClick={() =>
-              present({
-                header: "Ordenar Stands",
-                buttons: [
-                  {
-                    text: "Mejor puntuadas",
-                    cssClass: actionCssClasses(
-                      orderBy === "stars",
-                      orderDir === "desc"
-                    ),
-                    handler: () => handleShorting("stars", "desc"),
+    <>
+      {renderTopBarActionEnd(
+        <Button
+          className="animate__animated animate__fadeIn"
+          onClick={() =>
+            present({
+              header: "Ordenar Stands",
+              buttons: [
+                {
+                  text: "Mejor puntuadas",
+                  cssClass: actionCssClasses(
+                    orderBy === "stars",
+                    orderDir === "desc"
+                  ),
+                  handler: () => handleShorting("stars", "desc"),
+                },
+                {
+                  text: "Menor puntuadas",
+                  cssClass: actionCssClasses(
+                    orderBy === "stars",
+                    orderDir === "asc"
+                  ),
+                  handler: () => handleShorting("stars", "asc"),
+                },
+                {
+                  text: "Por nombre",
+                  cssClass: actionCssClasses(
+                    orderBy === "name",
+                    orderDir === "asc"
+                  ),
+                  handler: () => handleShorting("name", "asc"),
+                },
+                {
+                  text: "Limpiar filtro",
+                  cssClass: actionCssClasses(),
+                  handler: () => handleShorting("stars", "desc"),
+                },
+                {
+                  text: "Cancelar",
+                  cssClass: "danger-color",
+                  role: "cancel",
+                  data: {
+                    action: "cancel",
                   },
-                  {
-                    text: "Menor puntuadas",
-                    cssClass: actionCssClasses(
-                      orderBy === "stars",
-                      orderDir === "asc"
-                    ),
-                    handler: () => handleShorting("stars", "asc"),
-                  },
-                  {
-                    text: "Por nombre",
-                    cssClass: actionCssClasses(
-                      orderBy === "name",
-                      orderDir === "asc"
-                    ),
-                    handler: () => handleShorting("name", "asc"),
-                  },
-                  {
-                    text: "Limpiar filtro",
-                    cssClass: actionCssClasses(),
-                    handler: () => handleShorting("stars", "desc"),
-                  },
-                  {
-                    text: "Cancelar",
-                    cssClass: "danger-color",
-                    role: "cancel",
-                    data: {
-                      action: "cancel",
-                    },
-                  },
-                ],
-              })
-            }
-          >
-            <BiFilterAlt size={24} />
-          </Button>
-        }
-        startUser
-        sticky
-      />
+                },
+              ],
+            })
+          }
+        >
+          <BiFilterAlt size={24} />
+        </Button>
+      )}
 
       <Fetcher
         handleRefresh={handleRefresh}
         handleInfiniteScroll={handleInfinite}
         classNameSection="animate__animated animate__screenInUp"
       >
-        <div className="dataListContainer">
+        <div
+          className={`dataListContainer ${isCapacitor ? "isCapacitor" : ""}`}
+        >
           {(isLoading && !list.length) || isSorting
             ? Array(5)
                 .fill(0)
@@ -115,6 +113,6 @@ export const StandsList: React.FC<TPageProps> = () => {
               ))}
         </div>
       </Fetcher>
-    </IonPage>
+    </>
   );
 };

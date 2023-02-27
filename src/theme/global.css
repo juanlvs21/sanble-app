@@ -250,6 +250,10 @@ ion-action-sheet .action-sheet-wrapper {
   padding-bottom: 30px;
 }
 
+.refresher-refreshing ion-refresher-content .refresher-refreshing {
+  display: none;
+}
+
 form {
   width: 100%;
 }
@@ -262,6 +266,10 @@ form {
 
 .dataListContainer.col-1 {
   grid-template-columns: repeat(1, minmax(0, 1fr));
+}
+
+.dataListContainer.isCapacitor {
+  margin-top: 20px;
 }
 
 .Toastify {

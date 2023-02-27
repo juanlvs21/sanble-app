@@ -1,5 +1,5 @@
-import styles from "../Loaders.module.css";
 import { Spinner } from "@/components/common/loaders/Spinner";
+import styles from "../Loaders.module.css";
 
 export const LoadingSuspense = () => (
   <div

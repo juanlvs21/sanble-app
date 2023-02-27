@@ -1,14 +1,13 @@
 import { IonPage } from "@ionic/react";
-import { Link, RouteComponentProps } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import { Button } from "@/components/common/buttons/Button";
 import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 import { useLanding } from "@/hooks/useLanding";
+import { ERoutesName } from "@/types/TRoutes";
 import styles from "./Landing.module.css";
 
-type TPageProps = RouteComponentProps<{}>;
-
-export const Landing: React.FC<TPageProps> = () => {
+export const Landing = () => {
   const { handleGetDownloadAppLink } = useLanding();
   useDocumentTitle("¡Bienvenido! 🎉");
 
@@ -28,13 +27,11 @@ export const Landing: React.FC<TPageProps> = () => {
           </h1>
 
           <div className={styles.btnContainer}>
-            {/* <a href="/app"> */}
-            <Link to="/app">
+            <Link to={ERoutesName.APP}>
               <Button color="secondary" className={styles.btn}>
                 Ir a la aplicación
               </Button>
             </Link>
-            {/* </a> */}
 
             <Button
               onClick={handleGetDownloadAppLink}

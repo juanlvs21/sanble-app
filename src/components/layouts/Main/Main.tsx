@@ -1,19 +1,18 @@
+import { IonPage } from "@ionic/react";
+import { Outlet } from "react-router-dom";
+
 import { Sidebar } from "@/components/common/Sidebar";
+import { TopBarMain } from "@/components/modules/main/TopBarMain";
 import { useApp } from "@/hooks/useApp";
+import { useTopBarMain } from "@/hooks/useTopBarMain";
 import styles from "./Main.module.css";
 
-export type ComponentProps = {
-  /**
-   * Children element
-   */
-  children: React.ReactElement | React.ReactElement[];
-};
-
-export const MainLayout = ({ children }: ComponentProps) => {
+export const MainLayout = () => {
   const { isCapacitor, showSidebar, handleShowSidebar } = useApp();
+  const { props } = useTopBarMain();
 
   return (
-    <div
+    <IonPage
       className={`${styles.mainContent} ${
         showSidebar ? styles.showSidebar : ""
       }`}
@@ -31,8 +30,10 @@ export const MainLayout = ({ children }: ComponentProps) => {
           onClick={() => handleShowSidebar(false)}
         />
 
-        {children}
+        {props && <TopBarMain />}
+
+        <Outlet />
       </main>
-    </div>
+    </IonPage>
   );
 };

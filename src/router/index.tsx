@@ -1,11 +1,13 @@
-import { IonRouterOutlet, IonSplitPane, isPlatform } from "@ionic/react";
-import { lazy, Suspense } from "react";
-import { Route, Redirect } from "react-router-dom";
+import { isPlatform } from "@ionic/react";
+import { lazy } from "react";
+import { createBrowserRouter, Navigate } from "react-router-dom";
 
-import { LoadingSuspense } from "@/components/common/loaders/LoadingSuspense";
+import { SuspenseComponent } from "@/components/common/SuspenseComponent";
 import { AuthLayout } from "@/components/layouts/Auth";
 import { HomeLayout } from "@/components/layouts/Home";
 import { MainLayout } from "@/components/layouts/Main";
+import { ProvidersLayout } from "@/components/layouts/Providers";
+import { ERoutesName } from "@/types/TRoutes";
 
 const NotFoundScreen = lazy(() =>
   import("@/screens/NotFound").then(({ NotFound }) => ({ default: NotFound }))
@@ -27,6 +29,17 @@ const SignupScreen = lazy(() =>
 const HomeScreen = lazy(() =>
   import("@/screens/Home").then(({ Home }) => ({ default: Home }))
 );
+const FavoritesListScreen = lazy(() =>
+  import("@/screens/favorites/FavoritesList").then(({ FavoritesList }) => ({
+    default: FavoritesList,
+  }))
+);
+const NearYouScreen = lazy(() =>
+  import("@/screens/NearYou").then(({ NearYou }) => ({
+    default: NearYou,
+  }))
+);
+
 const FairsListScreen = lazy(() =>
   import("@/screens/fairs/FairsList").then(({ FairsList }) => ({
     default: FairsList,
@@ -54,191 +67,173 @@ const StandsListScreen = lazy(() =>
     default: StandsList,
   }))
 );
-const FavoritesListScreen = lazy(() =>
-  import("@/screens/favorites/FavoritesList").then(({ FavoritesList }) => ({
-    default: FavoritesList,
-  }))
-);
-const NearYouScreen = lazy(() =>
-  import("@/screens/NearYou").then(({ NearYou }) => ({
-    default: NearYou,
+const StandDetailsScreen = lazy(() =>
+  import("@/screens/stands/StandDetails").then(({ StandDetails }) => ({
+    default: StandDetails,
   }))
 );
 
-export const AppRoutes = () => (
-  <IonSplitPane contentId="main">
-    <IonRouterOutlet id="main">
-      {/* ------ LANDING ----- */}
-      <Route
-        path="/"
-        exact
-        render={(props) => (
-          <Suspense fallback={<LoadingSuspense />}>
-            <>
-              {isPlatform("capacitor") ? (
-                <WelcomeSlidesScreen {...props} />
-              ) : (
-                <LandingScreen {...props} />
-              )}
-            </>
-          </Suspense>
-        )}
-      />
+const ErrorScreen = () => <h1 style={{ marginTop: 300 }}>Error :c :c</h1>;
 
-      <MainLayout>
-        {/* ------ MAIN (SIDEBAR) ----- */}
-        <Route
-          path="/app/cerca"
-          exact
-          render={(props) => (
-            <Suspense fallback={<LoadingSuspense />}>
-              <NearYouScreen {...props} />
-            </Suspense>
-          )}
-        />
-        <Route
-          path="/app/favoritos"
-          exact
-          render={(props) => (
-            <Suspense fallback={<LoadingSuspense />}>
-              <FavoritesListScreen {...props} />
-            </Suspense>
-          )}
-        />
-        <Route
-          path="/app/misanble"
-          exact
-          render={(props) => (
-            <Suspense fallback={<LoadingSuspense />}>
-              <FavoritesListScreen {...props} />
-            </Suspense>
-          )}
-        />
-        <Route
-          path="/app/cerca"
-          exact
-          render={(props) => (
-            <Suspense fallback={<LoadingSuspense />}>
-              <NearYouScreen {...props} />
-            </Suspense>
-          )}
-        />
-        <Route
-          path="/app/perfil"
-          exact
-          render={(props) => (
-            <Suspense fallback={<LoadingSuspense />}>
-              <FavoritesListScreen {...props} />
-            </Suspense>
-          )}
-        />
-
-        {/* ------ HOME ----- */}
-        <Route
-          path="/app"
-          render={() => (
-            <HomeLayout>
-              <Route
-                path="/app"
-                exact
-                render={(props) => (
-                  <Suspense fallback={<LoadingSuspense />}>
-                    <HomeScreen {...props} />
-                  </Suspense>
-                )}
-              />
-              <Route
-                path="/app/ferias"
-                exact
-                render={(props) => (
-                  <Suspense fallback={<LoadingSuspense />}>
-                    <FairsListScreen {...props} />
-                  </Suspense>
-                )}
-              />
-              <Route
-                path="/app/stands"
-                exact
-                render={(props) => (
-                  <Suspense fallback={<LoadingSuspense />}>
-                    <StandsListScreen {...props} />
-                  </Suspense>
-                )}
-              />
-              <Route
-                path="/app/productos"
-                exact
-                render={(props) => (
-                  <Suspense fallback={<LoadingSuspense />}>
-                    <FavoritesListScreen {...props} />
-                  </Suspense>
-                )}
-              />
-            </HomeLayout>
-          )}
-        />
-      </MainLayout>
-
-      {/* ------ FAIR ----- */}
-      <Route
-        path="/app/ferias/:fairID"
-        exact
-        render={(props) => (
-          <Suspense fallback={<LoadingSuspense />}>
-            <FairDetailsScreen {...props} />
-          </Suspense>
-        )}
-      />
-      <Route
-        path="/app/ferias/:fairID/foto"
-        exact
-        render={(props) => (
-          <Suspense fallback={<LoadingSuspense />}>
-            <FairPhotoNewScreen {...props} />
-          </Suspense>
-        )}
-      />
-      <Route
-        path="/app/ferias/:fairID/foto/:photoID"
-        exact
-        render={(props) => (
-          <Suspense fallback={<LoadingSuspense />}>
-            <FairPhotoDetailsScreen {...props} />
-          </Suspense>
-        )}
-      />
-
-      {/* ------ SESSION ----- */}
-      <Route
-        path="/app/sesion"
-        render={() => (
-          <AuthLayout>
-            <Route
-              path="/app/sesion/entrar"
-              exact
-              render={(props) => (
-                <Suspense fallback={<LoadingSuspense />}>
-                  <SigninScreen {...props} />
-                </Suspense>
-              )}
-            />
-            <Route
-              path="/app/sesion/registrarse"
-              exact
-              render={(props) => (
-                <Suspense fallback={<LoadingSuspense />}>
-                  <SignupScreen {...props} />
-                </Suspense>
-              )}
-            />
-            <Route
-              path="/app/sesion"
-              exact
-              render={() => <Redirect to="/app/sesion/entrar" />}
-            />
-          </AuthLayout>
-        )}
-      />
-    </IonRouterOutlet>
-  </IonSplitPane>
-);
+export const router = createBrowserRouter([
+  {
+    path: ERoutesName.ROOT,
+    element: <ProvidersLayout />,
+    errorElement: <ErrorScreen />,
+    children: [
+      {
+        index: true,
+        errorElement: <ErrorScreen />,
+        element: isPlatform("capacitor") ? (
+          <WelcomeSlidesScreen />
+        ) : (
+          <LandingScreen />
+        ),
+      },
+      {
+        path: ERoutesName.APP,
+        errorElement: <ErrorScreen />,
+        element: <MainLayout />,
+        children: [
+          {
+            path: ERoutesName.APP,
+            element: <HomeLayout />,
+            children: [
+              {
+                index: true,
+                errorElement: <ErrorScreen />,
+                element: (
+                  <SuspenseComponent>
+                    <HomeScreen />
+                  </SuspenseComponent>
+                ),
+              },
+              {
+                path: ERoutesName.FAIRS_LIST,
+                errorElement: <ErrorScreen />,
+                element: (
+                  <SuspenseComponent>
+                    <FairsListScreen />
+                  </SuspenseComponent>
+                ),
+              },
+              {
+                path: ERoutesName.STANDS_LIST,
+                errorElement: <ErrorScreen />,
+                element: (
+                  <SuspenseComponent>
+                    <StandsListScreen />
+                  </SuspenseComponent>
+                ),
+              },
+              {
+                path: ERoutesName.FAVORITES_LIST,
+                errorElement: <ErrorScreen />,
+                element: (
+                  <SuspenseComponent>
+                    <FavoritesListScreen />
+                  </SuspenseComponent>
+                ),
+              },
+              {
+                path: ERoutesName.MY_SANBLE,
+                errorElement: <ErrorScreen />,
+                element: (
+                  <SuspenseComponent>
+                    <FavoritesListScreen />
+                  </SuspenseComponent>
+                ),
+              },
+              {
+                path: ERoutesName.NEAR_YOU,
+                errorElement: <ErrorScreen />,
+                element: (
+                  <SuspenseComponent>
+                    <NearYouScreen />
+                  </SuspenseComponent>
+                ),
+              },
+              {
+                path: ERoutesName.PROFILE,
+                errorElement: <ErrorScreen />,
+                element: (
+                  <SuspenseComponent>
+                    <FavoritesListScreen />
+                  </SuspenseComponent>
+                ),
+              },
+            ],
+          },
+          {
+            path: ERoutesName.FAIR_DETAILS,
+            errorElement: <ErrorScreen />,
+            element: (
+              <SuspenseComponent>
+                <FairDetailsScreen />
+              </SuspenseComponent>
+            ),
+          },
+          {
+            path: ERoutesName.FAIR_DETAILS_PHOTO,
+            errorElement: <ErrorScreen />,
+            element: (
+              <SuspenseComponent>
+                <FairPhotoDetailsScreen />
+              </SuspenseComponent>
+            ),
+          },
+          {
+            path: ERoutesName.FAIR_DETAILS_PHOTO_NEW,
+            errorElement: <ErrorScreen />,
+            element: (
+              <SuspenseComponent>
+                <FairPhotoNewScreen />
+              </SuspenseComponent>
+            ),
+          },
+          {
+            path: ERoutesName.STAND_DETAILS,
+            errorElement: <ErrorScreen />,
+            element: (
+              <SuspenseComponent>
+                <StandDetailsScreen />
+              </SuspenseComponent>
+            ),
+          },
+        ],
+      },
+      {
+        path: ERoutesName.SESSION,
+        errorElement: <ErrorScreen />,
+        element: <AuthLayout />,
+        children: [
+          {
+            index: true,
+            errorElement: <ErrorScreen />,
+            element: (
+              <Navigate to={ERoutesName.SESSION_SIGNIN} replace={true} />
+            ),
+          },
+          {
+            path: ERoutesName.SESSION_SIGNIN,
+            errorElement: <ErrorScreen />,
+            element: (
+              <SuspenseComponent>
+                <SigninScreen />
+              </SuspenseComponent>
+            ),
+          },
+          {
+            path: ERoutesName.SESSION_SIGNUP,
+            errorElement: <ErrorScreen />,
+            element: (
+              <SuspenseComponent>
+                <SignupScreen />
+              </SuspenseComponent>
+            ),
+          },
+        ],
+      },
+    ],
+  },
+]);

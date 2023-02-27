@@ -2,7 +2,6 @@ import {
   IonFab,
   IonFabButton,
   IonFabList,
-  IonPage,
   useIonActionSheet,
   useIonAlert,
 } from "@ionic/react";
@@ -12,18 +11,12 @@ import { HiOutlinePhotograph } from "react-icons/hi";
 import { IoIosArrowUp } from "react-icons/io";
 import { MdOutlineStorefront } from "react-icons/md";
 import { TiStar } from "react-icons/ti";
-import {
-  RouteComponentProps,
-  useHistory,
-  useLocation,
-  useParams,
-} from "react-router";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 import { ButtonFav } from "@/components/common/buttons/ButtonFav";
 import { Fetcher } from "@/components/common/Fetcher";
 import { ImageExtended } from "@/components/common/ImageExtended";
 import { Skeleton } from "@/components/common/Skeleton";
-import { TopBar } from "@/components/common/TopBar";
 import { FairModalMap } from "@/components/modules/fairs/FairModalMap";
 import { FairModalStands } from "@/components/modules/fairs/FairModalStands";
 import { InfoModal } from "@/components/modules/info/InfoModal";
@@ -32,12 +25,14 @@ import { ReviewForm } from "@/components/modules/reviews/ReviewForm";
 import { ReviewsList } from "@/components/modules/reviews/ReviewsList";
 import { fairType } from "@/helpers/fairs";
 import { getNavStateText } from "@/helpers/navigation";
+import { useFairPhotoDelete } from "@/hooks/fairs/photo/useFairPhotoDelete";
 import { useFairDetails } from "@/hooks/fairs/useFairDetails";
-import { useFairPhoto } from "@/hooks/fairs/useFairPhoto";
 import { useFairStands } from "@/hooks/fairs/useFairStands";
+import { useApp } from "@/hooks/useApp";
 import { useDocumentTitle } from "@/hooks/useDocumentTitle";
+import { useTopBarMain } from "@/hooks/useTopBarMain";
 import { useUser } from "@/hooks/useUser";
-import { TFairRouteState } from "@/types/TFair";
+import { ERoutesName } from "@/types/TRoutes";
 import styles from "./FairDetails.module.css";
 
 const MODAL_INFO_ID = "fair-info-open-modal";
@@ -47,38 +42,34 @@ const MODAL_PHOTOS_ID = "fair-photos-open-modal";
 
 type TRouteParams = { fairID: string };
 
-type TPageProps = RouteComponentProps<{}>;
-
-export const FairDetails: React.FC<TPageProps> = (props) => {
-  const history = useHistory();
+export const FairDetails = () => {
+  const navigate = useNavigate();
   const [present] = useIonActionSheet();
   const [presentAlert] = useIonAlert();
   const { fairID } = useParams<TRouteParams>();
-  const { state } = useLocation<TFairRouteState>();
+  const { state } = useLocation();
+  const { renderTopBarActionEnd } = useTopBarMain();
+  const { isCapacitor } = useApp();
   const finalFairID = fairID || state?.fairID || "";
   const {
     fair,
     review,
     reviews,
-    isLoading,
+    isLoadingDetails,
     isSaving,
     isLoadingReviews,
     handleLoadAll,
     handleSaveReview,
-    handleRefreshReviews,
     handleInfiniteReviews,
   } = useFairDetails(finalFairID);
   const {
     stands,
     isLoading: isLoadingStands,
-    handleLoad: handleRefreshStands,
+    handleRefresh: handleRefreshStands,
     handleInfinite: handleInfiniteStands,
   } = useFairStands(finalFairID);
-  const {
-    handleDeletePhoto,
-    isLoading: isLoadingPhoto,
-    isDeletingPhoto,
-  } = useFairPhoto(finalFairID);
+  const { handleDeletePhoto, isDeletingPhoto } =
+    useFairPhotoDelete(finalFairID);
   const { user, loadingSetFav, handleSetFavoriteFair } = useUser();
 
   useDocumentTitle(
@@ -95,14 +86,15 @@ export const FairDetails: React.FC<TPageProps> = (props) => {
   ) => {
     const navPhoto = (path: string, state: Record<string, string> = {}) => {
       if (handleDismiss) handleDismiss();
-      setTimeout(() => history.push(path, state), 200);
+      setTimeout(() => navigate(path, state), 200);
     };
 
     const buttons = [
       {
         text: "Publicar Nueva Fotografía",
         cssClass: "",
-        handler: () => navPhoto(`/app/ferias/${finalFairID}/foto`),
+        handler: () =>
+          navPhoto(`${ERoutesName.FAIRS_LIST}/${finalFairID}/foto`),
       },
     ];
 
@@ -112,10 +104,13 @@ export const FairDetails: React.FC<TPageProps> = (props) => {
           text: "Editar Fotografía",
           cssClass: "",
           handler: () =>
-            navPhoto(`/app/ferias/${finalFairID}/foto/${photoID}`, {
-              fairID: finalFairID,
-              photoID,
-            }),
+            navPhoto(
+              `${ERoutesName.FAIRS_LIST}/${finalFairID}/foto/${photoID}`,
+              {
+                fairID: finalFairID,
+                photoID,
+              }
+            ),
         },
         {
           text: "Eliminar Fotografía",
@@ -135,7 +130,6 @@ export const FairDetails: React.FC<TPageProps> = (props) => {
                   handler: () =>
                     handleDeletePhoto(photoID, () => {
                       if (handleDismiss) handleDismiss();
-                      handleLoadAll();
                     }),
                 },
               ],
@@ -161,34 +155,29 @@ export const FairDetails: React.FC<TPageProps> = (props) => {
   };
 
   return (
-    <IonPage>
-      <TopBar
-        title="Detalles"
-        startGoBack
-        startGoBackUrl={state?.goBackUrl || "/app/ferias"}
-        end={
-          <ButtonFav
-            isLoading={loadingSetFav}
-            color="light"
-            spinnerColor="dark"
-            isActive={user?.favoriteFairs.includes(fair?.id || "")}
-            onClick={() => (fair ? handleSetFavoriteFair(fair.id) : undefined)}
-          />
-        }
-        titleSize={24}
-        titleLight
-        sticky
-      />
+    <>
+      {renderTopBarActionEnd(
+        <ButtonFav
+          isLoading={loadingSetFav}
+          color="light"
+          spinnerColor="dark"
+          isActive={user?.favoriteFairs.includes(fair?.id || "")}
+          onClick={() => (fair ? handleSetFavoriteFair(fair.id) : undefined)}
+          className="animate__animated animate__fadeIn"
+        />
+      )}
 
       <div
         className={`${styles.fairCoverBg} animate__animated animate__fadeIn`}
       />
 
       <Fetcher
-        handleRefresh={handleRefreshReviews}
+        handleRefresh={handleLoadAll}
         handleInfiniteScroll={handleInfiniteReviews}
         refreshSpinnerColor="medium"
-        classNameSection={`${styles.fairFetcherSection} animate__animated animate__screenInUp `}
+        classNameSection={`${styles.fairFetcherSection} ${
+          isCapacitor ? styles.isCapacitor : ""
+        } animate__animated animate__screenInUp `}
         classNameContent={`${styles.fairFetcherContent}`}
         classNameInfinite={styles.fairFetcherInfinite}
       >
@@ -196,7 +185,7 @@ export const FairDetails: React.FC<TPageProps> = (props) => {
           <ImageExtended
             src={fair?.coverUrl}
             alt={fair?.name}
-            isLoading={!fair || isLoading || isDeletingPhoto}
+            isLoading={!fair || isLoadingDetails || isDeletingPhoto}
             classNamePicture={`${styles.fairCover}`}
             skeletonProps={{
               className: styles.fairSkeleton,
@@ -209,7 +198,7 @@ export const FairDetails: React.FC<TPageProps> = (props) => {
               <h1>{getNavStateText(fairID, state?.fairID, state?.fairName)}</h1>
             ) : (
               <>
-                {isLoading ? (
+                {isLoadingDetails ? (
                   <Skeleton width="100%" height={35} />
                 ) : (
                   <h1>{fair?.name}</h1>
@@ -217,7 +206,7 @@ export const FairDetails: React.FC<TPageProps> = (props) => {
               </>
             )}
             <div className={styles.fairNameStars}>
-              {!isLoading && (
+              {!isLoadingDetails && (
                 <>
                   <span
                     className={`${styles.fairNameStarsIcon} animate__animated animate__fadeIn`}
@@ -232,7 +221,7 @@ export const FairDetails: React.FC<TPageProps> = (props) => {
             </div>
           </div>
           <div>
-            {isLoading ? (
+            {isLoadingDetails ? (
               <Skeleton
                 width="100%"
                 height={20}
@@ -244,7 +233,7 @@ export const FairDetails: React.FC<TPageProps> = (props) => {
               </h6>
             )}
             <section className={styles.fairDescription}>
-              {isLoading ? (
+              {isLoadingDetails ? (
                 Array(5)
                   .fill(0)
                   .map((_, i) => (
@@ -263,7 +252,7 @@ export const FairDetails: React.FC<TPageProps> = (props) => {
             <section className={styles.fairInfo}>
               <div
                 className={`${styles.fairInfoCard} ${
-                  isLoading ? styles.isLoading : ""
+                  isLoadingDetails ? styles.isLoading : ""
                 }`}
                 id={MODAL_INFO_ID}
               >
@@ -272,7 +261,7 @@ export const FairDetails: React.FC<TPageProps> = (props) => {
               </div>
               <div
                 className={`${styles.fairInfoCard} ${
-                  isLoading ? styles.isLoading : ""
+                  isLoadingDetails ? styles.isLoading : ""
                 }`}
                 id={MODAL_MAP_ID}
               >
@@ -281,7 +270,7 @@ export const FairDetails: React.FC<TPageProps> = (props) => {
               </div>
               <div
                 className={`${styles.fairInfoCard} ${
-                  isLoading ? styles.isLoading : ""
+                  isLoadingDetails ? styles.isLoading : ""
                 }`}
                 id={MODAL_PHOTOS_ID}
               >
@@ -290,7 +279,7 @@ export const FairDetails: React.FC<TPageProps> = (props) => {
               </div>
               <div
                 className={`${styles.fairInfoCard} ${
-                  isLoading ? styles.isLoading : ""
+                  isLoadingDetails ? styles.isLoading : ""
                 }`}
                 id={MODAL_STANDS_ID}
               >
@@ -308,7 +297,7 @@ export const FairDetails: React.FC<TPageProps> = (props) => {
               <ReviewForm
                 review={review}
                 handleSave={handleSaveReview}
-                isLoading={isSaving || isLoading}
+                isLoading={isSaving || isLoadingDetails}
               />
               <ReviewsList
                 reviews={reviews}
@@ -351,13 +340,17 @@ export const FairDetails: React.FC<TPageProps> = (props) => {
       <ModalPhotos
         trigger={MODAL_PHOTOS_ID}
         photographs={fair?.photographs || []}
-        isLoading={isLoading || isLoadingPhoto || isDeletingPhoto}
+        isLoading={isLoadingDetails || isDeletingPhoto}
         handleAction={
           user?.uid === fair?.owner.id ? handleGalleryActions : undefined
         }
         isCoverText="Fotografía de Perfil"
       />
-      <FairModalMap trigger={MODAL_MAP_ID} fair={fair} isLoading={isLoading} />
+      <FairModalMap
+        trigger={MODAL_MAP_ID}
+        fair={fair}
+        isLoading={isLoadingDetails}
+      />
       <FairModalStands
         trigger={MODAL_STANDS_ID}
         stands={stands}
@@ -365,6 +358,6 @@ export const FairDetails: React.FC<TPageProps> = (props) => {
         handleInfinite={handleInfiniteStands}
         isLoading={isLoadingStands}
       />
-    </IonPage>
+    </>
   );
 };

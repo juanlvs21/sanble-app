@@ -37,7 +37,7 @@ export const ImageExtended = ({
   ...props
 }: ComponentProps) => {
   const [imageUrl, setImageUrl] = useState("");
-  const [isLoadingSrc, setIsLoadingSrc] = useState(true);
+  const [isLoadingSrc, setIsLoadingSrc] = useState(false);
 
   useEffect(() => {
     if (!isLoading) handleGetImage();
