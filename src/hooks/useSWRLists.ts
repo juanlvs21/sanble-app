@@ -12,7 +12,7 @@ const DEFAULT_LIMIT = 9;
 const DEFAULT_ORDER_BY = "stars";
 const DEFAULT_ORDER_DIR = "desc";
 
-type TDefaultParams = Partial<TOrder & Omit<TPagination, "total">>;
+type TDefaultParams = Partial<TOrder & TPagination>;
 
 export const useSWRLists = <T = any>(
   SWRKey: string,
@@ -36,7 +36,6 @@ export const useSWRLists = <T = any>(
   const [pagination, setPagination] = useState<TPagination>({
     lastIndex: paramsDefault.lastIndex,
     limit: paramsDefault.limit,
-    total: 0,
   });
 
   const { data, error, isLoading, mutate } = useSWRMutation<any>(
@@ -88,7 +87,6 @@ export const useSWRLists = <T = any>(
       {
         lastIndex: paramsDefault.lastIndex,
         limit: paramsDefault.limit,
-        total: 0,
       },
       order
     );
@@ -107,7 +105,6 @@ export const useSWRLists = <T = any>(
       {
         lastIndex: paramsDefault.lastIndex,
         limit: paramsDefault.limit,
-        total: 0,
       },
       { orderBy, orderDir }
     );
@@ -120,13 +117,15 @@ export const useSWRLists = <T = any>(
       setPagination(data.pagination);
       if (data.order) setOrder(data.order);
     }
+  }, [data]);
 
+  useEffect(() => {
     if (error) {
-      toast("Error al cargar el listado de stands", {
+      toast(error, {
         type: "error",
       });
     }
-  }, [data, error]);
+  }, [error]);
 
   return {
     list,

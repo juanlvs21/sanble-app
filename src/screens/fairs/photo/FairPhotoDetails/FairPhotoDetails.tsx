@@ -7,7 +7,7 @@ import {
   useIonActionSheet,
   useIonAlert,
 } from "@ionic/react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import { FiEdit2 } from "react-icons/fi";
 import { IoIosArrowBack } from "react-icons/io";
@@ -18,12 +18,13 @@ import { HeaderModal } from "@/components/common/HeaderModal";
 import { SpinnerFullScreen } from "@/components/common/loaders/SpinnerFullScreen";
 import { PhotoDescription } from "@/components/modules/photo/PhotoDescription";
 import { PhotoForm } from "@/components/modules/photo/PhotoForm";
-import { useFairPhoto } from "@/hooks/fairs/useFairPhoto";
+import { useFairPhotoDelete } from "@/hooks/fairs/photo/useFairPhotoDelete";
+import { useFairPhotoDetails } from "@/hooks/fairs/photo/useFairPhotoDetails";
 import { useModalGoBack } from "@/hooks/useModalGoBack";
 import { useTopBarMain } from "@/hooks/useTopBarMain";
 import { useUser } from "@/hooks/useUser";
-import styles from "./FairPhotoDetails.module.css";
 import { ERoutesName } from "@/types/TRoutes";
+import styles from "./FairPhotoDetails.module.css";
 
 const MODAL_PHOTO_DESCRIPTION_ID = "photo-description-open-modal";
 
@@ -38,24 +39,21 @@ export const FairPhotoDetails = () => {
   const finalFairID = fairID || state?.fairID || "";
   const finalPhotoID = photoID || state?.photoID || "";
   const { renderTopBarActionStart, renderTopBarActionEnd } = useTopBarMain();
-  const {
-    modalRef,
-    photograph,
-    ownerID,
-    isLoading,
-    isSubmit,
-    isChangingPhoto,
-    handleUpdatePhoto,
-    handleGetPhoto,
-  } = useFairPhoto(finalFairID);
-  const { handleDeletePhoto, isDeletingPhoto } = useFairPhoto(finalFairID);
+  const { handleDeletePhoto, isDeletingPhoto } =
+    useFairPhotoDelete(finalFairID);
   const { user } = useUser();
   const [showDescription, setShowDescription] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
 
-  useEffect(() => {
-    handleGetPhoto(finalPhotoID);
-  }, []);
+  const {
+    photograph,
+    ownerID,
+    isLoading,
+    modalRef,
+    isSubmit,
+    isChangingPhoto,
+    handleUpdatePhoto,
+  } = useFairPhotoDetails(finalFairID, finalPhotoID);
 
   const handleActions = () => {
     present({
@@ -149,7 +147,9 @@ export const FairPhotoDetails = () => {
         onClick={
           !isLoading && !isSubmit ? handleToggleShowDescription : undefined
         }
-        isLoading={isLoading || isChangingPhoto || isDeletingPhoto}
+        isLoading={
+          !photograph || isLoading || isChangingPhoto || isDeletingPhoto
+        }
         classNameContainer="animate__animated animate__screenInUp "
       />
 

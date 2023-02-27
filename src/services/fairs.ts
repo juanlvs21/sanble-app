@@ -3,7 +3,7 @@ import { AxiosRequestConfig, AxiosResponse } from "axios";
 import { api } from "@/services";
 import { TFair, TFairGeo } from "@/types/TFair";
 import { TResponseList } from "@/types/THttp";
-import { TPhotographDetails } from "@/types/TPhotograph";
+import { TPhotograph, TPhotographDetails } from "@/types/TPhotograph";
 import { TGetListParams } from "@/types/TRequest";
 import { TReview, TReviewForm } from "@/types/TReview";
 import { TStand } from "@/types/TStand";
@@ -52,8 +52,6 @@ export const getFairStandsListRequest = (
       {
         ...config,
         params: {
-          orderBy: params?.orderBy || "name",
-          orderDir: params?.orderDir || "desc",
           lastIndex: params?.lastIndex || 0,
           limit: params?.limit || 10,
         },
@@ -126,7 +124,7 @@ export const getFairPhotoRequest = (fairID: string, photoID: string) =>
 
 export const deleteFairPhotoRequest = (fairID: string, photoID: string) =>
   api
-    .delete<AxiosResponse<{ photographID: string }>>(
-      `${URL_PREFIX}/${fairID}/photograph/${photoID}`
-    )
+    .delete<
+      AxiosResponse<{ photographID: string; photographCover: TPhotograph }>
+    >(`${URL_PREFIX}/${fairID}/photograph/${photoID}`)
     .then(({ data }) => data.data);

@@ -9,9 +9,9 @@ export type TAxiosResult<T> = {
 export type TAxiosResp<T> = AxiosResponse<TAxiosResult<T>>;
 
 export type TPagination = {
-  total: number;
   lastIndex: number;
   limit: number;
+  // total: number;
 };
 
 export type TOrder = {

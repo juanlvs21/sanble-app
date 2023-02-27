@@ -25,8 +25,8 @@ import { ReviewForm } from "@/components/modules/reviews/ReviewForm";
 import { ReviewsList } from "@/components/modules/reviews/ReviewsList";
 import { fairType } from "@/helpers/fairs";
 import { getNavStateText } from "@/helpers/navigation";
+import { useFairPhotoDelete } from "@/hooks/fairs/photo/useFairPhotoDelete";
 import { useFairDetails } from "@/hooks/fairs/useFairDetails";
-import { useFairPhoto } from "@/hooks/fairs/useFairPhoto";
 import { useFairStands } from "@/hooks/fairs/useFairStands";
 import { useApp } from "@/hooks/useApp";
 import { useDocumentTitle } from "@/hooks/useDocumentTitle";
@@ -55,25 +55,21 @@ export const FairDetails = () => {
     fair,
     review,
     reviews,
-    isLoading,
+    isLoadingDetails,
     isSaving,
     isLoadingReviews,
     handleLoadAll,
     handleSaveReview,
-    handleRefreshReviews,
     handleInfiniteReviews,
   } = useFairDetails(finalFairID);
   const {
     stands,
     isLoading: isLoadingStands,
-    handleLoad: handleRefreshStands,
+    handleRefresh: handleRefreshStands,
     handleInfinite: handleInfiniteStands,
   } = useFairStands(finalFairID);
-  const {
-    handleDeletePhoto,
-    isLoading: isLoadingPhoto,
-    isDeletingPhoto,
-  } = useFairPhoto(finalFairID);
+  const { handleDeletePhoto, isDeletingPhoto } =
+    useFairPhotoDelete(finalFairID);
   const { user, loadingSetFav, handleSetFavoriteFair } = useUser();
 
   useDocumentTitle(
@@ -134,7 +130,6 @@ export const FairDetails = () => {
                   handler: () =>
                     handleDeletePhoto(photoID, () => {
                       if (handleDismiss) handleDismiss();
-                      handleLoadAll();
                     }),
                 },
               ],
@@ -177,7 +172,7 @@ export const FairDetails = () => {
       />
 
       <Fetcher
-        handleRefresh={handleRefreshReviews}
+        handleRefresh={handleLoadAll}
         handleInfiniteScroll={handleInfiniteReviews}
         refreshSpinnerColor="medium"
         classNameSection={`${styles.fairFetcherSection} ${
@@ -190,7 +185,7 @@ export const FairDetails = () => {
           <ImageExtended
             src={fair?.coverUrl}
             alt={fair?.name}
-            isLoading={!fair || isLoading || isDeletingPhoto}
+            isLoading={!fair || isLoadingDetails || isDeletingPhoto}
             classNamePicture={`${styles.fairCover}`}
             skeletonProps={{
               className: styles.fairSkeleton,
@@ -203,7 +198,7 @@ export const FairDetails = () => {
               <h1>{getNavStateText(fairID, state?.fairID, state?.fairName)}</h1>
             ) : (
               <>
-                {isLoading ? (
+                {isLoadingDetails ? (
                   <Skeleton width="100%" height={35} />
                 ) : (
                   <h1>{fair?.name}</h1>
@@ -211,7 +206,7 @@ export const FairDetails = () => {
               </>
             )}
             <div className={styles.fairNameStars}>
-              {!isLoading && (
+              {!isLoadingDetails && (
                 <>
                   <span
                     className={`${styles.fairNameStarsIcon} animate__animated animate__fadeIn`}
@@ -226,7 +221,7 @@ export const FairDetails = () => {
             </div>
           </div>
           <div>
-            {isLoading ? (
+            {isLoadingDetails ? (
               <Skeleton
                 width="100%"
                 height={20}
@@ -238,7 +233,7 @@ export const FairDetails = () => {
               </h6>
             )}
             <section className={styles.fairDescription}>
-              {isLoading ? (
+              {isLoadingDetails ? (
                 Array(5)
                   .fill(0)
                   .map((_, i) => (
@@ -257,7 +252,7 @@ export const FairDetails = () => {
             <section className={styles.fairInfo}>
               <div
                 className={`${styles.fairInfoCard} ${
-                  isLoading ? styles.isLoading : ""
+                  isLoadingDetails ? styles.isLoading : ""
                 }`}
                 id={MODAL_INFO_ID}
               >
@@ -266,7 +261,7 @@ export const FairDetails = () => {
               </div>
               <div
                 className={`${styles.fairInfoCard} ${
-                  isLoading ? styles.isLoading : ""
+                  isLoadingDetails ? styles.isLoading : ""
                 }`}
                 id={MODAL_MAP_ID}
               >
@@ -275,7 +270,7 @@ export const FairDetails = () => {
               </div>
               <div
                 className={`${styles.fairInfoCard} ${
-                  isLoading ? styles.isLoading : ""
+                  isLoadingDetails ? styles.isLoading : ""
                 }`}
                 id={MODAL_PHOTOS_ID}
               >
@@ -284,7 +279,7 @@ export const FairDetails = () => {
               </div>
               <div
                 className={`${styles.fairInfoCard} ${
-                  isLoading ? styles.isLoading : ""
+                  isLoadingDetails ? styles.isLoading : ""
                 }`}
                 id={MODAL_STANDS_ID}
               >
@@ -302,7 +297,7 @@ export const FairDetails = () => {
               <ReviewForm
                 review={review}
                 handleSave={handleSaveReview}
-                isLoading={isSaving || isLoading}
+                isLoading={isSaving || isLoadingDetails}
               />
               <ReviewsList
                 reviews={reviews}
@@ -345,13 +340,17 @@ export const FairDetails = () => {
       <ModalPhotos
         trigger={MODAL_PHOTOS_ID}
         photographs={fair?.photographs || []}
-        isLoading={isLoading || isLoadingPhoto || isDeletingPhoto}
+        isLoading={isLoadingDetails || isDeletingPhoto}
         handleAction={
           user?.uid === fair?.owner.id ? handleGalleryActions : undefined
         }
         isCoverText="Fotografía de Perfil"
       />
-      <FairModalMap trigger={MODAL_MAP_ID} fair={fair} isLoading={isLoading} />
+      <FairModalMap
+        trigger={MODAL_MAP_ID}
+        fair={fair}
+        isLoading={isLoadingDetails}
+      />
       <FairModalStands
         trigger={MODAL_STANDS_ID}
         stands={stands}

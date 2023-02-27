@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import useSWRMutation from "swr/immutable";
 
 import { infiteScrollData } from "@/helpers/infiniteScrollData";
 import { useToast } from "@/hooks/useToast";
@@ -7,69 +8,61 @@ import {
   getFairReviewsRequest,
   saveFairReviewRequest,
 } from "@/services";
-import { TFair } from "@/types/TFair";
-import { TGetListParams } from "@/types/TRequest";
+import { TPagination } from "@/types/THttp";
 import { TReview, TReviewForm } from "@/types/TReview";
 
 const DEFAULT_LAST_INDEX_REVIEWS = 0;
 const DEFAULT_LIMIT_REVIEWS = 9;
 
 export const useFairDetails = (fairID: string) => {
-  const { toast, toastDismiss } = useToast();
-  const [fair, setFair] = useState<TFair>();
+  const { toast } = useToast();
   const [review, setReview] = useState<TReview>();
-  const [reviews, setReviews] = useState<TReview[]>();
-  const [isLoading, setIsLoading] = useState(true);
+  const [reviews, setReviews] = useState<TReview[]>([]);
   const [isSaving, setIsSaving] = useState(false);
-  const [isLoadingReviews, setIsLoadingReviews] = useState(true);
-  const [lastIndexReviews, setLastIndexReviews] = useState(
-    DEFAULT_LAST_INDEX_REVIEWS
+
+  const [paginationReviews, setPaginationReviews] = useState<TPagination>({
+    lastIndex: DEFAULT_LAST_INDEX_REVIEWS,
+    limit: DEFAULT_LIMIT_REVIEWS,
+  });
+
+  const {
+    data: fair,
+    error: errorDetails,
+    isLoading: isLoadingDetails,
+    mutate: mutateDetails,
+  } = useSWRMutation(
+    `/fairs/${fairID}`,
+    async () => await getFairDetailsRequest(fairID)
   );
-  const [limitReviews, setLimitReviews] = useState(DEFAULT_LIMIT_REVIEWS);
 
-  const handleLoadDetails = async () => {
-    setIsLoading(true);
-    try {
-      const fairRes = await getFairDetailsRequest(fairID);
-      setFair(fairRes);
-    } catch (error) {
-      toastDismiss();
-      toast(error, {
-        type: "error",
-      });
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  const {
+    data: dataReviews,
+    error: errorReviews,
+    isLoading: isLoadingReviews,
+    mutate: mutateReviews,
+  } = useSWRMutation(
+    ["/fairs", fairID, "reviews"],
+    async () => await getFairReviewsRequest(fairID, paginationReviews)
+  );
 
-  const handleLoadReviews = async (params?: TGetListParams) => {
-    setIsLoadingReviews(true);
+  const handleMutateReviews = async (mutatePagination: TPagination) => {
+    setPaginationReviews(mutatePagination);
 
-    try {
-      const lastIndexReq = params?.lastIndex || DEFAULT_LAST_INDEX_REVIEWS;
-      const limitReq = params?.limit || DEFAULT_LIMIT_REVIEWS;
+    const dataMutate = await mutateReviews(
+      async () => await getFairReviewsRequest(fairID, mutatePagination)
+    );
 
-      const { form, list, pagination } = await getFairReviewsRequest(fairID, {
-        lastIndex: lastIndexReq,
-        limit: limitReq,
-      });
-
+    if (dataMutate) {
       const newList = infiteScrollData(
         "id",
-        list,
-        lastIndexReq === DEFAULT_LAST_INDEX_REVIEWS ? [] : reviews
+        dataMutate.list,
+        dataMutate.pagination.lastIndex === DEFAULT_LAST_INDEX_REVIEWS
+          ? []
+          : reviews
       );
 
       setReviews(newList);
-      setReview(form);
-      setLastIndexReviews(pagination.lastIndex);
-      setLimitReviews(pagination.limit);
-    } catch (error: any) {
-      toast("Error al cargar el listado de opiniones", {
-        type: "error",
-      });
-    } finally {
-      setIsLoadingReviews(false);
+      setPaginationReviews(dataMutate.pagination);
     }
   };
 
@@ -80,11 +73,15 @@ export const useFairDetails = (fairID: string) => {
       const { review, fairStars } = await saveFairReviewRequest(fairID, data);
 
       setReview(review);
-      setFair((state) => (state ? { ...state, stars: fairStars } : undefined));
+
+      if (fair) mutateDetails({ ...fair, stars: fairStars });
 
       toast("Opinión guardada con éxito", { type: "success" });
 
-      handleLoadReviews();
+      handleMutateReviews({
+        lastIndex: DEFAULT_LAST_INDEX_REVIEWS,
+        limit: DEFAULT_LIMIT_REVIEWS,
+      });
     } catch (error) {
       toast(error, { type: "error" });
     } finally {
@@ -92,37 +89,47 @@ export const useFairDetails = (fairID: string) => {
     }
   };
 
-  const handleRefreshReviews = async () => {
-    await Promise.all([handleLoadDetails(), handleLoadReviews()]);
+  const handleLoadAll = async () => {
+    await Promise.all([mutateDetails(), mutateReviews()]);
   };
 
   const handleInfiniteReviews = async () => {
-    await handleLoadReviews({
-      lastIndex: lastIndexReviews,
-      limit: limitReviews,
+    await handleMutateReviews({
+      lastIndex: paginationReviews.lastIndex,
+      limit: paginationReviews.limit,
     });
   };
 
-  const handleLoadAll = () => {
-    handleLoadDetails();
-    handleLoadReviews();
-  };
+  useEffect(() => {
+    if (!reviews.length && dataReviews && !errorReviews) {
+      setReview(dataReviews.form);
+      setReviews(dataReviews.list);
+      setPaginationReviews(dataReviews.pagination);
+    }
+  }, [dataReviews]);
 
   useEffect(() => {
-    handleLoadAll();
-  }, []);
+    if (errorReviews) {
+      toast(errorReviews, {
+        type: "error",
+      });
+    }
+  }, [errorReviews]);
+
+  useEffect(() => {
+    if (errorDetails) {
+      toast(errorDetails, { type: "error" });
+    }
+  }, [errorDetails]);
 
   return {
     fair,
     review,
     reviews,
     isSaving,
-    isLoading,
+    isLoadingDetails,
     isLoadingReviews,
     handleLoadAll,
-    handleLoadDetails,
-    handleLoadReviews,
-    handleRefreshReviews,
     handleInfiniteReviews,
     handleSaveReview,
   };

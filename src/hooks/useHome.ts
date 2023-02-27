@@ -1,74 +1,56 @@
-import { useState } from "react";
+import { useEffect } from "react";
+import useSWRMutation from "swr/immutable";
 
 import { useToast } from "@/hooks/useToast";
 import { getFairBestListRequest, getProductTypesRequest } from "@/services";
-import { TFair } from "@/types/TFair";
-import { TProductType } from "@/types/TProduct";
 
 export const useHome = () => {
   const { toast } = useToast();
 
-  const [fairsBest, setFairsBest] = useState<TFair[]>([]);
-  const [standsBest, setStandsBest] = useState<any[]>([]);
-  const [productTypes, setProductTypes] = useState<TProductType[]>([]);
-  const [isLoadingFairsBest, setIsLoadingFairsBest] = useState(true);
-  const [isLoadingStandsBest, setIsLoadingStandsBest] = useState(true);
-  const [isLoadingProductTypes, setIsLoadingProductTypes] = useState(true);
+  const {
+    data: dataFairs,
+    error: errorFairs,
+    isLoading: isLoadingFairs,
+    mutate: mutateFairs,
+  } = useSWRMutation("/fairs/best", getFairBestListRequest);
 
-  const handleLoadFairsBest = async () => {
-    setIsLoadingFairsBest(true);
+  const {
+    data: dataStands,
+    error: errorStands,
+    isLoading: isLoadingStands,
+    mutate: mutateStands,
+  } = useSWRMutation("/stands/best", getFairBestListRequest);
 
-    try {
-      const data = await getFairBestListRequest();
-      setFairsBest(data);
-    } catch (error: any) {
-      toast("Error al cargar las mejores ferias", {
-        type: "error",
-      });
-    } finally {
-      setIsLoadingFairsBest(false);
-    }
+  const {
+    data: dataProductType,
+    error: errorProductType,
+    isLoading: isLoadingProductType,
+    mutate: mutateProductType,
+  } = useSWRMutation("/products/types", getProductTypesRequest);
+
+  const handleLoadAllData = async () => {
+    await Promise.all([mutateFairs(), mutateStands(), mutateProductType()]);
   };
 
-  const handleLoadStandsBest = async () => {
-    setIsLoadingStandsBest(true);
+  useEffect(() => {
+    if (errorFairs) toast(errorFairs, { type: "error" });
+  }, [errorFairs]);
 
-    try {
-      const data = await getFairBestListRequest();
-      setStandsBest(data);
-    } catch (error: any) {
-      toast("Error al cargar los mejores stands", {
-        type: "error",
-      });
-    } finally {
-      setIsLoadingStandsBest(false);
-    }
-  };
+  useEffect(() => {
+    if (errorStands) toast(errorStands, { type: "error" });
+  }, [errorStands]);
 
-  const handleLoadProductTypes = async () => {
-    setIsLoadingProductTypes(true);
-
-    try {
-      const data = await getProductTypesRequest();
-      setProductTypes(data);
-    } catch (error: any) {
-      toast("Error al cargar las categorias de productos", {
-        type: "error",
-      });
-    } finally {
-      setIsLoadingProductTypes(false);
-    }
-  };
+  useEffect(() => {
+    if (errorProductType) toast(errorProductType, { type: "error" });
+  }, [errorProductType]);
 
   return {
-    isLoadingFairsBest,
-    isLoadingStandsBest,
-    isLoadingProductTypes,
-    fairsBest,
-    standsBest,
-    productTypes,
-    handleLoadFairsBest,
-    handleLoadStandsBest,
-    handleLoadProductTypes,
+    isLoadingFairsBest: isLoadingFairs,
+    isLoadingStandsBest: isLoadingStands,
+    isLoadingProductTypes: isLoadingProductType,
+    fairsBest: dataFairs,
+    standsBest: dataStands,
+    productTypes: dataProductType,
+    handleLoadAllData,
   };
 };

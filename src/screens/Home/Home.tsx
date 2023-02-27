@@ -18,28 +18,14 @@ export const Home = () => {
   useDocumentTitle("Inicio 🏠");
   const { renderTopBarActionEnd } = useTopBarMain();
   const {
-    handleLoadFairsBest,
-    handleLoadStandsBest,
-    handleLoadProductTypes,
     fairsBest,
     standsBest,
     productTypes,
     isLoadingFairsBest,
     isLoadingStandsBest,
     isLoadingProductTypes,
+    handleLoadAllData,
   } = useHome();
-
-  const handleLoadData = async () => {
-    await Promise.all([
-      handleLoadFairsBest(),
-      handleLoadStandsBest(),
-      handleLoadProductTypes(),
-    ]);
-  };
-
-  useEffect(() => {
-    handleLoadData();
-  }, []);
 
   return (
     <>
@@ -51,10 +37,10 @@ export const Home = () => {
         </Button>
       )}
       <HomeScreenContent
-        handleLoadData={handleLoadData}
-        fairsBest={fairsBest}
-        standsBest={standsBest}
-        productTypes={productTypes}
+        handleLoadData={handleLoadAllData}
+        fairsBest={fairsBest || []}
+        standsBest={(standsBest as any) || []}
+        productTypes={productTypes || []}
         isLoadingFairsBest={isLoadingFairsBest}
         isLoadingStandsBest={isLoadingStandsBest}
         isLoadingProductTypes={isLoadingProductTypes}
