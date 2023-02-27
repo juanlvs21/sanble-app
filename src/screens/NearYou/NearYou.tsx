@@ -15,7 +15,7 @@ export const NearYou = () => {
       className={`${styles.mapSection} animate__animated animate__screenInUp`}
     >
       <Map
-        markers={prepareListMapPin(list, ERoutesName.NEAR_YOU)}
+        markers={prepareListMapPin(list || [], ERoutesName.NEAR_YOU)}
         isLoading={isLoading}
         classNameSpinner={`${styles.nearYouSpinner} ${
           isCapacitor ? styles.isCapacitor : ""
