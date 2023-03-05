@@ -1,31 +1,25 @@
-import { useEffect, useState } from "react";
+import { useIonLoading } from "@ionic/react";
 
+import { useFairPhotoRevalidate } from "@/hooks/fairs/useFairRevalidate";
 import { useToast } from "@/hooks/useToast";
 import { deleteFairPhotoRequest } from "@/services";
-import { useFairPhotoRevalidate } from "@/hooks/fairs/useFairPhotoRevalidate";
 
 export const useFairPhotoDelete = (fairID: string) => {
+  const [presentLoading, dismissLoading] = useIonLoading();
   const { toast } = useToast();
-  const { handleRevalidateDelete } = useFairPhotoRevalidate(fairID);
-
-  const [isDeletingPhoto, setIsDeletingPhoto] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const { handleRevalidateAll } = useFairPhotoRevalidate(fairID);
 
   const handleDeletePhoto = async (photoID: string, callback: () => void) => {
-    setIsLoading(true);
+    presentLoading();
+
     try {
-      const { photographID, photographCover } = await deleteFairPhotoRequest(
-        fairID,
-        photoID
-      );
+      await deleteFairPhotoRequest(fairID, photoID);
 
       toast("Fotografía eliminada con éxito", {
         type: "success",
       });
 
-      await handleRevalidateDelete(photographID, photographCover);
-
-      setIsDeletingPhoto(true);
+      handleRevalidateAll();
 
       callback();
     } catch (error) {
@@ -33,18 +27,11 @@ export const useFairPhotoDelete = (fairID: string) => {
         type: "error",
       });
     } finally {
-      setIsLoading(false);
+      dismissLoading();
     }
   };
 
-  useEffect(() => {
-    if (isDeletingPhoto) {
-      setIsDeletingPhoto(false);
-    }
-  }, [isDeletingPhoto]);
-
   return {
-    isDeletingPhoto: isLoading ?? isDeletingPhoto,
     handleDeletePhoto,
   };
 };

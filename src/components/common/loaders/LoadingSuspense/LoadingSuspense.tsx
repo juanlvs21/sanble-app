@@ -1,10 +1,11 @@
-import { Spinner } from "@/components/common/loaders/Spinner";
+import { IonSpinner } from "@ionic/react";
+
 import styles from "../Loaders.module.css";
 
 export const LoadingSuspense = () => (
   <div
     className={`animate__animated animate__fadeIn ${styles.loadingSuspenseContainer}`}
   >
-    <Spinner center />
+    <IonSpinner />
   </div>
 );

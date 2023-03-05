@@ -1,7 +1,6 @@
-import { IonButton } from "@ionic/react";
+import { IonButton, IonSpinner } from "@ionic/react";
 import { CSSProperties } from "react";
 
-import { Spinner } from "@/components/common/loaders/Spinner";
 import { TButton } from "@/types/TComponents";
 
 export type ComponentProps = TButton & {
@@ -29,12 +28,6 @@ export type ComponentProps = TButton & {
     | "medium"
     | "dark";
   /**
-   * Spinner size (width, height)
-   *
-   * @default 18
-   */
-  spinnerSize?: number;
-  /**
    * Spinner online styles
    */
   spinnerStyle?: CSSProperties;
@@ -49,20 +42,10 @@ export const Button = ({
   isLoading,
   disabled,
   spinnerStyle,
-  spinnerSize = 25,
   spinnerColor = "light",
   ...rest
 }: ComponentProps) => (
   <IonButton {...rest} disabled={disabled || isLoading}>
-    {isLoading ? (
-      <Spinner
-        size={spinnerSize}
-        color={spinnerColor}
-        style={spinnerStyle}
-        center
-      />
-    ) : (
-      children
-    )}
+    {isLoading ? <IonSpinner color={spinnerColor} /> : children}
   </IonButton>
 );

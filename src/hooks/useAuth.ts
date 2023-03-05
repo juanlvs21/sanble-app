@@ -1,5 +1,6 @@
 import { GoogleAuth } from "@codetrix-studio/capacitor-google-auth";
 import { useLocation, useMatch, useNavigate } from "react-router-dom";
+import { useIonLoading } from "@ionic/react";
 
 import {
   auth,
@@ -28,17 +29,18 @@ type TClearSessionFuncParams = {
 
 export const useAuth = () => {
   const { pathname } = useLocation();
+  const [presentLoading, dismissLoading] = useIonLoading();
   const navigate = useNavigate();
   const { toast } = useToast();
   const { user, setUser } = useUser();
-  const { isCapacitor, setIsLoadingFull } = useApp();
+  const { isCapacitor } = useApp();
 
   const matchLanding = useMatch(ERoutesName.ROOT);
   const matchSignin = useMatch(ERoutesName.SESSION_SIGNIN);
   const matchSignup = useMatch(ERoutesName.SESSION_SIGNUP);
 
   const handleLoadUser = async () => {
-    setIsLoadingFull(true);
+    // presentLoading();
 
     try {
       const userRes = await getUserDataRequest();
@@ -50,7 +52,7 @@ export const useAuth = () => {
       });
       navigate(ERoutesName.SESSION_SIGNIN, { replace: true });
     } finally {
-      setIsLoadingFull(false);
+      dismissLoading();
     }
   };
 
@@ -65,7 +67,7 @@ export const useAuth = () => {
 
   const handleSignup = async (userForm: TAuthSignupForm) => {
     try {
-      setIsLoadingFull(true);
+      presentLoading();
 
       await signUpRequest(userForm);
       try {
@@ -77,28 +79,28 @@ export const useAuth = () => {
         await clearSessionRedirect({ withLogout: true });
       }
     } catch (error) {
-      setIsLoadingFull(false);
+      dismissLoading();
       toast(error, { type: "error" });
     }
   };
 
   const handleSignin = async (userForm: TAuthSigInForm) => {
     try {
-      setIsLoadingFull(true);
+      presentLoading();
 
       await signinRequest(userForm);
       await handleLoadUser();
       navigate(ERoutesName.APP, { replace: true });
     } catch (error: any) {
       await signOutRequest();
-      setIsLoadingFull(false);
+      dismissLoading();
       toast(error, { type: "error" });
     }
   };
 
   const handleSigninGoogle = async () => {
     try {
-      setIsLoadingFull(true);
+      presentLoading();
 
       if (isCapacitor) {
         const googleUser = await GoogleAuth.signIn();
@@ -115,7 +117,7 @@ export const useAuth = () => {
       navigate(ERoutesName.APP, { replace: true });
     } catch (error) {
       await signOutRequest();
-      setIsLoadingFull(false);
+      dismissLoading();
       toast(error, { type: "error" });
     }
   };

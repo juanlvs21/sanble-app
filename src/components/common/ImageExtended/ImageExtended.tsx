@@ -49,7 +49,10 @@ export const ImageExtended = ({
     const downloadingImage = new Image();
 
     downloadingImage.onload = function (this: any) {
-      if (this?.src) setImageUrl(this.src);
+      if (this?.src) {
+        setImageUrl(this.src);
+        setIsLoadingSrc(false);
+      }
     };
 
     downloadingImage.onerror = function () {

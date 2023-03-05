@@ -8,7 +8,6 @@ import {
   RefresherEventDetail,
 } from "@ionic/react";
 
-import { Spinner } from "@/components/common/loaders/Spinner";
 import { useApp } from "@/hooks/useApp";
 import { TColor } from "@/types/TComponents";
 import styles from "./Fetcher.module.css";
@@ -97,15 +96,8 @@ export const Fetcher = ({
           <IonRefresherContent
             pullingIcon={undefined}
             pullingText=""
-            refreshingSpinner={undefined}
-            refreshingText=""
-          >
-            <Spinner
-              className="refresher-refreshing-icon"
-              color={refreshSpinnerColor}
-              center
-            />
-          </IonRefresherContent>
+            color={refreshSpinnerColor}
+          />
         </IonRefresher>
 
         {children}
@@ -116,11 +108,10 @@ export const Fetcher = ({
           threshold="100px"
           className={`${styles.fetcherInfiniteScroll} ${classNameInfinite}`}
         >
-          <IonInfiniteScrollContent loadingSpinner={undefined} loadingText="">
-            <div className={`${styles.infiniteScrollSpinner} infinite-loading`}>
-              <Spinner color={infiniteSpinnerColor} center />
-            </div>
-          </IonInfiniteScrollContent>
+          <IonInfiniteScrollContent
+            loadingText=""
+            color={infiniteSpinnerColor}
+          />
         </IonInfiniteScroll>
       </IonContent>
     </section>

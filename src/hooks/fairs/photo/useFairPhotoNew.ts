@@ -1,22 +1,20 @@
-import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useIonLoading } from "@ionic/react";
 
 import { useToast } from "@/hooks/useToast";
 import { uploadFairPhotoRequest } from "@/services";
 import { TPhotographForm } from "@/types/TPhotograph";
 import { ERoutesName } from "@/types/TRoutes";
-import { useFairPhotoRevalidate } from "@/hooks/fairs/useFairPhotoRevalidate";
+import { useFairPhotoRevalidate } from "@/hooks/fairs/useFairRevalidate";
 
 export const useFairPhotoNew = (fairID: string) => {
+  const [presentLoading, dismissLoading] = useIonLoading();
   const { toast } = useToast();
   const navigate = useNavigate();
-  const { handleRevalidateUpload } = useFairPhotoRevalidate(fairID);
-
-  const [isSubmit, setIsSubmit] = useState(false);
-  const [isDeletingPhoto, setIsDeletingPhoto] = useState(false);
+  const { handleRevalidateAll } = useFairPhotoRevalidate(fairID);
 
   const handleUploadPhoto = async (data: TPhotographForm) => {
-    setIsSubmit(true);
+    presentLoading();
 
     try {
       const formData = new FormData();
@@ -31,7 +29,7 @@ export const useFairPhotoNew = (fairID: string) => {
         type: "success",
       });
 
-      await handleRevalidateUpload(photograph);
+      handleRevalidateAll();
 
       navigate(`${ERoutesName.FAIRS_LIST}/${fairID}/foto/${photograph.id}`, {
         state: {
@@ -45,16 +43,11 @@ export const useFairPhotoNew = (fairID: string) => {
         type: "error",
       });
     } finally {
-      setIsSubmit(false);
+      dismissLoading();
     }
   };
 
-  useEffect(() => {
-    if (isDeletingPhoto) setIsDeletingPhoto(false);
-  }, [isDeletingPhoto]);
-
   return {
-    isLoading: isSubmit || isDeletingPhoto,
     handleUploadPhoto,
   };
 };

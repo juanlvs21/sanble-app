@@ -5,7 +5,7 @@
 
 @keyframes skeleton-loading {
   0% {
-    background-color: #eee;
+    background-color: rgba(203, 203, 203, 0.5);
   }
   100% {
     background-color: var(--ion-color-light);

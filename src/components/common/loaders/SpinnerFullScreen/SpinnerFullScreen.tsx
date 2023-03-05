@@ -1,4 +1,5 @@
 import { Spinner } from "@/components/common/loaders/Spinner";
+import { IonSpinner } from "@ionic/react";
 import styles from "./SpinnerFullScreen.module.css";
 
 export type ComponentProps = {
@@ -25,13 +26,6 @@ export type ComponentProps = {
     | "light"
     | "medium"
     | "dark";
-
-  /**
-   * Size spinner
-   *
-   * @default 50
-   */
-  size?: string | number;
   /**
    * Custom className for content component
    */
@@ -41,8 +35,7 @@ export type ComponentProps = {
 export const SpinnerFullScreen = ({
   show,
   borderRadius,
-  color = "primary",
-  size = 50,
+  color,
   className = "",
 }: ComponentProps) =>
   show ? (
@@ -53,6 +46,6 @@ export const SpinnerFullScreen = ({
         borderRadius ? styles.showSprinnerBgBorderRadius : ""
       } ${className} animate__animated animate__fadeIn`}
     >
-      <Spinner size={size} color={color} center />
+      <IonSpinner color={color} />
     </div>
   ) : null;

@@ -20,6 +20,7 @@ import { PhotoDescription } from "@/components/modules/photo/PhotoDescription";
 import { PhotoForm } from "@/components/modules/photo/PhotoForm";
 import { useFairPhotoDelete } from "@/hooks/fairs/photo/useFairPhotoDelete";
 import { useFairPhotoDetails } from "@/hooks/fairs/photo/useFairPhotoDetails";
+import { useApp } from "@/hooks/useApp";
 import { useModalGoBack } from "@/hooks/useModalGoBack";
 import { useTopBarMain } from "@/hooks/useTopBarMain";
 import { useUser } from "@/hooks/useUser";
@@ -38,22 +39,20 @@ export const FairPhotoDetails = () => {
   const { state } = useLocation();
   const finalFairID = fairID || state?.fairID || "";
   const finalPhotoID = photoID || state?.photoID || "";
+  const { isCapacitor } = useApp();
   const { renderTopBarActionStart, renderTopBarActionEnd } = useTopBarMain();
-  const { handleDeletePhoto, isDeletingPhoto } =
-    useFairPhotoDelete(finalFairID);
+  const { handleDeletePhoto } = useFairPhotoDelete(finalFairID);
   const { user } = useUser();
-  const [showDescription, setShowDescription] = useState(true);
-  const [isOpen, setIsOpen] = useState(false);
-
   const {
     photograph,
     ownerID,
     isLoading,
+    isUpdate,
     modalRef,
-    isSubmit,
-    isChangingPhoto,
     handleUpdatePhoto,
   } = useFairPhotoDetails(finalFairID, finalPhotoID);
+  const [showDescription, setShowDescription] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
 
   const handleActions = () => {
     present({
@@ -140,25 +139,25 @@ export const FairPhotoDetails = () => {
           </Button>
         )}
 
-      <PhotoDescription
-        photo={photograph}
-        isCoverText="Fotografía de Perfil"
-        showDescription={showDescription}
-        onClick={
-          !isLoading && !isSubmit ? handleToggleShowDescription : undefined
-        }
-        isLoading={
-          !photograph || isLoading || isChangingPhoto || isDeletingPhoto
-        }
-        classNameContainer="animate__animated animate__screenInUp "
-      />
+      <section
+        className={`${styles.photoSection} ${
+          isCapacitor ? styles.isCapacitor : ""
+        } animate__animated animate__screenInUp`}
+      >
+        <PhotoDescription
+          photo={photograph}
+          isCoverText="Fotografía de Perfil"
+          showDescription={showDescription}
+          onClick={!isLoading ? handleToggleShowDescription : undefined}
+          isLoading={!photograph || isLoading || isUpdate}
+        />
+      </section>
 
       {user?.uid === ownerID && (
         <IonModal
           ref={modalRef}
           trigger={MODAL_PHOTO_DESCRIPTION_ID}
           className={styles.photoEditModal}
-          canDismiss={!isSubmit}
           onWillPresent={() => setIsOpen(true)}
           onWillDismiss={() => setIsOpen(false)}
         >
@@ -184,7 +183,7 @@ export const FairPhotoDetails = () => {
           </IonContent>
 
           <SpinnerFullScreen
-            show={isLoading || isSubmit || isDeletingPhoto}
+            show={isLoading}
             className={styles.photoEditFormSpinner}
           />
         </IonModal>

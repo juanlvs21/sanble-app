@@ -41,6 +41,10 @@ export type ComponentProps = {
    * Custom className img
    */
   classNameImg?: string;
+  /**
+   * Custom className description
+   */
+  classNameDescription?: string;
 };
 
 export const PhotoDescription = ({
@@ -49,18 +53,20 @@ export const PhotoDescription = ({
   onClick,
   isLoading,
   isCoverText = "Fotografía Destacada",
+  classNameDescription = "",
   classNameContainer = "",
   classNamePicture = "",
   classNameImg = "",
 }: ComponentProps) => (
   <div
-    onClick={onClick}
+    onClick={!isLoading ? onClick : undefined}
     className={`${styles.photoContainer} ${classNameContainer} animate__animated animate__fadeIn`}
   >
     <div
       style={{ backgroundImage: `url(${photo?.url})` }}
       className={`${styles.photoBackground}`}
     />
+
     <ImageExtended
       src={photo?.url ?? ""}
       alt={photo?.id ?? ""}
@@ -71,20 +77,26 @@ export const PhotoDescription = ({
       }}
       isLoading={isLoading}
     />
+    {photo?.isCover && (
+      <div
+        className={`${styles.photoDescriptionCover} ${
+          showDescription ? styles.show : ""
+        }`}
+      >
+        <p>
+          {isCoverText}
+          <BsFillBookmarkStarFill size={20} />
+        </p>
+      </div>
+    )}
     {photo && (
       <div
         className={`${styles.photoDescription} ${
           showDescription ? styles.show : ""
-        }`}
+        } ${classNameDescription}`}
       >
         <p>{photo.description}</p>
         <small>{dayjs(photo.creationTime).format("DD MMM hh:mm a")}</small>
-        {photo.isCover && (
-          <p className={styles.photoDescriptionCover}>
-            <BsFillBookmarkStarFill size={20} />
-            {isCoverText}
-          </p>
-        )}
       </div>
     )}
     <SpinnerFullScreen show={Boolean(isLoading)} />
