@@ -8,7 +8,7 @@ import { TGetListParams } from "@/types/TRequest";
 import { TOrder, TPagination } from "@/types/THttp";
 
 const DEFAULT_LAST_INDEX = 0;
-const DEFAULT_LIMIT = 9;
+const DEFAULT_LIMIT = 5;
 const DEFAULT_ORDER_BY = "stars";
 const DEFAULT_ORDER_DIR = "desc";
 
