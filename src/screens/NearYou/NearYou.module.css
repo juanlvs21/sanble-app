@@ -5,14 +5,16 @@
   transition: all 400ms ease-in-out;
 }
 
-.nearYouSpinner.isCapacitor {
-  top: 25px;
+.mapSection.isCapacitor {
+  margin-top: 95px;
+  height: calc(100% - 95px);
+  transition: all 400ms ease-in-out;
 }
 
 @media (max-width: 768px) {
   .mapSection {
-    margin-top: 95px;
-    height: calc(100% - 95px);
+    margin-top: 72px;
+    height: calc(100% - 72px);
     transition: all 400ms ease-in-out;
   }
 }

@@ -1,4 +1,5 @@
-import { Spinner } from "@/components/common/loaders/Spinner";
+import { IonSpinner } from "@ionic/react";
+
 import styles from "./Offline.module.css";
 
 export const Offline = () => {
@@ -6,7 +7,7 @@ export const Offline = () => {
     <section
       className={`${styles.offLineSection} animate__animated animate__fadeIn`}
     >
-      <Spinner className={styles.spinner} size={70} color="light" />
+      <IonSpinner className={styles.spinner} color="light" />
       <span>Reconectando...</span>
       <small>Has perdido tu conexión a internet</small>
     </section>

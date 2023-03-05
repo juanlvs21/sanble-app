@@ -20,7 +20,7 @@ export const getPropsTopBarMain = (
     [ERoutesName.NEAR_YOU]: {
       title: "Cerca de ti",
       startUser: true,
-      stickyNoScroll: true,
+      sticky: true,
     },
     [ERoutesName.FAIRS_LIST]: {
       title: "Ferias",

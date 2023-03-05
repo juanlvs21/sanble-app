@@ -9,7 +9,17 @@
   width: 100%;
   position: fixed;
   border-bottom: none;
-  transition: background 400ms ease-in-out;
+  transition: all 400ms ease-in-out;
+}
+
+.topBarContainer.showSidebar {
+  left: 300px;
+  transition: all 400ms ease-in-out;
+}
+
+.topBarContainer.showSidebar.isCapacitor {
+  margin-top: 40px;
+  transition: all 400ms ease-in-out;
 }
 
 .topBarContainer.isCapacitor {
@@ -23,7 +33,7 @@
   margin-top: -20px !important;
   -webkit-box-shadow: 5px 5px 5px 5px rgba(200, 200, 200, 0.2);
   box-shadow: 5px 5px 5px 5px rgba(200, 200, 200, 0.1);
-  transition: background 400ms ease-in-out;
+  transition: all 400ms ease-in-out;
 }
 
 .topBarContainer.sticky.isCapacitor {
@@ -79,6 +89,13 @@
   --color: var(--sanble-gray-color-2);
 }
 
+@media (max-width: 768px) {
+  .topBarContainer.showSidebar {
+    left: 220px;
+    top: 25px !important;
+    transition: all 400ms ease-in-out;
+  }
+}
 @media (min-width: 768px) {
   .topBarContainer,
   .topBarContainer.sticky {

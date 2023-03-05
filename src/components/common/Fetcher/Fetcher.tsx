@@ -7,8 +7,8 @@ import {
   IonRefresherContent,
   RefresherEventDetail,
 } from "@ionic/react";
+import { useEffect, createRef } from "react";
 
-import { Spinner } from "@/components/common/loaders/Spinner";
 import { useApp } from "@/hooks/useApp";
 import { TColor } from "@/types/TComponents";
 import styles from "./Fetcher.module.css";
@@ -18,6 +18,10 @@ export type ComponentProps = {
    * Children element
    */
   children: React.ReactElement | React.ReactElement[] | string;
+  /**
+   * Component Loading
+   */
+  isLoading?: boolean;
   /**
    * (JSX attribute) LocalJSX.IonRefresher["onIonRefresh"]?: ((event: CustomEvent<RefresherEventDetail>) => void) | undefined
    * Emitted when the user lets go of the content and has pulled down further than the pullMin or pulls the content down and exceeds the pullMax. Updates the refresher state to refreshing. The complete() method should be called when the async operation has completed.
@@ -60,6 +64,7 @@ export type ComponentProps = {
 
 export const Fetcher = ({
   children,
+  isLoading = false,
   classNameSection = "",
   classNameContent = "",
   classNameRefresh = "",
@@ -69,6 +74,7 @@ export const Fetcher = ({
   handleRefresh,
   handleInfiniteScroll,
 }: ComponentProps) => {
+  const fetcherRef = createRef<HTMLIonContentElement>();
   const { handleSetScrollTop } = useApp();
 
   const doRefresh = async (event: CustomEvent<RefresherEventDetail>) => {
@@ -81,9 +87,14 @@ export const Fetcher = ({
     await event.target.complete();
   };
 
+  useEffect(() => {
+    if (isLoading) fetcherRef.current?.scrollToTop(500);
+  }, [isLoading]);
+
   return (
     <section className={`${styles.sectionFetcher} ${classNameSection}`}>
       <IonContent
+        ref={fetcherRef}
         className={`${styles.ionContentFetcher} ${classNameContent}`}
         onIonScroll={handleSetScrollTop}
         scrollEvents
@@ -97,15 +108,8 @@ export const Fetcher = ({
           <IonRefresherContent
             pullingIcon={undefined}
             pullingText=""
-            refreshingSpinner={undefined}
-            refreshingText=""
-          >
-            <Spinner
-              className="refresher-refreshing-icon"
-              color={refreshSpinnerColor}
-              center
-            />
-          </IonRefresherContent>
+            color={refreshSpinnerColor}
+          />
         </IonRefresher>
 
         {children}
@@ -116,11 +120,10 @@ export const Fetcher = ({
           threshold="100px"
           className={`${styles.fetcherInfiniteScroll} ${classNameInfinite}`}
         >
-          <IonInfiniteScrollContent loadingSpinner={undefined} loadingText="">
-            <div className={`${styles.infiniteScrollSpinner} infinite-loading`}>
-              <Spinner color={infiniteSpinnerColor} center />
-            </div>
-          </IonInfiniteScrollContent>
+          <IonInfiniteScrollContent
+            loadingText=""
+            color={infiniteSpinnerColor}
+          />
         </IonInfiniteScroll>
       </IonContent>
     </section>

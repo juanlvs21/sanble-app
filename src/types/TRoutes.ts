@@ -14,5 +14,5 @@ export enum ERoutesName {
   STAND_DETAILS = "/app/stands/:standID",
   SESSION = "/app/sesion",
   SESSION_SIGNIN = "/app/sesion/entrar",
-  SESSION_SIGNUP = "/app/sesionregistrarse",
+  SESSION_SIGNUP = "/app/sesion/registrarse",
 }

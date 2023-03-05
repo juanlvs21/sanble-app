@@ -12,6 +12,7 @@ import { IoIosArrowUp } from "react-icons/io";
 import { MdOutlineStorefront } from "react-icons/md";
 import { TiStar } from "react-icons/ti";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useEffect } from "react";
 
 import { ButtonFav } from "@/components/common/buttons/ButtonFav";
 import { Fetcher } from "@/components/common/Fetcher";
@@ -44,7 +45,7 @@ type TRouteParams = { fairID: string };
 
 export const FairDetails = () => {
   const navigate = useNavigate();
-  const [present] = useIonActionSheet();
+  const [presentActions] = useIonActionSheet();
   const [presentAlert] = useIonAlert();
   const { fairID } = useParams<TRouteParams>();
   const { state } = useLocation();
@@ -59,6 +60,7 @@ export const FairDetails = () => {
     isSaving,
     isLoadingReviews,
     handleLoadAll,
+    handleLoadDetails,
     handleSaveReview,
     handleInfiniteReviews,
   } = useFairDetails(finalFairID);
@@ -68,8 +70,7 @@ export const FairDetails = () => {
     handleRefresh: handleRefreshStands,
     handleInfinite: handleInfiniteStands,
   } = useFairStands(finalFairID);
-  const { handleDeletePhoto, isDeletingPhoto } =
-    useFairPhotoDelete(finalFairID);
+  const { handleDeletePhoto } = useFairPhotoDelete(finalFairID);
   const { user, loadingSetFav, handleSetFavoriteFair } = useUser();
 
   useDocumentTitle(
@@ -128,7 +129,8 @@ export const FairDetails = () => {
                   text: "Eliminar",
                   role: "confirm",
                   handler: () =>
-                    handleDeletePhoto(photoID, () => {
+                    handleDeletePhoto(photoID, async () => {
+                      await handleLoadDetails();
                       if (handleDismiss) handleDismiss();
                     }),
                 },
@@ -138,7 +140,7 @@ export const FairDetails = () => {
       );
     }
 
-    present({
+    presentActions({
       header: "Acciones",
       buttons: [
         ...buttons,
@@ -185,7 +187,7 @@ export const FairDetails = () => {
           <ImageExtended
             src={fair?.coverUrl}
             alt={fair?.name}
-            isLoading={!fair || isLoadingDetails || isDeletingPhoto}
+            isLoading={isLoadingDetails}
             classNamePicture={`${styles.fairCover}`}
             skeletonProps={{
               className: styles.fairSkeleton,
@@ -340,7 +342,7 @@ export const FairDetails = () => {
       <ModalPhotos
         trigger={MODAL_PHOTOS_ID}
         photographs={fair?.photographs || []}
-        isLoading={isLoadingDetails || isDeletingPhoto}
+        isLoading={isLoadingDetails}
         handleAction={
           user?.uid === fair?.owner.id ? handleGalleryActions : undefined
         }

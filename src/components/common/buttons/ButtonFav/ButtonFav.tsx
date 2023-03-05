@@ -59,7 +59,6 @@ export const ButtonFav = ({
     color={color || (isActive ? "primary" : "medium")}
     className={`${styles.buttonFav} ${className}`}
     spinnerColor={spinnerColor || (isActive ? "medium" : "dark")}
-    spinnerSize={15}
     fill="solid"
     {...rest}
   >

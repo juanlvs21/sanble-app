@@ -132,5 +132,6 @@ export const useFairDetails = (fairID: string) => {
     handleLoadAll,
     handleInfiniteReviews,
     handleSaveReview,
+    handleLoadDetails: mutateDetails,
   };
 };

@@ -1,20 +1,22 @@
+import { useIonLoading } from "@ionic/react";
 import { useEffect, useRef, useState } from "react";
 import useSWRMutation from "swr/immutable";
 
+import { useFairPhotoRevalidate } from "@/hooks/fairs/useFairRevalidate";
 import { useToast } from "@/hooks/useToast";
 import { getFairPhotoRequest, updateFairPhotoRequest } from "@/services";
 import { TPhotograph, TPhotographForm } from "@/types/TPhotograph";
-import { useFairPhotoRevalidate } from "@/hooks/fairs/useFairPhotoRevalidate";
 
 export const useFairPhotoDetails = (fairID: string, photoID: string) => {
+  const [presentLoading, dismissLoading] = useIonLoading();
   const { toast } = useToast();
-  const { handleRevalidateUpdate } = useFairPhotoRevalidate(fairID);
+  const { handleRevalidateDetails, handleRevalidateAll } =
+    useFairPhotoRevalidate(fairID);
 
   const modalRef = useRef<HTMLIonModalElement>(null);
   const [photograph, setPhotograph] = useState<TPhotograph>();
   const [ownerID, setOwnerID] = useState<string>();
-  const [isSubmit, setIsSubmit] = useState(false);
-  const [isChangingPhoto, setIsChangingPhoto] = useState(false);
+  const [isUpdate, setIsUpdate] = useState(false);
 
   const { data, error, isLoading, mutate } = useSWRMutation(
     `/fairs/${fairID}/photograph/${photoID}`,
@@ -22,7 +24,8 @@ export const useFairPhotoDetails = (fairID: string, photoID: string) => {
   );
 
   const handleUpdatePhoto = async (data: TPhotographForm) => {
-    setIsSubmit(true);
+    presentLoading();
+    setIsUpdate(true);
 
     try {
       const formData = new FormData();
@@ -38,22 +41,23 @@ export const useFairPhotoDetails = (fairID: string, photoID: string) => {
         formData
       );
 
+      if (photographRes.isCover) handleRevalidateAll();
+      else handleRevalidateDetails();
+
+      await mutate();
+
       toast("Fotografía actualizada con éxito", {
         type: "success",
       });
 
-      await mutate();
-
-      if (photograph?.url !== photographRes.url) setIsChangingPhoto(true);
-
-      if (photographRes.isCover) handleRevalidateUpdate(photographRes);
+      if (modalRef?.current) modalRef?.current?.dismiss();
     } catch (error) {
-      console.log(error);
       toast(error, {
         type: "error",
       });
     } finally {
-      setIsSubmit(false);
+      setIsUpdate(false);
+      dismissLoading();
     }
   };
 
@@ -68,25 +72,12 @@ export const useFairPhotoDetails = (fairID: string, photoID: string) => {
     if (error) toast(error, { type: "error" });
   }, [error]);
 
-  useEffect(() => {
-    if (!isSubmit && modalRef?.current) {
-      modalRef?.current?.dismiss();
-    }
-  }, [isSubmit]);
-
-  useEffect(() => {
-    if (isChangingPhoto) {
-      setIsChangingPhoto(false);
-    }
-  }, [isChangingPhoto]);
-
   return {
     modalRef,
     photograph,
     ownerID,
     isLoading,
-    isSubmit,
-    isChangingPhoto,
+    isUpdate,
     handleUpdatePhoto,
   };
 };

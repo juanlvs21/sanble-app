@@ -6,11 +6,13 @@ import { HiOutlineShoppingBag } from "react-icons/hi";
 import { MdOutlineStorefront } from "react-icons/md";
 import { Link, useLocation, useMatch } from "react-router-dom";
 
+import { useApp } from "@/hooks/useApp";
 import { ERoutesName } from "@/types/TRoutes";
 import styles from "./BottomBar.module.css";
 
 export const BottomBar = () => {
   const { pathname } = useLocation();
+  const { showSidebar, isCapacitor } = useApp();
 
   const matchHome = useMatch(ERoutesName.APP);
   const matchFairsList = useMatch(ERoutesName.FAIRS_LIST);
@@ -44,7 +46,11 @@ export const BottomBar = () => {
   );
 
   return (
-    <div className={`${styles.homeBarContainer}`}>
+    <div
+      className={`${styles.homeBarContainer} ${
+        showSidebar ? styles.showSidebar : ""
+      } ${isCapacitor ? styles.isCapacitor : ""}`}
+    >
       <IonList className={styles.homeBarList}>
         {items.map((item) => (
           <Link to={item.path} key={item.path}>

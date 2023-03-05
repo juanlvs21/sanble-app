@@ -94,6 +94,7 @@ export const StandsList = () => {
         handleRefresh={handleRefresh}
         handleInfiniteScroll={handleInfinite}
         classNameSection="animate__animated animate__screenInUp"
+        isLoading={isLoading || isSorting}
       >
         <div
           className={`dataListContainer ${isCapacitor ? "isCapacitor" : ""}`}
