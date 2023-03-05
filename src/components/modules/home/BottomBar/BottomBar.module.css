@@ -5,6 +5,17 @@
   padding: 0 16px 10px 16px;
   width: 100%;
   z-index: 1000;
+  transition: all 400ms ease-in-out;
+}
+
+.homeBarContainer.showSidebar {
+  left: 300px;
+  transition: all 400ms ease-in-out;
+}
+
+.homeBarContainer.showSidebar.isCapacitor {
+  bottom: 50px;
+  transition: all 400ms ease-in-out;
 }
 
 .homeBarList {
@@ -52,6 +63,12 @@
   align-items: center;
 }
 
+@media (max-width: 768px) {
+  .homeBarContainer.showSidebar {
+    left: 220px;
+    transition: all 400ms ease-in-out;
+  }
+}
 @media (min-width: 768px) {
   .homeBarContainer {
     bottom: 0;

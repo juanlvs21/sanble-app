@@ -75,7 +75,7 @@ export const TopBar = ({
   className = "",
 }: ComponentProps) => {
   const navigate = useNavigate();
-  const { scrollTop, isCapacitor } = useApp();
+  const { scrollTop, showSidebar, isCapacitor } = useApp();
 
   const navigateToBack = () =>
     startGoBackUrl
@@ -86,7 +86,7 @@ export const TopBar = ({
     <IonToolbar
       className={`${styles.topBarContainer} ${
         isCapacitor ? styles.isCapacitor : ""
-      } ${
+      } ${showSidebar ? styles.showSidebar : ""} ${
         (sticky && scrollTop > 25) || stickyNoScroll ? styles.sticky : ""
       } ${className}`}
     >
