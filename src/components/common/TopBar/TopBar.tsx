@@ -4,6 +4,10 @@ import { useNavigate } from "react-router-dom";
 
 import { Button } from "@/components/common/buttons/Button";
 import { TopBarUserBtn } from "@/components/common/TopBarUserBtn";
+import {
+  portalTopBarMainEndID,
+  portalTopBarMainStartID,
+} from "@/helpers/mainPortal";
 import { useApp } from "@/hooks/useApp";
 import styles from "./TopBar.module.css";
 
@@ -97,26 +101,23 @@ export const TopBar = ({
         />
       )}
 
-      {(start || startUser || startGoBack) && (
-        <IonButtons slot="start" className={styles.topBarStart}>
-          {startUser ? (
-            <TopBarUserBtn />
-          ) : (
-            <>
-              {startGoBack ? (
-                <Button
-                  onClick={navigateToBack}
-                  className="animate__animated animate__fadeIn"
-                >
-                  <IoIosArrowBack size={24} />
-                </Button>
-              ) : (
-                start
-              )}
-            </>
-          )}
-        </IonButtons>
-      )}
+      <IonButtons slot="start" className={styles.topBarStart}>
+        {startUser ? (
+          <TopBarUserBtn />
+        ) : (
+          <>
+            {startGoBack && (
+              <Button
+                onClick={navigateToBack}
+                className="animate__animated animate__fadeIn"
+              >
+                <IoIosArrowBack size={24} />
+              </Button>
+            )}
+          </>
+        )}
+        <div id={portalTopBarMainStartID} />
+      </IonButtons>
       {title && (
         <IonTitle
           className={`${styles.topBarTitle} ${
@@ -129,14 +130,12 @@ export const TopBar = ({
           {title}
         </IonTitle>
       )}
-      {end && (
-        <IonButtons
-          slot="end"
-          className={`${styles.topBarEnd}  animate__animated animate__fadeIn`}
-        >
-          {end}
-        </IonButtons>
-      )}
+      <IonButtons
+        slot="end"
+        className={`${styles.topBarEnd}  animate__animated animate__fadeIn`}
+      >
+        <div id={portalTopBarMainEndID} />
+      </IonButtons>
     </IonToolbar>
   );
 };
