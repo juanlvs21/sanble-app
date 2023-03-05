@@ -126,43 +126,43 @@ export const router = createBrowserRouter([
                   </SuspenseComponent>
                 ),
               },
-              {
-                path: ERoutesName.FAVORITES_LIST,
-                errorElement: <ErrorScreen />,
-                element: (
-                  <SuspenseComponent>
-                    <FavoritesListScreen />
-                  </SuspenseComponent>
-                ),
-              },
-              {
-                path: ERoutesName.MY_SANBLE,
-                errorElement: <ErrorScreen />,
-                element: (
-                  <SuspenseComponent>
-                    <FavoritesListScreen />
-                  </SuspenseComponent>
-                ),
-              },
-              {
-                path: ERoutesName.NEAR_YOU,
-                errorElement: <ErrorScreen />,
-                element: (
-                  <SuspenseComponent>
-                    <NearYouScreen />
-                  </SuspenseComponent>
-                ),
-              },
-              {
-                path: ERoutesName.PROFILE,
-                errorElement: <ErrorScreen />,
-                element: (
-                  <SuspenseComponent>
-                    <FavoritesListScreen />
-                  </SuspenseComponent>
-                ),
-              },
             ],
+          },
+          {
+            path: ERoutesName.FAVORITES_LIST,
+            errorElement: <ErrorScreen />,
+            element: (
+              <SuspenseComponent>
+                <FavoritesListScreen />
+              </SuspenseComponent>
+            ),
+          },
+          {
+            path: ERoutesName.MY_SANBLE,
+            errorElement: <ErrorScreen />,
+            element: (
+              <SuspenseComponent>
+                <FavoritesListScreen />
+              </SuspenseComponent>
+            ),
+          },
+          {
+            path: ERoutesName.NEAR_YOU,
+            errorElement: <ErrorScreen />,
+            element: (
+              <SuspenseComponent>
+                <NearYouScreen />
+              </SuspenseComponent>
+            ),
+          },
+          {
+            path: ERoutesName.PROFILE,
+            errorElement: <ErrorScreen />,
+            element: (
+              <SuspenseComponent>
+                <FavoritesListScreen />
+              </SuspenseComponent>
+            ),
           },
           {
             path: ERoutesName.FAIR_DETAILS,

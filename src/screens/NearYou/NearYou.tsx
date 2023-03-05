@@ -12,14 +12,13 @@ export const NearYou = () => {
 
   return (
     <section
-      className={`${styles.mapSection} animate__animated animate__screenInUp`}
+      className={`${styles.mapSection} ${
+        isCapacitor ? styles.isCapacitor : ""
+      } animate__animated animate__screenInUp`}
     >
       <Map
         markers={prepareListMapPin(list || [], ERoutesName.NEAR_YOU)}
         isLoading={isLoading}
-        classNameSpinner={`${styles.nearYouSpinner} ${
-          isCapacitor ? styles.isCapacitor : ""
-        }`}
       />
     </section>
   );
