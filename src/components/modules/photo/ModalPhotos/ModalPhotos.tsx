@@ -21,6 +21,13 @@ import { TPhotograph } from "@/types/TPhotograph";
 import styles from "./ModalPhotos.module.css";
 
 export type ComponentProps = {
+  /**
+   * Modal photos ref
+   */
+  modalRef: React.RefObject<HTMLIonModalElement>;
+  /**
+   * Slides photos ref
+   */
   slidesRef?: React.Ref<HTMLIonSlidesElement>;
   /**
    * photographs list
@@ -74,6 +81,7 @@ export type ComponentProps = {
 };
 
 export const ModalPhotos = ({
+  modalRef,
   slidesRef,
   handleAction,
   photographs,
@@ -85,7 +93,6 @@ export const ModalPhotos = ({
   className = "",
   classNameItem = "",
 }: ComponentProps) => {
-  const modalRef = useRef<HTMLIonModalElement>(null);
   const [showDescription, setShowDescription] = useState(true);
   const [activePhoto, setActivePhoto] = useState<TPhotograph>();
   const [isOpen, setIsOpen] = useState(false);
@@ -100,7 +107,10 @@ export const ModalPhotos = ({
     []
   );
 
-  const handleDismiss = () => modalRef.current?.dismiss();
+  const handleDismiss = () => {
+    if (modalRef) modalRef.current?.dismiss();
+    return Promise.resolve(true);
+  };
 
   const handleToggleShowDescription = () => {
     setShowDescription((state) => !state);

@@ -5,7 +5,7 @@ import {
   useIonActionSheet,
   useIonAlert,
 } from "@ionic/react";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import { FiEdit2, FiMapPin } from "react-icons/fi";
 import { HiOutlinePhotograph } from "react-icons/hi";
@@ -64,6 +64,7 @@ export const FairDetails = () => {
     isLoadingDetails,
     isSaving,
     isLoadingReviews,
+    modalPhotosRef,
     handleLoadAll,
     handleSaveReview,
     handleInfiniteReviews,
@@ -87,6 +88,7 @@ export const FairDetails = () => {
     await handleLoadAll();
     slidesRef.current?.slideTo(getIndexPhoto(updateID), 0);
   });
+  const [photoShown, setPhotoShown] = useState(false);
 
   useDocumentTitle(
     `${
@@ -165,6 +167,14 @@ export const FairDetails = () => {
       ],
     });
   };
+
+  useEffect(() => {
+    if (!isLoadingDetails && state?.photoActiveID && !photoShown) {
+      modalPhotosRef.current?.present();
+      slidesRef.current?.slideTo(getIndexPhoto(state?.photoActiveID), 0);
+      setPhotoShown(true);
+    }
+  }, [isLoadingDetails, state]);
 
   return (
     <>
@@ -284,7 +294,7 @@ export const FairDetails = () => {
                 className={`${styles.fairInfoCard} ${
                   isLoadingDetails ? styles.isLoading : ""
                 }`}
-                id={MODAL_PHOTOS_ID}
+                onClick={() => modalPhotosRef.current?.present()}
               >
                 <HiOutlinePhotograph size={35} />
                 <h5>Fotos</h5>
@@ -350,6 +360,7 @@ export const FairDetails = () => {
         contactEmail={fair?.contactEmail}
       />
       <ModalPhotos
+        modalRef={modalPhotosRef}
         slidesRef={slidesRef}
         trigger={MODAL_PHOTOS_ID}
         photographs={fair?.photographs || []}

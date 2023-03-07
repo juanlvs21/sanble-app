@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import useSWRMutation from "swr/immutable";
 
 import { infiteScrollData } from "@/helpers/infiniteScrollData";
@@ -15,6 +15,7 @@ const DEFAULT_LAST_INDEX_REVIEWS = 0;
 const DEFAULT_LIMIT_REVIEWS = 9;
 
 export const useFairDetails = (fairID: string) => {
+  const modalPhotosRef = useRef<HTMLIonModalElement>(null);
   const { toast } = useToast();
   const [review, setReview] = useState<TReview>();
   const [reviews, setReviews] = useState<TReview[]>([]);
@@ -137,6 +138,7 @@ export const useFairDetails = (fairID: string) => {
     isSaving,
     isLoadingDetails,
     isLoadingReviews,
+    modalPhotosRef,
     handleLoadAll,
     handleInfiniteReviews,
     handleSaveReview,
