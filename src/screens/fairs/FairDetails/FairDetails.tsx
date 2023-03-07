@@ -83,7 +83,7 @@ export const FairDetails = () => {
     handleOpen: handleUpdateOpen,
     handleDismiss: handleUpdateDismiss,
     isUpdate,
-  } = useFairPhotoUpdate(finalFairID, async (updateID: string) => {
+  } = useFairPhotoUpdate(finalFairID, async (updateID?: string) => {
     await handleLoadAll();
     slidesRef.current?.slideTo(getIndexPhoto(updateID), 0);
   });

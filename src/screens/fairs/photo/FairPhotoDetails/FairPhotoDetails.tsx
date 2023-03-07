@@ -56,7 +56,7 @@ export const FairPhotoDetails = () => {
     handleOpen: handleUpdateOpen,
     handleDismiss: handleUpdateDismiss,
     isUpdate,
-  } = useFairPhotoUpdate(finalFairID, handleLoad);
+  } = useFairPhotoUpdate(finalFairID, () => handleLoad());
   const [showDescription, setShowDescription] = useState(true);
 
   const handleActions = () => {

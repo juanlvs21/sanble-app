@@ -8,7 +8,7 @@ import { TPhotograph, TPhotographForm } from "@/types/TPhotograph";
 
 export const useFairPhotoUpdate = (
   fairID: string,
-  callback?: (updateID: string) => Promise<any>
+  callback?: (updateID?: string) => Promise<any>
 ) => {
   const [presentLoading, dismissLoading] = useIonLoading();
   const modalRef = useRef<HTMLIonModalElement>(null);

@@ -100,7 +100,7 @@ export const useFairDetails = (fairID: string) => {
     });
   };
 
-  const getIndexPhoto = (photoID: string) => {
+  const getIndexPhoto = (photoID: string = "") => {
     const index = fair?.photographs.findIndex(
       (photoFilter) => photoFilter.id === photoID
     );
