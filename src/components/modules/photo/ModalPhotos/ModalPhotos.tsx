@@ -21,6 +21,7 @@ import { TPhotograph } from "@/types/TPhotograph";
 import styles from "./ModalPhotos.module.css";
 
 export type ComponentProps = {
+  slidesRef?: React.Ref<HTMLIonSlidesElement>;
   /**
    * photographs list
    */
@@ -49,7 +50,7 @@ export type ComponentProps = {
    * Callback for the action button. If this parameter is not sent, the button will not be show
    */
   handleAction?: (
-    id: string,
+    activePhoto: TPhotograph,
     handleDismiss?: () => Promise<boolean> | undefined
   ) => void;
   /**
@@ -73,6 +74,7 @@ export type ComponentProps = {
 };
 
 export const ModalPhotos = ({
+  slidesRef,
   handleAction,
   photographs,
   trigger,
@@ -85,7 +87,7 @@ export const ModalPhotos = ({
 }: ComponentProps) => {
   const modalRef = useRef<HTMLIonModalElement>(null);
   const [showDescription, setShowDescription] = useState(true);
-  const [activeID, setActiveID] = useState("");
+  const [activePhoto, setActivePhoto] = useState<TPhotograph>();
   const [isOpen, setIsOpen] = useState(false);
 
   const slideOpts = useMemo(
@@ -109,13 +111,13 @@ export const ModalPhotos = ({
     setIsOpen(true);
 
     if (photographs.length) {
-      setActiveID(photographs[0].id);
+      setActivePhoto(photographs[0]);
     }
   };
 
   const handleSlideDidChange = async (ev: any) => {
     ev.target.getActiveIndex().then((index: number) => {
-      setActiveID(photographs[index].id);
+      setActivePhoto(photographs[index]);
     });
   };
 
@@ -139,7 +141,11 @@ export const ModalPhotos = ({
           {handleAction && (
             <IonButtons slot="start">
               <Button
-                onClick={() => handleAction(activeID, handleDismiss)}
+                onClick={
+                  activePhoto
+                    ? () => handleAction(activePhoto, handleDismiss)
+                    : undefined
+                }
                 fill="clear"
                 color="medium"
               >
@@ -158,6 +164,7 @@ export const ModalPhotos = ({
       <IonContent>
         {Boolean(photographs.length) && !isLoading && (
           <IonSlides
+            ref={slidesRef}
             options={slideOpts}
             className={`${styles.photoContainer} animate__animated animate__fadeIn`}
             onIonSlideWillChange={handleSlideDidChange}

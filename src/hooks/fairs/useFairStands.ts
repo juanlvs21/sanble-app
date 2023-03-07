@@ -51,7 +51,6 @@ export const useFairStands = (fairID: string) => {
   };
 
   const handleRefresh = async () => {
-    console.log("handle refresh");
     await handleMutate({
       lastIndex: DEFAULT_LAST_INDEX,
       limit: DEFAULT_LIMIT,

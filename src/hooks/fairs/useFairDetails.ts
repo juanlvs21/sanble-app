@@ -100,6 +100,14 @@ export const useFairDetails = (fairID: string) => {
     });
   };
 
+  const getIndexPhoto = (photoID: string) => {
+    const index = fair?.photographs.findIndex(
+      (photoFilter) => photoFilter.id === photoID
+    );
+
+    return index || 0;
+  };
+
   useEffect(() => {
     if (!reviews.length && dataReviews && !errorReviews) {
       setReview(dataReviews.form);
@@ -133,5 +141,6 @@ export const useFairDetails = (fairID: string) => {
     handleInfiniteReviews,
     handleSaveReview,
     handleLoadDetails: mutateDetails,
+    getIndexPhoto,
   };
 };

@@ -69,8 +69,6 @@ export const useTopBarMain = () => {
   const renderTopBarActionStart = (el: React.ReactElement) => {
     const portalEl = document.querySelector(`#${portalTopBarMainStartID}`);
 
-    console.log({ portalEl });
-
     return portalEl ? createPortal(el, portalEl) : undefined;
   };
 

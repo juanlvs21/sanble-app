@@ -20,12 +20,14 @@ import { PhotoDescription } from "@/components/modules/photo/PhotoDescription";
 import { PhotoForm } from "@/components/modules/photo/PhotoForm";
 import { useFairPhotoDelete } from "@/hooks/fairs/photo/useFairPhotoDelete";
 import { useFairPhotoDetails } from "@/hooks/fairs/photo/useFairPhotoDetails";
+import { useFairPhotoUpdate } from "@/hooks/fairs/photo/useFairPhotoUpdate";
 import { useApp } from "@/hooks/useApp";
 import { useModalGoBack } from "@/hooks/useModalGoBack";
 import { useTopBarMain } from "@/hooks/useTopBarMain";
 import { useUser } from "@/hooks/useUser";
 import { ERoutesName } from "@/types/TRoutes";
 import styles from "./FairPhotoDetails.module.css";
+import { ModalUpdate } from "@/components/modules/photo/ModalUpdate";
 
 const MODAL_PHOTO_DESCRIPTION_ID = "photo-description-open-modal";
 
@@ -43,16 +45,19 @@ export const FairPhotoDetails = () => {
   const { renderTopBarActionStart, renderTopBarActionEnd } = useTopBarMain();
   const { handleDeletePhoto } = useFairPhotoDelete(finalFairID);
   const { user } = useUser();
+  const { photograph, ownerID, isLoading, handleLoad } = useFairPhotoDetails(
+    finalFairID,
+    finalPhotoID
+  );
   const {
-    photograph,
-    ownerID,
-    isLoading,
-    isUpdate,
-    modalRef,
+    modalRef: modalUpdateRef,
+    photo: photoUpdate,
     handleUpdatePhoto,
-  } = useFairPhotoDetails(finalFairID, finalPhotoID);
+    handleOpen: handleUpdateOpen,
+    handleDismiss: handleUpdateDismiss,
+    isUpdate,
+  } = useFairPhotoUpdate(finalFairID, handleLoad);
   const [showDescription, setShowDescription] = useState(true);
-  const [isOpen, setIsOpen] = useState(false);
 
   const handleActions = () => {
     present({
@@ -61,7 +66,7 @@ export const FairPhotoDetails = () => {
         {
           text: "Editar Fotografía",
           cssClass: "",
-          handler: () => modalRef.current?.present(),
+          handler: photograph ? () => handleUpdateOpen(photograph) : undefined,
         },
         {
           text: "Eliminar Fotografía",
@@ -105,10 +110,6 @@ export const FairPhotoDetails = () => {
 
   const handleToggleShowDescription = () =>
     setShowDescription((state) => !state);
-
-  const handleDismiss = () => modalRef.current?.dismiss();
-
-  useModalGoBack(isOpen, handleDismiss);
 
   return (
     <>
@@ -154,39 +155,13 @@ export const FairPhotoDetails = () => {
       </section>
 
       {user?.uid === ownerID && (
-        <IonModal
-          ref={modalRef}
-          trigger={MODAL_PHOTO_DESCRIPTION_ID}
-          className={styles.photoEditModal}
-          onWillPresent={() => setIsOpen(true)}
-          onWillDismiss={() => setIsOpen(false)}
-        >
-          <HeaderModal>
-            <IonToolbar>
-              <IonButtons slot="end">
-                <IonButton
-                  onClick={() => modalRef.current?.dismiss()}
-                  fill="clear"
-                  color="medium"
-                >
-                  <AiOutlineClose size={24} />
-                </IonButton>
-              </IonButtons>
-            </IonToolbar>
-          </HeaderModal>
-          <IonContent>
-            <PhotoForm
-              handleSave={handleUpdatePhoto}
-              className={styles.photoEditForm}
-              photo={photograph}
-            />
-          </IonContent>
-
-          <SpinnerFullScreen
-            show={isLoading}
-            className={styles.photoEditFormSpinner}
-          />
-        </IonModal>
+        <ModalUpdate
+          modalRef={modalUpdateRef}
+          handleSave={handleUpdatePhoto}
+          isLoading={isUpdate}
+          photo={photoUpdate}
+          handleDismiss={handleUpdateDismiss}
+        />
       )}
     </>
   );

@@ -5,6 +5,7 @@ import {
   useIonActionSheet,
   useIonAlert,
 } from "@ionic/react";
+import { useRef } from "react";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import { FiEdit2, FiMapPin } from "react-icons/fi";
 import { HiOutlinePhotograph } from "react-icons/hi";
@@ -12,7 +13,6 @@ import { IoIosArrowUp } from "react-icons/io";
 import { MdOutlineStorefront } from "react-icons/md";
 import { TiStar } from "react-icons/ti";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { useEffect } from "react";
 
 import { ButtonFav } from "@/components/common/buttons/ButtonFav";
 import { Fetcher } from "@/components/common/Fetcher";
@@ -22,17 +22,20 @@ import { FairModalMap } from "@/components/modules/fairs/FairModalMap";
 import { FairModalStands } from "@/components/modules/fairs/FairModalStands";
 import { InfoModal } from "@/components/modules/info/InfoModal";
 import { ModalPhotos } from "@/components/modules/photo/ModalPhotos";
+import { ModalUpdate } from "@/components/modules/photo/ModalUpdate";
 import { ReviewForm } from "@/components/modules/reviews/ReviewForm";
 import { ReviewsList } from "@/components/modules/reviews/ReviewsList";
 import { fairType } from "@/helpers/fairs";
 import { getNavStateText } from "@/helpers/navigation";
 import { useFairPhotoDelete } from "@/hooks/fairs/photo/useFairPhotoDelete";
+import { useFairPhotoUpdate } from "@/hooks/fairs/photo/useFairPhotoUpdate";
 import { useFairDetails } from "@/hooks/fairs/useFairDetails";
 import { useFairStands } from "@/hooks/fairs/useFairStands";
 import { useApp } from "@/hooks/useApp";
 import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 import { useTopBarMain } from "@/hooks/useTopBarMain";
 import { useUser } from "@/hooks/useUser";
+import { TPhotograph } from "@/types/TPhotograph";
 import { ERoutesName } from "@/types/TRoutes";
 import styles from "./FairDetails.module.css";
 
@@ -52,6 +55,8 @@ export const FairDetails = () => {
   const { renderTopBarActionEnd } = useTopBarMain();
   const { isCapacitor } = useApp();
   const finalFairID = fairID || state?.fairID || "";
+  const slidesRef = useRef<HTMLIonSlidesElement>(null);
+  const { user, loadingSetFav, handleSetFavoriteFair } = useUser();
   const {
     fair,
     review,
@@ -60,9 +65,9 @@ export const FairDetails = () => {
     isSaving,
     isLoadingReviews,
     handleLoadAll,
-    handleLoadDetails,
     handleSaveReview,
     handleInfiniteReviews,
+    getIndexPhoto,
   } = useFairDetails(finalFairID);
   const {
     stands,
@@ -71,7 +76,17 @@ export const FairDetails = () => {
     handleInfinite: handleInfiniteStands,
   } = useFairStands(finalFairID);
   const { handleDeletePhoto } = useFairPhotoDelete(finalFairID);
-  const { user, loadingSetFav, handleSetFavoriteFair } = useUser();
+  const {
+    modalRef: modalUpdateRef,
+    photo: photoUpdate,
+    handleUpdatePhoto,
+    handleOpen: handleUpdateOpen,
+    handleDismiss: handleUpdateDismiss,
+    isUpdate,
+  } = useFairPhotoUpdate(finalFairID, async (updateID: string) => {
+    await handleLoadAll();
+    slidesRef.current?.slideTo(getIndexPhoto(updateID), 0);
+  });
 
   useDocumentTitle(
     `${
@@ -82,7 +97,7 @@ export const FairDetails = () => {
   );
 
   const handleGalleryActions = (
-    photoID: string,
+    activePhoto: TPhotograph,
     handleDismiss?: () => Promise<boolean> | undefined
   ) => {
     const navPhoto = (path: string, state: Record<string, string> = {}) => {
@@ -104,14 +119,9 @@ export const FairDetails = () => {
         {
           text: "Editar Fotografía",
           cssClass: "",
-          handler: () =>
-            navPhoto(
-              `${ERoutesName.FAIRS_LIST}/${finalFairID}/foto/${photoID}`,
-              {
-                fairID: finalFairID,
-                photoID,
-              }
-            ),
+          handler: () => {
+            handleUpdateOpen(activePhoto);
+          },
         },
         {
           text: "Eliminar Fotografía",
@@ -129,9 +139,9 @@ export const FairDetails = () => {
                   text: "Eliminar",
                   role: "confirm",
                   handler: () =>
-                    handleDeletePhoto(photoID, async () => {
-                      await handleLoadDetails();
-                      if (handleDismiss) handleDismiss();
+                    handleDeletePhoto(activePhoto.id, async () => {
+                      await handleLoadAll();
+                      // if (handleDismiss) handleDismiss();
                     }),
                 },
               ],
@@ -340,6 +350,7 @@ export const FairDetails = () => {
         contactEmail={fair?.contactEmail}
       />
       <ModalPhotos
+        slidesRef={slidesRef}
         trigger={MODAL_PHOTOS_ID}
         photographs={fair?.photographs || []}
         isLoading={isLoadingDetails}
@@ -347,6 +358,13 @@ export const FairDetails = () => {
           user?.uid === fair?.owner.id ? handleGalleryActions : undefined
         }
         isCoverText="Fotografía de Perfil"
+      />
+      <ModalUpdate
+        modalRef={modalUpdateRef}
+        handleSave={handleUpdatePhoto}
+        isLoading={isUpdate}
+        photo={photoUpdate}
+        handleDismiss={handleUpdateDismiss}
       />
       <FairModalMap
         trigger={MODAL_MAP_ID}
