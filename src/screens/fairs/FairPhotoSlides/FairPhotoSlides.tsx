@@ -1,6 +1,6 @@
 import { useIonActionSheet, useIonAlert } from "@ionic/react";
 import { useEffect, useRef, useState } from "react";
-import { FiMenu } from "react-icons/fi";
+import { FiEdit } from "react-icons/fi";
 import { IoIosArrowBack } from "react-icons/io";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 
@@ -143,15 +143,12 @@ export const FairPhotoSlides = () => {
         </Button>
       )}
 
-      {renderTopBarActionEnd(
-        <Button
-          onClick={user?.uid === fair?.owner.id ? handleAction : undefined}
-          fill="clear"
-          color="medium"
-        >
-          <FiMenu size={24} />
-        </Button>
-      )}
+      {user?.uid === fair?.owner.id &&
+        renderTopBarActionEnd(
+          <Button onClick={handleAction} fill="clear" color="medium">
+            <FiEdit size={24} />
+          </Button>
+        )}
 
       <PhotoSlides
         slidesRef={slidesRef}
@@ -159,9 +156,10 @@ export const FairPhotoSlides = () => {
         handleSetActivePhoto={(photo) => setActivePhoto(photo)}
         isLoading={isLoadingDetails}
         isCoverText="Fotografía de Perfil"
-        classNameSlides={`animate__animated animate__screenInUp ${
-          styles.photoSlides
-        } ${isCapacitor ? styles.isCapacitor : ""}`}
+        className="animate__animated animate__screenInUp"
+        classNameSlides={`${styles.photoSlides} ${
+          isCapacitor ? styles.isCapacitor : ""
+        }`}
       />
 
       <ModalUpdate

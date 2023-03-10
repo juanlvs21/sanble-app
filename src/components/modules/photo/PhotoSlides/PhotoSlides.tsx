@@ -28,7 +28,7 @@ export type ComponentProps = {
   /**
    * Default slides per view
    *
-   * @default 1.1
+   * @default 1
    */
   slidesPerView?: number;
   /**

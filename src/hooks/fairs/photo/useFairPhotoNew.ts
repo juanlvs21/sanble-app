@@ -31,7 +31,7 @@ export const useFairPhotoNew = (fairID: string) => {
 
       handleRevalidateAll();
 
-      navigate(`${ERoutesName.FAIRS_LIST}/${fairID}`, {
+      navigate(`${ERoutesName.FAIRS_LIST}/${fairID}/fotos`, {
         state: {
           fairID,
           photoActiveID: photograph.id,
