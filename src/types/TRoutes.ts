@@ -9,6 +9,7 @@ export enum ERoutesName {
   FAIRS_LIST = "/app/ferias",
   FAIR_DETAILS = "/app/ferias/:fairID",
   FAIR_DETAILS_PHOTO = "/app/ferias/:fairID/foto/:photoID",
+  FAIR_DETAILS_PHOTO_SLIDES = "/app/ferias/:fairID/fotos",
   FAIR_DETAILS_PHOTO_NEW = "/app/ferias/:fairID/foto",
   STANDS_LIST = "/app/stands",
   STAND_DETAILS = "/app/stands/:standID",

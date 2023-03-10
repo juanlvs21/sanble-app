@@ -21,7 +21,7 @@ import { Skeleton } from "@/components/common/Skeleton";
 import { TopBar } from "@/components/common/TopBar";
 // import { StandModalFairs } from "@/components/modules/stands/StandModalFairs";
 // import { InfoModal } from "@/components/modules/info/InfoModal";
-// import { ModalPhotos } from "@/components/modules/photo/ModalPhotos";
+// import { PhotoSlides } from "@/components/modules/photo/PhotoSlides";
 import { ReviewForm } from "@/components/modules/reviews/ReviewForm";
 import { ReviewsList } from "@/components/modules/reviews/ReviewsList";
 import { getNavStateText } from "@/helpers/navigation";
@@ -255,7 +255,7 @@ export const StandDetails = () => {
         contactPhone={stand?.contactPhone}
         contactEmail={stand?.contactEmail}
       />
-      <ModalPhotos
+      <PhotoSlides
         trigger={MODAL_PHOTOS_ID}
         photographs={stand?.photographs || []}
         isLoading={isLoading || isLoadingPhoto || isDeletingPhoto}

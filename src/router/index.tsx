@@ -55,6 +55,11 @@ const FairPhotoNewScreen = lazy(() =>
     default: FairPhotoNew,
   }))
 );
+const FairPhotoSlidesScreen = lazy(() =>
+  import("@/screens/fairs/FairPhotoSlides").then(({ FairPhotoSlides }) => ({
+    default: FairPhotoSlides,
+  }))
+);
 const StandsListScreen = lazy(() =>
   import("@/screens/stands/StandsList").then(({ StandsList }) => ({
     default: StandsList,
@@ -163,6 +168,15 @@ export const router = createBrowserRouter([
             element: (
               <SuspenseComponent>
                 <FairDetailsScreen />
+              </SuspenseComponent>
+            ),
+          },
+          {
+            path: ERoutesName.FAIR_DETAILS_PHOTO_SLIDES,
+            errorElement: <ErrorScreen />,
+            element: (
+              <SuspenseComponent>
+                <FairPhotoSlidesScreen />
               </SuspenseComponent>
             ),
           },

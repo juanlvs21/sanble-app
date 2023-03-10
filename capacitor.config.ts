@@ -16,10 +16,10 @@ const config: CapacitorConfig = {
       forceCodeForRefreshToken: true,
     },
   },
-  // server: {
-  //   url: "http://192.168.0.115:3000",
-  //   cleartext: true,
-  // },
+  server: {
+    url: "http://192.168.0.100:3000",
+    cleartext: true,
+  },
 };
 
 export default config;

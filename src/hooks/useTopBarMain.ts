@@ -23,6 +23,9 @@ export const useTopBarMain = () => {
   const isFairs = useMatch(ERoutesName.FAIRS_LIST);
   const isFairDetails = useMatch(ERoutesName.FAIR_DETAILS);
   const isFairDetailsPhoto = useMatch(ERoutesName.FAIR_DETAILS_PHOTO);
+  const isFairDetailsPhotoSlides = useMatch(
+    ERoutesName.FAIR_DETAILS_PHOTO_SLIDES
+  );
   const isFairDetailsPhotoNew = useMatch(ERoutesName.FAIR_DETAILS_PHOTO_NEW);
   const isStands = useMatch(ERoutesName.STANDS_LIST);
   const isStandDetails = useMatch(ERoutesName.STAND_DETAILS);
@@ -44,6 +47,10 @@ export const useTopBarMain = () => {
       );
     } else if (isFairDetailsPhoto) {
       setProps(getPropsTopBarMain(ERoutesName.FAIR_DETAILS_PHOTO));
+      setRenderStart(true);
+      setRenderEnd(true);
+    } else if (isFairDetailsPhotoSlides) {
+      setProps(getPropsTopBarMain(ERoutesName.FAIR_DETAILS_PHOTO_SLIDES));
       setRenderStart(true);
       setRenderEnd(true);
     } else if (isFairDetailsPhotoNew) {

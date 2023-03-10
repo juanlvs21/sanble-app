@@ -41,6 +41,12 @@ export const getPropsTopBarMain = (
       sticky: true,
       stickyNoScroll: true,
     },
+    [ERoutesName.FAIR_DETAILS_PHOTO_SLIDES]: {
+      title: "Fotografías",
+      titleSize: 24,
+      sticky: true,
+      stickyNoScroll: true,
+    },
     [ERoutesName.FAIR_DETAILS_PHOTO_NEW]: {
       title: "Fotografía",
       titleSize: 24,
