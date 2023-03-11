@@ -6,12 +6,12 @@ import { IoIosArrowUp } from "react-icons/io";
 import { MdOutlineStorefront } from "react-icons/md";
 import { TiStar } from "react-icons/ti";
 import { Link, useLocation, useParams } from "react-router-dom";
+import { useDocumentTitle } from "usehooks-ts";
 
 import { ButtonFav } from "@/components/common/buttons/ButtonFav";
 import { Fetcher } from "@/components/common/Fetcher";
 import { ImageExtended } from "@/components/common/ImageExtended";
 import { Skeleton } from "@/components/common/Skeleton";
-import { FairModalMap } from "@/components/modules/fairs/FairModalMap";
 import { FairModalStands } from "@/components/modules/fairs/FairModalStands";
 import { InfoModal } from "@/components/modules/info/InfoModal";
 import { ReviewForm } from "@/components/modules/reviews/ReviewForm";
@@ -21,14 +21,12 @@ import { getNavStateText } from "@/helpers/navigation";
 import { useFairDetails } from "@/hooks/fairs/useFairDetails";
 import { useFairStands } from "@/hooks/fairs/useFairStands";
 import { useApp } from "@/hooks/useApp";
-import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 import { useTopBarMain } from "@/hooks/useTopBarMain";
 import { useUser } from "@/hooks/useUser";
 import { ERoutesName } from "@/types/TRoutes";
 import styles from "./FairDetails.module.css";
 
 const MODAL_INFO_ID = "fair-info-open-modal";
-const MODAL_MAP_ID = "fair-map-open-modal";
 const MODAL_STANDS_ID = "fair-stands-open-modal";
 
 type TRouteParams = { fairID: string };
@@ -171,15 +169,16 @@ export const FairDetails = () => {
                 <AiOutlineInfoCircle size={35} />
                 <h5>Información de Contacto</h5>
               </div>
-              <div
-                className={`${styles.fairInfoCard} ${
-                  isLoadingDetails ? styles.isLoading : ""
-                }`}
-                id={MODAL_MAP_ID}
-              >
-                <FiMapPin size={35} />
-                <h5>Localización en Mapa</h5>
-              </div>
+              <Link to={`${ERoutesName.FAIRS_LIST}/${fair?.id}/mapa`}>
+                <div
+                  className={`${styles.fairInfoCard} ${
+                    isLoadingDetails ? styles.isLoading : ""
+                  }`}
+                >
+                  <FiMapPin size={35} />
+                  <h5>Localización en Mapa</h5>
+                </div>
+              </Link>
               <Link to={`${ERoutesName.FAIRS_LIST}/${fair?.id}/fotos`}>
                 <div
                   className={`${styles.fairInfoCard} ${
@@ -249,11 +248,6 @@ export const FairDetails = () => {
         address={fair?.address}
         contactPhone={fair?.contactPhone}
         contactEmail={fair?.contactEmail}
-      />
-      <FairModalMap
-        trigger={MODAL_MAP_ID}
-        fair={fair}
-        isLoading={isLoadingDetails}
       />
       <FairModalStands
         trigger={MODAL_STANDS_ID}

@@ -22,6 +22,7 @@ export const useTopBarMain = () => {
   const isNearYou = useMatch(ERoutesName.NEAR_YOU);
   const isFairs = useMatch(ERoutesName.FAIRS_LIST);
   const isFairDetails = useMatch(ERoutesName.FAIR_DETAILS);
+  const isFairDetailsMap = useMatch(ERoutesName.FAIR_DETAILS_MAP);
   const isFairDetailsPhoto = useMatch(ERoutesName.FAIR_DETAILS_PHOTO);
   const isFairDetailsPhotoSlides = useMatch(
     ERoutesName.FAIR_DETAILS_PHOTO_SLIDES
@@ -45,6 +46,8 @@ export const useTopBarMain = () => {
           goBackUrl: state?.goBackUrl,
         })
       );
+    } else if (isFairDetailsMap) {
+      setProps(getPropsTopBarMain(ERoutesName.FAIR_DETAILS_MAP));
     } else if (isFairDetailsPhoto) {
       setProps(getPropsTopBarMain(ERoutesName.FAIR_DETAILS_PHOTO));
       setRenderStart(true);

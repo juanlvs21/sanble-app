@@ -1,6 +1,5 @@
 import { IonPage } from "@ionic/react";
-
-import { useDocumentTitle } from "@/hooks/useDocumentTitle";
+import { useDocumentTitle } from "usehooks-ts";
 
 export const NotFound = () => {
   useDocumentTitle("¡Ups! Página no encontrada 😢");

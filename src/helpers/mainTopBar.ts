@@ -35,6 +35,10 @@ export const getPropsTopBarMain = (
       titleLight: true,
       sticky: true,
     },
+    [ERoutesName.FAIR_DETAILS_MAP]: {
+      title: "Ubicación",
+      sticky: true,
+    },
     [ERoutesName.FAIR_DETAILS_PHOTO]: {
       title: "Fotografía",
       titleSize: 24,

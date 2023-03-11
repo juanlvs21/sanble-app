@@ -1,12 +1,12 @@
 import { useLocation } from "react-router-dom";
+import { useDocumentTitle } from "usehooks-ts";
 
 import { useApp } from "@/hooks/useApp";
-import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 
 export const FavoritesList = () => {
   const { pathname } = useLocation();
   const { handleShowSidebar, showSidebar } = useApp();
-  useDocumentTitle("Lista de Favoritos");
+  useDocumentTitle("Lista de Favoritos 🔖");
 
   return (
     <section className="animate__animated animate__screenInUp">

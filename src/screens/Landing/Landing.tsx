@@ -1,8 +1,8 @@
 import { IonPage } from "@ionic/react";
 import { Link } from "react-router-dom";
+import { useDocumentTitle } from "usehooks-ts";
 
 import { Button } from "@/components/common/buttons/Button";
-import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 import { useLanding } from "@/hooks/useLanding";
 import { ERoutesName } from "@/types/TRoutes";
 import styles from "./Landing.module.css";

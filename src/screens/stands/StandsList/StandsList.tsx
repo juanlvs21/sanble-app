@@ -1,5 +1,6 @@
 import { useIonActionSheet } from "@ionic/react";
 import { BiFilterAlt } from "react-icons/bi";
+import { useDocumentTitle } from "usehooks-ts";
 
 import { Button } from "@/components/common/buttons/Button";
 import { Fetcher } from "@/components/common/Fetcher";
@@ -7,7 +8,6 @@ import { Skeleton } from "@/components/common/Skeleton";
 import { StandCardList } from "@/components/modules/stands/StandCardList";
 import { useStandsList } from "@/hooks/stands/useStandsList";
 import { useApp } from "@/hooks/useApp";
-import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 import { useTopBarMain } from "@/hooks/useTopBarMain";
 import styles from "./StandsList.module.css";
 

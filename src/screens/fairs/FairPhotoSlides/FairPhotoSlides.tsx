@@ -8,6 +8,7 @@ import { Button } from "@/components/common/buttons/Button";
 import { SpinnerFullScreen } from "@/components/common/loaders/SpinnerFullScreen";
 import { ModalUpdate } from "@/components/modules/photo/ModalUpdate";
 import { PhotoSlides } from "@/components/modules/photo/PhotoSlides";
+import { getNavStateText } from "@/helpers/navigation";
 import { useFairPhotoDelete } from "@/hooks/fairs/photo/useFairPhotoDelete";
 import { useFairPhotoUpdate } from "@/hooks/fairs/photo/useFairPhotoUpdate";
 import { useFairDetails } from "@/hooks/fairs/useFairDetails";
@@ -16,6 +17,7 @@ import { useTopBarMain } from "@/hooks/useTopBarMain";
 import { useUser } from "@/hooks/useUser";
 import { TPhotograph } from "@/types/TPhotograph";
 import { ERoutesName } from "@/types/TRoutes";
+import { useDocumentTitle } from "usehooks-ts";
 import styles from "./FairPhotoSlides.module.css";
 
 type TRouteParams = { fairID: string };
@@ -49,6 +51,14 @@ export const FairPhotoSlides = () => {
   });
   const [photoShown, setPhotoShown] = useState(false);
   const [activePhoto, setActivePhoto] = useState<TPhotograph>();
+
+  useDocumentTitle(
+    `Fotografías de ${
+      getNavStateText(fairID, state?.fairID, state?.fairName) ||
+      fair?.name ||
+      "Feria"
+    } 📷`
+  );
 
   const handleAction = () => {
     const buttons = [

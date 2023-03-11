@@ -13,6 +13,7 @@ import { MdOutlineStorefront } from "react-icons/md";
 import { TiStar } from "react-icons/ti";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
 import { BiStoreAlt } from "react-icons/bi";
+import { useDocumentTitle } from "usehooks-ts";
 
 import { ButtonFav } from "@/components/common/buttons/ButtonFav";
 import { Fetcher } from "@/components/common/Fetcher";
@@ -28,7 +29,6 @@ import { getNavStateText } from "@/helpers/navigation";
 import { useStandDetails } from "@/hooks/stands/useStandDetails";
 // import { useStandPhoto } from "@/hooks/stands/useStandPhoto";
 // import { useStandFairs } from "@/hooks/stands/useStandFairs";
-import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 import { useUser } from "@/hooks/useUser";
 import { useTopBarMain } from "@/hooks/useTopBarMain";
 import styles from "./StandDetails.module.css";
