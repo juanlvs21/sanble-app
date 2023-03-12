@@ -1,4 +1,5 @@
 import { TFireBaseDocRefBasic } from "@/types/TFirebase";
+import { TPhotograph } from "@/types/TPhotograph";
 
 export enum EStandOrderBy {
   BEST = "best",
@@ -13,10 +14,9 @@ export type TStand = {
   contactEmail: string;
   contactPhone: string;
   coverUrl?: string;
+  photographs: TPhotograph[];
   creationTime: string;
   fairs: TFireBaseDocRefBasic[];
   owner: TFireBaseDocRefBasic;
-  products: any[];
-  promotions: any[];
   slogan?: string;
 };

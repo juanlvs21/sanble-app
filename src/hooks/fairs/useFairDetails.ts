@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import useSWRMutation from "swr/immutable";
 
 import { infiteScrollData } from "@/helpers/infiniteScrollData";

@@ -28,7 +28,7 @@ export const getPropsTopBarMain = (
       sticky: true,
     },
     [ERoutesName.FAIR_DETAILS]: {
-      title: "Detalles",
+      title: "Detalles Feria",
       startGoBackUrl: options?.goBackUrl || ERoutesName.FAIRS_LIST,
       titleSize: 24,
       startGoBack: true,
@@ -64,7 +64,7 @@ export const getPropsTopBarMain = (
       sticky: true,
     },
     [ERoutesName.STAND_DETAILS]: {
-      title: "Detalles",
+      title: "Detalles Stand",
       startGoBackUrl: options?.goBackUrl || ERoutesName.STANDS_LIST,
       titleSize: 24,
       startGoBack: true,
