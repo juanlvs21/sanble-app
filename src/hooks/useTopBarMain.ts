@@ -22,10 +22,17 @@ export const useTopBarMain = () => {
   const isNearYou = useMatch(ERoutesName.NEAR_YOU);
   const isFairs = useMatch(ERoutesName.FAIRS_LIST);
   const isFairDetails = useMatch(ERoutesName.FAIR_DETAILS);
-  const isFairDetailsPhoto = useMatch(ERoutesName.FAIR_DETAILS_PHOTO);
+  const isFairDetailsMap = useMatch(ERoutesName.FAIR_DETAILS_MAP);
+  const isFairDetailsPhotoSlides = useMatch(
+    ERoutesName.FAIR_DETAILS_PHOTO_SLIDES
+  );
   const isFairDetailsPhotoNew = useMatch(ERoutesName.FAIR_DETAILS_PHOTO_NEW);
   const isStands = useMatch(ERoutesName.STANDS_LIST);
   const isStandDetails = useMatch(ERoutesName.STAND_DETAILS);
+  const isStandDetailsPhotoSlides = useMatch(
+    ERoutesName.STAND_DETAILS_PHOTO_SLIDES
+  );
+  const isStandDetailsPhotoNew = useMatch(ERoutesName.STAND_DETAILS_PHOTO_NEW);
 
   const handleGetData = () => {
     if (isApp) {
@@ -42,13 +49,15 @@ export const useTopBarMain = () => {
           goBackUrl: state?.goBackUrl,
         })
       );
-    } else if (isFairDetailsPhoto) {
-      setProps(getPropsTopBarMain(ERoutesName.FAIR_DETAILS_PHOTO));
-      setRenderStart(true);
-      setRenderEnd(true);
+    } else if (isFairDetailsMap) {
+      setProps(getPropsTopBarMain(ERoutesName.FAIR_DETAILS_MAP));
     } else if (isFairDetailsPhotoNew) {
       setProps(getPropsTopBarMain(ERoutesName.FAIR_DETAILS_PHOTO_NEW));
       setRenderStart(false);
+    } else if (isFairDetailsPhotoSlides) {
+      setProps(getPropsTopBarMain(ERoutesName.FAIR_DETAILS_PHOTO_SLIDES));
+      setRenderStart(true);
+      setRenderEnd(true);
     } else if (isStands) {
       setProps(getPropsTopBarMain(ERoutesName.STANDS_LIST));
       setRenderEnd(true);
@@ -59,6 +68,13 @@ export const useTopBarMain = () => {
         })
       );
       setRenderEnd(true);
+    } else if (isStandDetailsPhotoNew) {
+      setProps(getPropsTopBarMain(ERoutesName.STAND_DETAILS_PHOTO_NEW));
+      setRenderStart(false);
+    } else if (isStandDetailsPhotoSlides) {
+      setProps(getPropsTopBarMain(ERoutesName.STAND_DETAILS_PHOTO_SLIDES));
+      setRenderStart(true);
+      setRenderEnd(true);
     } else {
       setProps(undefined);
       setRenderStart(false);
@@ -68,8 +84,6 @@ export const useTopBarMain = () => {
 
   const renderTopBarActionStart = (el: React.ReactElement) => {
     const portalEl = document.querySelector(`#${portalTopBarMainStartID}`);
-
-    console.log({ portalEl });
 
     return portalEl ? createPortal(el, portalEl) : undefined;
   };

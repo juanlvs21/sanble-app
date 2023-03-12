@@ -28,6 +28,16 @@ export interface IonCheckboxCustomEvent<T> extends CustomEvent<T> {
   target: HTMLIonCheckboxElement;
 }
 
+export interface IonModalCustomEvent<T> extends CustomEvent<T> {
+  detail: T;
+  target: HTMLIonModalElement;
+}
+
+export interface OverlayEventDetail<T = any> {
+  data?: T;
+  role?: string;
+}
+
 export interface IonicReactProps {
   class?: string;
   className?: string;

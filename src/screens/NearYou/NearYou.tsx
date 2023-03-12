@@ -1,7 +1,8 @@
+import { useDocumentTitle } from "usehooks-ts";
+
 import { Map } from "@/components/modules/geolocation/Map";
 import { useFairsListGeo } from "@/hooks/fairs/useFairsListGeo";
 import { useApp } from "@/hooks/useApp";
-import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 import { ERoutesName } from "@/types/TRoutes";
 import styles from "./NearYou.module.css";
 

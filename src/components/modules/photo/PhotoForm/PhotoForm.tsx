@@ -114,49 +114,51 @@ export const PhotoForm = ({
       onSubmit={handleSubmit}
       onKeyUp={(e) => e.key === "Enter" && handleSubmit()}
     >
-      <section className={styles.photoFormFileSection}>
-        <FileUploader
-          name="image"
-          hoverTitle={fileHoverTitle}
-          onTypeError={handleFileErrorType}
-          onSizeError={handleFileErrorSize}
-          onSelect={() => setErrorFile("")}
-          handleChange={handleChangeFile}
-          types={fileTypes}
-          photoFormFileContainer
-          dropMessageStyle={dropMessageStyle}
-          maxSize={fileMaxSize}
-        >
-          <div
-            className={styles.photoFormFileContainer}
-            style={{
-              backgroundImage: reviewSrc ? `url("${reviewSrc}")` : "",
-            }}
+      {!photo && (
+        <section className={styles.photoFormFileSection}>
+          <FileUploader
+            name="image"
+            hoverTitle={fileHoverTitle}
+            onTypeError={handleFileErrorType}
+            onSizeError={handleFileErrorSize}
+            onSelect={() => setErrorFile("")}
+            handleChange={handleChangeFile}
+            types={fileTypes}
+            photoFormFileContainer
+            dropMessageStyle={dropMessageStyle}
+            maxSize={fileMaxSize}
           >
             <div
-              className={styles.photoFormFile}
+              className={styles.photoFormFileContainer}
               style={{
-                color: reviewSrc
-                  ? "var(--ion-color-light)"
-                  : "var(--sanble-gray-color-1)",
+                backgroundImage: reviewSrc ? `url("${reviewSrc}")` : "",
               }}
             >
-              <MdOutlineAddPhotoAlternate size={52} />
-              <p>Haga clic o arrastre y suelte una fotografía aquí</p>
-              <small>
-                Máximo {fileMaxSize}mb | Tipos de archivos permitidos{" "}
-                {fileTypes.join(", ")}
-              </small>
+              <div
+                className={styles.photoFormFile}
+                style={{
+                  color: reviewSrc
+                    ? "var(--ion-color-light)"
+                    : "var(--sanble-gray-color-1)",
+                }}
+              >
+                <MdOutlineAddPhotoAlternate size={52} />
+                <p>Haga clic o arrastre y suelte una fotografía aquí</p>
+                <small>
+                  Máximo {fileMaxSize}mb | Tipos de archivos permitidos{" "}
+                  {fileTypes.join(", ")}
+                </small>
+              </div>
             </div>
-          </div>
-        </FileUploader>
-        <IonNote className={styles.photoFormFileError}>
-          {errorFile
-            ? errorFile
-            : getErrorMessage("image", touched, errors) &&
-              getErrorMessage("image", touched, errors)}
-        </IonNote>
-      </section>
+          </FileUploader>
+          <IonNote className={styles.photoFormFileError}>
+            {errorFile
+              ? errorFile
+              : getErrorMessage("image", touched, errors) &&
+                getErrorMessage("image", touched, errors)}
+          </IonNote>
+        </section>
+      )}
       <section>
         <Input
           placeholder="Descripción"

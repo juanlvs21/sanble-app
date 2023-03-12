@@ -1,8 +1,8 @@
-import { lazy, useEffect } from "react";
+import { lazy } from "react";
 import { BiBell } from "react-icons/bi";
+import { useDocumentTitle } from "usehooks-ts";
 
 import { Button } from "@/components/common/buttons/Button";
-import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 import { useHome } from "@/hooks/useHome";
 import { useTopBarMain } from "@/hooks/useTopBarMain";
 

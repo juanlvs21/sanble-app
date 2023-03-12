@@ -1,27 +1,30 @@
 import { useIonLoading } from "@ionic/react";
-import { useEffect, useRef, useState } from "react";
-import useSWRMutation from "swr/immutable";
+import { useRef, useState } from "react";
 
-import { useFairPhotoRevalidate } from "@/hooks/fairs/useFairRevalidate";
+import { useFairsRevalidate } from "@/hooks/fairs/useFairsRevalidate";
 import { useToast } from "@/hooks/useToast";
-import { getFairPhotoRequest, updateFairPhotoRequest } from "@/services";
+import { updateFairPhotoRequest } from "@/services";
 import { TPhotograph, TPhotographForm } from "@/types/TPhotograph";
 
-export const useFairPhotoDetails = (fairID: string, photoID: string) => {
+export const useFairPhotoUpdate = (
+  fairID: string,
+  callback?: (updateID?: string) => Promise<any>
+) => {
   const [presentLoading, dismissLoading] = useIonLoading();
-  const { toast } = useToast();
-  const { handleRevalidateDetails, handleRevalidateAll } =
-    useFairPhotoRevalidate(fairID);
-
   const modalRef = useRef<HTMLIonModalElement>(null);
-  const [photograph, setPhotograph] = useState<TPhotograph>();
-  const [ownerID, setOwnerID] = useState<string>();
+  const { toast } = useToast();
   const [isUpdate, setIsUpdate] = useState(false);
+  const [photo, setPhoto] = useState<TPhotograph>();
 
-  const { data, error, isLoading, mutate } = useSWRMutation(
-    `/fairs/${fairID}/photograph/${photoID}`,
-    async () => await getFairPhotoRequest(fairID, photoID)
-  );
+  const { handleRevalidateDetails, handleRevalidateAll } =
+    useFairsRevalidate(fairID);
+
+  const handleOpen = (photoCurrent: TPhotograph) => {
+    setPhoto(photoCurrent);
+    modalRef.current?.present();
+  };
+
+  const handleDismiss = () => modalRef.current?.dismiss();
 
   const handleUpdatePhoto = async (data: TPhotographForm) => {
     presentLoading();
@@ -33,8 +36,6 @@ export const useFairPhotoDetails = (fairID: string, photoID: string) => {
       formData.append("description", data.description);
       formData.append("isCover", `${data.isCover}`);
 
-      if (data.image) formData.append("image", data.image);
-
       const { photograph: photographRes } = await updateFairPhotoRequest(
         fairID,
         data.id,
@@ -44,7 +45,7 @@ export const useFairPhotoDetails = (fairID: string, photoID: string) => {
       if (photographRes.isCover) handleRevalidateAll();
       else handleRevalidateDetails();
 
-      await mutate();
+      if (callback) await callback(data.id);
 
       toast("Fotografía actualizada con éxito", {
         type: "success",
@@ -61,23 +62,12 @@ export const useFairPhotoDetails = (fairID: string, photoID: string) => {
     }
   };
 
-  useEffect(() => {
-    if (data && !error) {
-      setPhotograph(data.photograph);
-      setOwnerID(data.ownerID);
-    }
-  }, [data]);
-
-  useEffect(() => {
-    if (error) toast(error, { type: "error" });
-  }, [error]);
-
   return {
     modalRef,
-    photograph,
-    ownerID,
-    isLoading,
     isUpdate,
+    photo,
+    handleOpen,
+    handleDismiss,
     handleUpdatePhoto,
   };
 };

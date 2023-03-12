@@ -2,6 +2,7 @@ import { IonCol, IonGrid, IonRow } from "@ionic/react";
 import { useFormik } from "formik";
 import { BiEnvelope } from "react-icons/bi";
 import { FcGoogle } from "react-icons/fc";
+import { useDocumentTitle } from "usehooks-ts";
 
 import { Button } from "@/components/common/buttons/Button";
 import { Input } from "@/components/common/forms/Input";
@@ -9,7 +10,6 @@ import { InputPassword } from "@/components/common/forms/InputPassword";
 import { getErrorMessage } from "@/helpers/getFormikErrorMsg";
 import { signInSchema } from "@/helpers/validator/auth";
 import { useAuth } from "@/hooks/useAuth";
-import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 import { TAuthSigInForm } from "@/types/TUser";
 import styles from "../Auth.module.css";
 

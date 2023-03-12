@@ -1,84 +1,60 @@
-import {
-  IonFab,
-  IonFabButton,
-  IonFabList,
-  useIonActionSheet,
-  useIonAlert,
-} from "@ionic/react";
+import { IonFab, IonFabButton, IonFabList } from "@ionic/react";
 import { AiOutlineInfoCircle } from "react-icons/ai";
-import { FiEdit2, FiMapPin } from "react-icons/fi";
-import { HiOutlinePhotograph } from "react-icons/hi";
+import { BiStoreAlt } from "react-icons/bi";
+import { FiEdit2 } from "react-icons/fi";
+import { HiOutlinePhotograph, HiOutlineShoppingBag } from "react-icons/hi";
 import { IoIosArrowUp } from "react-icons/io";
 import { MdOutlineStorefront } from "react-icons/md";
 import { TiStar } from "react-icons/ti";
-import { useNavigate, useLocation, useParams } from "react-router-dom";
-import { BiStoreAlt } from "react-icons/bi";
+import { Link, useLocation, useParams } from "react-router-dom";
+import { useDocumentTitle } from "usehooks-ts";
 
 import { ButtonFav } from "@/components/common/buttons/ButtonFav";
 import { Fetcher } from "@/components/common/Fetcher";
 import { ImageExtended } from "@/components/common/ImageExtended";
 import { Skeleton } from "@/components/common/Skeleton";
-import { TopBar } from "@/components/common/TopBar";
-// import { StandModalFairs } from "@/components/modules/stands/StandModalFairs";
-// import { InfoModal } from "@/components/modules/info/InfoModal";
-// import { ModalPhotos } from "@/components/modules/photo/ModalPhotos";
+// import { FairModalStands } from "@/components/modules/fairs/FairModalStands";
+import { InfoModal } from "@/components/modules/info/InfoModal";
 import { ReviewForm } from "@/components/modules/reviews/ReviewForm";
 import { ReviewsList } from "@/components/modules/reviews/ReviewsList";
 import { getNavStateText } from "@/helpers/navigation";
 import { useStandDetails } from "@/hooks/stands/useStandDetails";
-// import { useStandPhoto } from "@/hooks/stands/useStandPhoto";
-// import { useStandFairs } from "@/hooks/stands/useStandFairs";
-import { useDocumentTitle } from "@/hooks/useDocumentTitle";
-import { useUser } from "@/hooks/useUser";
-import { useTopBarMain } from "@/hooks/useTopBarMain";
-import styles from "./StandDetails.module.css";
+// import { useFairStands } from "@/hooks/fairs/useFairStands";
 import { useApp } from "@/hooks/useApp";
+import { useTopBarMain } from "@/hooks/useTopBarMain";
+import { useUser } from "@/hooks/useUser";
+import { ERoutesName } from "@/types/TRoutes";
+import styles from "./StandDetails.module.css";
 
 const MODAL_INFO_ID = "stand-info-open-modal";
-const MODAL_STANDS_ID = "stand-stands-open-modal";
-const MODAL_PHOTOS_ID = "stand-photos-open-modal";
+const MODAL_FAIRS_ID = "stand-fairs-open-modal";
 
 type TRouteParams = { standID: string };
 
 export const StandDetails = () => {
-  const navigate = useNavigate();
-  const [present] = useIonActionSheet();
-  const [presentAlert] = useIonAlert();
   const { standID } = useParams<TRouteParams>();
   const { state } = useLocation();
   const { renderTopBarActionEnd } = useTopBarMain();
   const { isCapacitor } = useApp();
   const finalStandID = standID || state?.standID || "";
+  const { user, loadingSetFav, handleSetFavoriteStand } = useUser();
   const {
     stand,
     review,
     reviews,
-    isLoading,
+    isLoadingDetails,
     isSaving,
     isLoadingReviews,
     handleLoadAll,
     handleSaveReview,
-    handleRefreshReviews,
     handleInfiniteReviews,
   } = useStandDetails(finalStandID);
-  // const {
-  //   stands,
-  //   isLoading: isLoadingStands,
-  //   handleLoad: handleRefreshStands,
-  //   handleInfinite: handleInfiniteStands,
-  // } = useStandFairs(finalStandID);
-  // const {
-  //   handleDeletePhoto,
-  //   isLoading: isLoadingPhoto,
-  //   isDeletingPhoto,
-  // } = useStandPhoto(finalStandID);
-  const { user, loadingSetFav, handleSetFavoriteStand } = useUser();
 
   useDocumentTitle(
     `${
       getNavStateText(standID, state?.standID, state?.standName) ||
       stand?.name ||
-      "Stand"
+      "Feria"
     } 🛍️`
   );
 
@@ -91,6 +67,7 @@ export const StandDetails = () => {
           spinnerColor="dark"
           isActive={user?.favoriteStands.includes(stand?.id || "")}
           onClick={() => (stand ? handleSetFavoriteStand(stand.id) : undefined)}
+          className="animate__animated animate__fadeIn"
         />
       )}
 
@@ -99,7 +76,7 @@ export const StandDetails = () => {
       />
 
       <Fetcher
-        handleRefresh={handleRefreshReviews}
+        handleRefresh={handleLoadAll}
         handleInfiniteScroll={handleInfiniteReviews}
         refreshSpinnerColor="medium"
         classNameSection={`${styles.standFetcherSection} ${
@@ -112,7 +89,7 @@ export const StandDetails = () => {
           <ImageExtended
             src={stand?.coverUrl}
             alt={stand?.name}
-            isLoading={!stand || isLoading}
+            isLoading={isLoadingDetails}
             classNamePicture={`${styles.standCover}`}
             skeletonProps={{
               className: styles.standSkeleton,
@@ -121,13 +98,13 @@ export const StandDetails = () => {
         </div>
         <section className={`${styles.standContent}`}>
           <div className={styles.standNameContainer}>
-            {getNavStateText(standID, state?.standID, state?.standName) ? (
+            {getNavStateText(standID, state?.standID, state?.fairName) ? (
               <h1>
-                {getNavStateText(standID, state?.standID, state?.standName)}
+                {getNavStateText(standID, state?.standID, state?.fairName)}
               </h1>
             ) : (
               <>
-                {isLoading ? (
+                {isLoadingDetails ? (
                   <Skeleton width="100%" height={35} />
                 ) : (
                   <h1>{stand?.name}</h1>
@@ -135,7 +112,7 @@ export const StandDetails = () => {
               </>
             )}
             <div className={styles.standNameStars}>
-              {!isLoading && (
+              {!isLoadingDetails && (
                 <>
                   <span
                     className={`${styles.standNameStarsIcon} animate__animated animate__fadeIn`}
@@ -150,17 +127,17 @@ export const StandDetails = () => {
             </div>
           </div>
           <div>
-            {isLoading ? (
+            {isLoadingDetails ? (
               <Skeleton
                 width="100%"
                 height={20}
                 style={{ margin: "5px 0px" }}
               />
             ) : (
-              <h6 className={styles.standSlogan}>{stand?.slogan}</h6>
+              <h6 className={styles.standSlogan}>{stand && stand.slogan}</h6>
             )}
             <section className={styles.standDescription}>
-              {isLoading ? (
+              {isLoadingDetails ? (
                 Array(5)
                   .fill(0)
                   .map((_, i) => (
@@ -179,30 +156,41 @@ export const StandDetails = () => {
             <section className={styles.standInfo}>
               <div
                 className={`${styles.standInfoCard} ${
-                  isLoading ? styles.isLoading : ""
+                  isLoadingDetails ? styles.isLoading : ""
                 }`}
                 id={MODAL_INFO_ID}
               >
                 <AiOutlineInfoCircle size={35} />
                 <h5>Información de Contacto</h5>
               </div>
+              <Link to={`${ERoutesName.STANDS_LIST}/${stand?.id}/fotos`}>
+                <div
+                  className={`${styles.standInfoCard} ${
+                    isLoadingDetails ? styles.isLoading : ""
+                  }`}
+                >
+                  <HiOutlinePhotograph size={35} />
+                  <h5>Fotos</h5>
+                </div>
+              </Link>
+              <Link to={`${ERoutesName.FAIRS_LIST}/${stand?.id}/productos`}>
+                <div
+                  className={`${styles.standInfoCard} ${
+                    isLoadingDetails ? styles.isLoading : ""
+                  }`}
+                >
+                  <HiOutlineShoppingBag size={35} />
+                  <h5>Productos</h5>
+                </div>
+              </Link>
               <div
                 className={`${styles.standInfoCard} ${
-                  isLoading ? styles.isLoading : ""
+                  isLoadingDetails ? styles.isLoading : ""
                 }`}
-                id={MODAL_PHOTOS_ID}
-              >
-                <HiOutlinePhotograph size={35} />
-                <h5>Fotos</h5>
-              </div>
-              <div
-                className={`${styles.standInfoCard} ${
-                  isLoading ? styles.isLoading : ""
-                }`}
-                id={MODAL_STANDS_ID}
+                id={MODAL_FAIRS_ID}
               >
                 <BiStoreAlt size={35} />
-                <h5>Ferias </h5>
+                <h5>Ferias</h5>
               </div>
             </section>
 
@@ -215,7 +203,7 @@ export const StandDetails = () => {
               <ReviewForm
                 review={review}
                 handleSave={handleSaveReview}
-                isLoading={isSaving || isLoading}
+                isLoading={isSaving || isLoadingDetails}
               />
               <ReviewsList
                 reviews={reviews}
@@ -227,7 +215,7 @@ export const StandDetails = () => {
         </section>
       </Fetcher>
 
-      {/* {user?.uid === stand?.owner.id && (
+      {user?.uid === stand?.owner.id && (
         <IonFab
           slot="fixed"
           vertical="bottom"
@@ -242,35 +230,18 @@ export const StandDetails = () => {
               <FiEdit2 size={22} />
             </IonFabButton>
             <IonFabButton color="secondary">
-              <BiStoreAlt size={22} />
+              <MdOutlineStorefront size={22} />
             </IonFabButton>
           </IonFabList>
         </IonFab>
-      )} */}
+      )}
 
-      {/* <InfoModal
+      <InfoModal
         className={styles.infoModal}
         trigger={MODAL_INFO_ID}
-        address={stand?.address}
         contactPhone={stand?.contactPhone}
         contactEmail={stand?.contactEmail}
       />
-      <ModalPhotos
-        trigger={MODAL_PHOTOS_ID}
-        photographs={stand?.photographs || []}
-        isLoading={isLoading || isLoadingPhoto || isDeletingPhoto}
-        handleAction={
-          user?.uid === stand?.owner.id ? handleGalleryActions : undefined
-        }
-        isCoverText="Fotografía de Perfil"
-      />
-      <StandModalFairs
-        trigger={MODAL_STANDS_ID}
-        stands={stands}
-        handleRefresh={handleRefreshStands}
-        handleInfinite={handleInfiniteStands}
-        isLoading={isLoadingStands}
-      /> */}
     </>
   );
 };

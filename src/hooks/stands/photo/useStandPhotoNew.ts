@@ -2,16 +2,16 @@ import { useNavigate } from "react-router-dom";
 import { useIonLoading } from "@ionic/react";
 
 import { useToast } from "@/hooks/useToast";
-import { uploadFairPhotoRequest } from "@/services";
+import { uploadStandPhotoRequest } from "@/services";
 import { TPhotographForm } from "@/types/TPhotograph";
 import { ERoutesName } from "@/types/TRoutes";
-import { useFairsRevalidate } from "@/hooks/fairs/useFairsRevalidate";
+import { useStandsRevalidate } from "@/hooks/stands/useStandsRevalidate";
 
-export const useFairPhotoNew = (fairID: string) => {
+export const useStandPhotoNew = (standID: string) => {
   const [presentLoading, dismissLoading] = useIonLoading();
   const { toast } = useToast();
   const navigate = useNavigate();
-  const { handleRevalidateAll } = useFairsRevalidate(fairID);
+  const { handleRevalidateAll } = useStandsRevalidate(standID);
 
   const handleUploadPhoto = async (data: TPhotographForm) => {
     presentLoading();
@@ -23,7 +23,7 @@ export const useFairPhotoNew = (fairID: string) => {
       formData.append("description", data.description);
       formData.append("isCover", `${data.isCover}`);
 
-      const { photograph } = await uploadFairPhotoRequest(fairID, formData);
+      const { photograph } = await uploadStandPhotoRequest(standID, formData);
 
       toast("Fotografía publicada con éxito", {
         type: "success",
@@ -31,9 +31,9 @@ export const useFairPhotoNew = (fairID: string) => {
 
       handleRevalidateAll();
 
-      navigate(`${ERoutesName.FAIRS_LIST}/${fairID}/fotos`, {
+      navigate(`${ERoutesName.STANDS_LIST}/${standID}/fotos`, {
         state: {
-          fairID,
+          standID,
           photoActiveID: photograph.id,
         },
         replace: true,

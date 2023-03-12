@@ -50,17 +50,20 @@ const FairDetailsScreen = lazy(() =>
     default: FairDetails,
   }))
 );
+const FairMapScreen = lazy(() =>
+  import("@/screens/fairs/FairMap").then(({ FairMap }) => ({
+    default: FairMap,
+  }))
+);
 const FairPhotoNewScreen = lazy(() =>
-  import("@/screens/fairs/photo/FairPhotoNew").then(({ FairPhotoNew }) => ({
+  import("@/screens/fairs/FairPhotoNew").then(({ FairPhotoNew }) => ({
     default: FairPhotoNew,
   }))
 );
-const FairPhotoDetailsScreen = lazy(() =>
-  import("@/screens/fairs/photo/FairPhotoDetails").then(
-    ({ FairPhotoDetails }) => ({
-      default: FairPhotoDetails,
-    })
-  )
+const FairPhotoSlidesScreen = lazy(() =>
+  import("@/screens/fairs/FairPhotoSlides").then(({ FairPhotoSlides }) => ({
+    default: FairPhotoSlides,
+  }))
 );
 const StandsListScreen = lazy(() =>
   import("@/screens/stands/StandsList").then(({ StandsList }) => ({
@@ -70,6 +73,16 @@ const StandsListScreen = lazy(() =>
 const StandDetailsScreen = lazy(() =>
   import("@/screens/stands/StandDetails").then(({ StandDetails }) => ({
     default: StandDetails,
+  }))
+);
+const StandPhotoNewScreen = lazy(() =>
+  import("@/screens/stands/StandPhotoNew").then(({ StandPhotoNew }) => ({
+    default: StandPhotoNew,
+  }))
+);
+const StandPhotoSlidesScreen = lazy(() =>
+  import("@/screens/stands/StandPhotoSlides").then(({ StandPhotoSlides }) => ({
+    default: StandPhotoSlides,
   }))
 );
 
@@ -174,11 +187,20 @@ export const router = createBrowserRouter([
             ),
           },
           {
-            path: ERoutesName.FAIR_DETAILS_PHOTO,
+            path: ERoutesName.FAIR_DETAILS_MAP,
             errorElement: <ErrorScreen />,
             element: (
               <SuspenseComponent>
-                <FairPhotoDetailsScreen />
+                <FairMapScreen />
+              </SuspenseComponent>
+            ),
+          },
+          {
+            path: ERoutesName.FAIR_DETAILS_PHOTO_SLIDES,
+            errorElement: <ErrorScreen />,
+            element: (
+              <SuspenseComponent>
+                <FairPhotoSlidesScreen />
               </SuspenseComponent>
             ),
           },
@@ -197,6 +219,24 @@ export const router = createBrowserRouter([
             element: (
               <SuspenseComponent>
                 <StandDetailsScreen />
+              </SuspenseComponent>
+            ),
+          },
+          {
+            path: ERoutesName.STAND_DETAILS_PHOTO_SLIDES,
+            errorElement: <ErrorScreen />,
+            element: (
+              <SuspenseComponent>
+                <StandPhotoSlidesScreen />
+              </SuspenseComponent>
+            ),
+          },
+          {
+            path: ERoutesName.STAND_DETAILS_PHOTO_NEW,
+            errorElement: <ErrorScreen />,
+            element: (
+              <SuspenseComponent>
+                <StandPhotoNewScreen />
               </SuspenseComponent>
             ),
           },
