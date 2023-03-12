@@ -30,30 +30,21 @@ export const getPropsTopBarMain = (
     [ERoutesName.FAIR_DETAILS]: {
       title: "Detalles Feria",
       startGoBackUrl: options?.goBackUrl || ERoutesName.FAIRS_LIST,
-      titleSize: 24,
       startGoBack: true,
       titleLight: true,
       sticky: true,
     },
     [ERoutesName.FAIR_DETAILS_MAP]: {
-      title: "Ubicación",
+      title: "Ubicación Feria",
       sticky: true,
-    },
-    [ERoutesName.FAIR_DETAILS_PHOTO]: {
-      title: "Fotografía",
-      titleSize: 24,
-      sticky: true,
-      stickyNoScroll: true,
     },
     [ERoutesName.FAIR_DETAILS_PHOTO_SLIDES]: {
-      title: "Fotografías",
-      titleSize: 24,
+      title: "Fotografías Feria",
       sticky: true,
       stickyNoScroll: true,
     },
     [ERoutesName.FAIR_DETAILS_PHOTO_NEW]: {
-      title: "Fotografía",
-      titleSize: 24,
+      title: "Fotografía Feria",
       startGoBack: true,
       sticky: true,
       stickyNoScroll: true,
@@ -66,10 +57,20 @@ export const getPropsTopBarMain = (
     [ERoutesName.STAND_DETAILS]: {
       title: "Detalles Stand",
       startGoBackUrl: options?.goBackUrl || ERoutesName.STANDS_LIST,
-      titleSize: 24,
       startGoBack: true,
       titleLight: true,
       sticky: true,
+    },
+    [ERoutesName.STAND_DETAILS_PHOTO_SLIDES]: {
+      title: "Fotografías Stand",
+      sticky: true,
+      stickyNoScroll: true,
+    },
+    [ERoutesName.STAND_DETAILS_PHOTO_NEW]: {
+      title: "Fotografía Stand",
+      startGoBack: true,
+      sticky: true,
+      stickyNoScroll: true,
     },
   };
 

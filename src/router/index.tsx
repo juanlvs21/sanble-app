@@ -75,6 +75,16 @@ const StandDetailsScreen = lazy(() =>
     default: StandDetails,
   }))
 );
+const StandPhotoNewScreen = lazy(() =>
+  import("@/screens/stands/StandPhotoNew").then(({ StandPhotoNew }) => ({
+    default: StandPhotoNew,
+  }))
+);
+const StandPhotoSlidesScreen = lazy(() =>
+  import("@/screens/stands/StandPhotoSlides").then(({ StandPhotoSlides }) => ({
+    default: StandPhotoSlides,
+  }))
+);
 
 const ErrorScreen = () => <h1 style={{ marginTop: 300 }}>Error :c :c</h1>;
 
@@ -209,6 +219,24 @@ export const router = createBrowserRouter([
             element: (
               <SuspenseComponent>
                 <StandDetailsScreen />
+              </SuspenseComponent>
+            ),
+          },
+          {
+            path: ERoutesName.STAND_DETAILS_PHOTO_SLIDES,
+            errorElement: <ErrorScreen />,
+            element: (
+              <SuspenseComponent>
+                <StandPhotoSlidesScreen />
+              </SuspenseComponent>
+            ),
+          },
+          {
+            path: ERoutesName.STAND_DETAILS_PHOTO_NEW,
+            errorElement: <ErrorScreen />,
+            element: (
+              <SuspenseComponent>
+                <StandPhotoNewScreen />
               </SuspenseComponent>
             ),
           },

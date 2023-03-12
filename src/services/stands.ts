@@ -5,6 +5,7 @@ import { TStand } from "@/types/TStand";
 import { TResponseList } from "@/types/THttp";
 import { TGetListParams } from "@/types/TRequest";
 import { TReview, TReviewForm } from "@/types/TReview";
+import { TPhotographDetails } from "@/types/TPhotograph";
 
 const URL_PREFIX = "/stands";
 
@@ -57,5 +58,42 @@ export const saveStandReviewRequest = (standID: string, data: TReviewForm) =>
     .post<AxiosResponse<{ review: TReview; standStars: number }>>(
       `${URL_PREFIX}/${standID}/reviews`,
       data
+    )
+    .then(({ data }) => data.data);
+
+export const uploadStandPhotoRequest = (standID: string, formData: FormData) =>
+  api
+    .post<AxiosResponse<TPhotographDetails>>(
+      `${URL_PREFIX}/${standID}/photograph`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    )
+    .then(({ data }) => data.data);
+
+export const updateStandPhotoRequest = (
+  standID: string,
+  photoID: string,
+  formData: FormData
+) =>
+  api
+    .post<AxiosResponse<TPhotographDetails>>(
+      `${URL_PREFIX}/${standID}/photograph/${photoID}`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    )
+    .then(({ data }) => data.data);
+
+export const deleteStandPhotoRequest = (standID: string, photoID: string) =>
+  api
+    .delete<AxiosResponse<{ photographID: string }>>(
+      `${URL_PREFIX}/${standID}/photograph/${photoID}`
     )
     .then(({ data }) => data.data);

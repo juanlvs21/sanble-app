@@ -1,13 +1,13 @@
 import { useIonLoading } from "@ionic/react";
 import { useRef, useState } from "react";
 
-import { useFairsRevalidate } from "@/hooks/fairs/useFairsRevalidate";
+import { useStandsRevalidate } from "@/hooks/stands/useStandsRevalidate";
 import { useToast } from "@/hooks/useToast";
-import { updateFairPhotoRequest } from "@/services";
+import { updateStandPhotoRequest } from "@/services";
 import { TPhotograph, TPhotographForm } from "@/types/TPhotograph";
 
-export const useFairPhotoUpdate = (
-  fairID: string,
+export const useStandPhotoUpdate = (
+  standID: string,
   callback?: (updateID?: string) => Promise<any>
 ) => {
   const [presentLoading, dismissLoading] = useIonLoading();
@@ -17,7 +17,7 @@ export const useFairPhotoUpdate = (
   const [photo, setPhoto] = useState<TPhotograph>();
 
   const { handleRevalidateDetails, handleRevalidateAll } =
-    useFairsRevalidate(fairID);
+    useStandsRevalidate(standID);
 
   const handleOpen = (photoCurrent: TPhotograph) => {
     setPhoto(photoCurrent);
@@ -36,8 +36,8 @@ export const useFairPhotoUpdate = (
       formData.append("description", data.description);
       formData.append("isCover", `${data.isCover}`);
 
-      const { photograph: photographRes } = await updateFairPhotoRequest(
-        fairID,
+      const { photograph: photographRes } = await updateStandPhotoRequest(
+        standID,
         data.id,
         formData
       );

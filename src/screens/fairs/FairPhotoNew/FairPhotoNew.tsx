@@ -10,7 +10,7 @@ export const FairPhotoNew = () => {
   const { fairID } = useParams<TRouteParams>();
   const { handleUploadPhoto } = useFairPhotoNew(fairID || "");
 
-  useDocumentTitle("Nueva Fotografía de Feria📷");
+  useDocumentTitle("Nueva Fotografía de Feria 📷");
 
   return (
     <PhotoForm

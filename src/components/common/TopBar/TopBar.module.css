@@ -45,9 +45,10 @@
 }
 
 .topBarTitle {
+  color: var(--ion-color-primary);
   font-family: "Quicksand";
   font-weight: 700;
-  color: var(--ion-color-primary);
+  padding: 10px 5px;
 }
 
 .topBarTitleLight {
@@ -94,6 +95,12 @@
     left: 220px;
     top: 25px !important;
     transition: all 400ms ease-in-out;
+  }
+  .topBarTitle {
+    margin-top: 3px;
+  }
+  .topBarTitle.sticky {
+    margin-top: 20px;
   }
 }
 @media (min-width: 768px) {

@@ -1,19 +1,19 @@
 import { useIonLoading } from "@ionic/react";
 
-import { useFairsRevalidate } from "@/hooks/fairs/useFairsRevalidate";
+import { useStandsRevalidate } from "@/hooks/stands/useStandsRevalidate";
 import { useToast } from "@/hooks/useToast";
-import { deleteFairPhotoRequest } from "@/services";
+import { deleteStandPhotoRequest } from "@/services";
 
-export const useFairPhotoDelete = (fairID: string) => {
+export const useStandPhotoDelete = (standID: string) => {
   const [presentLoading, dismissLoading] = useIonLoading();
   const { toast } = useToast();
-  const { handleRevalidateAll } = useFairsRevalidate(fairID);
+  const { handleRevalidateAll } = useStandsRevalidate(standID);
 
   const handleDeletePhoto = async (photoID: string, callback: () => void) => {
     presentLoading();
 
     try {
-      await deleteFairPhotoRequest(fairID, photoID);
+      await deleteStandPhotoRequest(standID, photoID);
 
       toast("Fotografía eliminada con éxito", {
         type: "success",

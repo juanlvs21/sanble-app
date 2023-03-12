@@ -23,13 +23,16 @@ export const useTopBarMain = () => {
   const isFairs = useMatch(ERoutesName.FAIRS_LIST);
   const isFairDetails = useMatch(ERoutesName.FAIR_DETAILS);
   const isFairDetailsMap = useMatch(ERoutesName.FAIR_DETAILS_MAP);
-  const isFairDetailsPhoto = useMatch(ERoutesName.FAIR_DETAILS_PHOTO);
   const isFairDetailsPhotoSlides = useMatch(
     ERoutesName.FAIR_DETAILS_PHOTO_SLIDES
   );
   const isFairDetailsPhotoNew = useMatch(ERoutesName.FAIR_DETAILS_PHOTO_NEW);
   const isStands = useMatch(ERoutesName.STANDS_LIST);
   const isStandDetails = useMatch(ERoutesName.STAND_DETAILS);
+  const isStandDetailsPhotoSlides = useMatch(
+    ERoutesName.STAND_DETAILS_PHOTO_SLIDES
+  );
+  const isStandDetailsPhotoNew = useMatch(ERoutesName.STAND_DETAILS_PHOTO_NEW);
 
   const handleGetData = () => {
     if (isApp) {
@@ -48,17 +51,13 @@ export const useTopBarMain = () => {
       );
     } else if (isFairDetailsMap) {
       setProps(getPropsTopBarMain(ERoutesName.FAIR_DETAILS_MAP));
-    } else if (isFairDetailsPhoto) {
-      setProps(getPropsTopBarMain(ERoutesName.FAIR_DETAILS_PHOTO));
-      setRenderStart(true);
-      setRenderEnd(true);
+    } else if (isFairDetailsPhotoNew) {
+      setProps(getPropsTopBarMain(ERoutesName.FAIR_DETAILS_PHOTO_NEW));
+      setRenderStart(false);
     } else if (isFairDetailsPhotoSlides) {
       setProps(getPropsTopBarMain(ERoutesName.FAIR_DETAILS_PHOTO_SLIDES));
       setRenderStart(true);
       setRenderEnd(true);
-    } else if (isFairDetailsPhotoNew) {
-      setProps(getPropsTopBarMain(ERoutesName.FAIR_DETAILS_PHOTO_NEW));
-      setRenderStart(false);
     } else if (isStands) {
       setProps(getPropsTopBarMain(ERoutesName.STANDS_LIST));
       setRenderEnd(true);
@@ -68,6 +67,13 @@ export const useTopBarMain = () => {
           goBackUrl: state?.goBackUrl,
         })
       );
+      setRenderEnd(true);
+    } else if (isStandDetailsPhotoNew) {
+      setProps(getPropsTopBarMain(ERoutesName.STAND_DETAILS_PHOTO_NEW));
+      setRenderStart(false);
+    } else if (isStandDetailsPhotoSlides) {
+      setProps(getPropsTopBarMain(ERoutesName.STAND_DETAILS_PHOTO_SLIDES));
+      setRenderStart(true);
       setRenderEnd(true);
     } else {
       setProps(undefined);

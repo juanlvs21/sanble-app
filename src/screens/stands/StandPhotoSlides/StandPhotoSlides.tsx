@@ -10,34 +10,34 @@ import { SpinnerFullScreen } from "@/components/common/loaders/SpinnerFullScreen
 import { ModalUpdate } from "@/components/modules/photo/ModalUpdate";
 import { PhotoSlides } from "@/components/modules/photo/PhotoSlides";
 import { getNavStateText } from "@/helpers/navigation";
-import { useFairPhotoDelete } from "@/hooks/fairs/photo/useFairPhotoDelete";
-import { useFairPhotoUpdate } from "@/hooks/fairs/photo/useFairPhotoUpdate";
-import { useFairDetails } from "@/hooks/fairs/useFairDetails";
+import { useStandPhotoDelete } from "@/hooks/stands/photo/useStandPhotoDelete";
+import { useStandPhotoUpdate } from "@/hooks/stands/photo/useStandPhotoUpdate";
+import { useStandDetails } from "@/hooks/stands/useStandDetails";
 import { useApp } from "@/hooks/useApp";
 import { useTopBarMain } from "@/hooks/useTopBarMain";
 import { useUser } from "@/hooks/useUser";
 import { TPhotograph } from "@/types/TPhotograph";
 import { ERoutesName } from "@/types/TRoutes";
-import styles from "./FairPhotoSlides.module.css";
+import styles from "./StandPhotoSlides.module.css";
 
-type TRouteParams = { fairID: string };
+type TRouteParams = { standID: string };
 
-export const FairPhotoSlides = () => {
+export const StandPhotoSlides = () => {
   const navigate = useNavigate();
   const [presentActions] = useIonActionSheet();
   const [presentAlert] = useIonAlert();
-  const { fairID } = useParams<TRouteParams>();
+  const { standID } = useParams<TRouteParams>();
   const { state } = useLocation();
   const { user } = useUser();
   const slidesRef = useRef<HTMLIonSlidesElement>(null);
 
-  const finalFairID = fairID || state?.fairID || "";
+  const finaStandID = standID || state?.standID || "";
 
   const { isCapacitor } = useApp();
   const { renderTopBarActionStart, renderTopBarActionEnd } = useTopBarMain();
-  const { fair, isLoadingDetails, handleLoadAll, getIndexPhoto } =
-    useFairDetails(finalFairID);
-  const { handleDeletePhoto } = useFairPhotoDelete(finalFairID);
+  const { stand, isLoadingDetails, handleLoadAll, getIndexPhoto } =
+    useStandDetails(finaStandID);
+  const { handleDeletePhoto } = useStandPhotoDelete(finaStandID);
   const {
     modalRef: modalUpdateRef,
     photo: photoUpdate,
@@ -45,7 +45,7 @@ export const FairPhotoSlides = () => {
     handleOpen: handleUpdateOpen,
     handleDismiss: handleUpdateDismiss,
     isUpdate,
-  } = useFairPhotoUpdate(finalFairID, async (updateID?: string) => {
+  } = useStandPhotoUpdate(finaStandID, async (updateID?: string) => {
     await handleLoadAll();
     slidesRef.current?.slideTo(getIndexPhoto(updateID), 0);
   });
@@ -54,9 +54,9 @@ export const FairPhotoSlides = () => {
 
   useDocumentTitle(
     `Fotografías de ${
-      getNavStateText(fairID, state?.fairID, state?.fairName) ||
-      fair?.name ||
-      "Feria"
+      getNavStateText(standID, state?.standID, state?.standName) ||
+      stand?.name ||
+      "Stand"
     } 📷`
   );
 
@@ -66,11 +66,11 @@ export const FairPhotoSlides = () => {
         text: "Publicar Nueva Fotografía",
         cssClass: "",
         handler: () =>
-          navigate(`${ERoutesName.FAIRS_LIST}/${finalFairID}/fotos/nueva`),
+          navigate(`${ERoutesName.STANDS_LIST}/${finaStandID}/fotos/nueva`),
       },
     ];
 
-    if (fair?.photographs.length) {
+    if (stand?.photographs.length) {
       buttons.push(
         {
           text: "Editar Fotografía",
@@ -126,9 +126,9 @@ export const FairPhotoSlides = () => {
     });
   };
 
-  const handleGoDetailsFair = () => {
-    navigate(`${ERoutesName.FAIRS_LIST}/${finalFairID}`, {
-      state: fair ? { fairID: fair.id, fairName: fair.name } : {},
+  const handleGoDetailsStand = () => {
+    navigate(`${ERoutesName.STANDS_LIST}/${finaStandID}`, {
+      state: stand ? { standID: stand.id, standName: stand.name } : {},
     });
   };
 
@@ -140,20 +140,20 @@ export const FairPhotoSlides = () => {
   }, [isLoadingDetails, state]);
 
   useEffect(() => {
-    if (fair && fair?.photographs.length && !activePhoto) {
-      setActivePhoto(fair?.photographs[0]);
+    if (stand && stand?.photographs.length && !activePhoto) {
+      setActivePhoto(stand?.photographs[0]);
     }
-  }, [fair]);
+  }, [stand]);
 
   return (
     <>
       {renderTopBarActionStart(
-        <Button onClick={handleGoDetailsFair} fill="clear" color="medium">
+        <Button onClick={handleGoDetailsStand} fill="clear" color="medium">
           <IoIosArrowBack size={24} />
         </Button>
       )}
 
-      {user?.uid === fair?.owner.id &&
+      {user?.uid === stand?.owner.id &&
         renderTopBarActionEnd(
           <Button onClick={handleAction} fill="clear" color="medium">
             <FiEdit size={24} />
@@ -162,7 +162,7 @@ export const FairPhotoSlides = () => {
 
       <PhotoSlides
         slidesRef={slidesRef}
-        photographs={fair?.photographs || []}
+        photographs={stand?.photographs || []}
         handleSetActivePhoto={(photo) => setActivePhoto(photo)}
         isLoading={isLoadingDetails}
         isCoverText="Fotografía de Perfil"

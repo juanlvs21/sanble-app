@@ -1,1 +1,1 @@
-export * from "./PhotoNewScreen";
+export * from "./FairPhotoNew";

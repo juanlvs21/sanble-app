@@ -1,0 +1,16 @@
+.photoSlides {
+  height: calc(100% - 62px);
+  margin-top: 62px;
+}
+
+.photoSlides.isCapacitor {
+  height: calc(100% - 96px);
+  margin-top: 96px;
+}
+
+@media (max-width: 768px) {
+  .photoSlides {
+    height: calc(100% - 75px);
+    margin-top: 75px;
+  }
+}

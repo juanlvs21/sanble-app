@@ -27,14 +27,6 @@ export type ComponentProps = {
    */
   titleSize?: number | string;
   /**
-   * React component to start slot
-   */
-  start?: React.ReactElement;
-  /**
-   * React component to end slot
-   */
-  end?: React.ReactElement;
-  /**
    * If true, the user's profile picture will be found in the "start" slot. This prop has priority over the "start" and "startGoBack" props.
    */
   startUser?: boolean;
@@ -69,13 +61,11 @@ export const TopBar = ({
   startUser,
   startGoBack,
   startGoBackUrl,
-  start,
-  end,
   isLoading,
   sticky,
   stickyNoScroll,
   titleLight,
-  titleSize = 28,
+  titleSize = 20,
   className = "",
 }: ComponentProps) => {
   const navigate = useNavigate();

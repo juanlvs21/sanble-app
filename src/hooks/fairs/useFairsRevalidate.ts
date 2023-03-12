@@ -1,6 +1,6 @@
 import { useSWRConfig } from "swr";
 
-export const useFairPhotoRevalidate = (fairID: string) => {
+export const useFairsRevalidate = (fairID: string) => {
   const useSWRFairsList = "/fairs";
   const useSWRFairsBestList = "/fairs/best";
   const useSWRFairDetails = `/fairs/${fairID}`;
