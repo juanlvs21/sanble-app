@@ -1,4 +1,4 @@
-.homeBarContainer {
+.bottomBarContainer {
   position: fixed;
   bottom: 30px;
   left: 0;
@@ -8,17 +8,17 @@
   transition: all 400ms ease-in-out;
 }
 
-.homeBarContainer.showSidebar {
+.bottomBarContainer.showSidebar {
   left: 300px;
   transition: all 400ms ease-in-out;
 }
 
-.homeBarContainer.showSidebar.isCapacitor {
+.bottomBarContainer.showSidebar.isCapacitor {
   bottom: 50px;
   transition: all 400ms ease-in-out;
 }
 
-.homeBarList {
+.bottomBarList {
   display: flex;
   justify-content: space-evenly;
   border-radius: var(--sanble-border-radius);
@@ -30,12 +30,12 @@
   box-shadow: 5px 5px 5px 5px rgba(200, 200, 200, 0.1);
 }
 
-.homeBarList a {
+.bottomBarList a {
   width: 100%;
   border-radius: var(--sanble-border-radius);
 }
 
-.homeBarItem::part(native) {
+.bottomBarItem::part(native) {
   --inner-border-width: 0px;
   --padding-end: 0;
   --ion-safe-area-right: 0;
@@ -49,13 +49,13 @@
   transition: all 300ms ease-in-out;
 }
 
-.homeBarItem.homeBarItemActive::part(native) {
+.bottomBarItem.bottomBarItemActive::part(native) {
   background-color: var(--ion-color-secondary);
   color: #fff;
   transition: all 300ms ease-in-out;
 }
 
-.homeBarItemIcon {
+.bottomBarItemIcon {
   margin: auto;
   width: 100%;
   display: flex;
@@ -64,13 +64,13 @@
 }
 
 @media (max-width: 768px) {
-  .homeBarContainer.showSidebar {
+  .bottomBarContainer.showSidebar {
     left: 220px;
     transition: all 400ms ease-in-out;
   }
 }
 @media (min-width: 768px) {
-  .homeBarContainer {
+  .bottomBarContainer {
     bottom: 0;
     display: flex;
     justify-content: center;
@@ -79,8 +79,9 @@
     padding: 0 20px;
   }
 
-  .homeBarList {
+  .bottomBarList {
     width: 400px;
     box-shadow: none;
+    border: none;
   }
 }
