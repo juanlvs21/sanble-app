@@ -8,13 +8,21 @@ import { getFairListGeolocationRequest } from "@/services";
 import { TFairGeo } from "@/types/TFair";
 import { ERoutesName } from "@/types/TRoutes";
 
+const SWR_KEY_FAIRS_GEO = "/fairs/geolocation";
+
 export const useFairsListGeo = () => {
-  const { toast } = useToast();
+  const { toast, toastDismiss } = useToast();
   const navigate = useNavigate();
 
-  const { data, error, isLoading } = useSWRMutation(
-    "/fairs/geolocation",
-    getFairListGeolocationRequest
+  const { data, isLoading } = useSWRMutation(
+    SWR_KEY_FAIRS_GEO,
+    getFairListGeolocationRequest,
+    {
+      onError(error) {
+        toastDismiss(SWR_KEY_FAIRS_GEO);
+        toast(error, { type: "error", toastId: SWR_KEY_FAIRS_GEO });
+      },
+    }
   );
 
   const prepareListMapPin = (list: TFairGeo[], goBackUrl?: string) =>
@@ -27,10 +35,6 @@ export const useFairsListGeo = () => {
         },
       })
     );
-
-  useEffect(() => {
-    if (error) toast(error, { type: "error" });
-  }, [error]);
 
   return {
     list: data,

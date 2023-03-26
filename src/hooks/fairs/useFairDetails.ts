@@ -15,56 +15,63 @@ const DEFAULT_LAST_INDEX_REVIEWS = 0;
 const DEFAULT_LIMIT_REVIEWS = 9;
 
 export const useFairDetails = (fairID: string) => {
-  const { toast } = useToast();
+  const { toast, toastDismiss } = useToast();
   const [review, setReview] = useState<TReview>();
   const [reviews, setReviews] = useState<TReview[]>([]);
   const [isSaving, setIsSaving] = useState(false);
+  const [isRefresh, setIsRefresh] = useState(false);
 
   const [paginationReviews, setPaginationReviews] = useState<TPagination>({
     lastIndex: DEFAULT_LAST_INDEX_REVIEWS,
     limit: DEFAULT_LIMIT_REVIEWS,
   });
 
+  const SWR_KEY_FAIRS_DETAILS = `/fairs/${fairID}`;
+  const SWR_KEY_FAIRS_REVIEWS = `/fairs/${fairID}/reviews`;
+
   const {
     data: fair,
-    error: errorDetails,
     isLoading: isLoadingDetails,
     mutate: mutateDetails,
   } = useSWRMutation(
-    `/fairs/${fairID}`,
-    async () => await getFairDetailsRequest(fairID)
-  );
-
-  const {
-    data: dataReviews,
-    error: errorReviews,
-    isLoading: isLoadingReviews,
-    mutate: mutateReviews,
-  } = useSWRMutation(
-    ["/fairs", fairID, "reviews"],
-    async () => await getFairReviewsRequest(fairID, paginationReviews)
-  );
-
-  const handleMutateReviews = async (mutatePagination: TPagination) => {
-    setPaginationReviews(mutatePagination);
-
-    const dataMutate = await mutateReviews(
-      async () => await getFairReviewsRequest(fairID, mutatePagination)
-    );
-
-    if (dataMutate) {
-      const newList = infiteScrollData(
-        "id",
-        dataMutate.list,
-        dataMutate.pagination.lastIndex === DEFAULT_LAST_INDEX_REVIEWS
-          ? []
-          : reviews
-      );
-
-      setReviews(newList);
-      setPaginationReviews(dataMutate.pagination);
+    SWR_KEY_FAIRS_DETAILS,
+    async () => await getFairDetailsRequest(fairID),
+    {
+      onError(error) {
+        toastDismiss(SWR_KEY_FAIRS_DETAILS);
+        toast(error, { type: "error", toastId: SWR_KEY_FAIRS_DETAILS });
+      },
     }
-  };
+  );
+
+  const { isLoading: isLoadingReviews, mutate: mutateReviews } = useSWRMutation(
+    SWR_KEY_FAIRS_REVIEWS,
+    async () => await getFairReviewsRequest(fairID, paginationReviews),
+    {
+      onSuccess(data) {
+        if (data) {
+          const newList =
+            paginationReviews.lastIndex != 0
+              ? infiteScrollData(
+                  "id",
+                  data.list,
+                  data.pagination.lastIndex === DEFAULT_LAST_INDEX_REVIEWS
+                    ? []
+                    : reviews
+                )
+              : data.list;
+
+          setReviews(newList);
+          setReview(data.form);
+          setPaginationReviews(data.pagination);
+        }
+      },
+      onError(error) {
+        toastDismiss(SWR_KEY_FAIRS_REVIEWS);
+        toast(error, { type: "error", toastId: SWR_KEY_FAIRS_REVIEWS });
+      },
+    }
+  );
 
   const handleSaveReview = async (data: TReviewForm) => {
     try {
@@ -78,10 +85,11 @@ export const useFairDetails = (fairID: string) => {
 
       toast("Opinión guardada con éxito", { type: "success" });
 
-      handleMutateReviews({
+      setPaginationReviews({
         lastIndex: DEFAULT_LAST_INDEX_REVIEWS,
         limit: DEFAULT_LIMIT_REVIEWS,
       });
+      setIsRefresh(true);
     } catch (error) {
       toast(error, { type: "error" });
     } finally {
@@ -90,14 +98,15 @@ export const useFairDetails = (fairID: string) => {
   };
 
   const handleLoadAll = async () => {
-    await Promise.all([mutateDetails(), mutateReviews()]);
+    setPaginationReviews({
+      lastIndex: DEFAULT_LAST_INDEX_REVIEWS,
+      limit: DEFAULT_LIMIT_REVIEWS,
+    });
+    setIsRefresh(true);
   };
 
   const handleInfiniteReviews = async () => {
-    await handleMutateReviews({
-      lastIndex: paginationReviews.lastIndex,
-      limit: paginationReviews.limit,
-    });
+    mutateReviews();
   };
 
   const getIndexPhoto = (photoID: string = "") => {
@@ -109,26 +118,12 @@ export const useFairDetails = (fairID: string) => {
   };
 
   useEffect(() => {
-    if (!reviews.length && dataReviews && !errorReviews) {
-      setReview(dataReviews.form);
-      setReviews(dataReviews.list);
-      setPaginationReviews(dataReviews.pagination);
+    if (isRefresh) {
+      mutateDetails();
+      mutateReviews();
+      setIsRefresh(false);
     }
-  }, [dataReviews]);
-
-  useEffect(() => {
-    if (errorReviews) {
-      toast(errorReviews, {
-        type: "error",
-      });
-    }
-  }, [errorReviews]);
-
-  useEffect(() => {
-    if (errorDetails) {
-      toast(errorDetails, { type: "error" });
-    }
-  }, [errorDetails]);
+  }, [isRefresh]);
 
   return {
     fair,

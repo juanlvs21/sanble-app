@@ -95,7 +95,9 @@ export const Fetcher = ({
     <section className={`${styles.sectionFetcher} ${classNameSection}`}>
       <IonContent
         ref={fetcherRef}
-        className={`${styles.ionContentFetcher} ${classNameContent}`}
+        className={`${styles.ionContentFetcher} ${
+          isLoading ? styles.isLoading : ""
+        } ${classNameContent}`}
         onIonScroll={handleSetScrollTop}
         scrollEvents
       >

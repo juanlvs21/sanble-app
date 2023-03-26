@@ -4,45 +4,49 @@ import useSWRMutation from "swr/immutable";
 import { useToast } from "@/hooks/useToast";
 import { getFairBestListRequest, getProductTypesRequest } from "@/services";
 
+const SWR_KEY_FAIRS_BEST = "/fairs/best";
+const SWR_KEY_STANDS_BEST = "/stands/best";
+const SWR_KEY_PRODUCTS_TYPES = "/products/types";
+
 export const useHome = () => {
-  const { toast } = useToast();
+  const { toast, toastDismiss } = useToast();
 
   const {
     data: dataFairs,
-    error: errorFairs,
     isLoading: isLoadingFairs,
     mutate: mutateFairs,
-  } = useSWRMutation("/fairs/best", getFairBestListRequest);
+  } = useSWRMutation(SWR_KEY_FAIRS_BEST, getFairBestListRequest, {
+    onError(error) {
+      toastDismiss(SWR_KEY_FAIRS_BEST);
+      toast(error, { type: "error", toastId: SWR_KEY_FAIRS_BEST });
+    },
+  });
 
   const {
     data: dataStands,
-    error: errorStands,
     isLoading: isLoadingStands,
     mutate: mutateStands,
-  } = useSWRMutation("/stands/best", getFairBestListRequest);
+  } = useSWRMutation(SWR_KEY_STANDS_BEST, getFairBestListRequest, {
+    onError(error) {
+      toastDismiss(SWR_KEY_STANDS_BEST);
+      toast(error, { type: "error", toastId: SWR_KEY_STANDS_BEST });
+    },
+  });
 
   const {
     data: dataProductType,
-    error: errorProductType,
     isLoading: isLoadingProductType,
     mutate: mutateProductType,
-  } = useSWRMutation("/products/types", getProductTypesRequest);
+  } = useSWRMutation(SWR_KEY_PRODUCTS_TYPES, getProductTypesRequest, {
+    onError(error) {
+      toastDismiss(SWR_KEY_PRODUCTS_TYPES);
+      toast(error, { type: "error", toastId: SWR_KEY_PRODUCTS_TYPES });
+    },
+  });
 
   const handleLoadAllData = async () => {
     await Promise.all([mutateFairs(), mutateStands(), mutateProductType()]);
   };
-
-  useEffect(() => {
-    if (errorFairs) toast(errorFairs, { type: "error" });
-  }, [errorFairs]);
-
-  useEffect(() => {
-    if (errorStands) toast(errorStands, { type: "error" });
-  }, [errorStands]);
-
-  useEffect(() => {
-    if (errorProductType) toast(errorProductType, { type: "error" });
-  }, [errorProductType]);
 
   return {
     isLoadingFairsBest: isLoadingFairs,

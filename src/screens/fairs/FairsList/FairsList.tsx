@@ -21,7 +21,6 @@ export const FairsList = () => {
     orderBy,
     orderDir,
     isLoading,
-    isSorting,
     handleRefresh,
     handleInfinite,
     handleShorting,
@@ -30,7 +29,7 @@ export const FairsList = () => {
   const actionCssClasses = (isOrderBy = false, isOrderDir = false) => {
     const classes = [];
 
-    if (isSorting) classes.push("disable");
+    if (isLoading) classes.push("disable");
     if (isOrderBy && isOrderDir) classes.push("active");
 
     return classes.length ? classes : "";
@@ -102,13 +101,13 @@ export const FairsList = () => {
         handleRefresh={handleRefresh}
         handleInfiniteScroll={handleInfinite}
         classNameSection="animate__animated animate__screenInUp"
-        isLoading={isLoading || isSorting}
+        isLoading={isLoading || isLoading}
       >
         <div
           className={`dataListContainer ${isCapacitor ? "isCapacitor" : ""}`}
         >
-          {(isLoading && !list.length) || isSorting
-            ? Array(5)
+          {(isLoading && !list.length) || isLoading
+            ? Array(6)
                 .fill(0)
                 .map((_, i) => (
                   <Skeleton

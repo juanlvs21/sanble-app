@@ -3,7 +3,7 @@ import { AxiosRequestConfig, AxiosResponse } from "axios";
 import { api } from "@/services";
 import { TFair, TFairGeo } from "@/types/TFair";
 import { TResponseList } from "@/types/THttp";
-import { TPhotograph, TPhotographDetails } from "@/types/TPhotograph";
+import { TPhotographDetails } from "@/types/TPhotograph";
 import { TGetListParams } from "@/types/TRequest";
 import { TReview, TReviewForm } from "@/types/TReview";
 import { TStand } from "@/types/TStand";

@@ -11,71 +11,65 @@ const DEFAULT_LAST_INDEX = 0;
 const DEFAULT_LIMIT = 10;
 
 export const useFairStands = (fairID: string) => {
-  const { toast } = useToast();
+  const { toast, toastDismiss } = useToast();
   const [stands, setStands] = useState<TStand[]>([]);
+  const [isRefresh, setIsRefresh] = useState(false);
 
   const [pagination, setPagination] = useState<TPagination>({
     lastIndex: DEFAULT_LAST_INDEX,
     limit: DEFAULT_LIMIT,
   });
 
-  const { data, error, isLoading, mutate } = useSWRMutation(
-    ["/fairs", fairID, "stands"],
-    async () => await getFairStandsListRequest(fairID, pagination)
+  const SWR_KEY_FAIRS_STANDS = `/fairs/${fairID}/stands`;
+
+  const { data, isLoading, mutate } = useSWRMutation(
+    SWR_KEY_FAIRS_STANDS,
+    async () => await getFairStandsListRequest(fairID, pagination),
+    {
+      onSuccess(data) {
+        if (data) {
+          const newList =
+            pagination.lastIndex != 0
+              ? infiteScrollData(
+                  "id",
+                  data.list,
+                  data.pagination.lastIndex === DEFAULT_LAST_INDEX ? [] : stands
+                )
+              : data.list;
+
+          setStands(newList || []);
+          setPagination(data.pagination);
+        }
+      },
+      onError(error) {
+        toastDismiss(SWR_KEY_FAIRS_STANDS);
+        toast(error, { type: "error", toastId: SWR_KEY_FAIRS_STANDS });
+      },
+    }
   );
 
-  const handleMutate = async (
-    mutatePagination: TPagination,
-    infinite = false
-  ) => {
-    setPagination(mutatePagination);
-
-    const dataMutate = await mutate(
-      async () => await getFairStandsListRequest(fairID, mutatePagination)
-    );
-
-    if (dataMutate) {
-      const newList = infinite
-        ? infiteScrollData(
-            "id",
-            dataMutate.list,
-            dataMutate.pagination.lastIndex === DEFAULT_LAST_INDEX
-              ? []
-              : data?.list
-          )
-        : data?.list;
-
-      setStands(newList || []);
-      setPagination(dataMutate.pagination);
-    }
-  };
-
   const handleRefresh = async () => {
-    await handleMutate({
+    setPagination({
       lastIndex: DEFAULT_LAST_INDEX,
       limit: DEFAULT_LIMIT,
     });
+    setIsRefresh(true);
   };
 
   const handleInfinite = async () => {
-    await handleMutate(pagination, true);
+    setIsRefresh(true);
   };
 
   useEffect(() => {
-    if (!stands.length && data && !error) {
-      setStands(data.list);
-      setPagination(data.pagination);
+    if (isRefresh) {
+      mutate();
+      setIsRefresh(false);
     }
-  }, [data]);
-
-  useEffect(() => {
-    if (error) toast(error, { type: "error" });
-  }, [error]);
+  }, [isRefresh]);
 
   return {
     stands: data?.list || [],
     isLoading,
-    handleMutate,
     handleRefresh,
     handleInfinite,
   };
