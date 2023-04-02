@@ -1,8 +1,8 @@
 import { useSWRLists } from "@/hooks/useSWRLists";
-import { getFairListRequest } from "@/services";
-import { TFair } from "@/types/TFair";
+import { getMySanbleStandListRequest } from "@/services";
+import { TStand } from "@/types/TStand";
 
-export const useFairsList = () => {
+export const useMySanbleStandsList = () => {
   const {
     list,
     orderBy,
@@ -11,7 +11,7 @@ export const useFairsList = () => {
     handleRefresh,
     handleInfinite,
     handleShorting,
-  } = useSWRLists<TFair>("/fairs", getFairListRequest);
+  } = useSWRLists<TStand>("/my-sanble/stands", getMySanbleStandListRequest);
 
   return {
     list,

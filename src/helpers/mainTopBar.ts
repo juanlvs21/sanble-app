@@ -72,6 +72,16 @@ export const getPropsTopBarMain = (
       sticky: true,
       stickyNoScroll: true,
     },
+    [ERoutesName.MY_SANBLE_FAIRS]: {
+      title: "Mis Ferias",
+      startUser: true,
+      sticky: true,
+    },
+    [ERoutesName.MY_SANBLE_STANDS]: {
+      title: "Mis Stands",
+      startUser: true,
+      sticky: true,
+    },
   };
 
   return props[route];

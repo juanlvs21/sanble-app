@@ -31,7 +31,8 @@ export const Sidebar = () => {
   const matchStandsList = useMatch(ERoutesName.STANDS_LIST);
   const matchProductsList = useMatch(ERoutesName.PRODUCTS_LIST);
   const matchFavorites = useMatch(ERoutesName.FAVORITES_LIST);
-  const matchMySanble = useMatch(ERoutesName.MY_SANBLE);
+  const matchMySanbleFairs = useMatch(ERoutesName.MY_SANBLE_FAIRS);
+  const matchMySanbleStands = useMatch(ERoutesName.MY_SANBLE_STANDS);
   const matchNearYou = useMatch(ERoutesName.NEAR_YOU);
   // const matchMessages = useMatch("/app/mensajes");
   const matchProfile = useMatch(ERoutesName.PROFILE);
@@ -53,14 +54,16 @@ export const Sidebar = () => {
       },
       {
         label: "Mi Sanble",
-        path: ERoutesName.MY_SANBLE,
+        path: ERoutesName.MY_SANBLE_FAIRS,
         icon: (
           <img
-            src={`/assets/icon/${matchMySanble ? "logo" : "logoWhite"}.png`}
+            src={`/assets/icon/${
+              matchMySanbleFairs || matchMySanbleStands ? "logo" : "logoWhite"
+            }.png`}
             alt="Sanble"
           />
         ),
-        active: matchMySanble,
+        active: matchMySanbleFairs || matchMySanbleStands,
       },
       {
         label: "Cerca de ti",

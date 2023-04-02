@@ -4,8 +4,9 @@ import { createBrowserRouter, Navigate } from "react-router-dom";
 
 import { SuspenseComponent } from "@/components/common/SuspenseComponent";
 import { AuthLayout } from "@/components/layouts/Auth";
-import { HomeLayout } from "@/components/layouts/Home";
 import { MainLayout } from "@/components/layouts/Main";
+import { HomeLayout } from "@/components/layouts/Home";
+import { MySanbleList } from "@/components/layouts/MySanbleList";
 import { ProvidersLayout } from "@/components/layouts/Providers";
 import { ERoutesName } from "@/types/TRoutes";
 
@@ -39,7 +40,6 @@ const NearYouScreen = lazy(() =>
     default: NearYou,
   }))
 );
-
 const FairsListScreen = lazy(() =>
   import("@/screens/fairs/FairsList").then(({ FairsList }) => ({
     default: FairsList,
@@ -84,6 +84,20 @@ const StandPhotoSlidesScreen = lazy(() =>
   import("@/screens/stands/StandPhotoSlides").then(({ StandPhotoSlides }) => ({
     default: StandPhotoSlides,
   }))
+);
+const MySanbleFairsScreen = lazy(() =>
+  import("@/screens/mySanble/MySanbleFairsList").then(
+    ({ MySanbleFairsList }) => ({
+      default: MySanbleFairsList,
+    })
+  )
+);
+const MySanbleStandsScreen = lazy(() =>
+  import("@/screens/mySanble/MySanbleStandsList").then(
+    ({ MySanbleStandsList }) => ({
+      default: MySanbleStandsList,
+    })
+  )
 );
 
 const ErrorScreen = () => <h1 style={{ marginTop: 300 }}>Error :c :c</h1>;
@@ -142,16 +156,38 @@ export const router = createBrowserRouter([
             ],
           },
           {
-            path: ERoutesName.FAVORITES_LIST,
-            errorElement: <ErrorScreen />,
-            element: (
-              <SuspenseComponent>
-                <FavoritesListScreen />
-              </SuspenseComponent>
-            ),
+            path: ERoutesName.MY_SANBLE,
+            element: <MySanbleList />,
+            children: [
+              {
+                index: true,
+                errorElement: <ErrorScreen />,
+                element: (
+                  <Navigate to={ERoutesName.MY_SANBLE_FAIRS} replace={true} />
+                ),
+              },
+              {
+                path: ERoutesName.MY_SANBLE_FAIRS,
+                errorElement: <ErrorScreen />,
+                element: (
+                  <SuspenseComponent>
+                    <MySanbleFairsScreen />
+                  </SuspenseComponent>
+                ),
+              },
+              {
+                path: ERoutesName.MY_SANBLE_STANDS,
+                errorElement: <ErrorScreen />,
+                element: (
+                  <SuspenseComponent>
+                    <MySanbleStandsScreen />
+                  </SuspenseComponent>
+                ),
+              },
+            ],
           },
           {
-            path: ERoutesName.MY_SANBLE,
+            path: ERoutesName.FAVORITES_LIST,
             errorElement: <ErrorScreen />,
             element: (
               <SuspenseComponent>
@@ -273,6 +309,14 @@ export const router = createBrowserRouter([
             ),
           },
         ],
+      },
+      {
+        errorElement: <ErrorScreen />,
+        element: (
+          <SuspenseComponent>
+            <NotFoundScreen />
+          </SuspenseComponent>
+        ),
       },
     ],
   },
