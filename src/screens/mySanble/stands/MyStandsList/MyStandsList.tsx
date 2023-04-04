@@ -5,15 +5,15 @@ import { useDocumentTitle } from "usehooks-ts";
 import { Fetcher } from "@/components/common/Fetcher";
 import { Skeleton } from "@/components/common/Skeleton";
 import { Button } from "@/components/common/buttons/Button";
-import { FairCardList } from "@/components/modules/fairs/FairCardList";
-import { useMySanbleFairsList } from "@/hooks/mySanble/useMySanbleFairsList";
+import { StandCardList } from "@/components/modules/stands/StandCardList";
+import { useMyStandsList } from "@/hooks/mySanble/stands/useMyStandsList";
 import { useApp } from "@/hooks/useApp";
 import { useTopBarMain } from "@/hooks/useTopBarMain";
 import { ERoutesName } from "@/types/TRoutes";
-import styles from "./MySanbleFairsList.module.css";
+import styles from "./MyStandsList.module.css";
 
-export const MySanbleFairsList = () => {
-  useDocumentTitle("Lista de Mis Ferias 🛍️");
+export const MyStandsList = () => {
+  useDocumentTitle("Lista de Mis Stands 🛒");
   const [present] = useIonActionSheet();
   const { renderTopBarActionEnd } = useTopBarMain();
   const { isCapacitor } = useApp();
@@ -25,7 +25,7 @@ export const MySanbleFairsList = () => {
     handleRefresh,
     handleInfinite,
     handleShorting,
-  } = useMySanbleFairsList();
+  } = useMyStandsList();
 
   const actionCssClasses = (isOrderBy = false, isOrderDir = false) => {
     const classes = [];
@@ -43,7 +43,7 @@ export const MySanbleFairsList = () => {
           className="animate__animated animate__fadeIn"
           onClick={() =>
             present({
-              header: "Ordenar Ferias",
+              header: "Ordenar Stands",
               buttons: [
                 {
                   text: "Mejor puntuadas",
@@ -62,14 +62,6 @@ export const MySanbleFairsList = () => {
                   handler: () => handleShorting("stars", "asc"),
                 },
                 {
-                  text: "Fechas cercanas",
-                  cssClass: actionCssClasses(
-                    orderBy === "celebrationDate",
-                    orderDir === "desc"
-                  ),
-                  handler: () => handleShorting("celebrationDate", "desc"),
-                },
-                {
                   text: "Por nombre",
                   cssClass: actionCssClasses(
                     orderBy === "name",
@@ -83,7 +75,7 @@ export const MySanbleFairsList = () => {
                   handler: () => handleShorting("stars", "desc"),
                 },
                 {
-                  text: "Cancel",
+                  text: "Cancelar",
                   cssClass: "danger-color",
                   role: "cancel",
                   data: {
@@ -114,14 +106,14 @@ export const MySanbleFairsList = () => {
                   <Skeleton
                     key={i}
                     height={130}
-                    className={styles.fairListCardSkeleton}
+                    className={styles.standListCardSkeleton}
                   />
                 ))
-            : list.map((fair) => (
-                <FairCardList
-                  key={fair.id}
-                  fair={fair}
-                  goBackUrl={ERoutesName.MY_SANBLE_FAIRS}
+            : list.map((stand) => (
+                <StandCardList
+                  key={stand.id}
+                  stand={stand}
+                  goBackUrl={ERoutesName.MY_SANBLE_STANDS}
                 />
               ))}
         </div>

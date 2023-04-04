@@ -1,19 +1,21 @@
-import { useIonActionSheet } from "@ionic/react";
+import { IonFab, IonFabButton, useIonActionSheet } from "@ionic/react";
 import { BiFilterAlt } from "react-icons/bi";
+import { IoMdAdd } from "react-icons/io";
+import { Link } from "react-router-dom";
 import { useDocumentTitle } from "usehooks-ts";
 
 import { Fetcher } from "@/components/common/Fetcher";
 import { Skeleton } from "@/components/common/Skeleton";
 import { Button } from "@/components/common/buttons/Button";
-import { StandCardList } from "@/components/modules/stands/StandCardList";
-import { useMySanbleStandsList } from "@/hooks/mySanble/useMySanbleStandsList";
+import { FairCardList } from "@/components/modules/fairs/FairCardList";
+import { useMyFairsList } from "@/hooks/mySanble/fairs/useMyFairsList";
 import { useApp } from "@/hooks/useApp";
 import { useTopBarMain } from "@/hooks/useTopBarMain";
 import { ERoutesName } from "@/types/TRoutes";
-import styles from "./MySanbleStandsList.module.css";
+import styles from "./MyFairsList.module.css";
 
-export const MySanbleStandsList = () => {
-  useDocumentTitle("Lista de Mis Stands 🛒");
+export const MyFairsList = () => {
+  useDocumentTitle("Lista de Mis Ferias 🛍️");
   const [present] = useIonActionSheet();
   const { renderTopBarActionEnd } = useTopBarMain();
   const { isCapacitor } = useApp();
@@ -25,7 +27,7 @@ export const MySanbleStandsList = () => {
     handleRefresh,
     handleInfinite,
     handleShorting,
-  } = useMySanbleStandsList();
+  } = useMyFairsList();
 
   const actionCssClasses = (isOrderBy = false, isOrderDir = false) => {
     const classes = [];
@@ -43,7 +45,7 @@ export const MySanbleStandsList = () => {
           className="animate__animated animate__fadeIn"
           onClick={() =>
             present({
-              header: "Ordenar Stands",
+              header: "Ordenar Ferias",
               buttons: [
                 {
                   text: "Mejor puntuadas",
@@ -62,6 +64,14 @@ export const MySanbleStandsList = () => {
                   handler: () => handleShorting("stars", "asc"),
                 },
                 {
+                  text: "Fechas cercanas",
+                  cssClass: actionCssClasses(
+                    orderBy === "celebrationDate",
+                    orderDir === "desc"
+                  ),
+                  handler: () => handleShorting("celebrationDate", "desc"),
+                },
+                {
                   text: "Por nombre",
                   cssClass: actionCssClasses(
                     orderBy === "name",
@@ -75,7 +85,7 @@ export const MySanbleStandsList = () => {
                   handler: () => handleShorting("stars", "desc"),
                 },
                 {
-                  text: "Cancelar",
+                  text: "Cancel",
                   cssClass: "danger-color",
                   role: "cancel",
                   data: {
@@ -89,6 +99,19 @@ export const MySanbleStandsList = () => {
           <BiFilterAlt size={24} />
         </Button>
       )}
+
+      <IonFab
+        slot="fixed"
+        vertical="bottom"
+        horizontal="end"
+        className={`${styles.fairFloatBtn} animate__animated animate__fadeIn`}
+      >
+        <Link to={ERoutesName.MY_SANBLE_FAIRS_NEW}>
+          <IonFabButton color="secondary">
+            <IoMdAdd size={28} />
+          </IonFabButton>
+        </Link>
+      </IonFab>
 
       <Fetcher
         handleRefresh={handleRefresh}
@@ -106,14 +129,14 @@ export const MySanbleStandsList = () => {
                   <Skeleton
                     key={i}
                     height={130}
-                    className={styles.standListCardSkeleton}
+                    className={styles.fairListCardSkeleton}
                   />
                 ))
-            : list.map((stand) => (
-                <StandCardList
-                  key={stand.id}
-                  stand={stand}
-                  goBackUrl={ERoutesName.MY_SANBLE_STANDS}
+            : list.map((fair) => (
+                <FairCardList
+                  key={fair.id}
+                  fair={fair}
+                  goBackUrl={ERoutesName.MY_SANBLE_FAIRS}
                 />
               ))}
         </div>

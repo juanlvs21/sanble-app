@@ -86,18 +86,14 @@ const StandPhotoSlidesScreen = lazy(() =>
   }))
 );
 const MySanbleFairsScreen = lazy(() =>
-  import("@/screens/mySanble/MySanbleFairsList").then(
-    ({ MySanbleFairsList }) => ({
-      default: MySanbleFairsList,
-    })
-  )
+  import("@/screens/mySanble/fairs/MyFairsList").then(({ MyFairsList }) => ({
+    default: MyFairsList,
+  }))
 );
 const MySanbleStandsScreen = lazy(() =>
-  import("@/screens/mySanble/MySanbleStandsList").then(
-    ({ MySanbleStandsList }) => ({
-      default: MySanbleStandsList,
-    })
-  )
+  import("@/screens/mySanble/stands/MyStandsList").then(({ MyStandsList }) => ({
+    default: MyStandsList,
+  }))
 );
 
 const ErrorScreen = () => <h1 style={{ marginTop: 300 }}>Error :c :c</h1>;
