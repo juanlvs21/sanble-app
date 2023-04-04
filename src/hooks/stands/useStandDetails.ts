@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { RefObject, useEffect, useState } from "react";
+import { SwiperRef } from "swiper/react";
 import useSWRMutation from "swr/immutable";
 
 import { infiteScrollData } from "@/helpers/infiniteScrollData";
@@ -9,17 +10,22 @@ import {
   saveStandReviewRequest,
 } from "@/services";
 import { TPagination } from "@/types/THttp";
+import { TPhotograph } from "@/types/TPhotograph";
 import { TReview, TReviewForm } from "@/types/TReview";
 
 const DEFAULT_LAST_INDEX_REVIEWS = 0;
 const DEFAULT_LIMIT_REVIEWS = 9;
 
-export const useStandDetails = (standID: string) => {
+export const useStandDetails = (
+  standID: string,
+  slidesPhotoRef?: RefObject<SwiperRef>
+) => {
   const { toast, toastDismiss } = useToast();
   const [review, setReview] = useState<TReview>();
   const [reviews, setReviews] = useState<TReview[]>([]);
   const [isSaving, setIsSaving] = useState(false);
   const [isRefresh, setIsRefresh] = useState(false);
+  const [activePhoto, setActivePhoto] = useState<TPhotograph>();
 
   const [paginationReviews, setPaginationReviews] = useState<TPagination>({
     lastIndex: DEFAULT_LAST_INDEX_REVIEWS,
@@ -31,13 +37,22 @@ export const useStandDetails = (standID: string) => {
 
   const {
     data: stand,
-    error: errorDetails,
     isLoading: isLoadingDetails,
     mutate: mutateDetails,
   } = useSWRMutation(
     SWR_KEY_STANDS_DETAILS,
     async () => await getStandDetailsRequest(standID),
     {
+      onSuccess(data) {
+        setTimeout(() => {
+          if (data && activePhoto && slidesPhotoRef) {
+            slidesPhotoRef.current?.swiper?.slideTo(
+              getIndexPhoto(activePhoto.id, data.photographs),
+              0
+            );
+          }
+        }, 100);
+      },
       onError(error) {
         toastDismiss(SWR_KEY_STANDS_DETAILS);
         toast(error, { type: "error", toastId: SWR_KEY_STANDS_DETAILS });
@@ -45,12 +60,7 @@ export const useStandDetails = (standID: string) => {
     }
   );
 
-  const {
-    data: dataReviews,
-    error: errorReviews,
-    isLoading: isLoadingReviews,
-    mutate: mutateReviews,
-  } = useSWRMutation(
+  const { isLoading: isLoadingReviews, mutate: mutateReviews } = useSWRMutation(
     SWR_KEY_STANDS_REVIEWS,
     async () => await getStandReviewsRequest(standID, paginationReviews),
     {
@@ -118,8 +128,11 @@ export const useStandDetails = (standID: string) => {
     mutateReviews();
   };
 
-  const getIndexPhoto = (photoID: string = "") => {
-    const index = stand?.photographs.findIndex(
+  const getIndexPhoto = (
+    photoID: string = "",
+    photographs: TPhotograph[] = []
+  ) => {
+    const index = photographs.findIndex(
       (photoFilter) => photoFilter.id === photoID
     );
 
@@ -141,6 +154,8 @@ export const useStandDetails = (standID: string) => {
     isSaving,
     isLoadingDetails,
     isLoadingReviews,
+    activePhoto,
+    setActivePhoto,
     handleLoadAll,
     handleInfiniteReviews,
     handleSaveReview,

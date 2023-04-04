@@ -15,11 +15,11 @@ export const useStandPhotoDelete = (standID: string) => {
     try {
       await deleteStandPhotoRequest(standID, photoID);
 
+      handleRevalidateAll();
+
       toast("Fotografía eliminada con éxito", {
         type: "success",
       });
-
-      handleRevalidateAll();
 
       callback();
     } catch (error) {

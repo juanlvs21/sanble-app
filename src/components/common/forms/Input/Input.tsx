@@ -1,41 +1,40 @@
-import { IonInput, IonTextarea, IonItem, IonNote } from "@ionic/react";
+import type { IonInput as IonInputType } from "@ionic/core/components";
+import { IonInput, IonItem, IonNote } from "@ionic/react";
 
-import { TInput } from "@/types/TComponents";
+import { TInputHelpers } from "@/types/TComponents";
 
-export type ComponentProps = TInput & {
-  Icon?: React.ReactElement;
-  helper?: string | React.ReactElement;
-  helperIsError?: boolean;
-  /**
-   * Switch component between input and textarea
-   */
-  textarea?: boolean;
-};
+export type ComponentProps = IonInputType &
+  TInputHelpers & {
+    /**
+     * Icon Start
+     */
+    Icon?: React.ReactElement;
+    /**
+     * Error content
+     */
+    helper?: string | React.ReactElement;
+    /**
+     * Show error
+     */
+    helperIsError?: boolean;
+  };
 
 export const Input = ({
   Icon,
   helper,
   helperIsError,
-  textarea,
   ...rest
 }: ComponentProps) => (
   <IonItem
     fill="outline"
-    className={`inputItem ${textarea ? "textareItem" : ""} ${
-      Icon ? "inputWithIcon" : ""
-    }`}
+    className={`inputItem  ${Icon ? "inputWithIcon" : ""}`}
   >
     {Icon && (
       <span slot="start" className="slotIconStart">
         {Icon}
       </span>
     )}
-    {textarea ? <IonTextarea {...rest} /> : <IonInput {...rest} />}
+    <IonInput {...rest} />
     <IonNote slot={helperIsError ? "error" : "helper"}>{helper}</IonNote>
-    {rest.maxlength && (
-      <IonNote slot="helper">
-        {rest.value?.length}/{rest.maxlength}
-      </IonNote>
-    )}
   </IonItem>
 );

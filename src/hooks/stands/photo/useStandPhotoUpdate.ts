@@ -5,19 +5,16 @@ import { useStandsRevalidate } from "@/hooks/stands/useStandsRevalidate";
 import { useToast } from "@/hooks/useToast";
 import { updateStandPhotoRequest } from "@/services";
 import { TPhotograph, TPhotographForm } from "@/types/TPhotograph";
+import { mutate } from "swr";
 
-export const useStandPhotoUpdate = (
-  standID: string,
-  callback?: (updateID?: string) => Promise<any>
-) => {
+export const useStandPhotoUpdate = (standID: string) => {
   const [presentLoading, dismissLoading] = useIonLoading();
   const modalRef = useRef<HTMLIonModalElement>(null);
   const { toast } = useToast();
   const [isUpdate, setIsUpdate] = useState(false);
   const [photo, setPhoto] = useState<TPhotograph>();
 
-  const { handleRevalidateDetails, handleRevalidateAll } =
-    useStandsRevalidate(standID);
+  const { handleRevalidateLists } = useStandsRevalidate(standID);
 
   const handleOpen = (photoCurrent: TPhotograph) => {
     setPhoto(photoCurrent);
@@ -42,10 +39,9 @@ export const useStandPhotoUpdate = (
         formData
       );
 
-      if (photographRes.isCover) handleRevalidateAll();
-      else handleRevalidateDetails();
+      if (photographRes.isCover) handleRevalidateLists();
 
-      if (callback) await callback(data.id);
+      await mutate(`/stands/${standID}`, undefined, { revalidate: true });
 
       toast("Fotografía actualizada con éxito", {
         type: "success",

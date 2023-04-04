@@ -1,3 +1,4 @@
+import { IonCheckboxCustomEvent } from "@ionic/core";
 import { CheckboxChangeEventDetail, IonNote } from "@ionic/react";
 import { FormikHelpers, useFormik } from "formik";
 import { useState } from "react";
@@ -6,10 +7,9 @@ import { MdOutlineAddPhotoAlternate } from "react-icons/md";
 
 import { Button } from "@/components/common/buttons/Button";
 import { Checkbox } from "@/components/common/forms/Checkbox";
-import { Input } from "@/components/common/forms/Input";
+import { TextArea } from "@/components/common/forms/TextArea";
 import { getErrorMessage } from "@/helpers/getFormikErrorMsg";
 import { photoSchema } from "@/helpers/validator/photo";
-import { IonCheckboxCustomEvent } from "@/types/TComponents";
 import { TPhotograph, TPhotographForm } from "@/types/TPhotograph";
 import styles from "./PhotoForm.module.css";
 
@@ -160,20 +160,17 @@ export const PhotoForm = ({
         </section>
       )}
       <section>
-        <Input
+        <TextArea
           placeholder="Descripción"
           name="description"
-          onIonChange={handleChange}
+          onIonInput={handleChange}
           onIonBlur={handleBlur}
           disabled={isSubmitting}
           value={values.description}
           helper={getErrorMessage("description", touched, errors)}
           maxlength={500}
-          max={5}
           className={styles.photoFormTextarea}
           helperIsError
-          textarea
-          multiple
         />
         <Checkbox
           label="Fotografía de perfil"

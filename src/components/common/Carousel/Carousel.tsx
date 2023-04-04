@@ -1,5 +1,8 @@
-import { IonSlide, IonSlides } from "@ionic/react";
 import { useMemo } from "react";
+import { Swiper, SwiperSlide, SwiperProps } from "swiper/react";
+
+import "swiper/css";
+import "@ionic/react/css/ionic-swiper.css";
 
 import {
   ComponentProps as SkeletonProps,
@@ -63,7 +66,7 @@ export const Carousel = ({
     1600: { slidesPerView: 3.7 },
   },
 }: ComponentProps) => {
-  const slideOpts = useMemo(
+  const slideOpts: SwiperProps = useMemo(
     () => ({
       slidesPerView,
       breakpoints,
@@ -85,17 +88,17 @@ export const Carousel = ({
           className="animate__animated animate__fadeIn"
         />
       ) : (
-        <IonSlides options={slideOpts}>
+        <Swiper {...slideOpts}>
           {items.map((item, i) => (
-            <IonSlide key={i}>
+            <SwiperSlide key={i}>
               <div
                 className={`${styles.slidesItem} ${classNameItem} animate__animated animate__fadeIn`}
               >
                 {item}
               </div>
-            </IonSlide>
+            </SwiperSlide>
           ))}
-        </IonSlides>
+        </Swiper>
       )}
     </section>
   );

@@ -2,12 +2,9 @@ import { useState } from "react";
 import { IonButton, IonInput, IonItem, IonNote } from "@ionic/react";
 import { HiOutlineKey, HiOutlineEye, HiOutlineEyeOff } from "react-icons/hi";
 
-import { TInput } from "@/types/TComponents";
+import { TInputHelpers } from "@/types/TComponents";
 
-export type ComponentProps = TInput & {
-  helper?: string | React.ReactElement;
-  helperIsError?: boolean;
-};
+export type ComponentProps = typeof IonInput.defaultProps & TInputHelpers;
 
 export const InputPassword = ({
   placeholder = "Contraseña",

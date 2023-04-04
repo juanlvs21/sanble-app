@@ -6,12 +6,13 @@ import { uploadStandPhotoRequest } from "@/services";
 import { TPhotographForm } from "@/types/TPhotograph";
 import { ERoutesName } from "@/types/TRoutes";
 import { useStandsRevalidate } from "@/hooks/stands/useStandsRevalidate";
+import { mutate } from "swr";
 
 export const useStandPhotoNew = (standID: string) => {
   const [presentLoading, dismissLoading] = useIonLoading();
   const { toast } = useToast();
   const navigate = useNavigate();
-  const { handleRevalidateAll } = useStandsRevalidate(standID);
+  const { handleRevalidateLists } = useStandsRevalidate(standID);
 
   const handleUploadPhoto = async (data: TPhotographForm) => {
     presentLoading();
@@ -25,11 +26,13 @@ export const useStandPhotoNew = (standID: string) => {
 
       const { photograph } = await uploadStandPhotoRequest(standID, formData);
 
+      if (photograph.isCover) handleRevalidateLists();
+
+      await mutate(`/stands/${standID}`, undefined, { revalidate: true });
+
       toast("Fotografía publicada con éxito", {
         type: "success",
       });
-
-      handleRevalidateAll();
 
       navigate(`${ERoutesName.STANDS_LIST}/${standID}/fotos`, {
         state: {

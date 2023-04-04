@@ -3,6 +3,7 @@ import { useIonLoading } from "@ionic/react";
 import { useFairsRevalidate } from "@/hooks/fairs/useFairsRevalidate";
 import { useToast } from "@/hooks/useToast";
 import { deleteFairPhotoRequest } from "@/services";
+import { mutate } from "swr";
 
 export const useFairPhotoDelete = (fairID: string) => {
   const [presentLoading, dismissLoading] = useIonLoading();
@@ -15,11 +16,11 @@ export const useFairPhotoDelete = (fairID: string) => {
     try {
       await deleteFairPhotoRequest(fairID, photoID);
 
+      handleRevalidateAll();
+
       toast("Fotografía eliminada con éxito", {
         type: "success",
       });
-
-      handleRevalidateAll();
 
       callback();
     } catch (error) {

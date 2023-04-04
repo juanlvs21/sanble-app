@@ -1,5 +1,9 @@
-import { IonContent, IonSlide, IonSlides } from "@ionic/react";
-import { useMemo, useState } from "react";
+import { IonContent } from "@ionic/react";
+import { useMemo, useState, Ref } from "react";
+import { Swiper, SwiperSlide, SwiperProps, SwiperRef } from "swiper/react";
+
+import "swiper/css";
+import "@ionic/react/css/ionic-swiper.css";
 
 import { EmptyAlert } from "@/components/common/EmptyAlert";
 import { PhotoDescription } from "@/components/modules/photo/PhotoDescription";
@@ -14,7 +18,7 @@ export type ComponentProps = {
   /**
    * Slides photos ref
    */
-  slidesRef?: React.Ref<HTMLIonSlidesElement>;
+  slidesRef?: Ref<SwiperRef>;
   /**
    * Function to set active photo
    */
@@ -62,7 +66,7 @@ export const PhotoSlides = ({
 }: ComponentProps) => {
   const [showDescription, setShowDescription] = useState(true);
 
-  const slideOpts = useMemo(
+  const slideOpts: SwiperProps = useMemo(
     () => ({
       slidesPerView,
       initialSlide: 0,
@@ -76,23 +80,21 @@ export const PhotoSlides = ({
     setShowDescription((state) => !state);
   };
 
-  const handleSlideDidChange = async (ev: any) => {
-    ev.target.getActiveIndex().then((index: number) => {
-      handleSetActivePhoto(photographs[index]);
-    });
+  const handleSlideDidChange = async (event: any) => {
+    handleSetActivePhoto(photographs[event.activeIndex]);
   };
 
   return (
     <IonContent className={`${className}`}>
       {Boolean(photographs.length) && !isLoading && (
-        <IonSlides
+        <Swiper
           ref={slidesRef}
-          options={slideOpts}
           className={`${styles.photoContainer} ${classNameSlides} animate__animated animate__fadeIn`}
-          onIonSlideWillChange={handleSlideDidChange}
+          onActiveIndexChange={handleSlideDidChange}
+          {...slideOpts}
         >
           {photographs.map((photo, i) => (
-            <IonSlide
+            <SwiperSlide
               key={i}
               className={`${classNameSlide} ${styles.photoSlide}`}
             >
@@ -102,9 +104,9 @@ export const PhotoSlides = ({
                 showDescription={showDescription}
                 onClick={handleToggleShowDescription}
               />
-            </IonSlide>
+            </SwiperSlide>
           ))}
-        </IonSlides>
+        </Swiper>
       )}
       {!Boolean(photographs.length) && !isLoading && (
         <EmptyAlert

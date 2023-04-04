@@ -5,19 +5,16 @@ import { useFairsRevalidate } from "@/hooks/fairs/useFairsRevalidate";
 import { useToast } from "@/hooks/useToast";
 import { updateFairPhotoRequest } from "@/services";
 import { TPhotograph, TPhotographForm } from "@/types/TPhotograph";
+import { mutate } from "swr";
 
-export const useFairPhotoUpdate = (
-  fairID: string,
-  callback?: (updateID?: string) => Promise<any>
-) => {
+export const useFairPhotoUpdate = (fairID: string) => {
   const [presentLoading, dismissLoading] = useIonLoading();
   const modalRef = useRef<HTMLIonModalElement>(null);
   const { toast } = useToast();
   const [isUpdate, setIsUpdate] = useState(false);
   const [photo, setPhoto] = useState<TPhotograph>();
 
-  const { handleRevalidateDetails, handleRevalidateAll } =
-    useFairsRevalidate(fairID);
+  const { handleRevalidateLists } = useFairsRevalidate(fairID);
 
   const handleOpen = (photoCurrent: TPhotograph) => {
     setPhoto(photoCurrent);
@@ -42,10 +39,9 @@ export const useFairPhotoUpdate = (
         formData
       );
 
-      if (photographRes.isCover) handleRevalidateAll();
-      else handleRevalidateDetails();
+      if (photographRes.isCover) handleRevalidateLists();
 
-      if (callback) await callback(data.id);
+      await mutate(`/fairs/${fairID}`, undefined, { revalidate: true });
 
       toast("Fotografía actualizada con éxito", {
         type: "success",

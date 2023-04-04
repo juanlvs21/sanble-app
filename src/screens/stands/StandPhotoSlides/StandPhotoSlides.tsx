@@ -4,6 +4,7 @@ import { FiEdit } from "react-icons/fi";
 import { IoIosArrowBack } from "react-icons/io";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useDocumentTitle } from "usehooks-ts";
+import { SwiperRef } from "swiper/react";
 
 import { Button } from "@/components/common/buttons/Button";
 import { SpinnerFullScreen } from "@/components/common/loaders/SpinnerFullScreen";
@@ -29,14 +30,20 @@ export const StandPhotoSlides = () => {
   const { standID } = useParams<TRouteParams>();
   const { state } = useLocation();
   const { user } = useUser();
-  const slidesRef = useRef<HTMLIonSlidesElement>(null);
+  const slidesRef = useRef<SwiperRef>(null);
 
   const finaStandID = standID || state?.standID || "";
 
   const { isCapacitor } = useApp();
   const { renderTopBarActionStart, renderTopBarActionEnd } = useTopBarMain();
-  const { stand, isLoadingDetails, handleLoadAll, getIndexPhoto } =
-    useStandDetails(finaStandID);
+  const {
+    stand,
+    isLoadingDetails,
+    activePhoto,
+    setActivePhoto,
+    handleLoadAll,
+    getIndexPhoto,
+  } = useStandDetails(finaStandID, slidesRef);
   const { handleDeletePhoto } = useStandPhotoDelete(finaStandID);
   const {
     modalRef: modalUpdateRef,
@@ -45,12 +52,8 @@ export const StandPhotoSlides = () => {
     handleOpen: handleUpdateOpen,
     handleDismiss: handleUpdateDismiss,
     isUpdate,
-  } = useStandPhotoUpdate(finaStandID, async (updateID?: string) => {
-    await handleLoadAll();
-    slidesRef.current?.slideTo(getIndexPhoto(updateID), 0);
-  });
+  } = useStandPhotoUpdate(finaStandID);
   const [photoShown, setPhotoShown] = useState(false);
-  const [activePhoto, setActivePhoto] = useState<TPhotograph>();
 
   useDocumentTitle(
     `Fotografías de ${
@@ -134,7 +137,10 @@ export const StandPhotoSlides = () => {
 
   useEffect(() => {
     if (!isLoadingDetails && state?.photoActiveID && !photoShown) {
-      slidesRef.current?.slideTo(getIndexPhoto(state?.photoActiveID), 0);
+      slidesRef?.current?.swiper.slideTo(
+        getIndexPhoto(state?.photoActiveID, stand?.photographs),
+        0
+      );
       setPhotoShown(true);
     }
   }, [isLoadingDetails, state]);

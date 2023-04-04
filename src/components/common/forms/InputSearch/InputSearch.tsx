@@ -1,22 +1,15 @@
 import { IonButton, IonInput, IonItem, IonNote } from "@ionic/react";
 import { FiSearch } from "react-icons/fi";
 
-import { TInput } from "@/types/TComponents";
+import { TInputHelpers } from "@/types/TComponents";
 
-export type ComponentProps = TInput & {
-  /**
-   * Error content
-   */
-  helper?: string | React.ReactElement;
-  /**
-   * Show error
-   */
-  helperIsError?: boolean;
-  /**
-   * Custom className for content component
-   */
-  classNameItem?: string;
-};
+export type ComponentProps = typeof IonInput.defaultProps &
+  TInputHelpers & {
+    /**
+     * Custom className for content component
+     */
+    classNameItem?: string;
+  };
 
 export const InputSearch = ({
   inputmode = "search",

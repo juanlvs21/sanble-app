@@ -4,6 +4,7 @@ import { FiEdit } from "react-icons/fi";
 import { IoIosArrowBack } from "react-icons/io";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useDocumentTitle } from "usehooks-ts";
+import { SwiperRef } from "swiper/react";
 
 import { Button } from "@/components/common/buttons/Button";
 import { SpinnerFullScreen } from "@/components/common/loaders/SpinnerFullScreen";
@@ -29,14 +30,20 @@ export const FairPhotoSlides = () => {
   const { fairID } = useParams<TRouteParams>();
   const { state } = useLocation();
   const { user } = useUser();
-  const slidesRef = useRef<HTMLIonSlidesElement>(null);
+  const slidesRef = useRef<SwiperRef>(null);
 
   const finalFairID = fairID || state?.fairID || "";
 
   const { isCapacitor } = useApp();
   const { renderTopBarActionStart, renderTopBarActionEnd } = useTopBarMain();
-  const { fair, isLoadingDetails, handleLoadAll, getIndexPhoto } =
-    useFairDetails(finalFairID);
+  const {
+    fair,
+    isLoadingDetails,
+    activePhoto,
+    handleLoadAll,
+    setActivePhoto,
+    getIndexPhoto,
+  } = useFairDetails(finalFairID, slidesRef);
   const { handleDeletePhoto } = useFairPhotoDelete(finalFairID);
   const {
     modalRef: modalUpdateRef,
@@ -45,12 +52,8 @@ export const FairPhotoSlides = () => {
     handleOpen: handleUpdateOpen,
     handleDismiss: handleUpdateDismiss,
     isUpdate,
-  } = useFairPhotoUpdate(finalFairID, async (updateID?: string) => {
-    await handleLoadAll();
-    slidesRef.current?.slideTo(getIndexPhoto(updateID), 0);
-  });
+  } = useFairPhotoUpdate(finalFairID);
   const [photoShown, setPhotoShown] = useState(false);
-  const [activePhoto, setActivePhoto] = useState<TPhotograph>();
 
   useDocumentTitle(
     `Fotografías de ${
@@ -134,7 +137,11 @@ export const FairPhotoSlides = () => {
 
   useEffect(() => {
     if (!isLoadingDetails && state?.photoActiveID && !photoShown) {
-      slidesRef.current?.slideTo(getIndexPhoto(state?.photoActiveID), 0);
+      slidesRef?.current?.swiper.slideTo(
+        getIndexPhoto(state?.photoActiveID, fair?.photographs),
+        0
+      );
+      console.log({ ref: slidesRef.current });
       setPhotoShown(true);
     }
   }, [isLoadingDetails, state]);
