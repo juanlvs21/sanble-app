@@ -2,13 +2,14 @@ import { useIonActionSheet } from "@ionic/react";
 import { BiFilterAlt } from "react-icons/bi";
 import { useDocumentTitle } from "usehooks-ts";
 
-import { Button } from "@/components/common/buttons/Button";
 import { Fetcher } from "@/components/common/Fetcher";
 import { Skeleton } from "@/components/common/Skeleton";
+import { Button } from "@/components/common/buttons/Button";
 import { StandCardList } from "@/components/modules/stands/StandCardList";
 import { useMySanbleStandsList } from "@/hooks/mySanble/useMySanbleStandsList";
 import { useApp } from "@/hooks/useApp";
 import { useTopBarMain } from "@/hooks/useTopBarMain";
+import { ERoutesName } from "@/types/TRoutes";
 import styles from "./MySanbleStandsList.module.css";
 
 export const MySanbleStandsList = () => {
@@ -109,7 +110,11 @@ export const MySanbleStandsList = () => {
                   />
                 ))
             : list.map((stand) => (
-                <StandCardList key={stand.id} stand={stand} />
+                <StandCardList
+                  key={stand.id}
+                  stand={stand}
+                  goBackUrl={ERoutesName.MY_SANBLE_STANDS}
+                />
               ))}
         </div>
       </Fetcher>

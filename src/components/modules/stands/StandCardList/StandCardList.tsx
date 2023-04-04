@@ -13,12 +13,20 @@ export type ComponentProps = {
    */
   stand: TStand;
   /**
+   *  Go back url details
+   */
+  goBackUrl?: string;
+  /**
    * Custom className component
    */
   className?: string;
 };
 
-export const StandCardList = ({ stand, className = "" }: ComponentProps) => {
+export const StandCardList = ({
+  stand,
+  goBackUrl,
+  className = "",
+}: ComponentProps) => {
   const { user, loadingSetFav, handleSetFavoriteStand } = useUser();
 
   return (
@@ -27,7 +35,7 @@ export const StandCardList = ({ stand, className = "" }: ComponentProps) => {
     >
       <Link
         to={`/app/stands/${stand.id}`}
-        state={{ standID: stand.id, standName: stand.name }}
+        state={{ standID: stand.id, standName: stand.name, goBackUrl }}
         className={styles.standListCardLink}
       >
         <div className={styles.standListCardContent}>

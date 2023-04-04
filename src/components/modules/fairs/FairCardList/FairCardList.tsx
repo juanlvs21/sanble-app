@@ -18,9 +18,13 @@ export type ComponentProps = {
    * Fair Details
    */
   fair: TFair;
+  /**
+   *  Go back url details
+   */
+  goBackUrl?: string;
 };
 
-export const FairCardList = ({ fair }: ComponentProps) => {
+export const FairCardList = ({ fair, goBackUrl }: ComponentProps) => {
   const isMobileS = useMediaQuery("(max-width: 320px)");
   const { user, loadingSetFav, handleSetFavoriteFair } = useUser();
 
@@ -30,7 +34,7 @@ export const FairCardList = ({ fair }: ComponentProps) => {
     >
       <Link
         to={`${ERoutesName.FAIRS_LIST}/${fair.id}`}
-        state={{ fairID: fair.id, fairName: fair.name }}
+        state={{ fairID: fair.id, fairName: fair.name, goBackUrl }}
         className={styles.fairListCardLink}
       >
         <ImageExtended
