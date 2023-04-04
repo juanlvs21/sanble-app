@@ -1,9 +1,8 @@
-import type { IonInput as IonInputType } from "@ionic/core/components";
 import { IonInput, IonItem, IonNote } from "@ionic/react";
 
 import { TInputHelpers } from "@/types/TComponents";
 
-export type ComponentProps = IonInputType &
+export type ComponentProps = typeof IonInput.defaultProps &
   TInputHelpers & {
     /**
      * Icon Start

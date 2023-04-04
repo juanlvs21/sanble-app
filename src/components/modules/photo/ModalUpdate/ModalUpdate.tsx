@@ -14,7 +14,6 @@ import { HeaderModal } from "@/components/common/HeaderModal";
 import { PhotoForm } from "@/components/modules/photo/PhotoForm";
 import { TPhotograph, TPhotographForm } from "@/types/TPhotograph";
 import styles from "./ModalUpdate.module.css";
-import { IonModalCustomEvent, OverlayEventDetail } from "@/types/TComponents";
 import { useModalGoBack } from "@/hooks/useModalGoBack";
 
 export type ComponentProps = {

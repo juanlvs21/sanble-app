@@ -1,7 +1,7 @@
 import { FormikHelpers, useFormik } from "formik";
 
 import { Button } from "@/components/common/buttons/Button";
-import { Input } from "@/components/common/forms/Input";
+import { TextArea } from "@/components/common/forms/TextArea";
 import { Stars } from "@/components/common/Stars";
 import { getErrorMessage } from "@/helpers/getFormikErrorMsg";
 import { reviewSchema } from "@/helpers/validator/review";
@@ -69,21 +69,17 @@ export const ReviewForm = ({
         disable={isLoading || isSubmitting}
         className={styles.stars}
       />
-      <Input
+      <TextArea
         placeholder="Comentario"
-        type="text"
         name="comment"
-        onIonChange={handleChange}
+        onIonInput={handleChange}
         onIonBlur={handleBlur}
         disabled={isSubmitting || isLoading}
         value={values.comment}
         helper={getErrorMessage("comment", touched, errors)}
         className={styles.reviewFormInput}
         maxlength={500}
-        max={5}
         helperIsError
-        textarea
-        multiple
       />
       <Button
         expand="block"

@@ -1,8 +1,12 @@
-import { IonContent, IonPage, IonSlide, IonSlides } from "@ionic/react";
+import { IonContent, IonPage } from "@ionic/react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { IoIosArrowBack } from "react-icons/io";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
+import { Swiper, SwiperProps, SwiperSlide, SwiperRef } from "swiper/react";
+
+import "swiper/css";
+import "@ionic/react/css/ionic-swiper.css";
 
 import { Button } from "@/components/common/buttons/Button";
 import { SpinnerFullScreen } from "@/components/common/loaders/SpinnerFullScreen";
@@ -13,9 +17,11 @@ import { useUser } from "@/hooks/useUser";
 import { ERoutesName } from "@/types/TRoutes";
 import styles from "./WelcomeSlides.module.css";
 
-const slideOpts = {
+const slideOpts: SwiperProps = {
   initialSlide: 0,
   speed: 400,
+  slidesPerView: 1,
+  spaceBetween: 0,
 };
 
 type TWelcomeSlide = {
@@ -30,7 +36,7 @@ export const WelcomeSlides = () => {
   const navigate = useNavigate();
   const { hideMobileWelcome } = useApp();
   const { user } = useUser();
-  const slideRef = useRef<any>(null);
+  const slideRef = useRef<SwiperRef>(null);
   const [active, setActive] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -52,11 +58,10 @@ export const WelcomeSlides = () => {
   };
 
   const onBtnClicked = async (direction: "next" | "prev") => {
-    const swiper = await slideRef.current.getSwiper();
     if (direction === "next") {
-      swiper.slideNext();
+      slideRef.current?.swiper.slideNext();
     } else if (direction === "prev") {
-      swiper.slidePrev();
+      slideRef.current?.swiper.slidePrev();
     }
   };
 
@@ -139,6 +144,10 @@ export const WelcomeSlides = () => {
     []
   );
 
+  const onActiveChange = async (event: any) => {
+    setActive(event.activeIndex + 1);
+  };
+
   return isLoading ? (
     <SpinnerFullScreen show />
   ) : (
@@ -153,46 +162,38 @@ export const WelcomeSlides = () => {
             <IoIosArrowBack size={24} />
           </Button>
         )}
-        <IonSlides
+        <Swiper
           ref={slideRef}
-          options={slideOpts}
           className={styles.slidesWelcomeContainer}
-          onIonSlideDidChange={async (e) => {
-            const slideActive = await e.target.getActiveIndex();
-            setActive(slideActive + 1);
-          }}
+          onActiveIndexChange={onActiveChange}
+          {...slideOpts}
         >
           {items.map((item, i) => (
-            <IonSlide key={i}>
-              <div
-                className={`${styles.slideWelcomeDataContent} animate__animated animate__fadeIn`}
-                style={{
-                  backgroundImage: `url("/assets/images/welcome/${item.bg}.svg")`,
-                }}
+            <SwiperSlide
+              key={i}
+              className={`${styles.slideWelcomeDataContent} animate__animated animate__fadeIn`}
+              style={{
+                backgroundImage: `url("/assets/images/welcome/${item.bg}.svg")`,
+              }}
+            >
+              <section className={styles.slideWelcomeImgContainer}>
+                <img
+                  src={`/assets/images/welcome/${item.img}.svg`}
+                  className="animate__animated animate__zoomIn"
+                />
+              </section>
+              <section
+                className={`${styles.slideWelcomeDescriptionContainer} animate__animated animate__fadeIn`}
               >
-                <section className={styles.slideWelcomeImgContainer}>
-                  <img
-                    src={`/assets/images/welcome/${item.img}.svg`}
-                    className="animate__animated animate__zoomIn"
-                  />
-                </section>
-                <section
-                  className={`${styles.slideWelcomeDescriptionContainer} animate__animated animate__fadeIn`}
-                >
-                  <h1
-                    className={`${!item.description ? styles.onlyTitle : ""}`}
-                  >
-                    {item.title}
-                  </h1>
-                  <p>{item.description}</p>
-                  <div className={styles.slideWelcomeActions}>
-                    {item.actions}
-                  </div>
-                </section>
-              </div>
-            </IonSlide>
+                <h1 className={`${!item.description ? styles.onlyTitle : ""}`}>
+                  {item.title}
+                </h1>
+                <p>{item.description}</p>
+                <div className={styles.slideWelcomeActions}>{item.actions}</div>
+              </section>
+            </SwiperSlide>
           ))}
-        </IonSlides>
+        </Swiper>
         <div
           className={`${styles.slidesWelcomeProgress} animate__animated animate__slideInUp`}
         >

@@ -3,7 +3,10 @@
 }
 
 .slidesWelcomeContainer {
+  position: relative;
   height: 100vh;
+  display: flex;
+  flex-direction: row;
 }
 
 .slideWelcomeDataContent {
@@ -99,7 +102,7 @@
 
 .slidesWelcomeProgress {
   position: relative;
-  bottom: 20px;
+  bottom: 60px;
   z-index: 1000;
   width: calc(100% - 40px);
   max-width: 600px;

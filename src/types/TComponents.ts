@@ -1,14 +1,5 @@
-import {
-  InputInputEventDetail,
-  IonButtonCustomEvent,
-  IonCheckboxCustomEvent,
-  IonInputCustomEvent,
-  IonTextareaCustomEvent,
-} from "@ionic/core";
-import {
-  CheckboxChangeEventDetail,
-  TextareaChangeEventDetail,
-} from "@ionic/react";
+import { IonButtonCustomEvent, IonCheckboxCustomEvent } from "@ionic/core";
+import { CheckboxChangeEventDetail } from "@ionic/react";
 import { IonicReactProps } from "@ionic/react/dist/types/components/IonicReactProps";
 import { DOMAttributes } from "react";
 

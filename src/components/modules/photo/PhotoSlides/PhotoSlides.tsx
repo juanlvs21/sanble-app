@@ -80,7 +80,7 @@ export const PhotoSlides = ({
     setShowDescription((state) => !state);
   };
 
-  const handleSlideDidChange = async (event: any) => {
+  const onActiveChange = async (event: any) => {
     handleSetActivePhoto(photographs[event.activeIndex]);
   };
 
@@ -90,7 +90,7 @@ export const PhotoSlides = ({
         <Swiper
           ref={slidesRef}
           className={`${styles.photoContainer} ${classNameSlides} animate__animated animate__fadeIn`}
-          onActiveIndexChange={handleSlideDidChange}
+          onActiveIndexChange={onActiveChange}
           {...slideOpts}
         >
           {photographs.map((photo, i) => (
