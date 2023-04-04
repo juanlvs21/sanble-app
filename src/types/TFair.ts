@@ -18,7 +18,7 @@ export type TFair = {
   name: string;
   geopoint?: LatLngTuple;
   creationTime: string;
-  celebrationDate: string;
+  celebrationDate?: string;
   owner: TFireBaseDocRefBasic;
   address: string;
   description: string;
@@ -37,4 +37,16 @@ export type TFairGeo = {
   geopoint?: LatLngTuple;
   stars: number;
   type: EFairType; // TODO: We can distinguish the marker icon depending on the type of fair
+};
+
+export type TFairForm = {
+  id?: string;
+  name: string;
+  geopoint?: LatLngTuple;
+  celebrationDate?: string;
+  address: string;
+  description: string;
+  type?: EFairType;
+  contactEmail: string;
+  contactPhone: string;
 };

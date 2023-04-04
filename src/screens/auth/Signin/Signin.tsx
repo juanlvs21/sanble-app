@@ -55,7 +55,7 @@ export const Signin = () => {
             name="email"
             inputmode="email"
             Icon={<BiEnvelope />}
-            onIonChange={handleChange}
+            onIonInput={handleChange}
             onIonBlur={handleBlur}
             disabled={isSubmitting}
             value={values.email}
@@ -64,7 +64,7 @@ export const Signin = () => {
           />
           <InputPassword
             name="password"
-            onIonChange={handleChange}
+            onIonInput={handleChange}
             onIonBlur={handleBlur}
             disabled={isSubmitting}
             value={values.password}

@@ -36,6 +36,7 @@ export const useSWRLists = <T = any>(
     lastIndex: paramsDefault.lastIndex,
     limit: paramsDefault.limit,
   });
+  const [isEmpty, setIsEmpty] = useState(false);
 
   const { isLoading, mutate } = useSWRImmutable<any>(
     SWRKey,
@@ -47,7 +48,7 @@ export const useSWRLists = <T = any>(
     {
       onSuccess(data) {
         if (data) {
-          const newList =
+          const newList: T[] =
             pagination.lastIndex != 0
               ? infiteScrollData(
                   "id",
@@ -58,6 +59,7 @@ export const useSWRLists = <T = any>(
                 )
               : data.list;
 
+          setIsEmpty(!newList.length);
           setList(newList);
           setPagination(data.pagination);
         }
@@ -108,6 +110,7 @@ export const useSWRLists = <T = any>(
     orderBy: order.orderBy,
     orderDir: order.orderDir,
     isLoading,
+    isEmpty,
     handleRefresh,
     handleInfinite,
     handleShorting,

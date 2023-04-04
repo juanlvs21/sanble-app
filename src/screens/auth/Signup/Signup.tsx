@@ -54,7 +54,7 @@ export const Signup = () => {
             placeholder="Nombre"
             name="name"
             Icon={<BiUser />}
-            onIonChange={handleChange}
+            onIonInput={handleChange}
             onIonBlur={handleBlur}
             disabled={isSubmitting}
             value={values.name}
@@ -67,7 +67,7 @@ export const Signup = () => {
             name="email"
             inputmode="email"
             Icon={<BiEnvelope />}
-            onIonChange={handleChange}
+            onIonInput={handleChange}
             onIonBlur={handleBlur}
             disabled={isSubmitting}
             value={values.email}
@@ -76,7 +76,7 @@ export const Signup = () => {
           />
           <InputPassword
             name="password"
-            onIonChange={handleChange}
+            onIonInput={handleChange}
             onIonBlur={handleBlur}
             disabled={isSubmitting}
             value={values.password}

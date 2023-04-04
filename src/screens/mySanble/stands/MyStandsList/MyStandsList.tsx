@@ -1,7 +1,9 @@
 import { useIonActionSheet } from "@ionic/react";
 import { BiFilterAlt } from "react-icons/bi";
+import { IoMdAddCircle } from "react-icons/io";
 import { useDocumentTitle } from "usehooks-ts";
 
+import { EmptyList } from "@/components/common/EmptyList";
 import { Fetcher } from "@/components/common/Fetcher";
 import { Skeleton } from "@/components/common/Skeleton";
 import { Button } from "@/components/common/buttons/Button";
@@ -22,6 +24,7 @@ export const MyStandsList = () => {
     orderBy,
     orderDir,
     isLoading,
+    isEmpty,
     handleRefresh,
     handleInfinite,
     handleShorting,
@@ -96,27 +99,40 @@ export const MyStandsList = () => {
         classNameSection="animate__animated animate__screenInUp"
         isLoading={isLoading || isLoading}
       >
-        <div
-          className={`dataListContainer ${isCapacitor ? "isCapacitor" : ""}`}
-        >
-          {(isLoading && !list.length) || isLoading
-            ? Array(6)
-                .fill(0)
-                .map((_, i) => (
-                  <Skeleton
-                    key={i}
-                    height={130}
-                    className={styles.standListCardSkeleton}
+        <>
+          {isEmpty && (
+            <EmptyList
+              title="No tienes Stands Creados"
+              subtitle={
+                <>
+                  Te invitamos a crear un nuevo stand usando el boton{" "}
+                  <IoMdAddCircle size={24} />
+                </>
+              }
+            />
+          )}
+          <div
+            className={`dataListContainer ${isCapacitor ? "isCapacitor" : ""} `}
+          >
+            {(isLoading && !list.length) || isLoading
+              ? Array(6)
+                  .fill(0)
+                  .map((_, i) => (
+                    <Skeleton
+                      key={i}
+                      height={130}
+                      className={styles.standListCardSkeleton}
+                    />
+                  ))
+              : list.map((stand) => (
+                  <StandCardList
+                    key={stand.id}
+                    stand={stand}
+                    goBackUrl={ERoutesName.MY_SANBLE_STANDS}
                   />
-                ))
-            : list.map((stand) => (
-                <StandCardList
-                  key={stand.id}
-                  stand={stand}
-                  goBackUrl={ERoutesName.MY_SANBLE_STANDS}
-                />
-              ))}
-        </div>
+                ))}
+          </div>
+        </>
       </Fetcher>
     </>
   );

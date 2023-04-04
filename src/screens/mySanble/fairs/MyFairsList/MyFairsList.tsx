@@ -1,9 +1,10 @@
 import { IonFab, IonFabButton, useIonActionSheet } from "@ionic/react";
 import { BiFilterAlt } from "react-icons/bi";
-import { IoMdAdd } from "react-icons/io";
+import { IoMdAdd, IoMdAddCircle } from "react-icons/io";
 import { Link } from "react-router-dom";
 import { useDocumentTitle } from "usehooks-ts";
 
+import { EmptyList } from "@/components/common/EmptyList";
 import { Fetcher } from "@/components/common/Fetcher";
 import { Skeleton } from "@/components/common/Skeleton";
 import { Button } from "@/components/common/buttons/Button";
@@ -24,6 +25,7 @@ export const MyFairsList = () => {
     orderBy,
     orderDir,
     isLoading,
+    isEmpty,
     handleRefresh,
     handleInfinite,
     handleShorting,
@@ -119,27 +121,40 @@ export const MyFairsList = () => {
         classNameSection="animate__animated animate__screenInUp"
         isLoading={isLoading || isLoading}
       >
-        <div
-          className={`dataListContainer ${isCapacitor ? "isCapacitor" : ""}`}
-        >
-          {(isLoading && !list.length) || isLoading
-            ? Array(6)
-                .fill(0)
-                .map((_, i) => (
-                  <Skeleton
-                    key={i}
-                    height={130}
-                    className={styles.fairListCardSkeleton}
+        <>
+          {isEmpty && (
+            <EmptyList
+              title="No tienes Ferias Creadas"
+              subtitle={
+                <>
+                  Te invitamos a crear una nueva feria usando el boton{" "}
+                  <IoMdAddCircle size={24} />
+                </>
+              }
+            />
+          )}
+          <div
+            className={`dataListContainer ${isCapacitor ? "isCapacitor" : ""} `}
+          >
+            {(isLoading && !list.length) || isLoading
+              ? Array(6)
+                  .fill(0)
+                  .map((_, i) => (
+                    <Skeleton
+                      key={i}
+                      height={130}
+                      className={styles.fairListCardSkeleton}
+                    />
+                  ))
+              : list.map((fair) => (
+                  <FairCardList
+                    key={fair.id}
+                    fair={fair}
+                    goBackUrl={ERoutesName.MY_SANBLE_FAIRS}
                   />
-                ))
-            : list.map((fair) => (
-                <FairCardList
-                  key={fair.id}
-                  fair={fair}
-                  goBackUrl={ERoutesName.MY_SANBLE_FAIRS}
-                />
-              ))}
-        </div>
+                ))}
+          </div>
+        </>
       </Fetcher>
     </>
   );

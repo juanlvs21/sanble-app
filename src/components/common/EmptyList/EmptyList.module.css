@@ -1,0 +1,35 @@
+.emptyMessage {
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  pointer-events: none;
+  margin: 30px;
+}
+
+.emptyMessageTitle {
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.emptyMessageTitle.withSubtitle {
+  margin-bottom: 0;
+}
+
+.emptyMessageSubtitle {
+  margin-bottom: 20px;
+  margin-top: 0;
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+}
+
+.emptyMessageSubtitle svg {
+  margin-left: 10px;
+}
+
+@media (max-width: 500px) {
+  .emptyMessageSubtitle {
+    flex-direction: column;
+  }
+}

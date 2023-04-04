@@ -1,0 +1,10 @@
+.datetimeModal {
+  width: auto;
+  height: auto;
+}
+
+.datetimeModal::part(content) {
+  width: auto;
+  height: auto;
+  border-radius: var(--sanble-border-radius);
+}

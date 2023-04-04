@@ -149,7 +149,10 @@ ion-item.inputItem.textareItem {
 ion-item.inputItem.textareItem::part(native),
 ion-item.inputItem.textareItem textarea {
   height: auto;
-  overflow-y: auto;
+}
+
+ion-item.inputItem.textareItem.inputWithIcon textarea {
+  padding-left: 45px;
 }
 
 ion-item.inputItem.textareItem {
@@ -176,6 +179,10 @@ ion-item.inputItem.inputCheckbox {
 ion-item.inputItem.inputCheckbox ion-label {
   color: #8e8d8d;
   margin-top: 13px !important;
+}
+
+ion-item.inputItem.inputSelect ion-select {
+  width: 100%;
 }
 
 ion-button.button-block {
@@ -252,10 +259,6 @@ ion-action-sheet .action-sheet-wrapper {
 
 ion-loading .loading-wrapper {
   background-color: transparent !important;
-}
-
-form {
-  width: 100%;
 }
 
 /* List Data */

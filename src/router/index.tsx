@@ -90,6 +90,11 @@ const MySanbleFairsScreen = lazy(() =>
     default: MyFairsList,
   }))
 );
+const MySanbleNewFairScreen = lazy(() =>
+  import("@/screens/mySanble/fairs/NewFair").then(({ NewFair }) => ({
+    default: NewFair,
+  }))
+);
 const MySanbleStandsScreen = lazy(() =>
   import("@/screens/mySanble/stands/MyStandsList").then(({ MyStandsList }) => ({
     default: MyStandsList,
@@ -181,6 +186,15 @@ export const router = createBrowserRouter([
                 ),
               },
             ],
+          },
+          {
+            path: ERoutesName.MY_SANBLE_FAIRS_NEW,
+            errorElement: <ErrorScreen />,
+            element: (
+              <SuspenseComponent>
+                <MySanbleNewFairScreen />
+              </SuspenseComponent>
+            ),
           },
           {
             path: ERoutesName.FAVORITES_LIST,
