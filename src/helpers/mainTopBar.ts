@@ -80,7 +80,6 @@ export const getPropsTopBarMain = (
     [ERoutesName.MY_SANBLE_FAIRS_NEW]: {
       title: "Nueva Feria",
       startGoBack: true,
-      titleLight: true,
       sticky: true,
     },
     [ERoutesName.MY_SANBLE_STANDS]: {

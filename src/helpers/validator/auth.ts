@@ -11,7 +11,7 @@ export const signUpSchema = yup.object({
   email: yup
     .string()
     .required("Ingrese su correo electrónico")
-    .email("Ingrese un correo el electrónico valido")
+    .email("Ingrese un correo el electrónico válido")
     .max(
       lengthMax,
       `El correo electrónico debe tener máximo ${lengthMax} caracteres`
@@ -27,6 +27,6 @@ export const signInSchema = yup.object({
   email: yup
     .string()
     .required("Ingrese su correo electrónico")
-    .email("Ingrese un correo el electrónico valido"),
+    .email("Ingrese un correo el electrónico válido"),
   password: yup.string().required("Ingrese su contraseña"),
 });

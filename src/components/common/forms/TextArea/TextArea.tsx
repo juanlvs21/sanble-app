@@ -22,7 +22,12 @@ export const TextArea = ({
       </span>
     )}
     <IonTextarea {...rest} />
-    <IonNote slot={helperIsError ? "error" : "helper"}>{helper}</IonNote>
+    <IonNote
+      slot={helperIsError ? "error" : "helper"}
+      className="textAreaError"
+    >
+      {helper}
+    </IonNote>
     {rest.maxlength && (
       <IonNote slot="helper">
         {rest?.value?.toString().length}/{rest.maxlength}

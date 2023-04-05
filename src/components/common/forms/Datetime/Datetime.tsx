@@ -25,8 +25,17 @@ export type ComponentProps = typeof IonInput.defaultProps &
      * Show error
      */
     helperIsError?: boolean;
+    /**
+     * Set datetime value in input text value
+     */
     onSetValue?: (e: IonDatetimeCustomEvent<DatetimeChangeEventDetail>) => void;
+    /**
+     * Modal props
+     */
     modalProps?: typeof IonModal.defaultProps;
+    /**
+     * Datetime props
+     */
     datetimeProps?: typeof IonDatetime.defaultProps;
   };
 
@@ -45,6 +54,7 @@ export const Datetime = ({
     e: IonDatetimeCustomEvent<DatetimeChangeEventDetail>
   ) => {
     if (onSetValue) {
+      e.target.name = rest.name || "";
       onSetValue(e);
       setOpen(false);
     }
@@ -77,7 +87,7 @@ export const Datetime = ({
           showDefaultButtons
           doneText="Aceptar"
           cancelText="Cancelar"
-          // onIonChange={handleChange}
+          onIonChange={handleChange}
           onIonCancel={() => setOpen(false)}
         />
       </IonModal>

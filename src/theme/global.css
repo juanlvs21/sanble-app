@@ -171,6 +171,10 @@ ion-item.inputItem.textareItem textarea {
   padding: 10px;
 }
 
+ion-item.inputItem.textareItem .textAreaError {
+  margin-left: 45px;
+}
+
 ion-item.inputItem.inputCheckbox {
   --background: transparent;
   --border-color: transparent;
@@ -185,11 +189,11 @@ ion-item.inputItem.inputSelect ion-select {
   width: 100%;
 }
 
-ion-button.button-block {
+/* ion-button.button-block {
   width: 100% !important;
   color: #57bbc1;
   color: #015871;
-}
+} */
 
 ion-button {
   border-radius: var(--sanble-border-radius);

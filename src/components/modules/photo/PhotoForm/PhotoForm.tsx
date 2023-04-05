@@ -186,7 +186,7 @@ export const PhotoForm = ({
           expand="block"
           color="primary"
           type="submit"
-          disabled={isSubmitting || isLoading}
+          isLoading={isSubmitting || isLoading}
           className={styles.photoFormBtn}
         >
           {photo ? "Editar" : "Publicar"}

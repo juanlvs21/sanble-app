@@ -1,4 +1,5 @@
 import { IonContent, IonModal } from "@ionic/react";
+import { parsePhoneNumberFromString } from "libphonenumber-js";
 import { useRef } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import { BiEnvelope } from "react-icons/bi";
@@ -41,7 +42,10 @@ export const InfoModal = ({
   const { toast, toastDismiss } = useToast();
   const modalInfo = useRef<HTMLIonModalElement>(null);
 
-  const handleCopyClipBoard = (text: string, message = "Texto copiado") => {
+  const handleCopyClipBoard = (
+    text: string = "",
+    message = "Texto copiado"
+  ) => {
     toastDismiss();
 
     navigator.clipboard.writeText(text);
@@ -84,11 +88,16 @@ export const InfoModal = ({
           {contactPhone && (
             <p
               onClick={() =>
-                handleCopyClipBoard(contactPhone, "Número de teléfono copiado")
+                handleCopyClipBoard(
+                  parsePhoneNumberFromString(contactPhone, "VE")?.number,
+                  "Número de teléfono copiado"
+                )
               }
             >
               <FiPhone size={20} />
-              <span>{contactPhone}</span>
+              <span>
+                {parsePhoneNumberFromString(contactPhone, "VE")?.number}
+              </span>
             </p>
           )}
           {contactEmail && (
