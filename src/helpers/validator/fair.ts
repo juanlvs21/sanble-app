@@ -2,6 +2,7 @@ import * as yup from "yup";
 import { parsePhoneNumberFromString } from "libphonenumber-js";
 
 import { EFairType } from "@/types/TFair";
+import { prefixPhoneVE } from "@/helpers/prefixPhoneVE";
 
 const lengthMaxLong = 500;
 const lengthMaxShort = 40;
@@ -42,9 +43,26 @@ export const newFairSchema = yup.object({
     .string()
     .required("Ingrese un teléfono de contacto")
     .transform((value) =>
-      parsePhoneNumberFromString(value, "VE")?.nationalNumber
+      (parsePhoneNumberFromString(value, "VE")?.nationalNumber
         ? parsePhoneNumberFromString(value, "VE")?.nationalNumber
         : value
+      ).slice(0, 10)
+    )
+    .test(
+      "valid-phone-ve",
+      "Ingrese un teléfono válido para Venezuela",
+      (value = "") => {
+        const parsedNumber = parsePhoneNumberFromString(value, "VE");
+
+        if (!Boolean(parsedNumber)) return false;
+        else {
+          return prefixPhoneVE.includes(
+            (parsedNumber?.nationalNumber || "").slice(0, 3)
+          );
+        }
+
+        return true;
+      }
     )
     .min(lengthMaxPhone, `El teléfono debe tener ${lengthMaxPhone} digitos`)
     .max(lengthMaxPhone, `El teléfono debe tener ${lengthMaxPhone} digitos`),

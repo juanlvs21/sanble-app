@@ -1,24 +1,15 @@
-import { Icon, LatLngTuple } from "leaflet";
+import { LatLngTuple } from "leaflet";
 import { useEffect, useState } from "react";
 import { TbMapOff } from "react-icons/tb";
-import {
-  MapContainer,
-  Marker,
-  TileLayer,
-  Tooltip /* Popup */,
-} from "react-leaflet";
+import { MapContainer, TileLayer, Tooltip /* Popup */ } from "react-leaflet";
 
 import "leaflet/dist/leaflet.css";
 
 import { SpinnerFullScreen } from "@/components/common/loaders/SpinnerFullScreen";
+import { MapMarker } from "@/components/modules/geolocation/MapMarker";
 import { useGeolocation } from "@/hooks/useGeolocation";
 import { EMapIcon, TMapMarker } from "@/types/TMap";
 import styles from "./Map.module.css";
-
-const userPin = new Icon({
-  iconUrl: `/assets/icon/${EMapIcon.USER_PRIMARY}.svg`,
-  iconSize: [50, 50],
-});
 
 export type ComponentProps = {
   /**
@@ -31,6 +22,14 @@ export type ComponentProps = {
    * @default []
    */
   markers?: TMapMarker[];
+  /**
+   * Main marker drag event
+   */
+  draggableMarkerEvent?: (latlng: LatLngTuple) => void;
+  /**
+   * Main marker drag tooltip text
+   */
+  DraggableMarkerTooltip?: React.ReactNode;
   /**
    * Error message
    */
@@ -53,6 +52,8 @@ export const Map = ({
   markers = [],
   isLoading = false,
   classNameSpinner = "",
+  DraggableMarkerTooltip,
+  draggableMarkerEvent,
 }: ComponentProps) => {
   const { userPosition, isGettingPosition, error, getCurrentPosition } =
     useGeolocation();
@@ -90,59 +91,45 @@ export const Map = ({
             attribution="&copy;<b>Sanble</b>"
           />
 
-          <Marker
-            position={[userPosition.latitude, userPosition.longitude]}
-            icon={userPin}
-          >
-            {/* <Popup>
-            <div className={styles.mapTooltipContent}>
-              <span>Tu ubicación actual</span>
-            </div>
-          </Popup> */}
-            <Tooltip direction="bottom" offset={[0, 30]} permanent>
-              <div className={styles.mapTooltipContent}>
-                <b>Tu ubicación actual</b>
-              </div>
-            </Tooltip>
-          </Marker>
+          {draggableMarkerEvent ? (
+            <MapMarker
+              position={[userPosition.latitude, userPosition.longitude]}
+              icon={EMapIcon.GENERIC_PRIMARY}
+              draggableMarkerEvent={draggableMarkerEvent}
+              Tooltip={DraggableMarkerTooltip}
+            />
+          ) : (
+            <MapMarker
+              position={[userPosition.latitude, userPosition.longitude]}
+              icon={EMapIcon.USER_PRIMARY}
+              Tooltip={
+                <Tooltip direction="bottom" offset={[0, 30]} permanent>
+                  <b>Tu ubicación actual</b>
+                </Tooltip>
+              }
+            />
+          )}
 
           {markers.map((marker: TMapMarker) => (
-            <Marker
+            <MapMarker
               key={marker.id}
               position={marker.position}
-              icon={
-                new Icon({
-                  iconUrl: `/assets/icon/${
-                    marker.icon || EMapIcon.GENERIC_SECONDARY
-                  }.svg`,
-                  iconSize: [50, 50],
-                })
-              }
-            >
-              {/* <Popup>
-              <div
-                className={styles.mapTooltipContent}
-                onClick={() => alert("TEST")}
-              >
-                <span>{marker.title}</span>
-                {marker.additional}
-              </div>
-            </Popup> */}
-              <Tooltip
-                direction="bottom"
-                offset={[0, 30]}
-                eventHandlers={{
-                  click: marker.onClick || undefined,
-                }}
-                interactive
-                permanent
-              >
-                <div className={styles.mapTooltipContent}>
+              icon={marker.icon}
+              Tooltip={
+                <Tooltip
+                  direction="bottom"
+                  offset={[0, 30]}
+                  eventHandlers={{
+                    click: marker.onClick || undefined,
+                  }}
+                  interactive
+                  permanent
+                >
                   <b>{marker.title}</b>
                   {marker.onClick && <small>Ver detalles</small>}
-                </div>
-              </Tooltip>
-            </Marker>
+                </Tooltip>
+              }
+            />
           ))}
         </MapContainer>
       )}

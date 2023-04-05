@@ -1,7 +1,7 @@
 import { AxiosRequestConfig, AxiosResponse } from "axios";
 
 import { api } from "@/services";
-import { TFair } from "@/types/TFair";
+import { TFair, TFairForm } from "@/types/TFair";
 import { TResponseList } from "@/types/THttp";
 import { TGetListParams } from "@/types/TRequest";
 import { TStand } from "@/types/TStand";
@@ -22,6 +22,11 @@ export const getMySanbleFairListRequest = (
         limit: params?.limit || 9,
       },
     })
+    .then(({ data }) => data.data);
+
+export const saveFairRequest = (values: TFairForm) =>
+  api
+    .post<AxiosResponse<TFair>>(`${URL_PREFIX}/fairs`, values)
     .then(({ data }) => data.data);
 
 export const getMySanbleStandListRequest = (

@@ -10,6 +10,12 @@
   justify-content: center;
 }
 
+.newFairMapModal {
+  --width: 100%;
+  --height: 100vh;
+  --border-radius: 0;
+}
+
 @media (max-width: 768px) {
   .newFairContainer {
     overflow-y: auto;

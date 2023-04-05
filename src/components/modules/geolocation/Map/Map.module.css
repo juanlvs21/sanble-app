@@ -8,14 +8,6 @@
   top: 0;
 }
 
-.mapTooltipContent {
-  padding: 5px 10px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
 .mapError {
   height: 100%;
   display: flex;

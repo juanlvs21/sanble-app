@@ -44,6 +44,7 @@ export const useFairDetails = (
     async () => await getFairDetailsRequest(fairID),
     {
       onSuccess(data) {
+        console.log({ data });
         setTimeout(() => {
           if (data && activePhoto && slidesPhotoRef) {
             slidesPhotoRef.current?.swiper?.slideTo(
@@ -54,7 +55,6 @@ export const useFairDetails = (
         }, 100);
       },
       onError(error) {
-        console.log({ error });
         toastDismiss(SWR_KEY_FAIRS_DETAILS);
         toast(error, { type: "error", toastId: SWR_KEY_FAIRS_DETAILS });
       },

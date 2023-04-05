@@ -30,7 +30,7 @@ export type ComponentProps = {
   handleSave: (
     values: TPhotographForm,
     formikHelpers: FormikHelpers<TPhotographForm>
-  ) => void | Promise<any>;
+  ) => void | Promise<void>;
   /**
    * Allowed file types in the file input
    *
