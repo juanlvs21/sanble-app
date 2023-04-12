@@ -18,6 +18,7 @@
     "cap:open": "ionic capacitor open android",
     "cap:run": "ionic capacitor run android",
     "cap:run:live": "ionic capacitor run android -l --external",
+    "cap:gen-icon": "npx cordova-res android --skip-config --icon  --copy",
     "gen:apk": "npm run cap:sync && cd android && ./gradlew assembleDebug"
   },
   "dependencies": {
