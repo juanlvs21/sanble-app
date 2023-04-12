@@ -1,6 +1,6 @@
 import { GoogleAuth } from "@codetrix-studio/capacitor-google-auth";
-import { useLocation, useMatch, useNavigate } from "react-router-dom";
 import { useIonLoading } from "@ionic/react";
+import { useLocation, useMatch, useNavigate } from "react-router-dom";
 
 import {
   auth,
@@ -40,8 +40,6 @@ export const useAuth = () => {
   const matchSignup = useMatch(ERoutesName.SESSION_SIGNUP);
 
   const handleLoadUser = async () => {
-    // presentLoading();
-
     try {
       const userRes = await getUserDataRequest();
       setUser(userRes);
