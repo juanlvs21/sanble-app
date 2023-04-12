@@ -1151,6 +1151,11 @@
   resolved "https://registry.yarnpkg.com/@capacitor/app/-/app-4.1.1.tgz#47329e19ecc080bc2934be86566a7673e0f94e5c"
   integrity sha512-SJcJA1rhFQyeH6eLfUEbdKkHzAwzahJNVPNXmU88fdmXpMgM2dJGzZj1vrm6e21aQq+Z4aBVLJ2RCdj92zD7wg==
 
+"@capacitor/camera@4.1.4":
+  version "4.1.4"
+  resolved "https://registry.yarnpkg.com/@capacitor/camera/-/camera-4.1.4.tgz#5d019f88d1f3547b537270e35bcb96084eb48df6"
+  integrity sha512-7f4n7PlnstYsdGyxc0Kc4hIyS6csFLOjXvffm7pJsuy9pSo+kfdOPdYgGg360QwbUAmA+Yv+J1ZW1eFIwgvWrQ==
+
 "@capacitor/cli@4.3.0":
   version "4.3.0"
   resolved "https://registry.npmjs.org/@capacitor/cli/-/cli-4.3.0.tgz"
@@ -1664,6 +1669,11 @@
     "@stencil/core" "^3.1.0"
     ionicons "^7.1.0"
     tslib "^2.1.0"
+
+"@ionic/pwa-elements@3.1.1":
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/@ionic/pwa-elements/-/pwa-elements-3.1.1.tgz#ae1a97260886545b3285364974674576f2b090a7"
+  integrity sha512-BoEX1pSrKn5dP4VQwaf8DweAmT4ynmpW+9f6oj/W1xLe54bmuXcUY07ziuZX1DLu50xHSYcO5qJ/dbYC/w6wgA==
 
 "@ionic/react@7.0.0":
   version "7.0.0"

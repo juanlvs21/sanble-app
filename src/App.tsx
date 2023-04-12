@@ -1,6 +1,5 @@
 import { IonApp, setupIonicReact } from "@ionic/react";
-import { lazy } from "react";
-import { BrowserRouter, RouterProvider } from "react-router-dom";
+import { RouterProvider } from "react-router-dom";
 
 import "react-toastify/dist/ReactToastify.css";
 

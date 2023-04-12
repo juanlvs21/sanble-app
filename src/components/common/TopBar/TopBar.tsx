@@ -112,7 +112,7 @@ export const TopBar = ({
         <IonTitle
           className={`${styles.topBarTitle} ${
             titleLight ? styles.topBarTitleLight : ""
-          } ${
+          } ${isCapacitor ? styles.isCapacitor : ""} ${
             (sticky && scrollTop > 25) || stickyNoScroll ? styles.sticky : ""
           }  animate__animated animate__fadeIn`}
           style={{ fontSize: titleSize }}

@@ -23,6 +23,7 @@
   "dependencies": {
     "@capacitor/android": "4.7.3",
     "@capacitor/app": "4.1.1",
+    "@capacitor/camera": "4.1.4",
     "@capacitor/core": "4.7.3",
     "@capacitor/geolocation": "4.0.1",
     "@capacitor/haptics": "4.1.0",
@@ -32,6 +33,7 @@
     "@capacitor/status-bar": "4.1.1",
     "@codetrix-studio/capacitor-google-auth": "3.2.2",
     "@ionic/core": "7.0.0",
+    "@ionic/pwa-elements": "3.1.1",
     "@ionic/react": "7.0.0",
     "axios": "0.27.2",
     "dayjs": "1.11.5",

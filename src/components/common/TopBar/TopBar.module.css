@@ -40,6 +40,10 @@
   --padding-top: 70px;
 }
 
+.topBarTitle.sticky.isCapacitor {
+  margin-top: 30px;
+}
+
 .topBarProgressBar {
   top: 0;
 }
@@ -49,6 +53,10 @@
   font-family: "Quicksand";
   font-weight: 700;
   padding: 10px 5px;
+}
+
+.topBarTitle.isCapacitor {
+  margin-top: 15px;
 }
 
 .topBarTitleLight {

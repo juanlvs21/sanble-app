@@ -37,10 +37,14 @@
   align-items: center;
   flex-direction: column;
   padding: 20px 10px;
-  height: 407px;
+  height: 410px;
   text-align: center;
   background-color: rgba(0, 0, 0, 0.5) !important;
   transition: all 400ms ease-in-out;
+}
+
+.photoFormFile.isCapacitor {
+  height: 330px;
 }
 
 .photoFormFile p {
@@ -64,6 +68,10 @@
 
 .photoFormBtn {
   margin-top: 50px;
+}
+
+.photoCameraBtn {
+  margin-top: 30px;
 }
 
 .photoFormSpinner {
