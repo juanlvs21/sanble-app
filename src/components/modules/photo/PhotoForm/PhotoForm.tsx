@@ -116,27 +116,34 @@ export const PhotoForm = ({
 
   const handleOpenCamera = async () => {
     try {
-      const image = await Camera.getPhoto({
-        quality: 100,
-        resultType: CameraResultType.Base64,
-        promptLabelHeader: "Seleccionar imagen",
-        promptLabelPicture: "Usar Cámara",
-        promptLabelPhoto: "Usar Galería",
-        promptLabelCancel: "Cancelar",
-        saveToGallery: true,
-      });
+      const permissions = await Camera.requestPermissions();
 
-      const time = new Date().getTime();
+      if (
+        permissions.photos === "granted" &&
+        permissions.camera === "granted"
+      ) {
+        const image = await Camera.getPhoto({
+          quality: 100,
+          resultType: CameraResultType.Base64,
+          promptLabelHeader: "Seleccionar imagen",
+          promptLabelPicture: "Usar Cámara",
+          promptLabelPhoto: "Usar Galería",
+          promptLabelCancel: "Cancelar",
+          saveToGallery: true,
+        });
 
-      const blob = base64StringToBlob(image.base64String ?? "");
+        const time = new Date().getTime();
 
-      const file = new File([blob], `${time}.${image.format}`, {
-        lastModified: time,
-        type: blob.type,
-      });
+        const blob = base64StringToBlob(image.base64String ?? "");
 
-      setFieldValue("image", file);
-      setReviewSrc(URL.createObjectURL(blob));
+        const file = new File([blob], `${time}.${image.format}`, {
+          lastModified: time,
+          type: blob.type,
+        });
+
+        setFieldValue("image", file);
+        setReviewSrc(URL.createObjectURL(blob));
+      }
     } catch (error) {
       console.error({ error });
       setErrorCamera(false);
