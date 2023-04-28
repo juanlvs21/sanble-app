@@ -60,8 +60,6 @@ export const newFairSchema = yup.object({
             (parsedNumber?.nationalNumber || "").slice(0, 3)
           );
         }
-
-        return true;
       }
     )
     .min(lengthMaxPhone, `El teléfono debe tener ${lengthMaxPhone} digitos`)

@@ -1,23 +1,27 @@
-.newFairContainer {
+.formFairContainer {
   padding: 15px 25px;
   overflow-y: auto;
   height: calc(100vh - 62px);
   margin-top: 62px;
 }
 
-.newFairNextRow {
+.formFairNextRow {
   display: flex;
   justify-content: center;
 }
 
-.newFairMapModal {
+.formFairMapModal {
   --width: 100%;
   --height: 100vh;
   --border-radius: 0;
 }
 
+.formFairTextArea textarea {
+  height: 120px !important;
+}
+
 @media (max-width: 768px) {
-  .newFairContainer {
+  .formFairContainer {
     overflow-y: auto;
     height: calc(100vh - 91px);
     margin-top: 91px;

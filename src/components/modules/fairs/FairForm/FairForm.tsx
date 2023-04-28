@@ -108,7 +108,7 @@ export const FairForm = ({
 
   return (
     <form
-      className={styles.newFairContainer}
+      className={styles.formFairContainer}
       onSubmit={handleSubmit}
       onKeyUp={(e) => e.key === "Enter" && handleSubmit()}
     >
@@ -166,6 +166,7 @@ export const FairForm = ({
               onIonBlur={handleBlur}
               value={values.description}
               helper={getErrorMessage("description", touched, errors)}
+              className={styles.formFairTextArea}
               maxlength={500}
               helperIsError
             />
@@ -208,11 +209,12 @@ export const FairForm = ({
               value={values.address}
               helper={getErrorMessage("address", touched, errors)}
               maxlength={500}
+              className={styles.formFairTextArea}
               helperIsError
             />
           </IonCol>
         </IonRow>
-        <IonRow className={styles.newFairNextRow}>
+        <IonRow className={styles.formFairNextRow}>
           <IonCol size="12" size-sm="6">
             <Button expand="block" color="primary" type="submit">
               Siguiente
@@ -221,7 +223,7 @@ export const FairForm = ({
         </IonRow>
       </IonGrid>
 
-      <IonModal isOpen={openMapModal} className={styles.newFairMapModal}>
+      <IonModal isOpen={openMapModal} className={styles.formFairMapModal}>
         <IonHeader>
           <IonToolbar>
             <IonButtons slot="start">
