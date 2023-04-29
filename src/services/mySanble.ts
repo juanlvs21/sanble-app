@@ -4,7 +4,7 @@ import { api } from "@/services";
 import { TFair, TFairForm } from "@/types/TFair";
 import { TResponseList } from "@/types/THttp";
 import { TGetListParams } from "@/types/TRequest";
-import { TStand } from "@/types/TStand";
+import { TStand, TStandForm } from "@/types/TStand";
 
 const URL_PREFIX = "/my-sanble";
 
@@ -43,4 +43,9 @@ export const getMySanbleStandListRequest = (
         limit: params?.limit || 9,
       },
     })
+    .then(({ data }) => data.data);
+
+export const saveStandRequest = (values: TStandForm) =>
+  api
+    .post<AxiosResponse<TStand>>(`${URL_PREFIX}/stands`, values)
     .then(({ data }) => data.data);

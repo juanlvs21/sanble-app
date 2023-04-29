@@ -47,6 +47,6 @@ export type TFairForm = {
   address: string;
   description: string;
   type?: EFairType;
-  contactEmail: string;
+  contactEmail?: string;
   contactPhone: string;
 };

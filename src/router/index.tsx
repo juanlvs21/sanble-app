@@ -100,6 +100,11 @@ const MySanbleStandsScreen = lazy(() =>
     default: MyStandsList,
   }))
 );
+const MySanbleNewStandScreen = lazy(() =>
+  import("@/screens/mySanble/stands/NewStand").then(({ NewStand }) => ({
+    default: NewStand,
+  }))
+);
 
 const ErrorScreen = () => <h1 style={{ marginTop: 300 }}>Error :c :c</h1>;
 
@@ -193,6 +198,15 @@ export const router = createBrowserRouter([
             element: (
               <SuspenseComponent>
                 <MySanbleNewFairScreen />
+              </SuspenseComponent>
+            ),
+          },
+          {
+            path: ERoutesName.MY_SANBLE_STANDS_NEW,
+            errorElement: <ErrorScreen />,
+            element: (
+              <SuspenseComponent>
+                <MySanbleNewStandScreen />
               </SuspenseComponent>
             ),
           },

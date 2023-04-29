@@ -1,6 +1,6 @@
-import { useIonActionSheet } from "@ionic/react";
+import { IonFab, IonFabButton, useIonActionSheet } from "@ionic/react";
 import { BiFilterAlt } from "react-icons/bi";
-import { IoMdAddCircle } from "react-icons/io";
+import { IoMdAdd, IoMdAddCircle } from "react-icons/io";
 import { useDocumentTitle } from "usehooks-ts";
 
 import { EmptyList } from "@/components/common/EmptyList";
@@ -13,6 +13,7 @@ import { useApp } from "@/hooks/useApp";
 import { useTopBarMain } from "@/hooks/useTopBarMain";
 import { ERoutesName } from "@/types/TRoutes";
 import styles from "./MyStandsList.module.css";
+import { Link } from "react-router-dom";
 
 export const MyStandsList = () => {
   useDocumentTitle("Lista de Mis Stands 🛒");
@@ -92,6 +93,19 @@ export const MyStandsList = () => {
           <BiFilterAlt size={24} />
         </Button>
       )}
+
+      <IonFab
+        slot="fixed"
+        vertical="bottom"
+        horizontal="end"
+        className={`${styles.standFloatBtn} animate__animated animate__fadeIn`}
+      >
+        <Link to={ERoutesName.MY_SANBLE_STANDS_NEW}>
+          <IonFabButton color="secondary">
+            <IoMdAdd size={28} />
+          </IonFabButton>
+        </Link>
+      </IonFab>
 
       <Fetcher
         handleRefresh={handleRefresh}

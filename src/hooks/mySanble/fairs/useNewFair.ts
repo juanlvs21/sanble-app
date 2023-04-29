@@ -41,8 +41,6 @@ export const useNewFair = () => {
 
       const fair = await saveFairRequest(formValues);
 
-      console.log({ fair });
-
       toast("Feria creada exitosamente", { type: "success" });
 
       navigate(`${ERoutesName.FAIRS_LIST}/${fair.id}`, {

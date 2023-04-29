@@ -82,6 +82,11 @@ export const getPropsTopBarMain = (
       startGoBack: true,
       sticky: true,
     },
+    [ERoutesName.MY_SANBLE_STANDS_NEW]: {
+      title: "Nuevo Stand",
+      startGoBack: true,
+      sticky: true,
+    },
     [ERoutesName.MY_SANBLE_STANDS]: {
       title: "Mis Stands",
       startUser: true,

@@ -1,0 +1,23 @@
+.formStandContainer {
+  padding: 15px 25px;
+  overflow-y: auto;
+  height: calc(100vh - 62px);
+  margin-top: 62px;
+}
+
+.formStandNextRow {
+  display: flex;
+  justify-content: center;
+}
+
+.formStandTextArea textarea {
+  height: 120px !important;
+}
+
+@media (max-width: 768px) {
+  .formStandContainer {
+    overflow-y: auto;
+    height: calc(100vh - 91px);
+    margin-top: 91px;
+  }
+}

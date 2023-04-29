@@ -22,7 +22,3 @@ export const NewFair = () => {
     />
   );
 };
-
-// Colocar un boton de siguiente que abra con modal con el mapa, y
-// que el modal sea el que haga el submit, redirigir a detalles de
-// feria con un state goBack del listado de mis ferias

@@ -7,6 +7,7 @@ export enum ERoutesName {
   MY_SANBLE_FAIRS = "/app/misanble/ferias",
   MY_SANBLE_FAIRS_NEW = "/app/misanble/ferias/nueva",
   MY_SANBLE_STANDS = "/app/misanble/stands",
+  MY_SANBLE_STANDS_NEW = "/app/misanble/stands/nuevo",
   NEAR_YOU = "/app/cerca",
   PROFILE = "/app/perfil",
   FAIRS_LIST = "/app/ferias",

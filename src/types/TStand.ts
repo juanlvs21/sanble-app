@@ -20,3 +20,12 @@ export type TStand = {
   owner: TFireBaseDocRefBasic;
   slogan?: string;
 };
+
+export type TStandForm = {
+  id?: string;
+  name: string;
+  contactEmail: string;
+  contactPhone: string;
+  description: string;
+  slogan: string;
+};
