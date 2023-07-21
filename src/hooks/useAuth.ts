@@ -35,7 +35,6 @@ export const useAuth = () => {
   const { toast } = useToast();
   const { user, setUser } = useUser();
   const { isCapacitor } = useApp();
-  const [isLoadingForm, setIsLoadingForm] = useState(false);
 
   const matchLanding = useMatch(ERoutesName.ROOT);
 
@@ -64,7 +63,7 @@ export const useAuth = () => {
 
   const handleSignup = async (userForm: TAuthSignupForm) => {
     try {
-      setIsLoadingForm(true);
+      await presentLoading();
 
       await signUpRequest(userForm);
       try {
@@ -75,26 +74,27 @@ export const useAuth = () => {
         await clearSessionRedirect({ withLogout: true });
       }
     } catch (error) {
-      setIsLoadingForm(false);
+      await dismissLoading();
       toast(error, { type: "error" });
     }
   };
 
   const handleSignin = async (userForm: TAuthSigInForm) => {
     try {
+      await presentLoading();
       await signinRequest(userForm);
       window.location.replace(ERoutesName.APP);
       // navigate(ERoutesName.APP, { replace: true });
     } catch (error: any) {
       await signOutRequest();
-      setIsLoadingForm(false);
+      await dismissLoading();
       toast(error, { type: "error" });
     }
   };
 
   const handleSigninGoogle = async () => {
     try {
-      setIsLoadingForm(true);
+      await presentLoading();
 
       if (isCapacitor) {
         const googleUser = await GoogleAuth.signIn();
@@ -110,7 +110,7 @@ export const useAuth = () => {
       window.location.replace(ERoutesName.APP);
     } catch (error) {
       await signOutRequest();
-      setIsLoadingForm(false);
+      await dismissLoading();
       toast(error, { type: "error" });
     }
   };
@@ -121,7 +121,7 @@ export const useAuth = () => {
       await signOutRequest();
     } finally {
       await clearSessionRedirect();
-      dismissLoading();
+      await dismissLoading();
     }
   };
 
@@ -140,6 +140,7 @@ export const useAuth = () => {
         }
 
         await handleLoadUser();
+        await dismissLoading();
       } catch (error) {
         await clearSessionRedirect({ withLogout: true });
       }
@@ -156,6 +157,5 @@ export const useAuth = () => {
     handleSignOut,
     handleGetSession,
     clearSessionRedirect,
-    isLoadingForm,
   };
 };

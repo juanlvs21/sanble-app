@@ -7,7 +7,6 @@ import { useDocumentTitle } from "usehooks-ts";
 import { Button } from "@/components/common/buttons/Button";
 import { Input } from "@/components/common/forms/Input";
 import { InputPassword } from "@/components/common/forms/InputPassword";
-import { SpinnerFullScreen } from "@/components/common/loaders/SpinnerFullScreen";
 import { getErrorMessage } from "@/helpers/getFormikErrorMsg";
 import { signInSchema } from "@/helpers/validator/auth";
 import { useAuth } from "@/hooks/useAuth";
@@ -16,7 +15,7 @@ import styles from "../Auth.module.css";
 
 export const Signin = () => {
   useDocumentTitle("Iniciar Sesión");
-  const { handleSignin, handleSigninGoogle, isLoadingForm } = useAuth();
+  const { handleSignin, handleSigninGoogle } = useAuth();
   const {
     handleSubmit,
     handleChange,
@@ -58,7 +57,7 @@ export const Signin = () => {
             Icon={<BiEnvelope />}
             onIonInput={handleChange}
             onIonBlur={handleBlur}
-            disabled={isSubmitting || isLoadingForm}
+            disabled={isSubmitting}
             value={values.email}
             helper={getErrorMessage("email", touched, errors)}
             helperIsError
@@ -67,7 +66,7 @@ export const Signin = () => {
             name="password"
             onIonInput={handleChange}
             onIonBlur={handleBlur}
-            disabled={isSubmitting || isLoadingForm}
+            disabled={isSubmitting}
             value={values.password}
             helper={getErrorMessage("password", touched, errors)}
             helperIsError
@@ -76,7 +75,7 @@ export const Signin = () => {
             expand="block"
             color="primary"
             type="submit"
-            disabled={isSubmitting || isLoadingForm}
+            disabled={isSubmitting}
             className={styles.btn}
           >
             Ingresar
@@ -86,7 +85,7 @@ export const Signin = () => {
           expand="block"
           color="secondary"
           fill="clear"
-          disabled={isSubmitting || isLoadingForm}
+          disabled={isSubmitting}
           className={styles.btn}
           onClick={handleSigninGoogle}
         >
@@ -96,11 +95,6 @@ export const Signin = () => {
           </>
         </Button>
       </IonRow>
-
-      <SpinnerFullScreen
-        show={isSubmitting || isLoadingForm}
-        className={styles.fullScreenSpinner}
-      />
     </IonGrid>
   );
 };
