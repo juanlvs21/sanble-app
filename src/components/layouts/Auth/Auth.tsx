@@ -1,5 +1,5 @@
-import { IonCol, IonContent } from "@ionic/react";
-import { Outlet } from "react-router-dom";
+import { IonCol, IonContent, useIonLoading } from "@ionic/react";
+import { Outlet, useLocation } from "react-router-dom";
 
 import styles from "./Auth.module.css";
 
@@ -7,6 +7,7 @@ import { SpinnerFullScreen } from "@/components/common/loaders/SpinnerFullScreen
 import { TabBar } from "@/components/modules/auth/TabBar";
 import { useApp } from "@/hooks/useApp";
 import { ERoutesName } from "@/types/TRoutes";
+import { useEffect } from "react";
 
 const bgImage: Record<string, string> = {
   [ERoutesName.SESSION_SIGNIN]: "signinRoute",
@@ -19,7 +20,15 @@ const getWavesClass = (pathname: string) => {
 };
 
 export const AuthLayout = () => {
+  const [_, dismissLoading] = useIonLoading();
   const { isLoadingFull } = useApp();
+
+  useEffect(() => {
+    return () => {
+      const onDismiss = async () => await dismissLoading();
+      onDismiss();
+    };
+  }, []);
 
   return (
     <IonContent

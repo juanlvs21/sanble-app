@@ -50,3 +50,7 @@
 .btn .iconGoole {
   margin-right: 15px;
 }
+
+.fullScreenSpinner {
+  border-radius: var(--sanble-border-radius);
+}

@@ -22,6 +22,7 @@ import {
 } from "@/services";
 import { ERoutesName } from "@/types/TRoutes";
 import { TAuthSigInForm, TAuthSignupForm, TUser } from "@/types/TUser";
+import { useState } from "react";
 
 type TClearSessionFuncParams = {
   withLogout?: boolean;
@@ -34,10 +35,9 @@ export const useAuth = () => {
   const { toast } = useToast();
   const { user, setUser } = useUser();
   const { isCapacitor } = useApp();
+  const [isLoadingForm, setIsLoadingForm] = useState(false);
 
   const matchLanding = useMatch(ERoutesName.ROOT);
-  const matchSignin = useMatch(ERoutesName.SESSION_SIGNIN);
-  const matchSignup = useMatch(ERoutesName.SESSION_SIGNUP);
 
   const handleLoadUser = async () => {
     try {
@@ -50,14 +50,13 @@ export const useAuth = () => {
       });
       navigate(ERoutesName.SESSION_SIGNIN, { replace: true });
     } finally {
-      dismissLoading();
     }
   };
 
   const clearSessionRedirect = async (params?: TClearSessionFuncParams) => {
     await removeStorage(StorageUserKey);
 
-    if (!matchLanding && !matchSignin && !matchSignup)
+    if (!matchLanding && !pathname.startsWith(ERoutesName.SESSION))
       navigate(ERoutesName.SESSION_SIGNIN, { replace: true });
 
     if (params?.withLogout) await signOutRequest();
@@ -65,40 +64,37 @@ export const useAuth = () => {
 
   const handleSignup = async (userForm: TAuthSignupForm) => {
     try {
-      presentLoading();
+      setIsLoadingForm(true);
 
       await signUpRequest(userForm);
       try {
         await signinRequest(userForm);
-        await handleLoadUser();
         navigate(ERoutesName.APP, { replace: true });
       } catch (error) {
         await signOutRequest();
         await clearSessionRedirect({ withLogout: true });
       }
     } catch (error) {
-      dismissLoading();
+      setIsLoadingForm(false);
       toast(error, { type: "error" });
     }
   };
 
   const handleSignin = async (userForm: TAuthSigInForm) => {
     try {
-      presentLoading();
-
       await signinRequest(userForm);
-      await handleLoadUser();
-      navigate(ERoutesName.APP, { replace: true });
+      window.location.replace(ERoutesName.APP);
+      // navigate(ERoutesName.APP, { replace: true });
     } catch (error: any) {
       await signOutRequest();
-      dismissLoading();
+      setIsLoadingForm(false);
       toast(error, { type: "error" });
     }
   };
 
   const handleSigninGoogle = async () => {
     try {
-      presentLoading();
+      setIsLoadingForm(true);
 
       if (isCapacitor) {
         const googleUser = await GoogleAuth.signIn();
@@ -110,21 +106,22 @@ export const useAuth = () => {
         await signinGoogleRequest();
       }
 
-      await handleLoadUser();
-
-      navigate(ERoutesName.APP, { replace: true });
+      // navigate(ERoutesName.APP, { replace: true });
+      window.location.replace(ERoutesName.APP);
     } catch (error) {
       await signOutRequest();
-      dismissLoading();
+      setIsLoadingForm(false);
       toast(error, { type: "error" });
     }
   };
 
   const handleSignOut = async () => {
     try {
+      await presentLoading();
       await signOutRequest();
     } finally {
       await clearSessionRedirect();
+      dismissLoading();
     }
   };
 
@@ -143,10 +140,6 @@ export const useAuth = () => {
         }
 
         await handleLoadUser();
-
-        if (pathname.includes("/sesion")) {
-          navigate(ERoutesName.APP, { replace: true });
-        }
       } catch (error) {
         await clearSessionRedirect({ withLogout: true });
       }
@@ -163,5 +156,6 @@ export const useAuth = () => {
     handleSignOut,
     handleGetSession,
     clearSessionRedirect,
+    isLoadingForm,
   };
 };

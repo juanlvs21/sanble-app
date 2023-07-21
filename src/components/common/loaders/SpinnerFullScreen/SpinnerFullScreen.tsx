@@ -1,4 +1,3 @@
-import { Spinner } from "@/components/common/loaders/Spinner";
 import { IonSpinner } from "@ionic/react";
 import styles from "./SpinnerFullScreen.module.css";
 
