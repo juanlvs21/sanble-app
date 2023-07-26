@@ -19,7 +19,8 @@
     "cap:run": "ionic capacitor run android",
     "cap:run:live": "ionic capacitor run android -l --external",
     "cap:gen-icon": "npx cordova-res android --skip-config --icon  --copy",
-    "gen:apk": "npm run cap:sync && cd android && ./gradlew assembleDebug"
+    "gen:apk": "npm run cap:sync && cd android && ./gradlew assembleDebug",
+    "type-check": "tsc --pretty --noEmit"
   },
   "dependencies": {
     "@capacitor/android": "4.7.3",
@@ -61,7 +62,7 @@
     "@types/react": "18.0.20",
     "@types/react-dom": "18.0.6",
     "@vitejs/plugin-react": "2.1.0",
-    "typescript": "^5.0.3",
+    "typescript": "5.1.6",
     "vite": "3.1.1",
     "vite-plugin-pwa": "0.14.4"
   },
