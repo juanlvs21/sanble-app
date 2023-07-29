@@ -7,8 +7,9 @@ import {
   IonRefresherContent,
   RefresherEventDetail,
 } from "@ionic/react";
-import { useEffect, createRef } from "react";
+import { createRef, useEffect } from "react";
 
+import { Spinner } from "@/components/common/loaders/Spinner";
 import { useApp } from "@/hooks/useApp";
 import { TColor } from "@/types/TComponents";
 import styles from "./Fetcher.module.css";
@@ -111,7 +112,12 @@ export const Fetcher = ({
             pullingIcon={undefined}
             pullingText=""
             color={refreshSpinnerColor}
-          />
+          >
+            <Spinner
+              color="dark"
+              className={`${styles.fetcherRefreshSpinner} test`}
+            />
+          </IonRefresherContent>
         </IonRefresher>
 
         {children}

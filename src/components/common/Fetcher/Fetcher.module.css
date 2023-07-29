@@ -29,7 +29,19 @@
 }
 
 .fetcherRefresh {
-  padding-top: 115px;
+  width: 100%;
+  padding-top: 80px;
+}
+
+.fetcherRefresh :global(.refresher-pulling),
+.fetcherRefresh :global(.refresher-refreshing) {
+  display: none !important;
+}
+
+.fetcherRefreshSpinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .fetcherInfiniteScroll {

@@ -41,7 +41,7 @@ export const useSWRLists = <T = any>(
   });
   const [isEmpty, setIsEmpty] = useState(false);
 
-  const { isLoading, mutate } = useSWRImmutable<any>(
+  const { isLoading, isValidating, mutate } = useSWRImmutable<any>(
     SWRKey,
     async () =>
       await fetcher({
@@ -116,6 +116,7 @@ export const useSWRLists = <T = any>(
     orderBy: order.orderBy,
     orderDir: order.orderDir,
     isLoading: isLoading || isInitializing,
+    isValidating,
     isEmpty,
     handleRefresh,
     handleInfinite,
