@@ -1,6 +1,6 @@
 import { toast as toastBase, ToastOptions } from "react-toastify";
 
-import { unknownErrorMsg } from "@/helpers/constTexts";
+import { unknownErrorMsg } from "@/helpers/constants";
 import { errorsMessage } from "@/helpers/formatErrors";
 
 type TOptions = ToastOptions & {

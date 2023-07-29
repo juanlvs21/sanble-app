@@ -30,7 +30,7 @@ export const Sidebar = () => {
   const matchFairsList = useMatch(ERoutesName.FAIRS_LIST);
   const matchStandsList = useMatch(ERoutesName.STANDS_LIST);
   const matchProductsList = useMatch(ERoutesName.PRODUCTS_LIST);
-  const matchFavorites = useMatch(ERoutesName.FAVORITES_LIST);
+  const matchFavorites = useMatch(ERoutesName.FAVORITES);
   const matchMySanbleFairs = useMatch(ERoutesName.MY_SANBLE_FAIRS);
   const matchMySanbleStands = useMatch(ERoutesName.MY_SANBLE_STANDS);
   const matchNearYou = useMatch(ERoutesName.NEAR_YOU);
@@ -48,7 +48,7 @@ export const Sidebar = () => {
       },
       {
         label: "Favoritos",
-        path: ERoutesName.FAVORITES_LIST,
+        path: ERoutesName.FAVORITES,
         icon: <FiHeart size={28} />,
         active: matchFavorites,
       },

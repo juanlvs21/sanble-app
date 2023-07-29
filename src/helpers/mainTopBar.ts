@@ -92,6 +92,17 @@ export const getPropsTopBarMain = (
       startUser: true,
       sticky: true,
     },
+    [ERoutesName.FAVORITES_FAIRS]: {
+      title: "Ferias Favoritas",
+      startUser: true,
+      sticky: true,
+    },
+
+    [ERoutesName.FAVORITES_STANDS]: {
+      title: "Stands Favoritos",
+      startUser: true,
+      sticky: true,
+    },
   };
 
   return props[route];

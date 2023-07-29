@@ -1,0 +1,9 @@
+.fairListCardSkeleton {
+  margin-bottom: 20px;
+}
+
+@media (min-width: 768px) {
+  .fairListCardSkeleton {
+    margin: 20px;
+  }
+}

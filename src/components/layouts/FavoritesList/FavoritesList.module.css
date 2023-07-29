@@ -1,0 +1,22 @@
+.favoritesContainer {
+  background-image: url("/assets/images/home/home-wave.svg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: right;
+  height: 100%;
+}
+
+.favoritesContent {
+  background: transparent;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  transition: all 500s ease-in-out;
+}
+
+@media (min-width: 768px) {
+  .favoritesContent {
+    transition: all 500s ease-in-out;
+  }
+}

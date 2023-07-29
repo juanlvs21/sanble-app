@@ -5,3 +5,4 @@ export * from "./mySanble";
 export * from "./products";
 export * from "./stands";
 export * from "./user";
+export * from "./favorite";

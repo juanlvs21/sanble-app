@@ -37,6 +37,8 @@ export const useTopBarMain = () => {
   const isMySanbleFairsNew = useMatch(ERoutesName.MY_SANBLE_FAIRS_NEW);
   const isMySanbleStands = useMatch(ERoutesName.MY_SANBLE_STANDS);
   const isMySanbleStandsNew = useMatch(ERoutesName.MY_SANBLE_STANDS_NEW);
+  const isFavoriteFairs = useMatch(ERoutesName.FAVORITES_FAIRS);
+  const isFavoriteStands = useMatch(ERoutesName.FAVORITES_STANDS);
 
   const handleGetData = () => {
     if (isApp) {
@@ -90,6 +92,12 @@ export const useTopBarMain = () => {
       setRenderEnd(true);
     } else if (isMySanbleStandsNew) {
       setProps(getPropsTopBarMain(ERoutesName.MY_SANBLE_STANDS_NEW));
+      setRenderEnd(true);
+    } else if (isFavoriteFairs) {
+      setProps(getPropsTopBarMain(ERoutesName.FAVORITES_FAIRS));
+      setRenderEnd(true);
+    } else if (isFavoriteStands) {
+      setProps(getPropsTopBarMain(ERoutesName.FAVORITES_STANDS));
       setRenderEnd(true);
     } else {
       setProps(undefined);

@@ -6,6 +6,7 @@ import { infiteScrollData } from "@/helpers/infiniteScrollData";
 import { useToast } from "@/hooks/useToast";
 import { TGetListParams } from "@/types/TRequest";
 import { TOrder, TPagination } from "@/types/THttp";
+import { EVERY_THIRTY_SECONDS_IN_MILLISECONDS } from "@/helpers/constants";
 
 const DEFAULT_LAST_INDEX = 0;
 const DEFAULT_LIMIT = 30;
@@ -19,6 +20,8 @@ export const useSWRLists = <T = any>(
   fetcher: (params: TGetListParams) => Promise<any>,
   defaultParams?: TDefaultParams
 ) => {
+  const [isInitializing, setIsInitializing] = useState(true);
+
   const paramsDefault: Required<TDefaultParams> = {
     lastIndex: defaultParams?.lastIndex ?? DEFAULT_LAST_INDEX,
     limit: defaultParams?.limit ?? DEFAULT_LIMIT,
@@ -46,7 +49,9 @@ export const useSWRLists = <T = any>(
         ...order,
       }),
     {
+      refreshInterval: EVERY_THIRTY_SECONDS_IN_MILLISECONDS,
       onSuccess(data) {
+        setIsInitializing(false);
         if (data) {
           const newList: T[] =
             pagination.lastIndex != 0
@@ -65,6 +70,7 @@ export const useSWRLists = <T = any>(
         }
       },
       onError: (error) => {
+        setIsInitializing(false);
         toast(error, {
           type: "error",
           toastId: SWRKey,
@@ -109,7 +115,7 @@ export const useSWRLists = <T = any>(
     list,
     orderBy: order.orderBy,
     orderDir: order.orderDir,
-    isLoading,
+    isLoading: isLoading || isInitializing,
     isEmpty,
     handleRefresh,
     handleInfinite,

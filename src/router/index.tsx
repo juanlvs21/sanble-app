@@ -7,6 +7,7 @@ import { AuthLayout } from "@/components/layouts/Auth";
 import { MainLayout } from "@/components/layouts/Main";
 import { HomeLayout } from "@/components/layouts/Home";
 import { MySanbleList } from "@/components/layouts/MySanbleList";
+import { FavoritesList } from "@/components/layouts/FavoritesList";
 import { ProvidersLayout } from "@/components/layouts/Providers";
 import { ERoutesName } from "@/types/TRoutes";
 
@@ -31,8 +32,8 @@ const HomeScreen = lazy(() =>
   import("@/screens/Home").then(({ Home }) => ({ default: Home }))
 );
 const FavoritesListScreen = lazy(() =>
-  import("@/screens/favorites/FavoritesList").then(({ FavoritesList }) => ({
-    default: FavoritesList,
+  import("@/screens/favorites/FavoritesFairs").then(({ FavoritesFairs }) => ({
+    default: FavoritesFairs,
   }))
 );
 const NearYouScreen = lazy(() =>
@@ -103,6 +104,16 @@ const MySanbleStandsScreen = lazy(() =>
 const MySanbleNewStandScreen = lazy(() =>
   import("@/screens/mySanble/stands/NewStand").then(({ NewStand }) => ({
     default: NewStand,
+  }))
+);
+const FavoriteFairsScreen = lazy(() =>
+  import("@/screens/favorites/FavoritesFairs").then(({ FavoritesFairs }) => ({
+    default: FavoritesFairs,
+  }))
+);
+const FavoritesStandsScreen = lazy(() =>
+  import("@/screens/favorites/FavoritesStands").then(({ FavoritesStands }) => ({
+    default: FavoritesStands,
   }))
 );
 
@@ -211,13 +222,35 @@ export const router = createBrowserRouter([
             ),
           },
           {
-            path: ERoutesName.FAVORITES_LIST,
-            errorElement: <ErrorScreen />,
-            element: (
-              <SuspenseComponent>
-                <FavoritesListScreen />
-              </SuspenseComponent>
-            ),
+            path: ERoutesName.FAVORITES,
+            element: <FavoritesList />,
+            children: [
+              {
+                index: true,
+                errorElement: <ErrorScreen />,
+                element: (
+                  <Navigate to={ERoutesName.FAVORITES_FAIRS} replace={true} />
+                ),
+              },
+              {
+                path: ERoutesName.FAVORITES_FAIRS,
+                errorElement: <ErrorScreen />,
+                element: (
+                  <SuspenseComponent>
+                    <FavoriteFairsScreen />
+                  </SuspenseComponent>
+                ),
+              },
+              {
+                path: ERoutesName.FAVORITES_STANDS,
+                errorElement: <ErrorScreen />,
+                element: (
+                  <SuspenseComponent>
+                    <FavoritesStandsScreen />
+                  </SuspenseComponent>
+                ),
+              },
+            ],
           },
           {
             path: ERoutesName.NEAR_YOU,
