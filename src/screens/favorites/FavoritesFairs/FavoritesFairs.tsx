@@ -1,6 +1,5 @@
 import { useIonActionSheet } from "@ionic/react";
 import { BiFilterAlt } from "react-icons/bi";
-import { useDocumentTitle } from "usehooks-ts";
 
 import { EmptyList } from "@/components/common/EmptyList";
 import { Fetcher } from "@/components/common/Fetcher";
@@ -9,12 +8,13 @@ import { Button } from "@/components/common/buttons/Button";
 import { FairCardList } from "@/components/modules/fairs/FairCardList";
 import { useFavoritesFairs } from "@/hooks/favorites/useFavoritesFairs";
 import { useApp } from "@/hooks/useApp";
+import { useDocumentTitleApp } from "@/hooks/useDocumentTitle";
 import { useTopBarMain } from "@/hooks/useTopBarMain";
 import { ERoutesName } from "@/types/TRoutes";
 import styles from "./FavoritesFairs.module.css";
 
 export const FavoritesFairs = () => {
-  useDocumentTitle("Mis Ferias Favoritas 🛍️");
+  useDocumentTitleApp("Mis Ferias Favoritas 🛍️");
   const [present] = useIonActionSheet();
   const { renderTopBarActionEnd } = useTopBarMain();
   const { isCapacitor } = useApp();

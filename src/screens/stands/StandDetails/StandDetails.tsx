@@ -7,7 +7,6 @@ import { IoIosArrowUp } from "react-icons/io";
 import { MdOutlineStorefront } from "react-icons/md";
 import { TiStar } from "react-icons/ti";
 import { Link, useLocation, useParams } from "react-router-dom";
-import { useDocumentTitle } from "usehooks-ts";
 
 import { ButtonFav } from "@/components/common/buttons/ButtonFav";
 import { Fetcher } from "@/components/common/Fetcher";
@@ -21,6 +20,7 @@ import { getNavStateText } from "@/helpers/navigation";
 import { useStandDetails } from "@/hooks/stands/useStandDetails";
 // import { useFairStands } from "@/hooks/fairs/useFairStands";
 import { useApp } from "@/hooks/useApp";
+import { useDocumentTitleApp } from "@/hooks/useDocumentTitle";
 import { useTopBarMain } from "@/hooks/useTopBarMain";
 import { useUser } from "@/hooks/useUser";
 import { ERoutesName } from "@/types/TRoutes";
@@ -50,7 +50,7 @@ export const StandDetails = () => {
     handleInfiniteReviews,
   } = useStandDetails(finalStandID);
 
-  useDocumentTitle(
+  useDocumentTitleApp(
     `${
       getNavStateText(standID, state?.standID, state?.standName) ||
       stand?.name ||

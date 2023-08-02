@@ -1,6 +1,5 @@
 import { useIonActionSheet } from "@ionic/react";
 import { BiFilterAlt } from "react-icons/bi";
-import { useDocumentTitle } from "usehooks-ts";
 
 import { EmptyList } from "@/components/common/EmptyList";
 import { Fetcher } from "@/components/common/Fetcher";
@@ -9,12 +8,13 @@ import { Button } from "@/components/common/buttons/Button";
 import { StandCardList } from "@/components/modules/stands/StandCardList";
 import { useFavoritesStands } from "@/hooks/favorites/useFavoritesStands";
 import { useApp } from "@/hooks/useApp";
+import { useDocumentTitleApp } from "@/hooks/useDocumentTitle";
 import { useTopBarMain } from "@/hooks/useTopBarMain";
 import { ERoutesName } from "@/types/TRoutes";
 import styles from "./FavoritesStands.module.css";
 
 export const FavoritesStands = () => {
-  useDocumentTitle("Mis Stands Favoritos 🛒");
+  useDocumentTitleApp("Mis Stands Favoritos 🛒");
   const [present] = useIonActionSheet();
   const { renderTopBarActionEnd } = useTopBarMain();
   const { isCapacitor } = useApp();

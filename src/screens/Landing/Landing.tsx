@@ -1,15 +1,15 @@
 import { IonPage } from "@ionic/react";
 import { Link } from "react-router-dom";
-import { useDocumentTitle } from "usehooks-ts";
 
 import { Button } from "@/components/common/buttons/Button";
+import { useDocumentTitleApp } from "@/hooks/useDocumentTitle";
 import { useLanding } from "@/hooks/useLanding";
 import { ERoutesName } from "@/types/TRoutes";
 import styles from "./Landing.module.css";
 
 export const Landing = () => {
   const { handleGetDownloadAppLink } = useLanding();
-  useDocumentTitle("¡Bienvenido! 🎉");
+  useDocumentTitleApp("¡Bienvenido! 🎉");
 
   return (
     <IonPage>

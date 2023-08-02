@@ -1,8 +1,8 @@
 import { lazy } from "react";
 import { BiBell } from "react-icons/bi";
-import { useDocumentTitle } from "usehooks-ts";
 
 import { Button } from "@/components/common/buttons/Button";
+import { useDocumentTitleApp } from "@/hooks/useDocumentTitle";
 import { useHome } from "@/hooks/useHome";
 import { useTopBarMain } from "@/hooks/useTopBarMain";
 
@@ -15,7 +15,7 @@ const HomeScreenContent = lazy(() =>
 );
 
 export const Home = () => {
-  useDocumentTitle("Inicio 🏠");
+  useDocumentTitleApp("Inicio 🏠");
   const { renderTopBarActionEnd } = useTopBarMain();
   const {
     fairsBest,

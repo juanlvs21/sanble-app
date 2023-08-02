@@ -3,7 +3,6 @@ import { useEffect, useRef, useState } from "react";
 import { FiEdit } from "react-icons/fi";
 import { IoIosArrowBack } from "react-icons/io";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { useDocumentTitle } from "usehooks-ts";
 import { SwiperRef } from "swiper/react";
 
 import { Button } from "@/components/common/buttons/Button";
@@ -15,9 +14,9 @@ import { useStandPhotoDelete } from "@/hooks/stands/photo/useStandPhotoDelete";
 import { useStandPhotoUpdate } from "@/hooks/stands/photo/useStandPhotoUpdate";
 import { useStandDetails } from "@/hooks/stands/useStandDetails";
 import { useApp } from "@/hooks/useApp";
+import { useDocumentTitleApp } from "@/hooks/useDocumentTitle";
 import { useTopBarMain } from "@/hooks/useTopBarMain";
 import { useUser } from "@/hooks/useUser";
-import { TPhotograph } from "@/types/TPhotograph";
 import { ERoutesName } from "@/types/TRoutes";
 import styles from "./StandPhotoSlides.module.css";
 
@@ -55,7 +54,7 @@ export const StandPhotoSlides = () => {
   } = useStandPhotoUpdate(finaStandID);
   const [photoShown, setPhotoShown] = useState(false);
 
-  useDocumentTitle(
+  useDocumentTitleApp(
     `Fotografías de ${
       getNavStateText(standID, state?.standID, state?.standName) ||
       stand?.name ||

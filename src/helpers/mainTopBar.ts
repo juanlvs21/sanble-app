@@ -97,9 +97,13 @@ export const getPropsTopBarMain = (
       startUser: true,
       sticky: true,
     },
-
     [ERoutesName.FAVORITES_STANDS]: {
       title: "Stands Favoritos",
+      startUser: true,
+      sticky: true,
+    },
+    [ERoutesName.PROFILE]: {
+      title: "Perfil",
       startUser: true,
       sticky: true,
     },

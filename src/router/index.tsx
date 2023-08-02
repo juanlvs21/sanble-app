@@ -116,6 +116,11 @@ const FavoritesStandsScreen = lazy(() =>
     default: FavoritesStands,
   }))
 );
+const ProfileScreen = lazy(() =>
+  import("@/screens/Profile").then(({ Profile }) => ({
+    default: Profile,
+  }))
+);
 
 const ErrorScreen = () => <h1 style={{ marginTop: 300 }}>Error :c :c</h1>;
 
@@ -266,7 +271,7 @@ export const router = createBrowserRouter([
             errorElement: <ErrorScreen />,
             element: (
               <SuspenseComponent>
-                <FavoritesListScreen />
+                <ProfileScreen />
               </SuspenseComponent>
             ),
           },

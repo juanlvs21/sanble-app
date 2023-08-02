@@ -1,7 +1,6 @@
 import { IonFab, IonFabButton, useIonActionSheet } from "@ionic/react";
 import { BiFilterAlt } from "react-icons/bi";
 import { IoMdAdd, IoMdAddCircle } from "react-icons/io";
-import { useDocumentTitle } from "usehooks-ts";
 
 import { EmptyList } from "@/components/common/EmptyList";
 import { Fetcher } from "@/components/common/Fetcher";
@@ -10,13 +9,14 @@ import { Button } from "@/components/common/buttons/Button";
 import { StandCardList } from "@/components/modules/stands/StandCardList";
 import { useMyStandsList } from "@/hooks/mySanble/stands/useMyStandsList";
 import { useApp } from "@/hooks/useApp";
+import { useDocumentTitleApp } from "@/hooks/useDocumentTitle";
 import { useTopBarMain } from "@/hooks/useTopBarMain";
 import { ERoutesName } from "@/types/TRoutes";
-import styles from "./MyStandsList.module.css";
 import { Link } from "react-router-dom";
+import styles from "./MyStandsList.module.css";
 
 export const MyStandsList = () => {
-  useDocumentTitle("Lista de Mis Stands 🛒");
+  useDocumentTitleApp("Lista de Mis Stands 🛒");
   const [present] = useIonActionSheet();
   const { renderTopBarActionEnd } = useTopBarMain();
   const { isCapacitor } = useApp();

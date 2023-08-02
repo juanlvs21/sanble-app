@@ -2,7 +2,6 @@ import { IonCol, IonGrid, IonRow } from "@ionic/react";
 import { useFormik } from "formik";
 import { BiEnvelope, BiUser } from "react-icons/bi";
 import { FcGoogle } from "react-icons/fc";
-import { useDocumentTitle } from "usehooks-ts";
 
 import { Button } from "@/components/common/buttons/Button";
 import { Input } from "@/components/common/forms/Input";
@@ -11,10 +10,11 @@ import { getErrorMessage } from "@/helpers/getFormikErrorMsg";
 import { signUpSchema } from "@/helpers/validator/auth";
 import { useAuth } from "@/hooks/useAuth";
 import { TAuthSignupForm } from "@/types/TUser";
+import { useDocumentTitleApp } from "@/hooks/useDocumentTitle";
 import styles from "../Auth.module.css";
 
 export const Signup = () => {
-  useDocumentTitle("Registrarse");
+  useDocumentTitleApp("Registrarse");
   const { handleSignup, handleSigninGoogle } = useAuth();
   const {
     handleSubmit,

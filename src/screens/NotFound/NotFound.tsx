@@ -1,8 +1,9 @@
 import { IonPage } from "@ionic/react";
-import { useDocumentTitle } from "usehooks-ts";
+
+import { useDocumentTitleApp } from "@/hooks/useDocumentTitle";
 
 export const NotFound = () => {
-  useDocumentTitle("¡Ups! Página no encontrada 😢");
+  useDocumentTitleApp("¡Ups! Página no encontrada 😢");
 
   return (
     <IonPage className="animate__animated animate__screenInUp">

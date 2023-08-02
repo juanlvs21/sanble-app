@@ -39,6 +39,7 @@ export const useTopBarMain = () => {
   const isMySanbleStandsNew = useMatch(ERoutesName.MY_SANBLE_STANDS_NEW);
   const isFavoriteFairs = useMatch(ERoutesName.FAVORITES_FAIRS);
   const isFavoriteStands = useMatch(ERoutesName.FAVORITES_STANDS);
+  const isProfile = useMatch(ERoutesName.PROFILE);
 
   const handleGetData = () => {
     if (isApp) {
@@ -99,6 +100,8 @@ export const useTopBarMain = () => {
     } else if (isFavoriteStands) {
       setProps(getPropsTopBarMain(ERoutesName.FAVORITES_STANDS));
       setRenderEnd(true);
+    } else if (isProfile) {
+      setProps(getPropsTopBarMain(ERoutesName.PROFILE));
     } else {
       setProps(undefined);
       setRenderStart(false);

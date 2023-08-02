@@ -1,6 +1,5 @@
 import { IoIosArrowBack } from "react-icons/io";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { useDocumentTitle } from "usehooks-ts";
 
 import { Button } from "@/components/common/buttons/Button";
 import { Map } from "@/components/modules/geolocation/Map";
@@ -9,12 +8,13 @@ import { useFairDetails } from "@/hooks/fairs/useFairDetails";
 import { useApp } from "@/hooks/useApp";
 import { useTopBarMain } from "@/hooks/useTopBarMain";
 import { ERoutesName } from "@/types/TRoutes";
+import { useDocumentTitleApp } from "@/hooks/useDocumentTitle";
 import styles from "./FairMap.module.css";
 
 type TRouteParams = { fairID: string };
 
 export const FairMap = () => {
-  useDocumentTitle("Cerca de ti 📌");
+  useDocumentTitleApp("Cerca de ti 📌");
   const navigate = useNavigate();
   const { fairID } = useParams<TRouteParams>();
   const { state } = useLocation();

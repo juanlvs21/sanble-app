@@ -6,7 +6,6 @@ import { IoIosArrowUp } from "react-icons/io";
 import { MdOutlineStorefront } from "react-icons/md";
 import { TiStar } from "react-icons/ti";
 import { Link, useLocation, useParams } from "react-router-dom";
-import { useDocumentTitle } from "usehooks-ts";
 
 import { ButtonFav } from "@/components/common/buttons/ButtonFav";
 import { Fetcher } from "@/components/common/Fetcher";
@@ -24,6 +23,7 @@ import { useApp } from "@/hooks/useApp";
 import { useTopBarMain } from "@/hooks/useTopBarMain";
 import { useUser } from "@/hooks/useUser";
 import { ERoutesName } from "@/types/TRoutes";
+import { useDocumentTitleApp } from "@/hooks/useDocumentTitle";
 import styles from "./FairDetails.module.css";
 
 const MODAL_INFO_ID = "fair-info-open-modal";
@@ -56,7 +56,7 @@ export const FairDetails = () => {
     handleInfinite: handleInfiniteStands,
   } = useFairStands(finalFairID);
 
-  useDocumentTitle(
+  useDocumentTitleApp(
     `${
       getNavStateText(fairID, state?.fairID, state?.fairName) ||
       fair?.name ||
