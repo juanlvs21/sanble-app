@@ -1,14 +1,41 @@
 .profileGrid {
-  margin-top: 40px;
+  padding: 20px;
+  max-width: 991px;
 }
 
-.profileCol {
+.profileTitle {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  justify-content: center;
+  margin-bottom: 40px;
 }
 
 .profileAvatar {
   width: 200px;
   height: 200px;
+}
+
+.profileForm {
+  width: 100%;
+}
+
+.profileCol {
+  padding: 10px 50px;
+  display: flex;
+  flex-direction: column;
+}
+
+.profileCol.colRight {
+  align-items: end;
+}
+
+.profileCol.colLeft {
+  border-left: 1px solid var(--sanble-gray-color-1);
+  align-items: start;
+}
+
+@media (max-width: 768px) {
+  .profileCol {
+    align-items: center !important;
+    padding: 10px;
+  }
 }
