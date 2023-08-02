@@ -11,6 +11,7 @@ import {
 } from "@/components/common/Skeleton";
 import { brokenImage, defaultImage } from "@/helpers/defaultImage";
 import styles from "./ImageExtended.module.css";
+import { fetchBlob } from "@/services";
 
 export type ComponentProps = DetailedHTMLProps<
   ImgHTMLAttributes<HTMLImageElement>,
@@ -36,40 +37,35 @@ export const ImageExtended = ({
   isLoading = false,
   ...props
 }: ComponentProps) => {
-  const [imageUrl, setImageUrl] = useState("");
+  const [image, setImage] = useState("");
   const [isLoadingSrc, setIsLoadingSrc] = useState(false);
 
-  useEffect(() => {
-    if (!isLoading) handleGetImage();
-  }, [isLoading]);
+  const handleGetImage = async (url: string) => {
+    try {
+      setIsLoadingSrc(true);
 
-  const handleGetImage = async () => {
-    setIsLoadingSrc(true);
+      const blob = await fetchBlob(url);
 
-    const downloadingImage = new Image();
-
-    downloadingImage.onload = function (this: any) {
-      if (this?.src) {
-        setImageUrl(this.src);
-        setIsLoadingSrc(false);
-      }
-    };
-
-    downloadingImage.onerror = function () {
-      setImageUrl(brokenImage);
-    };
-
-    downloadingImage.src = props?.src || defaultImage;
+      setImage(URL.createObjectURL(blob));
+    } catch (error) {
+      setImage(brokenImage);
+    } finally {
+      setIsLoadingSrc(false);
+    }
   };
+
+  useEffect(() => {
+    if (!isLoading) handleGetImage(props?.src || defaultImage);
+  }, [isLoading, props?.src]);
 
   return (
     <picture
       className={`${classNamePicture} ${styles.imagePicture} animate__animated animate__fadeIn`}
     >
-      {imageUrl && (
+      {image && (
         <img
           {...props}
-          src={imageUrl}
+          src={image}
           loading={props.loading || "lazy"}
           onLoad={() => setIsLoadingSrc(false)}
           className={`${props.className} ${styles.imageTag} ${

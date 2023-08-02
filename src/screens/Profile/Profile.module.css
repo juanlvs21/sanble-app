@@ -1,0 +1,14 @@
+.profileGrid {
+  margin-top: 40px;
+}
+
+.profileCol {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.profileAvatar {
+  width: 200px;
+  height: 200px;
+}
