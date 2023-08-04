@@ -26,7 +26,7 @@ export type ComponentProps = {
 
 export const FairCardList = ({ fair, goBackUrl }: ComponentProps) => {
   const isMobileS = useMediaQuery("(max-width: 320px)");
-  const { user, loadingSetFav, handleSetFavoriteFair } = useUser();
+  const { user, isLoading: loadingSetFav, handleSetFavoriteFair } = useUser();
 
   return (
     <article

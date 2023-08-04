@@ -37,7 +37,7 @@ export const StandDetails = () => {
   const { renderTopBarActionEnd } = useTopBarMain();
   const { isCapacitor } = useApp();
   const finalStandID = standID || state?.standID || "";
-  const { user, loadingSetFav, handleSetFavoriteStand } = useUser();
+  const { user, isLoading: loadingSetFav, handleSetFavoriteStand } = useUser();
   const {
     stand,
     review,

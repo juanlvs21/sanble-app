@@ -37,7 +37,7 @@ export const FairDetails = () => {
   const { renderTopBarActionEnd } = useTopBarMain();
   const { isCapacitor } = useApp();
   const finalFairID = fairID || state?.fairID || "";
-  const { user, loadingSetFav, handleSetFavoriteFair } = useUser();
+  const { user, isLoading: loadingSetFav, handleSetFavoriteFair } = useUser();
   const {
     fair,
     review,

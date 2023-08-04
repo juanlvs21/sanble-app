@@ -27,7 +27,7 @@ export const StandCardList = ({
   goBackUrl,
   className = "",
 }: ComponentProps) => {
-  const { user, loadingSetFav, handleSetFavoriteStand } = useUser();
+  const { user, isLoading: loadingSetFav, handleSetFavoriteStand } = useUser();
 
   return (
     <article

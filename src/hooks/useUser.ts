@@ -3,17 +3,17 @@ import { useState } from "react";
 import { authActions } from "@/context/actions/authActions";
 import { useAuthContext } from "@/context/AuthContext";
 import { useToast } from "@/hooks/useToast";
-import { setFavoriteRequest } from "@/services";
-import { EUserFav } from "@/types/TUser";
+import { setFavoriteRequest, updateUserRequest } from "@/services";
+import { EUserFav, TUpdateUser } from "@/types/TUser";
 
 export const useUser = () => {
   const [{ user }, dispatch] = useAuthContext();
   const { setUser } = authActions(dispatch);
   const { toast } = useToast();
-  const [loadingSetFav, setLoadingSetFav] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const setFavorite = async (favoriteType: EUserFav, favoriteID: string) => {
-    setLoadingSetFav(true);
+    setIsLoading(true);
 
     try {
       const { favorites } = await setFavoriteRequest(favoriteType, favoriteID);
@@ -44,7 +44,7 @@ export const useUser = () => {
     } catch (error) {
       toast("Ha ocurrido un error al guardar el favorito", { type: "error" });
     } finally {
-      setLoadingSetFav(false);
+      setIsLoading(false);
     }
   };
 
@@ -56,11 +56,26 @@ export const useUser = () => {
     await setFavorite(EUserFav.STAND, favoriteID);
   };
 
+  const handleUpdateUser = async (userForm: TUpdateUser) => {
+    try {
+      setIsLoading(true);
+
+      const res = await updateUserRequest(userForm);
+
+      console.log(res);
+    } catch (error) {
+      toast(error, { type: "error" });
+    } finally {
+      setIsLoading(true);
+    }
+  };
+
   return {
     user,
-    loadingSetFav,
+    isLoading,
     setUser,
     handleSetFavoriteFair,
     handleSetFavoriteStand,
+    handleUpdateUser,
   };
 };

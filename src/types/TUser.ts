@@ -46,3 +46,9 @@ export type TAuth = {
 export type TUserFavorites = {
   favorites: string[];
 };
+
+export type TUpdateUser = {
+  email: string;
+  displayName: string;
+  phoneNumber: string;
+};

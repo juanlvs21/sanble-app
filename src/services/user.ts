@@ -1,7 +1,7 @@
 import { AxiosResponse } from "axios";
 
 import { api } from "@/services";
-import { TAuthSignupForm, TUser } from "@/types/TUser";
+import { TAuthSignupForm, TUpdateUser, TUser } from "@/types/TUser";
 
 export const signUpRequest = (user: TAuthSignupForm) =>
   api
@@ -9,4 +9,9 @@ export const signUpRequest = (user: TAuthSignupForm) =>
     .then(({ data }) => data.data);
 
 export const getUserDataRequest = () =>
-  api.get<AxiosResponse<TUser>>("/user/profile").then(({ data }) => data.data);
+  api.get<AxiosResponse<TUser>>("/user").then(({ data }) => data.data);
+
+export const updateUserRequest = (updateUser: TUpdateUser) =>
+  api
+    .put<AxiosResponse<TUser>>("/user", updateUser)
+    .then(({ data }) => data.data);
