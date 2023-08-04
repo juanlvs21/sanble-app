@@ -10,8 +10,8 @@
 }
 
 .profileAvatar {
-  width: 200px;
-  height: 200px;
+  width: 250px;
+  height: 250px;
 }
 
 .profileForm {
@@ -33,9 +33,23 @@
   align-items: start;
 }
 
+.divider {
+  border-top: 1px solid var(--sanble-gray-color-1);
+  display: block;
+  width: 100%;
+  margin: 40px 0;
+}
+
 @media (max-width: 768px) {
+  .profileAvatar {
+    width: 200px;
+    height: 200px;
+  }
   .profileCol {
     align-items: center !important;
     padding: 10px;
+  }
+  .profileCol.colLeft {
+    border: none;
   }
 }

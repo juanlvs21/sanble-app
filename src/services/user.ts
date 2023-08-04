@@ -1,7 +1,12 @@
 import { AxiosResponse } from "axios";
 
 import { api } from "@/services";
-import { TAuthSignupForm, TUpdateUser, TUser } from "@/types/TUser";
+import {
+  TAuthSignupForm,
+  TChangePassword,
+  TUpdateUser,
+  TUser,
+} from "@/types/TUser";
 
 export const signUpRequest = (user: TAuthSignupForm) =>
   api
@@ -14,4 +19,9 @@ export const getUserDataRequest = () =>
 export const updateUserRequest = (updateUser: TUpdateUser) =>
   api
     .put<AxiosResponse<TUser>>("/user", updateUser)
+    .then(({ data }) => data.data);
+
+export const changePasswordUserRequest = (passwordUser: TChangePassword) =>
+  api
+    .patch<AxiosResponse>("/user/change-password", passwordUser)
     .then(({ data }) => data.data);

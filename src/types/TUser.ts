@@ -53,6 +53,11 @@ export type TUpdateUser = {
   phoneNumber: string;
 };
 
+export type TChangePassword = {
+  password: string;
+  confirmPassword?: string;
+};
+
 export type TRecoverPassword = {
   email: string;
 };

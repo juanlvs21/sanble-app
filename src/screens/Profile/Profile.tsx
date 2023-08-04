@@ -9,25 +9,27 @@ import { useDocumentTitleApp } from "@/hooks/useDocumentTitle";
 import { useUser } from "@/hooks/useUser";
 import styles from "./Profile.module.css";
 import { Button } from "@/components/common/buttons/Button";
-import { TUpdateUser } from "@/types/TUser";
+import { TChangePassword, TUpdateUser } from "@/types/TUser";
 import { userSchema } from "@/helpers/validator/user";
 import parsePhoneNumberFromString from "libphonenumber-js";
 import { getErrorMessage } from "@/helpers/getFormikErrorMsg";
+import { InputPassword } from "@/components/common/forms/InputPassword";
+import { changePasswordSchema } from "@/helpers/validator/auth";
 
 export const Profile = () => {
   const { user } = useUser();
   const title = user?.displayName || user?.email || "Mi Perfil";
   useDocumentTitleApp(`${title} 👤`);
 
-  const { handleUpdateUser } = useUser();
+  const { handleUpdateUser, handleChangePasswordUser } = useUser();
   const {
-    handleSubmit,
-    handleChange,
-    handleBlur,
-    values,
-    touched,
-    errors,
-    isSubmitting,
+    handleSubmit: handleSubmitUpdate,
+    handleChange: handleChangeUpdate,
+    handleBlur: handleBlurUpdate,
+    values: valuesUpdate,
+    touched: touchedUpdate,
+    errors: errorsUpdate,
+    isSubmitting: isSubmittingUpdate,
   } = useFormik<TUpdateUser>({
     initialValues: {
       displayName: user?.displayName ?? "",
@@ -39,13 +41,26 @@ export const Profile = () => {
     enableReinitialize: true,
   });
 
+  const {
+    handleSubmit: handleSubmitChangePass,
+    handleChange: handleChangeChangePass,
+    handleBlur: handleBlurChangePass,
+    values: valuesChangePass,
+    touched: touchedChangePass,
+    errors: errorsChangePass,
+    isSubmitting: isSubmittingChangePass,
+  } = useFormik<TChangePassword>({
+    initialValues: {
+      password: "",
+      confirmPassword: "",
+    },
+    validationSchema: changePasswordSchema,
+    onSubmit: handleChangePasswordUser,
+    enableReinitialize: true,
+  });
+
   return (
-    <Fetcher
-      // handleRefresh={handleRefresh}
-      // handleInfiniteScroll={handleInfinite}
-      classNameSection="animate__animated animate__screenInUp"
-      // isLoading={isLoading || isLoading}
-    >
+    <Fetcher classNameSection="animate__animated animate__screenInUp">
       <IonGrid className={`${styles.profileGrid}`}>
         <IonRow>
           <IonCol size="12"></IonCol>
@@ -70,8 +85,8 @@ export const Profile = () => {
             className={`${styles.profileCol} ${styles.colLeft}`}
           >
             <form
-              onSubmit={handleSubmit}
-              onKeyUp={(e) => e.key === "Enter" && handleSubmit()}
+              onSubmit={handleSubmitUpdate}
+              onKeyUp={(e) => e.key === "Enter" && handleSubmitUpdate()}
               className={`${styles.profileForm}`}
             >
               <h2 className={`${styles.profileTitle}`}>Datos del Usuario</h2>
@@ -81,11 +96,11 @@ export const Profile = () => {
                 type="text"
                 name="displayName"
                 Icon={<BiUser />}
-                onIonInput={handleChange}
-                onIonBlur={handleBlur}
-                disabled={isSubmitting}
-                value={values.displayName}
-                helper={getErrorMessage("email", touched, errors)}
+                onIonInput={handleChangeUpdate}
+                onIonBlur={handleBlurUpdate}
+                disabled={isSubmittingUpdate}
+                value={valuesUpdate.displayName}
+                helper={getErrorMessage("email", touchedUpdate, errorsUpdate)}
                 helperIsError
               />
 
@@ -95,11 +110,11 @@ export const Profile = () => {
                 name="email"
                 inputmode="email"
                 Icon={<BiEnvelope />}
-                onIonInput={handleChange}
-                onIonBlur={handleBlur}
-                disabled={isSubmitting}
-                value={values.email}
-                helper={getErrorMessage("email", touched, errors)}
+                onIonInput={handleChangeUpdate}
+                onIonBlur={handleBlurUpdate}
+                disabled={isSubmittingUpdate}
+                value={valuesUpdate.email}
+                helper={getErrorMessage("email", touchedUpdate, errorsUpdate)}
                 helperIsError
               />
 
@@ -109,14 +124,18 @@ export const Profile = () => {
                 type="tel"
                 inputmode="tel"
                 Icon={<BiPhone />}
-                onIonInput={handleChange}
-                onIonBlur={handleBlur}
+                onIonInput={handleChangeUpdate}
+                onIonBlur={handleBlurUpdate}
                 label="+58"
                 value={(
-                  parsePhoneNumberFromString(values.phoneNumber, "VE")
-                    ?.nationalNumber || values.phoneNumber
+                  parsePhoneNumberFromString(valuesUpdate.phoneNumber, "VE")
+                    ?.nationalNumber || valuesUpdate.phoneNumber
                 ).slice(0, 10)}
-                helper={getErrorMessage("phoneNumber", touched, errors)}
+                helper={getErrorMessage(
+                  "phoneNumber",
+                  touchedUpdate,
+                  errorsUpdate
+                )}
                 helperIsError
               />
 
@@ -124,9 +143,58 @@ export const Profile = () => {
                 expand="block"
                 color="primary"
                 type="submit"
-                isLoading={isSubmitting}
+                isLoading={isSubmittingUpdate}
               >
                 Guardar
+              </Button>
+            </form>
+
+            <span className={`${styles.divider}`} />
+
+            <form
+              onSubmit={handleSubmitChangePass}
+              onKeyUp={(e) => e.key === "Enter" && handleSubmitChangePass()}
+              className={`${styles.profileForm}`}
+            >
+              <h2 className={`${styles.profileTitle}`}>Cambiar Contraseña</h2>
+
+              <InputPassword
+                placeholder="Contraseña"
+                name="password"
+                onIonInput={handleChangeChangePass}
+                onIonBlur={handleBlurChangePass}
+                disabled={isSubmittingChangePass}
+                value={valuesChangePass.password}
+                helper={getErrorMessage(
+                  "password",
+                  touchedChangePass,
+                  errorsChangePass
+                )}
+                helperIsError
+              />
+
+              <InputPassword
+                placeholder="Confirmar Contraseña"
+                name="confirmPassword"
+                onIonInput={handleChangeChangePass}
+                onIonBlur={handleBlurChangePass}
+                disabled={isSubmittingChangePass}
+                value={valuesChangePass.confirmPassword}
+                helper={getErrorMessage(
+                  "confirmPassword",
+                  touchedChangePass,
+                  errorsChangePass
+                )}
+                helperIsError
+              />
+
+              <Button
+                expand="block"
+                color="primary"
+                type="submit"
+                isLoading={isSubmittingChangePass}
+              >
+                Cambiar Contraseña
               </Button>
             </form>
           </IonCol>

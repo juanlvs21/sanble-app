@@ -1,10 +1,15 @@
 import { useState } from "react";
+import { FormikHelpers } from "formik";
 
 import { authActions } from "@/context/actions/authActions";
 import { useAuthContext } from "@/context/AuthContext";
 import { useToast } from "@/hooks/useToast";
-import { setFavoriteRequest, updateUserRequest } from "@/services";
-import { EUserFav, TUpdateUser } from "@/types/TUser";
+import {
+  changePasswordUserRequest,
+  setFavoriteRequest,
+  updateUserRequest,
+} from "@/services";
+import { EUserFav, TChangePassword, TUpdateUser } from "@/types/TUser";
 
 export const useUser = () => {
   const [{ user }, dispatch] = useAuthContext();
@@ -70,6 +75,25 @@ export const useUser = () => {
     }
   };
 
+  const handleChangePasswordUser = async (
+    { password }: TChangePassword,
+    formikHelpers: FormikHelpers<TChangePassword>
+  ) => {
+    try {
+      setIsLoading(true);
+
+      await changePasswordUserRequest({ password });
+
+      toast("Contraseña cambiada existosamente", { type: "success" });
+
+      formikHelpers.resetForm();
+    } catch (error) {
+      toast(error, { type: "error" });
+    } finally {
+      setIsLoading(true);
+    }
+  };
+
   return {
     user,
     isLoading,
@@ -77,5 +101,6 @@ export const useUser = () => {
     handleSetFavoriteFair,
     handleSetFavoriteStand,
     handleUpdateUser,
+    handleChangePasswordUser,
   };
 };

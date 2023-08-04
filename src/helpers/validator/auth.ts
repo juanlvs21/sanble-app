@@ -31,6 +31,25 @@ export const signInSchema = yup.object({
   password: yup.string().required("Ingrese su contraseña"),
 });
 
+export const changePasswordSchema = yup.object({
+  password: yup
+    .string()
+    .required("Ingrese su contraseña")
+    .min(passMin, `La contraseña debe tener mínimo ${passMin}`)
+    .max(lengthMax, `La contraseña debe tener máximo ${lengthMax} caracteres`),
+  confirmPassword: yup
+    .string()
+    .test(
+      "matchPass",
+      "Contraseña no coincide",
+      (value, { parent, createError }) => {
+        if (value !== parent.password) return createError();
+
+        return true;
+      }
+    ),
+});
+
 export const recoveryPasswordSchema = yup.object({
   email: yup
     .string()
