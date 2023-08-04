@@ -24,4 +24,6 @@ export enum ERoutesName {
   SESSION = "/app/sesion",
   SESSION_SIGNIN = "/app/sesion/entrar",
   SESSION_SIGNUP = "/app/sesion/registrarse",
+  SESSION_RECOVERY_PASSWORD = "/app/sesion/recovery-password",
+  SESSION_RECOVERY_PASSWORD_SUCCESS = "/app/sesion/recovery-password/success",
 }

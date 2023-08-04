@@ -52,3 +52,7 @@ export type TUpdateUser = {
   displayName: string;
   phoneNumber: string;
 };
+
+export type TRecoverPassword = {
+  email: string;
+};

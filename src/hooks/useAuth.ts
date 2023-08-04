@@ -15,14 +15,19 @@ import { useToast } from "@/hooks/useToast";
 import { useUser } from "@/hooks/useUser";
 import {
   getUserDataRequest,
+  recoveryPasswordRequest,
   signinGoogleRequest,
   signinRequest,
   signOutRequest,
   signUpRequest,
 } from "@/services";
 import { ERoutesName } from "@/types/TRoutes";
-import { TAuthSigInForm, TAuthSignupForm, TUser } from "@/types/TUser";
-import { useState } from "react";
+import {
+  TAuthSigInForm,
+  TAuthSignupForm,
+  TRecoverPassword,
+  TUser,
+} from "@/types/TUser";
 
 type TClearSessionFuncParams = {
   withLogout?: boolean;
@@ -150,12 +155,24 @@ export const useAuth = () => {
     setReady(true);
   };
 
+  const handleRecoveryPassword = async (recoveryForm: TRecoverPassword) => {
+    try {
+      await recoveryPasswordRequest(recoveryForm);
+      navigate(ERoutesName.SESSION_RECOVERY_PASSWORD_SUCCESS, {
+        replace: true,
+      });
+    } catch (error: any) {
+      toast(error, { type: "error" });
+    }
+  };
+
   return {
     handleSignup,
     handleSignin,
     handleSigninGoogle,
     handleSignOut,
     handleGetSession,
+    handleRecoveryPassword,
     clearSessionRedirect,
   };
 };

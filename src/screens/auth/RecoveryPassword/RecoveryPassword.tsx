@@ -1,23 +1,21 @@
 import { IonCol, IonGrid, IonRow } from "@ionic/react";
 import { useFormik } from "formik";
 import { BiEnvelope } from "react-icons/bi";
-import { FcGoogle } from "react-icons/fc";
 import { Link } from "react-router-dom";
 
 import { Button } from "@/components/common/buttons/Button";
 import { Input } from "@/components/common/forms/Input";
-import { InputPassword } from "@/components/common/forms/InputPassword";
 import { getErrorMessage } from "@/helpers/getFormikErrorMsg";
-import { signInSchema } from "@/helpers/validator/auth";
-import { useAuth } from "@/hooks/useAuth";
+import { recoveryPasswordSchema } from "@/helpers/validator/auth";
 import { useDocumentTitleApp } from "@/hooks/useDocumentTitle";
+import { useRecoveryPassword } from "@/hooks/useRecoveryPassword";
 import { ERoutesName } from "@/types/TRoutes";
-import { TAuthSigInForm } from "@/types/TUser";
+import { TRecoverPassword } from "@/types/TUser";
 import styles from "../Auth.module.css";
 
-export const Signin = () => {
-  useDocumentTitleApp("Iniciar Sesión");
-  const { handleSignin, handleSigninGoogle } = useAuth();
+export const RecoveryPassword = () => {
+  useDocumentTitleApp("Recuperar contraseña");
+  const { handleRecoveryPassword, isLoading } = useRecoveryPassword();
   const {
     handleSubmit,
     handleChange,
@@ -26,13 +24,12 @@ export const Signin = () => {
     touched,
     errors,
     isSubmitting,
-  } = useFormik<TAuthSigInForm>({
+  } = useFormik<TRecoverPassword>({
     initialValues: {
       email: "",
-      password: "",
     },
-    validationSchema: signInSchema,
-    onSubmit: handleSignin,
+    validationSchema: recoveryPasswordSchema,
+    onSubmit: handleRecoveryPassword,
   });
 
   return (
@@ -41,9 +38,12 @@ export const Signin = () => {
     >
       <IonRow>
         <IonCol>
-          <h1 className={styles.title}>Ingresar</h1>
+          <h1 className={styles.title}>Recuperar Contraseña</h1>
           <span className={styles.titleLineSignIn} />
-          <p className={styles.subtitle}>Ingresa en la Plataforma de Sanble</p>
+          <p className={styles.subtitle}>
+            ¿Has olvidado tu contraseña? Puedes recuperarla usando tu dirección
+            de correo electrónico
+          </p>
         </IonCol>
       </IonRow>
       <IonRow className={styles.formContainer}>
@@ -59,51 +59,28 @@ export const Signin = () => {
             Icon={<BiEnvelope />}
             onIonInput={handleChange}
             onIonBlur={handleBlur}
-            disabled={isSubmitting}
+            disabled={isSubmitting || isLoading}
             value={values.email}
             helper={getErrorMessage("email", touched, errors)}
             helperIsError
           />
-          <InputPassword
-            name="password"
-            onIonInput={handleChange}
-            onIonBlur={handleBlur}
-            disabled={isSubmitting}
-            value={values.password}
-            helper={getErrorMessage("password", touched, errors)}
-            helperIsError
-          />
-
-          <Link
-            to={ERoutesName.SESSION_RECOVERY_PASSWORD}
-            className={`${styles.recoveryPasswordToForm}`}
-          >
-            ¿Has olvidado tu contraseña?
-          </Link>
-
           <Button
             expand="block"
             color="primary"
             type="submit"
-            disabled={isSubmitting}
+            isLoading={isSubmitting || isLoading}
             className={styles.btn}
           >
-            Ingresar
+            Recuperar
           </Button>
         </form>
-        <Button
-          expand="block"
-          color="secondary"
-          fill="clear"
-          disabled={isSubmitting}
-          className={styles.btn}
-          onClick={handleSigninGoogle}
+
+        <Link
+          to={ERoutesName.SESSION_SIGNIN}
+          className={`${styles.recoveryPasswordToSignin}`}
         >
-          <>
-            <FcGoogle size={20} className={styles.iconGoole} />
-            Ingresar con Google
-          </>
-        </Button>
+          Ir al inicio de sesión
+        </Link>
       </IonRow>
     </IonGrid>
   );

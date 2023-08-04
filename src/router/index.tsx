@@ -28,13 +28,20 @@ const SigninScreen = lazy(() =>
 const SignupScreen = lazy(() =>
   import("@/screens/auth/Signup").then(({ Signup }) => ({ default: Signup }))
 );
+const RecoveryPasswordScreen = lazy(() =>
+  import("@/screens/auth/RecoveryPassword").then(({ RecoveryPassword }) => ({
+    default: RecoveryPassword,
+  }))
+);
+const RecoveryPasswordSuccessScreen = lazy(() =>
+  import("@/screens/auth/RecoveryPasswordSuccess").then(
+    ({ RecoveryPasswordSuccess }) => ({
+      default: RecoveryPasswordSuccess,
+    })
+  )
+);
 const HomeScreen = lazy(() =>
   import("@/screens/Home").then(({ Home }) => ({ default: Home }))
-);
-const FavoritesListScreen = lazy(() =>
-  import("@/screens/favorites/FavoritesFairs").then(({ FavoritesFairs }) => ({
-    default: FavoritesFairs,
-  }))
 );
 const NearYouScreen = lazy(() =>
   import("@/screens/NearYou").then(({ NearYou }) => ({
@@ -367,6 +374,24 @@ export const router = createBrowserRouter([
             element: (
               <SuspenseComponent>
                 <SignupScreen />
+              </SuspenseComponent>
+            ),
+          },
+          {
+            path: ERoutesName.SESSION_RECOVERY_PASSWORD,
+            errorElement: <ErrorScreen />,
+            element: (
+              <SuspenseComponent>
+                <RecoveryPasswordScreen />
+              </SuspenseComponent>
+            ),
+          },
+          {
+            path: ERoutesName.SESSION_RECOVERY_PASSWORD_SUCCESS,
+            errorElement: <ErrorScreen />,
+            element: (
+              <SuspenseComponent>
+                <RecoveryPasswordSuccessScreen />
               </SuspenseComponent>
             ),
           },

@@ -8,7 +8,9 @@ import {
   signOut,
   User,
 } from "@/helpers/firebase";
-import { TAuthSigInForm } from "@/types/TUser";
+import { TAuthSigInForm, TRecoverPassword } from "@/types/TUser";
+import { api } from "@/services/api";
+import { AxiosResponse } from "axios";
 
 export const signOutRequest = () => signOut(auth);
 
@@ -24,3 +26,8 @@ export const signinGoogleRequest = async () => {
 
 export const getSessionRequest = (nextOrObserver: NextOrObserver<User>) =>
   onAuthStateChanged(auth, nextOrObserver);
+
+export const recoveryPasswordRequest = (recoveryForm: TRecoverPassword) =>
+  api
+    .post<AxiosResponse>("/user/recovery-password", recoveryForm)
+    .then(({ data }) => data.data);

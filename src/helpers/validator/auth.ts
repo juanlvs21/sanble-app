@@ -30,3 +30,10 @@ export const signInSchema = yup.object({
     .email("Ingrese un correo el electrónico válido"),
   password: yup.string().required("Ingrese su contraseña"),
 });
+
+export const recoveryPasswordSchema = yup.object({
+  email: yup
+    .string()
+    .required("Ingrese su correo electrónico")
+    .email("Ingrese un correo el electrónico válido"),
+});

@@ -1,5 +1,5 @@
 import { IonCol, IonContent, useIonLoading } from "@ionic/react";
-import { Outlet, useLocation } from "react-router-dom";
+import { Outlet, useLocation, useMatch } from "react-router-dom";
 
 import styles from "./Auth.module.css";
 
@@ -12,6 +12,8 @@ import { useEffect } from "react";
 const bgImage: Record<string, string> = {
   [ERoutesName.SESSION_SIGNIN]: "signinRoute",
   [ERoutesName.SESSION_SIGNUP]: "signupRoute",
+  [ERoutesName.SESSION_RECOVERY_PASSWORD]: "signinRoute",
+  [ERoutesName.SESSION_RECOVERY_PASSWORD_SUCCESS]: "signinRoute",
 };
 
 const getWavesClass = (pathname: string) => {
@@ -22,6 +24,11 @@ const getWavesClass = (pathname: string) => {
 export const AuthLayout = () => {
   const [_, dismissLoading] = useIonLoading();
   const { isLoadingFull } = useApp();
+
+  const matchRecoveryPassword = useMatch(ERoutesName.SESSION_RECOVERY_PASSWORD);
+  const matchRecoveryPasswordSuccess = useMatch(
+    ERoutesName.SESSION_RECOVERY_PASSWORD_SUCCESS
+  );
 
   useEffect(() => {
     return () => {
@@ -37,12 +44,17 @@ export const AuthLayout = () => {
       <div
         className={`${styles.layoutContainer} ${getWavesClass(
           location.pathname
-        )}`}
+        )} ${
+          matchRecoveryPassword || matchRecoveryPasswordSuccess
+            ? styles.layoutContainerRecovery
+            : ""
+        }`}
       >
         <IonCol className={styles.logoContainer}>
           <img src="/assets/images/logo-full.png" className={styles.logoImg} />
         </IonCol>
-        <TabBar />
+
+        {!(matchRecoveryPassword || matchRecoveryPasswordSuccess) && <TabBar />}
 
         <main>
           <Outlet />
