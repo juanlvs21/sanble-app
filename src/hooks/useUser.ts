@@ -60,9 +60,9 @@ export const useUser = () => {
     try {
       setIsLoading(true);
 
-      const res = await updateUserRequest(userForm);
+      const newUser = await updateUserRequest(userForm);
 
-      console.log(res);
+      setUser(newUser);
     } catch (error) {
       toast(error, { type: "error" });
     } finally {
