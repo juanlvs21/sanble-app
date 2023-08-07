@@ -1,0 +1,25 @@
+.avatarSection {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.avatarSection :global(label) {
+  text-align: center;
+  width: 100%;
+  height: 100%;
+}
+
+.avatarSection :global(label > div) {
+  width: 100%;
+  height: 100%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  background-position: center;
+}
+
+.avatarSection :global(label > div > div) {
+  margin: auto;
+}

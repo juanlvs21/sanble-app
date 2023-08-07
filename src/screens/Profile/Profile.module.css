@@ -12,6 +12,12 @@
 .profileAvatar {
   width: 250px;
   height: 250px;
+  position: relative;
+  overflow: revert;
+}
+
+.profileAvatar :global(img) {
+  border-radius: 250px;
 }
 
 .profileForm {
@@ -40,10 +46,28 @@
   margin: 40px 0;
 }
 
+.profileAvatarBtn {
+  position: absolute;
+  right: 20px;
+  top: 0;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  --padding-bottom: 0;
+  --padding-end: 0;
+  --padding-start: 0;
+  --padding-top: 0;
+}
+
 @media (max-width: 768px) {
   .profileAvatar {
     width: 200px;
     height: 200px;
+  }
+  .profileAvatar :global(img) {
+    border-radius: 200px;
   }
   .profileCol {
     align-items: center !important;

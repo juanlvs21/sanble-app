@@ -1,4 +1,4 @@
-import { Camera, CameraResultType, CameraSource } from "@capacitor/camera";
+import { Camera, CameraResultType } from "@capacitor/camera";
 import { IonCheckboxCustomEvent } from "@ionic/core";
 import { CheckboxChangeEventDetail, IonNote } from "@ionic/react";
 import { FormikHelpers, useFormik } from "formik";
@@ -103,7 +103,6 @@ export const PhotoForm = ({
   const handleChangeFile = (file: any) => {
     setReviewSrc("");
     setFieldValue("image", file);
-    console.log({ file2: file });
     setTimeout(() => setReviewSrc(URL.createObjectURL(file)), 100);
   };
 

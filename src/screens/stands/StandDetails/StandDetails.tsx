@@ -194,6 +194,18 @@ export const StandDetails = () => {
               </div>
             </section>
 
+            {/* <IonSegment value="buttons">
+              <IonSegmentButton value="default">
+                <IonLabel>Productos</IonLabel>
+              </IonSegmentButton>
+              <IonSegmentButton value="segment">
+                <IonLabel>Promociones</IonLabel>
+              </IonSegmentButton>
+              <IonSegmentButton value="buttons">
+                <IonLabel>Reviews</IonLabel>
+              </IonSegmentButton>
+            </IonSegment> */}
+
             <section
               className={`${styles.standReviewsContainer} animate__animated animate__fadeIn`}
             >

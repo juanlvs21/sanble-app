@@ -1,26 +1,29 @@
-import { IonAvatar, IonCol, IonGrid, IonRow } from "@ionic/react";
-import { BiEnvelope, BiPhone, BiUser } from "react-icons/bi";
+import { IonAvatar, IonButton, IonCol, IonGrid, IonRow } from "@ionic/react";
 import { useFormik } from "formik";
+import parsePhoneNumberFromString from "libphonenumber-js";
+import { BiEnvelope, BiImageAdd, BiPhone, BiUser } from "react-icons/bi";
 
 import { Fetcher } from "@/components/common/Fetcher";
 import { ImageExtended } from "@/components/common/ImageExtended";
+import { Button } from "@/components/common/buttons/Button";
 import { Input } from "@/components/common/forms/Input";
+import { InputPassword } from "@/components/common/forms/InputPassword";
+import { ChangeAvatarModal } from "@/components/modules/profile/ChangeAvatarModal";
+import { getErrorMessage } from "@/helpers/getFormikErrorMsg";
+import { changePasswordSchema } from "@/helpers/validator/auth";
+import { userSchema } from "@/helpers/validator/user";
+import { useChangeAvatar } from "@/hooks/profile/useChangeAvatar";
 import { useDocumentTitleApp } from "@/hooks/useDocumentTitle";
 import { useUser } from "@/hooks/useUser";
-import styles from "./Profile.module.css";
-import { Button } from "@/components/common/buttons/Button";
 import { TChangePassword, TUpdateUser } from "@/types/TUser";
-import { userSchema } from "@/helpers/validator/user";
-import parsePhoneNumberFromString from "libphonenumber-js";
-import { getErrorMessage } from "@/helpers/getFormikErrorMsg";
-import { InputPassword } from "@/components/common/forms/InputPassword";
-import { changePasswordSchema } from "@/helpers/validator/auth";
+import styles from "./Profile.module.css";
 
 export const Profile = () => {
   const { user } = useUser();
   const title = user?.displayName || user?.email || "Mi Perfil";
   useDocumentTitleApp(`${title} 👤`);
 
+  const changeAvatarProps = useChangeAvatar();
   const { handleUpdateUser, handleChangePasswordUser } = useUser();
   const {
     handleSubmit: handleSubmitUpdate,
@@ -77,8 +80,19 @@ export const Profile = () => {
                 alt={title}
                 className={`${styles.profileAvatar}`}
               />
+              <IonButton
+                size="small"
+                color="secondary"
+                className={`${styles.profileAvatarBtn}`}
+                onClick={() => changeAvatarProps.onOpen(true)}
+              >
+                <BiImageAdd size={25} />
+              </IonButton>
             </IonAvatar>
+
+            <ChangeAvatarModal {...changeAvatarProps} />
           </IonCol>
+
           <IonCol
             size="12"
             size-md="7"
