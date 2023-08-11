@@ -1,7 +1,7 @@
 import { AxiosRequestConfig, AxiosResponse } from "axios";
 
 import { api } from "@/services";
-import { TFair, TFairGeo } from "@/types/TFair";
+import { TFair, TFairForm, TFairGeo } from "@/types/TFair";
 import { TResponseList } from "@/types/THttp";
 import { TPhotographDetails } from "@/types/TPhotograph";
 import { TGetListParams } from "@/types/TRequest";
@@ -34,6 +34,11 @@ export const getFairBestListRequest = () =>
 export const getFairDetailsRequest = (fairID: string) =>
   api
     .get<AxiosResponse<TFair>>(`${URL_PREFIX}/${fairID}`)
+    .then(({ data }) => data.data);
+
+export const updateFairRequest = (values: TFairForm) =>
+  api
+    .patch<AxiosResponse<TFair>>(`${URL_PREFIX}/${values?.id ?? ""}`, values)
     .then(({ data }) => data.data);
 
 export const getFairListGeolocationRequest = () =>

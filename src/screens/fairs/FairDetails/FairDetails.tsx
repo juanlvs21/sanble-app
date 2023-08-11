@@ -236,7 +236,12 @@ export const FairDetails = () => {
             <IonFabButton
               color="secondary"
               onClick={() =>
-                navigate(`${ERoutesName.FAIRS_LIST}/${fair?.id ?? ""}/editar`)
+                navigate(
+                  `${ERoutesName.FAIR_DETAILS_UPDATE.replace(
+                    ":fairID",
+                    fair?.id ?? ""
+                  )}`
+                )
               }
             >
               <FiEdit2 size={22} />

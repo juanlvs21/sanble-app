@@ -1,11 +1,11 @@
 import { useIonLoading } from "@ionic/react";
 import { LatLngTuple } from "leaflet";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { useFairDetails } from "@/hooks/fairs/useFairDetails";
 import { useToast } from "@/hooks/useToast";
-import { saveFairRequest } from "@/services";
+import { updateFairRequest } from "@/services";
 import { TFairForm } from "@/types/TFair";
 import { ERoutesName } from "@/types/TRoutes";
 
@@ -42,16 +42,15 @@ export const useFairUpdate = (fairID: string) => {
     try {
       presentLoading();
 
-      const fair = await saveFairRequest(formValues);
+      const fair = await updateFairRequest(formValues);
 
-      toast("Feria creada exitosamente", { type: "success" });
+      toast("Feria actualizada exitosamente", { type: "success" });
 
       navigate(`${ERoutesName.FAIRS_LIST}/${fair.id}`, {
         replace: true,
         state: {
           fairID: fair.id,
           fairName: fair.name,
-          goBackUrl: ERoutesName.MY_SANBLE_FAIRS,
         },
       });
     } catch (error) {

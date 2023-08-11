@@ -36,7 +36,6 @@ import { newFairSchema } from "@/helpers/validator/fair";
 import { EFairType, TFairForm } from "@/types/TFair";
 import { Tooltip } from "react-leaflet";
 import styles from "./FairForm.module.css";
-import { formatFairsMarks } from "@/helpers/mapFormatMarkers";
 
 export type ComponentProps = {
   /**
