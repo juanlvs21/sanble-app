@@ -1,6 +1,6 @@
 import { RefObject, useEffect, useState } from "react";
 import { SwiperRef } from "swiper/react";
-import useSWRMutation from "swr/immutable";
+import useSWR from "swr";
 
 import { infiteScrollData } from "@/helpers/infiniteScrollData";
 import { useToast } from "@/hooks/useToast";
@@ -39,7 +39,7 @@ export const useFairDetails = (
     data: fair,
     isLoading: isLoadingDetails,
     mutate: mutateDetails,
-  } = useSWRMutation(
+  } = useSWR(
     SWR_KEY_FAIRS_DETAILS,
     async () => await getFairDetailsRequest(fairID),
     {
@@ -61,7 +61,7 @@ export const useFairDetails = (
     }
   );
 
-  const { isLoading: isLoadingReviews, mutate: mutateReviews } = useSWRMutation(
+  const { isLoading: isLoadingReviews, mutate: mutateReviews } = useSWR(
     SWR_KEY_FAIRS_REVIEWS,
     async () => await getFairReviewsRequest(fairID, paginationReviews),
     {

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import useSWRMutation from "swr/immutable";
+import useSWR from "swr";
 
 import { infiteScrollData } from "@/helpers/infiniteScrollData";
 import { useToast } from "@/hooks/useToast";
@@ -22,7 +22,7 @@ export const useFairStands = (fairID: string) => {
 
   const SWR_KEY_FAIRS_STANDS = `/fairs/${fairID}/stands`;
 
-  const { data, isLoading, mutate } = useSWRMutation(
+  const { data, isLoading, mutate } = useSWR(
     SWR_KEY_FAIRS_STANDS,
     async () => await getFairStandsListRequest(fairID, pagination),
     {

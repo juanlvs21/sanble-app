@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import useSWRMutation from "swr/immutable";
+import useSWR from "swr";
 
 import { formatFairsMarks } from "@/helpers/mapFormatMarkers";
 import { useToast } from "@/hooks/useToast";
@@ -13,7 +13,7 @@ export const useFairsListGeo = () => {
   const { toast, toastDismiss } = useToast();
   const navigate = useNavigate();
 
-  const { data, isLoading } = useSWRMutation(
+  const { data, isLoading } = useSWR(
     SWR_KEY_FAIRS_GEO,
     getFairListGeolocationRequest,
     {

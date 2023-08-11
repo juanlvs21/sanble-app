@@ -1,5 +1,4 @@
-import { useEffect } from "react";
-import useSWRMutation from "swr/immutable";
+import useSWR from "swr";
 
 import { useToast } from "@/hooks/useToast";
 import { getFairBestListRequest, getProductTypesRequest } from "@/services";
@@ -15,7 +14,7 @@ export const useHome = () => {
     data: dataFairs,
     isLoading: isLoadingFairs,
     mutate: mutateFairs,
-  } = useSWRMutation(SWR_KEY_FAIRS_BEST, getFairBestListRequest, {
+  } = useSWR(SWR_KEY_FAIRS_BEST, getFairBestListRequest, {
     onError(error) {
       toastDismiss(SWR_KEY_FAIRS_BEST);
       toast(error, { type: "error", toastId: SWR_KEY_FAIRS_BEST });
@@ -26,7 +25,7 @@ export const useHome = () => {
     data: dataStands,
     isLoading: isLoadingStands,
     mutate: mutateStands,
-  } = useSWRMutation(SWR_KEY_STANDS_BEST, getFairBestListRequest, {
+  } = useSWR(SWR_KEY_STANDS_BEST, getFairBestListRequest, {
     onError(error) {
       toastDismiss(SWR_KEY_STANDS_BEST);
       toast(error, { type: "error", toastId: SWR_KEY_STANDS_BEST });
@@ -37,7 +36,7 @@ export const useHome = () => {
     data: dataProductType,
     isLoading: isLoadingProductType,
     mutate: mutateProductType,
-  } = useSWRMutation(SWR_KEY_PRODUCTS_TYPES, getProductTypesRequest, {
+  } = useSWR(SWR_KEY_PRODUCTS_TYPES, getProductTypesRequest, {
     onError(error) {
       toastDismiss(SWR_KEY_PRODUCTS_TYPES);
       toast(error, { type: "error", toastId: SWR_KEY_PRODUCTS_TYPES });
