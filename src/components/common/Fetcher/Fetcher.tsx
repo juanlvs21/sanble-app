@@ -76,7 +76,7 @@ export const Fetcher = ({
   handleInfiniteScroll,
 }: ComponentProps) => {
   const fetcherRef = createRef<HTMLIonContentElement>();
-  const { handleSetScrollTop } = useApp();
+  const { handleSetScrollTop, isCapacitor } = useApp();
 
   const doRefresh = async (event: CustomEvent<RefresherEventDetail>) => {
     if (handleRefresh) await handleRefresh();
@@ -115,7 +115,9 @@ export const Fetcher = ({
           >
             <Spinner
               color="dark"
-              className={`${styles.fetcherRefreshSpinner} test`}
+              className={`${styles.fetcherRefreshSpinner} ${
+                isCapacitor ? styles.isCapacitor : ""
+              }`}
             />
           </IonRefresherContent>
         </IonRefresher>
