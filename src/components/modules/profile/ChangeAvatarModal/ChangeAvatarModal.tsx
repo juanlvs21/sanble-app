@@ -114,7 +114,7 @@ export const ChangeAvatarModal = ({
           {isCapacitor ? (
             <>
               <div
-                className={styles.avatarFileContainer}
+                className={styles.avatarFileContainerCapacitor}
                 style={{
                   backgroundImage: reviewSrc ? `url("${reviewSrc}")` : "",
                 }}
@@ -142,7 +142,6 @@ export const ChangeAvatarModal = ({
                 maxSize={fileMaxSize}
               >
                 <div
-                  className={styles.photoFormFileContainer}
                   style={{
                     backgroundImage: reviewSrc ? `url("${reviewSrc}")` : "",
                     pointerEvents: "none",
