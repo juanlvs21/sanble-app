@@ -46,6 +46,7 @@ export type TFairForm = {
   celebrationDate?: string;
   address: string;
   description: string;
+  stars?: number;
   type?: EFairType;
   contactEmail?: string;
   contactPhone: string;

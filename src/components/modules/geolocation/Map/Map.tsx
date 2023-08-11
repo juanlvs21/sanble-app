@@ -93,7 +93,9 @@ export const Map = ({
 
           {draggableMarkerEvent ? (
             <MapMarker
-              position={[userPosition.latitude, userPosition.longitude]}
+              position={
+                center || [userPosition.latitude, userPosition.longitude]
+              }
               icon={EMapIcon.GENERIC_PRIMARY}
               draggableMarkerEvent={draggableMarkerEvent}
               Tooltip={DraggableMarkerTooltip}

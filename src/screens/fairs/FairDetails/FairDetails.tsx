@@ -5,7 +5,7 @@ import { HiOutlinePhotograph } from "react-icons/hi";
 import { IoIosArrowUp } from "react-icons/io";
 import { MdOutlineStorefront } from "react-icons/md";
 import { TiStar } from "react-icons/ti";
-import { Link, useLocation, useParams } from "react-router-dom";
+import { Link, useLocation, useParams, useNavigate } from "react-router-dom";
 
 import { ButtonFav } from "@/components/common/buttons/ButtonFav";
 import { Fetcher } from "@/components/common/Fetcher";
@@ -32,6 +32,7 @@ const MODAL_STANDS_ID = "fair-stands-open-modal";
 type TRouteParams = { fairID: string };
 
 export const FairDetails = () => {
+  const navigate = useNavigate();
   const { fairID } = useParams<TRouteParams>();
   const { state } = useLocation();
   const { renderTopBarActionEnd } = useTopBarMain();
@@ -232,7 +233,12 @@ export const FairDetails = () => {
             <IoIosArrowUp size={28} />
           </IonFabButton>
           <IonFabList side="top">
-            <IonFabButton color="secondary">
+            <IonFabButton
+              color="secondary"
+              onClick={() =>
+                navigate(`${ERoutesName.FAIRS_LIST}/${fair?.id ?? ""}/editar`)
+              }
+            >
               <FiEdit2 size={22} />
             </IonFabButton>
             <IonFabButton color="secondary">

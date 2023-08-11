@@ -36,6 +36,7 @@ import { newFairSchema } from "@/helpers/validator/fair";
 import { EFairType, TFairForm } from "@/types/TFair";
 import { Tooltip } from "react-leaflet";
 import styles from "./FairForm.module.css";
+import { formatFairsMarks } from "@/helpers/mapFormatMarkers";
 
 export type ComponentProps = {
   /**
@@ -135,6 +136,7 @@ export const FairForm = ({
               onIonChange={handleSetValueType}
               onIonBlur={handleBlur}
               helper={getErrorMessage("type", touched, errors)}
+              value={values.type}
               helperIsError
             >
               <IonSelectOption value={EFairType.ENTREPRENEURSHIP}>
@@ -240,6 +242,7 @@ export const FairForm = ({
         <IonContent>
           <Map
             draggableMarkerEvent={handleSetLocation}
+            center={values.geopoint}
             DraggableMarkerTooltip={
               <Tooltip direction="bottom" offset={[0, 30]} permanent>
                 <b>{values.name}</b>

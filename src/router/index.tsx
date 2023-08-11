@@ -58,6 +58,11 @@ const FairDetailsScreen = lazy(() =>
     default: FairDetails,
   }))
 );
+const FairUpdateScreen = lazy(() =>
+  import("@/screens/fairs/FairUpdate").then(({ FairUpdate }) => ({
+    default: FairUpdate,
+  }))
+);
 const FairMapScreen = lazy(() =>
   import("@/screens/fairs/FairMap").then(({ FairMap }) => ({
     default: FairMap,
@@ -288,6 +293,15 @@ export const router = createBrowserRouter([
             element: (
               <SuspenseComponent>
                 <FairDetailsScreen />
+              </SuspenseComponent>
+            ),
+          },
+          {
+            path: ERoutesName.FAIR_DETAILS_UPDATE,
+            errorElement: <ErrorScreen />,
+            element: (
+              <SuspenseComponent>
+                <FairUpdateScreen />
               </SuspenseComponent>
             ),
           },

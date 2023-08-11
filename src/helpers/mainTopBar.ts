@@ -34,6 +34,11 @@ export const getPropsTopBarMain = (
       titleLight: true,
       sticky: true,
     },
+    [ERoutesName.FAIR_DETAILS_UPDATE]: {
+      title: "Actualizar Feria",
+      startGoBack: true,
+      sticky: true,
+    },
     [ERoutesName.FAIR_DETAILS_MAP]: {
       title: "Ubicación Feria",
       sticky: true,
