@@ -5,12 +5,13 @@ import { HiOutlinePhotograph } from "react-icons/hi";
 import { IoIosArrowUp } from "react-icons/io";
 import { MdOutlineStorefront } from "react-icons/md";
 import { TiStar } from "react-icons/ti";
-import { Link, useLocation, useParams, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 
-import { ButtonFav } from "@/components/common/buttons/ButtonFav";
 import { Fetcher } from "@/components/common/Fetcher";
 import { ImageExtended } from "@/components/common/ImageExtended";
+import { SegmentDetails } from "@/components/common/SegmentDetails";
 import { Skeleton } from "@/components/common/Skeleton";
+import { ButtonFav } from "@/components/common/buttons/ButtonFav";
 import { FairModalStands } from "@/components/modules/fairs/FairModalStands";
 import { InfoModal } from "@/components/modules/info/InfoModal";
 import { ReviewForm } from "@/components/modules/reviews/ReviewForm";
@@ -20,14 +21,18 @@ import { getNavStateText } from "@/helpers/navigation";
 import { useFairDetails } from "@/hooks/fairs/useFairDetails";
 import { useFairStands } from "@/hooks/fairs/useFairStands";
 import { useApp } from "@/hooks/useApp";
+import { useDocumentTitleApp } from "@/hooks/useDocumentTitle";
 import { useTopBarMain } from "@/hooks/useTopBarMain";
 import { useUser } from "@/hooks/useUser";
 import { ERoutesName } from "@/types/TRoutes";
-import { useDocumentTitleApp } from "@/hooks/useDocumentTitle";
 import styles from "./FairDetails.module.css";
+import { useSegmentDetails } from "@/hooks/useSegmentDetails";
+import { useEffect } from "react";
 
 const MODAL_INFO_ID = "fair-info-open-modal";
 const MODAL_STANDS_ID = "fair-stands-open-modal";
+
+const SEGMENT_ITEMS = ["Publicaciónes", "Opiniones"];
 
 type TRouteParams = { fairID: string };
 
@@ -57,6 +62,9 @@ export const FairDetails = () => {
     handleInfinite: handleInfiniteStands,
   } = useFairStands(finalFairID);
 
+  const { value: segmentValue, handleChange: segmentHandleChange } =
+    useSegmentDetails();
+
   useDocumentTitleApp(
     `${
       getNavStateText(fairID, state?.fairID, state?.fairName) ||
@@ -64,6 +72,10 @@ export const FairDetails = () => {
       "Feria"
     } 🛍️`
   );
+
+  useEffect(() => {
+    handleLoadAll();
+  }, [segmentValue]);
 
   return (
     <>
@@ -201,23 +213,39 @@ export const FairDetails = () => {
               </div>
             </section>
 
-            <section
-              className={`${styles.fairReviewsContainer} animate__animated animate__fadeIn`}
-            >
-              <h3>Califica esta Feria</h3>
-              <p>Comparte tu opinión con otros usuarios</p>
+            <SegmentDetails
+              value={segmentValue}
+              items={SEGMENT_ITEMS}
+              onChange={segmentHandleChange}
+              className={`${styles.fairSegment}`}
+            />
 
-              <ReviewForm
-                review={review}
-                handleSave={handleSaveReview}
-                isLoading={isSaving || isLoadingDetails}
-              />
-              <ReviewsList
-                reviews={reviews}
-                isLoading={isLoadingReviews && !reviews?.length}
-                className={styles.fairReviewsList}
-              />
-            </section>
+            {segmentValue === 0 && (
+              <section
+                className={`${styles.fairReviewsContainer} animate__animated animate__fadeIn`}
+              >
+                <h3>Listado de publicaciones</h3>
+              </section>
+            )}
+            {segmentValue === 1 && (
+              <section
+                className={`${styles.fairReviewsContainer} animate__animated animate__fadeIn`}
+              >
+                <h3>Califica esta Feria</h3>
+                <p>Comparte tu opinión con otros usuarios</p>
+
+                <ReviewForm
+                  review={review}
+                  handleSave={handleSaveReview}
+                  isLoading={isSaving || isLoadingDetails}
+                />
+                <ReviewsList
+                  reviews={reviews}
+                  isLoading={isLoadingReviews && !reviews?.length}
+                  className={styles.fairReviewsList}
+                />
+              </section>
+            )}
           </div>
         </section>
       </Fetcher>

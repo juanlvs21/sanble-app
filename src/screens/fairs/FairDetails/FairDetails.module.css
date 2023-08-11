@@ -193,6 +193,10 @@
   transition: all 400ms ease-in-out;
 }
 
+.fairSegment {
+  margin-top: 42px;
+}
+
 .fairReviewsContainer {
   margin-top: 40px;
 }

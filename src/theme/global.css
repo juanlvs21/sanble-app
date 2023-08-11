@@ -269,6 +269,23 @@ ion-avatar {
   overflow: hidden;
 }
 
+ion-segment {
+  border-radius: calc(var(--sanble-border-radius) + 6px);
+  padding: 4px;
+}
+
+ion-segment-button {
+  --border-radius: var(--sanble-border-radius);
+  --background-checked: var(--ion-color-primary);
+  --indicator-color: transparent;
+  --indicator-box-shadow: none;
+  --color-checked: var(--ion-color-light);
+  --color-hover: black;
+
+  height: 50px;
+  font-size: 18px;
+}
+
 /* List Data */
 .dataListContainer {
   display: grid;
