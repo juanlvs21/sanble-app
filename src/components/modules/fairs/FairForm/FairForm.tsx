@@ -9,7 +9,6 @@ import {
   IonCol,
   IonContent,
   IonGrid,
-  IonHeader,
   IonModal,
   IonRow,
   IonSelectOption,
@@ -24,6 +23,7 @@ import { HiOutlineCalendar } from "react-icons/hi";
 import { MdOutlineDescription, MdTitle } from "react-icons/md";
 import { TbMap2 } from "react-icons/tb";
 
+import { HeaderModal } from "@/components/common/HeaderModal";
 import { Button } from "@/components/common/buttons/Button";
 import { Datetime } from "@/components/common/forms/Datetime";
 import { Input } from "@/components/common/forms/Input";
@@ -225,7 +225,7 @@ export const FairForm = ({
       </IonGrid>
 
       <IonModal isOpen={openMapModal} className={styles.formFairMapModal}>
-        <IonHeader>
+        <HeaderModal>
           <IonToolbar>
             <IonButtons slot="start">
               <Button onClick={() => onOpenMapModal(false)}>Atrás</Button>
@@ -237,7 +237,7 @@ export const FairForm = ({
               </Button>
             </IonButtons>
           </IonToolbar>
-        </IonHeader>
+        </HeaderModal>
         <IonContent>
           <Map
             draggableMarkerEvent={handleSetLocation}
