@@ -11,7 +11,7 @@
 }
 
 .fairListCard .fairListCardPicture {
-  display: contents;
+  width: 100px;
 }
 
 .fairListCard .fairListCardImg {
@@ -23,8 +23,8 @@
 }
 
 .fairListCardContent {
-  margin: 15px 20px;
-  width: calc(100% - 60px);
+  padding: 15px 20px;
+  width: calc(100% - 100px);
   display: flex;
   flex-direction: column;
 }
@@ -74,8 +74,8 @@
 
 .fairListCard .fairListCardBtnFav {
   position: absolute;
-  right: 6px;
-  bottom: 0;
+  right: 3px;
+  bottom: -8px;
 }
 
 .fairListCardLink {
@@ -88,16 +88,21 @@
   .fairListCard {
     margin: 20px;
   }
-  .fairListCardContent {
-    width: cal(100% - 80px);
-  }
 }
 
 @media (max-width: 380px) {
   .fairListCardBtnFav {
-    bottom: -5px;
+    bottom: 0 !important;
+    right: 0 !important;
     width: 30px;
     height: 30px;
+  }
+  .fairListCard .fairListCardImg {
+    width: 60px;
+  }
+
+  .fairListCardContent {
+    width: calc(100% - 60px);
   }
   .fairListCardBtnFav::part(native) {
     width: 30px;
@@ -108,10 +113,6 @@
 @media (max-width: 330px) {
   .fairListCard img {
     width: 80px;
-  }
-
-  .fairListCardContent {
-    width: cal(100% - 100px);
   }
 
   .fairListCardContent h1 {

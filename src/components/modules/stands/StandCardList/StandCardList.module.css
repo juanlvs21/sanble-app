@@ -11,7 +11,7 @@
 }
 
 .standListCard .standListCardPicture {
-  display: contents;
+  width: 130px;
 }
 
 .standListCard .standListCardImg {
@@ -23,7 +23,7 @@
 }
 
 .standListCardContent {
-  margin: 15px 20px;
+  padding: 15px 20px;
   width: calc(100% - 130px);
   display: flex;
   flex-direction: column;
@@ -58,7 +58,7 @@
   position: absolute;
   margin: 0;
   bottom: -6px;
-  right: -1px;
+  right: 5px;
 }
 
 .standListCardLink {
@@ -71,14 +71,21 @@
   .standListCard {
     margin: 20px;
   }
-  .standListCardContent {
-    width: cal(100% - 80px);
-  }
 }
 
 @media (max-width: 380px) {
+  .standListCard .standListCardPicture {
+    width: 80px;
+  }
+  .standListCard .standListCardImg {
+    width: 80px;
+  }
+  .standListCardContent {
+    width: calc(100% - 80px);
+  }
   .standListCardBtnFav {
-    bottom: -5px;
+    bottom: 0 !important;
+    right: 0 !important;
     width: 30px;
     height: 30px;
   }
@@ -91,10 +98,6 @@
 @media (max-width: 330px) {
   .standListCard img {
     width: 80px;
-  }
-
-  .standListCardContent {
-    width: cal(100% - 100px);
   }
 
   .standListCardContent h1 {
