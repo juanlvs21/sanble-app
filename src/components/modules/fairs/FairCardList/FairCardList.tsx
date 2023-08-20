@@ -64,7 +64,7 @@ export const FairCardList = ({ fair, goBackUrl }: ComponentProps) => {
         </div>
       </Link>
 
-      {/* {user?.uid !== fair.owner.id && ()} We should hide fav button if you are the owner */}
+      {/* {user?.uid !== fair.owner.uid && ()} We should hide fav button if you are the owner */}
       <ButtonFav
         className={styles.fairListCardBtnFav}
         isLoading={loadingSetFav}

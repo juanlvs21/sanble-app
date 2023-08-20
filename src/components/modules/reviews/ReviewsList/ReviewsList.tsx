@@ -1,9 +1,10 @@
 import { ImageExtended } from "@/components/common/ImageExtended";
 import { Skeleton } from "@/components/common/Skeleton";
-import { TReview } from "@/types/TReview";
-import { dayjs } from "@/helpers/time";
-import styles from "./ReviewsList.module.css";
 import { Stars } from "@/components/common/Stars";
+import { dayjs } from "@/helpers/time";
+import { useUser } from "@/hooks/useUser";
+import { TReview } from "@/types/TReview";
+import styles from "./ReviewsList.module.css";
 
 export type ComponentProps = {
   /**
@@ -25,6 +26,8 @@ export const ReviewsList = ({
   isLoading,
   className = "",
 }: ComponentProps) => {
+  const { user } = useUser();
+
   return (
     <ul className={`${styles.reviewsList} ${className}`}>
       {isLoading
@@ -40,11 +43,16 @@ export const ReviewsList = ({
               />
             ))
         : reviews?.map((review) => (
-            <li key={review.id}>
+            <li
+              key={review.id}
+              className={`${
+                user?.uid === review.owner.uid ? styles.myReview : ""
+              }`}
+            >
               <div className={styles.reviewOwnerContainer}>
                 <ImageExtended
-                  src={review?.ownerPhoto}
-                  alt={review?.ownerName}
+                  src={review?.owner.photoURL}
+                  alt={review?.owner.displayName}
                   classNamePicture={styles.reviewOwnerPhotoContainer}
                   className={styles.reviewOwnerPhoto}
                   skeletonProps={{
@@ -53,7 +61,7 @@ export const ReviewsList = ({
                 />
                 <div>
                   <h6>
-                    {review.ownerName}
+                    {review.owner.displayName}
                     <span>
                       - {dayjs(review.creationTime).format("DD/MM/YYYY")}
                     </span>

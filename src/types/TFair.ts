@@ -1,6 +1,8 @@
-import { TPhotograph } from "@/types/TPhotograph";
-import { TFireBaseDocRefBasic } from "@/types/TFirebase";
+import { DocumentReference } from "firebase/firestore";
 import { LatLngTuple } from "leaflet";
+
+import { TPhotograph } from "@/types/TPhotograph";
+import { TUserOwnerData } from "./TUser";
 
 export enum EFairType {
   ENTREPRENEURSHIP = "entrepreneurship",
@@ -19,7 +21,8 @@ export type TFair = {
   geopoint?: LatLngTuple;
   creationTime: string;
   celebrationDate?: string;
-  owner: TFireBaseDocRefBasic;
+  ownerRef: DocumentReference;
+  owner: TUserOwnerData;
   address: string;
   description: string;
   stars: number;
@@ -28,7 +31,7 @@ export type TFair = {
   contactPhone: string;
   photographs: TPhotograph[];
   coverUrl?: string;
-  stands: TFireBaseDocRefBasic[];
+  stands: DocumentReference[];
 };
 
 export type TFairGeo = {

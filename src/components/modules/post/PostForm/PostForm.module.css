@@ -1,0 +1,12 @@
+.postForm {
+  margin-top: 20px;
+}
+
+.postFormInput {
+  height: 120px;
+}
+
+.postFormInput::part(native),
+.postFormInput textarea {
+  height: 120px !important;
+}

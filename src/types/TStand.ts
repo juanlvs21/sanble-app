@@ -1,5 +1,7 @@
-import { TFireBaseDocRefBasic } from "@/types/TFirebase";
+import { DocumentReference } from "firebase/firestore";
+
 import { TPhotograph } from "@/types/TPhotograph";
+import { TUserOwnerData } from "./TUser";
 
 export enum EStandOrderBy {
   BEST = "best",
@@ -16,8 +18,9 @@ export type TStand = {
   coverUrl?: string;
   photographs: TPhotograph[];
   creationTime: string;
-  fairs: TFireBaseDocRefBasic[];
-  owner: TFireBaseDocRefBasic;
+  fairs: DocumentReference[];
+  ownerRef: DocumentReference;
+  owner: TUserOwnerData;
   slogan?: string;
 };
 

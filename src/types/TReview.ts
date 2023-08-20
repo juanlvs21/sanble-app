@@ -1,20 +1,14 @@
-import { TFireBaseDocRefBasic } from "@/types/TFirebase";
-
-export enum EReviewType {
-  STAND = "stand",
-  FAIR = "fair",
-}
+import { DocumentReference } from "firebase/firestore";
+import { TUserOwnerData } from "./TUser";
 
 export type TReview = {
   id: string;
   comment: string;
   stars: number;
-  type: EReviewType;
-  ownerName: string;
-  ownerPhoto?: string;
   creationTime: string;
-  owner: TFireBaseDocRefBasic;
-  parent: TFireBaseDocRefBasic;
+  ownerRef: DocumentReference;
+  owner: TUserOwnerData;
+  parent: DocumentReference;
 };
 
 export type TReviewForm = Pick<TReview, "comment" | "stars">;

@@ -158,7 +158,7 @@ export const StandPhotoSlides = () => {
         </Button>
       )}
 
-      {user?.uid === stand?.owner.id &&
+      {user?.uid === stand?.owner.uid &&
         renderTopBarActionEnd(
           <Button onClick={handleAction} fill="clear" color="medium">
             <FiEdit size={24} />

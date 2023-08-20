@@ -54,7 +54,6 @@ export const useFairUpdate = (fairID: string) => {
         },
       });
     } catch (error) {
-      console.log({ error });
       toast(error, { type: "error" });
     } finally {
       dismissLoading();

@@ -6,15 +6,19 @@ import { infiteScrollData } from "@/helpers/infiniteScrollData";
 import { useToast } from "@/hooks/useToast";
 import {
   getFairDetailsRequest,
+  getFairPostsRequest,
   getFairReviewsRequest,
+  saveFairPostRequest,
   saveFairReviewRequest,
 } from "@/services";
 import { TPagination } from "@/types/THttp";
 import { TPhotograph } from "@/types/TPhotograph";
 import { TReview, TReviewForm } from "@/types/TReview";
+import { TPost, TPostForm } from "@/types/TPost";
+import { FormikHelpers } from "formik";
 
-const DEFAULT_LAST_INDEX_REVIEWS = 0;
-const DEFAULT_LIMIT_REVIEWS = 9;
+const DEFAULT_LAST_INDEX_LIST = 0;
+const DEFAULT_LIMIT_LIST = 9;
 
 export const useFairDetails = (
   fairID: string,
@@ -23,17 +27,16 @@ export const useFairDetails = (
   const { toast, toastDismiss } = useToast();
   const [review, setReview] = useState<TReview>();
   const [reviews, setReviews] = useState<TReview[]>([]);
-  const [isSaving, setIsSaving] = useState(false);
+  const [posts, setPosts] = useState<TPost[]>([]);
+
+  const [isSavingReview, setIsSavingReview] = useState(false);
+  const [isSavingPost, setIsSavingPost] = useState(false);
   const [isRefresh, setIsRefresh] = useState(false);
   const [activePhoto, setActivePhoto] = useState<TPhotograph>();
 
-  const [paginationReviews, setPaginationReviews] = useState<TPagination>({
-    lastIndex: DEFAULT_LAST_INDEX_REVIEWS,
-    limit: DEFAULT_LIMIT_REVIEWS,
-  });
-
   const SWR_KEY_FAIRS_DETAILS = `/fairs/${fairID}`;
   const SWR_KEY_FAIRS_REVIEWS = `/fairs/${fairID}/reviews`;
+  const SWR_KEY_FAIRS_POSTS = `/fairs/${fairID}/posts`;
 
   const {
     data: fair,
@@ -44,7 +47,6 @@ export const useFairDetails = (
     async () => await getFairDetailsRequest(fairID),
     {
       onSuccess(data) {
-        console.log({ data });
         setTimeout(() => {
           if (data && activePhoto && slidesPhotoRef) {
             slidesPhotoRef.current?.swiper?.slideTo(
@@ -63,24 +65,28 @@ export const useFairDetails = (
 
   const { isLoading: isLoadingReviews, mutate: mutateReviews } = useSWR(
     SWR_KEY_FAIRS_REVIEWS,
-    async () => await getFairReviewsRequest(fairID, paginationReviews),
+    async () => await getFairReviewsRequest(fairID),
     {
       onSuccess(data) {
         if (data) {
-          const newList =
-            paginationReviews.lastIndex != 0
-              ? infiteScrollData(
-                  "id",
-                  data.list,
-                  data.pagination.lastIndex === DEFAULT_LAST_INDEX_REVIEWS
-                    ? []
-                    : reviews
-                )
-              : data.list;
-
-          setReviews(newList);
+          setReviews(data.list);
           setReview(data.form);
-          setPaginationReviews(data.pagination);
+        }
+      },
+      onError(error) {
+        toastDismiss(SWR_KEY_FAIRS_REVIEWS);
+        toast(error, { type: "error", toastId: SWR_KEY_FAIRS_REVIEWS });
+      },
+    }
+  );
+
+  const { isLoading: isLoadingPosts, mutate: mutatePosts } = useSWR(
+    SWR_KEY_FAIRS_POSTS,
+    async () => await getFairPostsRequest(fairID),
+    {
+      onSuccess(data) {
+        if (data) {
+          setPosts(data.list);
         }
       },
       onError(error) {
@@ -92,7 +98,7 @@ export const useFairDetails = (
 
   const handleSaveReview = async (data: TReviewForm) => {
     try {
-      setIsSaving(true);
+      setIsSavingReview(true);
 
       const { review, fairStars } = await saveFairReviewRequest(fairID, data);
 
@@ -102,28 +108,47 @@ export const useFairDetails = (
 
       toast("Opinión guardada con éxito", { type: "success" });
 
-      setPaginationReviews({
-        lastIndex: DEFAULT_LAST_INDEX_REVIEWS,
-        limit: DEFAULT_LIMIT_REVIEWS,
-      });
       setIsRefresh(true);
     } catch (error) {
       toast(error, { type: "error" });
     } finally {
-      setIsSaving(false);
+      setIsSavingReview(false);
+    }
+  };
+
+  const handleSavePost = async (
+    data: TPostForm,
+    formikHelpers: FormikHelpers<TPostForm>
+  ) => {
+    try {
+      setIsSavingPost(true);
+
+      const formData = new FormData();
+
+      formData.append("text", data.text);
+      if (data.image) formData.append("image", data.image);
+
+      await saveFairPostRequest(fairID, formData);
+
+      formikHelpers.resetForm();
+
+      toast("Información publicada con éxito", { type: "success" });
+
+      setIsRefresh(true);
+    } catch (error) {
+      toast(error, { type: "error" });
+    } finally {
+      setIsSavingPost(false);
     }
   };
 
   const handleLoadAll = async () => {
-    setPaginationReviews({
-      lastIndex: DEFAULT_LAST_INDEX_REVIEWS,
-      limit: DEFAULT_LIMIT_REVIEWS,
-    });
     setIsRefresh(true);
   };
 
-  const handleInfiniteReviews = async () => {
+  const handleInfiniteScroll = async () => {
     mutateReviews();
+    mutatePosts();
   };
 
   const getIndexPhoto = (
@@ -141,22 +166,27 @@ export const useFairDetails = (
     if (isRefresh) {
       mutateDetails();
       mutateReviews();
+      mutatePosts();
       setIsRefresh(false);
     }
   }, [isRefresh]);
 
   return {
     fair,
+    activePhoto,
     review,
     reviews,
-    isSaving,
+    isSavingReview,
     isLoadingDetails,
     isLoadingReviews,
-    activePhoto,
+    posts,
+    isSavingPost,
+    isLoadingPosts,
     setActivePhoto,
     handleLoadAll,
-    handleInfiniteReviews,
+    handleInfiniteScroll,
     handleSaveReview,
+    handleSavePost,
     handleLoadDetails: mutateDetails,
     getIndexPhoto,
   };

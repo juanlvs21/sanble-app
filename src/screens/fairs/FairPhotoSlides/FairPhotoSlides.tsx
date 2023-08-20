@@ -159,7 +159,7 @@ export const FairPhotoSlides = () => {
         </Button>
       )}
 
-      {user?.uid === fair?.owner.id &&
+      {user?.uid === fair?.owner.uid &&
         renderTopBarActionEnd(
           <Button onClick={handleAction} fill="clear" color="medium">
             <FiEdit size={24} />

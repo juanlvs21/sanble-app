@@ -55,7 +55,7 @@ export const StandCardList = ({
         />
       </Link>
 
-      {/* {user?.uid !== stand.owner.id && ()} We should hide fav button if you are the owner */}
+      {/* {user?.uid !== stand.owner.uid && ()} We should hide fav button if you are the owner */}
       <ButtonFav
         className={styles.standListCardBtnFav}
         isLoading={loadingSetFav}

@@ -27,11 +27,6 @@ export const useStandDetails = (
   const [isRefresh, setIsRefresh] = useState(false);
   const [activePhoto, setActivePhoto] = useState<TPhotograph>();
 
-  const [paginationReviews, setPaginationReviews] = useState<TPagination>({
-    lastIndex: DEFAULT_LAST_INDEX_REVIEWS,
-    limit: DEFAULT_LIMIT_REVIEWS,
-  });
-
   const SWR_KEY_STANDS_DETAILS = `/stands/${standID}`;
   const SWR_KEY_STANDS_REVIEWS = `/stands/${standID}/reviews`;
 
@@ -62,24 +57,12 @@ export const useStandDetails = (
 
   const { isLoading: isLoadingReviews, mutate: mutateReviews } = useSWR(
     SWR_KEY_STANDS_REVIEWS,
-    async () => await getStandReviewsRequest(standID, paginationReviews),
+    async () => await getStandReviewsRequest(standID),
     {
       onSuccess(data) {
         if (data) {
-          const newList =
-            paginationReviews.lastIndex != 0
-              ? infiteScrollData(
-                  "id",
-                  data.list,
-                  data.pagination.lastIndex === DEFAULT_LAST_INDEX_REVIEWS
-                    ? []
-                    : reviews
-                )
-              : data.list;
-
-          setReviews(newList);
+          setReviews(data.list);
           setReview(data.form);
-          setPaginationReviews(data.pagination);
         }
       },
       onError(error) {
@@ -103,11 +86,6 @@ export const useStandDetails = (
       if (stand) mutateDetails({ ...stand, stars: standStars });
 
       toast("Opinión guardada con éxito", { type: "success" });
-
-      setPaginationReviews({
-        lastIndex: DEFAULT_LAST_INDEX_REVIEWS,
-        limit: DEFAULT_LIMIT_REVIEWS,
-      });
       setIsRefresh(true);
     } catch (error) {
       toast(error, { type: "error" });
@@ -117,10 +95,6 @@ export const useStandDetails = (
   };
 
   const handleLoadAll = async () => {
-    setPaginationReviews({
-      lastIndex: DEFAULT_LAST_INDEX_REVIEWS,
-      limit: DEFAULT_LIMIT_REVIEWS,
-    });
     setIsRefresh(true);
   };
 

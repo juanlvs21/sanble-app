@@ -77,7 +77,6 @@ export const StandDetails = () => {
 
       <Fetcher
         handleRefresh={handleLoadAll}
-        handleInfiniteScroll={handleInfiniteReviews}
         refreshSpinnerColor="medium"
         classNameSection={`${styles.standFetcherSection} ${
           isCapacitor ? styles.isCapacitor : ""
@@ -215,7 +214,7 @@ export const StandDetails = () => {
         </section>
       </Fetcher>
 
-      {user?.uid === stand?.owner.id && (
+      {user?.uid === stand?.owner.uid && (
         <IonFab
           slot="fixed"
           vertical="bottom"

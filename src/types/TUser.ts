@@ -61,3 +61,10 @@ export type TChangePassword = {
 export type TRecoverPassword = {
   email: string;
 };
+
+export type TUserOwnerData = {
+  uid: string;
+  email: string;
+  displayName: string;
+  photoURL?: string;
+};

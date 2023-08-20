@@ -7,6 +7,7 @@ import { TPhotographDetails } from "@/types/TPhotograph";
 import { TGetListParams } from "@/types/TRequest";
 import { TReview, TReviewForm } from "@/types/TReview";
 import { TStand } from "@/types/TStand";
+import { TPost, TPostForm } from "@/types/TPost";
 
 const URL_PREFIX = "/fairs";
 
@@ -64,21 +65,10 @@ export const getFairStandsListRequest = (
     )
     .then(({ data }) => data.data);
 
-export const getFairReviewsRequest = (
-  fairID: string,
-  params?: TGetListParams,
-  config?: AxiosRequestConfig
-) =>
+export const getFairReviewsRequest = (fairID: string) =>
   api
     .get<AxiosResponse<TResponseList<TReview[]> & { form?: TReview }>>(
-      `${URL_PREFIX}/${fairID}/reviews`,
-      {
-        ...config,
-        params: {
-          lastIndex: params?.lastIndex || 0,
-          limit: params?.limit || 9,
-        },
-      }
+      `${URL_PREFIX}/${fairID}/reviews`
     )
     .then(({ data }) => data.data);
 
@@ -87,6 +77,24 @@ export const saveFairReviewRequest = (fairID: string, data: TReviewForm) =>
     .post<AxiosResponse<{ review: TReview; fairStars: number }>>(
       `${URL_PREFIX}/${fairID}/reviews`,
       data
+    )
+    .then(({ data }) => data.data);
+
+export const getFairPostsRequest = (fairID: string) =>
+  api
+    .get<AxiosResponse<TResponseList<TPost[]>>>(`${URL_PREFIX}/${fairID}/posts`)
+    .then(({ data }) => data.data);
+
+export const saveFairPostRequest = (fairID: string, formData: FormData) =>
+  api
+    .post<AxiosResponse<{ post: TPost }>>(
+      `${URL_PREFIX}/${fairID}/posts`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
     )
     .then(({ data }) => data.data);
 

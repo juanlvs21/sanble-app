@@ -28,6 +28,7 @@ import { ERoutesName } from "@/types/TRoutes";
 import styles from "./FairDetails.module.css";
 import { useSegmentDetails } from "@/hooks/useSegmentDetails";
 import { useEffect } from "react";
+import { PostForm } from "@/components/modules/post/PostForm";
 
 const MODAL_INFO_ID = "fair-info-open-modal";
 const MODAL_STANDS_ID = "fair-stands-open-modal";
@@ -49,11 +50,13 @@ export const FairDetails = () => {
     review,
     reviews,
     isLoadingDetails,
-    isSaving,
+    isSavingReview,
     isLoadingReviews,
+    isSavingPost,
+    // isLoadingPosts,
     handleLoadAll,
     handleSaveReview,
-    handleInfiniteReviews,
+    handleSavePost,
   } = useFairDetails(finalFairID);
   const {
     stands,
@@ -96,7 +99,6 @@ export const FairDetails = () => {
 
       <Fetcher
         handleRefresh={handleLoadAll}
-        handleInfiniteScroll={handleInfiniteReviews}
         refreshSpinnerColor="medium"
         classNameSection={`${styles.fairFetcherSection} ${
           isCapacitor ? styles.isCapacitor : ""
@@ -222,14 +224,29 @@ export const FairDetails = () => {
 
             {segmentValue === 0 && (
               <section
-                className={`${styles.fairReviewsContainer} animate__animated animate__fadeIn`}
+                className={`${styles.fairFormContainer} animate__animated animate__fadeIn`}
               >
-                <h3>Listado de publicaciones</h3>
+                <h3>
+                  {user?.uid === fair?.owner.uid
+                    ? "Hacer una publicación"
+                    : "Pubicaciones de la Feria"}
+                </h3>
+
+                {user?.uid === fair?.owner.uid && (
+                  <>
+                    <p>Comparte información con tu público</p>
+
+                    <PostForm
+                      handleSave={handleSavePost}
+                      isLoading={isSavingPost || isLoadingDetails}
+                    />
+                  </>
+                )}
               </section>
             )}
             {segmentValue === 1 && (
               <section
-                className={`${styles.fairReviewsContainer} animate__animated animate__fadeIn`}
+                className={`${styles.fairFormContainer} animate__animated animate__fadeIn`}
               >
                 <h3>Califica esta Feria</h3>
                 <p>Comparte tu opinión con otros usuarios</p>
@@ -237,12 +254,12 @@ export const FairDetails = () => {
                 <ReviewForm
                   review={review}
                   handleSave={handleSaveReview}
-                  isLoading={isSaving || isLoadingDetails}
+                  isLoading={isSavingReview || isLoadingDetails}
                 />
                 <ReviewsList
                   reviews={reviews}
                   isLoading={isLoadingReviews && !reviews?.length}
-                  className={styles.fairReviewsList}
+                  className={styles.fairList}
                 />
               </section>
             )}
@@ -250,7 +267,7 @@ export const FairDetails = () => {
         </section>
       </Fetcher>
 
-      {user?.uid === fair?.owner.id && (
+      {user?.uid === fair?.owner.uid && (
         <IonFab
           slot="fixed"
           vertical="bottom"

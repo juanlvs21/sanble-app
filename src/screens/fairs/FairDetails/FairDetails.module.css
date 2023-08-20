@@ -197,22 +197,22 @@
   margin-top: 42px;
 }
 
-.fairReviewsContainer {
+.fairFormContainer {
   margin-top: 40px;
 }
 
-.fairReviewsContainer h3 {
+.fairFormContainer h3 {
   font-weight: 600;
   font-size: 18px;
 }
 
-.fairReviewsContainer p {
+.fairFormContainer p {
   color: var(--sanble-gray-color-2);
   font-weight: 500;
   font-size: 12px;
 }
 
-.fairReviewsList {
+.fairList {
   margin-top: 50px;
 }
 
