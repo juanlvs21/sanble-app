@@ -65,10 +65,21 @@ export const getFairStandsListRequest = (
     )
     .then(({ data }) => data.data);
 
-export const getFairReviewsRequest = (fairID: string) =>
+export const getFairReviewsRequest = (
+  fairID: string,
+  params?: TGetListParams,
+  config?: AxiosRequestConfig
+) =>
   api
     .get<AxiosResponse<TResponseList<TReview[]> & { form?: TReview }>>(
-      `${URL_PREFIX}/${fairID}/reviews`
+      `${URL_PREFIX}/${fairID}/reviews`,
+      {
+        ...config,
+        params: {
+          lastIndex: params?.lastIndex || 0,
+          limit: params?.limit || 9,
+        },
+      }
     )
     .then(({ data }) => data.data);
 
@@ -80,9 +91,22 @@ export const saveFairReviewRequest = (fairID: string, data: TReviewForm) =>
     )
     .then(({ data }) => data.data);
 
-export const getFairPostsRequest = (fairID: string) =>
+export const getFairPostsRequest = (
+  fairID: string,
+  params?: TGetListParams,
+  config?: AxiosRequestConfig
+) =>
   api
-    .get<AxiosResponse<TResponseList<TPost[]>>>(`${URL_PREFIX}/${fairID}/posts`)
+    .get<AxiosResponse<TResponseList<TPost[]>>>(
+      `${URL_PREFIX}/${fairID}/posts`,
+      {
+        ...config,
+        params: {
+          lastIndex: params?.lastIndex || 0,
+          limit: params?.limit || 9,
+        },
+      }
+    )
     .then(({ data }) => data.data);
 
 export const saveFairPostRequest = (fairID: string, formData: FormData) =>

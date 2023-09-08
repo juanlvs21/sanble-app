@@ -1,0 +1,10 @@
+.loadMoreContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
+}
+
+.loadMoreBtn {
+  width: 130px;
+}

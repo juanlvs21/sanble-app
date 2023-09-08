@@ -45,9 +45,11 @@ export const StandDetails = () => {
     isLoadingDetails,
     isSaving,
     isLoadingReviews,
+    isLoadMoreReviews,
+    showLoadMoreReviewBtn,
     handleLoadAll,
     handleSaveReview,
-    handleInfiniteReviews,
+    handleLoadMoreReviews,
   } = useStandDetails(finalStandID);
 
   useDocumentTitleApp(
@@ -207,6 +209,9 @@ export const StandDetails = () => {
               <ReviewsList
                 reviews={reviews}
                 isLoading={isLoadingReviews && !reviews?.length}
+                isLoadMore={isLoadMoreReviews}
+                showLoadMoreBtn={showLoadMoreReviewBtn}
+                handleLoadMore={handleLoadMoreReviews}
                 className={styles.standReviewsList}
               />
             </section>

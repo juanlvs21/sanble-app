@@ -5,6 +5,7 @@ import { EmptyList } from "@/components/common/EmptyList";
 import { Fetcher } from "@/components/common/Fetcher";
 import { Skeleton } from "@/components/common/Skeleton";
 import { Button } from "@/components/common/buttons/Button";
+import { ButtonLoadMore } from "@/components/common/buttons/ButtonLoadMore";
 import { StandCardList } from "@/components/modules/stands/StandCardList";
 import { useFavoritesStands } from "@/hooks/favorites/useFavoritesStands";
 import { useApp } from "@/hooks/useApp";
@@ -23,10 +24,12 @@ export const FavoritesStands = () => {
     orderBy,
     orderDir,
     isLoading,
+    isLoadMore,
     isEmpty,
+    showLoadMoreBtn,
     handleRefresh,
-    handleInfinite,
     handleShorting,
+    handleLoadMore,
   } = useFavoritesStands();
 
   const actionCssClasses = (isOrderBy = false, isOrderDir = false) => {
@@ -94,7 +97,6 @@ export const FavoritesStands = () => {
 
       <Fetcher
         handleRefresh={handleRefresh}
-        handleInfiniteScroll={handleInfinite}
         classNameSection="animate__animated animate__screenInUp"
         isLoading={isLoading || isLoading}
       >
@@ -126,6 +128,12 @@ export const FavoritesStands = () => {
                   />
                 ))}
           </div>
+          {showLoadMoreBtn && (
+            <ButtonLoadMore
+              handleLoadMore={handleLoadMore}
+              isLoading={isLoadMore}
+            />
+          )}
         </>
       </Fetcher>
     </>

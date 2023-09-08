@@ -15,9 +15,13 @@ const config: CapacitorConfig = {
       clientId: googleAuth.clientId,
       forceCodeForRefreshToken: true,
     },
+    Keyboard: {
+      resize: "native",
+      resizeOnFullScreen: true,
+    },
   },
   server: {
-    url: "http://192.168.50.195:3000",
+    url: "http://192.168.50.196:3000",
     cleartext: true,
   },
 };

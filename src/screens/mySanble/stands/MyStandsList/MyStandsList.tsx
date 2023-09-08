@@ -6,6 +6,7 @@ import { EmptyList } from "@/components/common/EmptyList";
 import { Fetcher } from "@/components/common/Fetcher";
 import { Skeleton } from "@/components/common/Skeleton";
 import { Button } from "@/components/common/buttons/Button";
+import { ButtonLoadMore } from "@/components/common/buttons/ButtonLoadMore";
 import { StandCardList } from "@/components/modules/stands/StandCardList";
 import { useMyStandsList } from "@/hooks/mySanble/stands/useMyStandsList";
 import { useApp } from "@/hooks/useApp";
@@ -25,10 +26,12 @@ export const MyStandsList = () => {
     orderBy,
     orderDir,
     isLoading,
+    isLoadMore,
     isEmpty,
+    showLoadMoreBtn,
     handleRefresh,
-    handleInfinite,
     handleShorting,
+    handleLoadMore,
   } = useMyStandsList();
 
   const actionCssClasses = (isOrderBy = false, isOrderDir = false) => {
@@ -109,7 +112,6 @@ export const MyStandsList = () => {
 
       <Fetcher
         handleRefresh={handleRefresh}
-        handleInfiniteScroll={handleInfinite}
         classNameSection="animate__animated animate__screenInUp"
         isLoading={isLoading || isLoading}
       >
@@ -146,6 +148,13 @@ export const MyStandsList = () => {
                   />
                 ))}
           </div>
+
+          {showLoadMoreBtn && (
+            <ButtonLoadMore
+              handleLoadMore={handleLoadMore}
+              isLoading={isLoadMore}
+            />
+          )}
         </>
       </Fetcher>
     </>

@@ -4,6 +4,7 @@ import { BiFilterAlt } from "react-icons/bi";
 import { Fetcher } from "@/components/common/Fetcher";
 import { Skeleton } from "@/components/common/Skeleton";
 import { Button } from "@/components/common/buttons/Button";
+import { ButtonLoadMore } from "@/components/common/buttons/ButtonLoadMore";
 import { StandCardList } from "@/components/modules/stands/StandCardList";
 import { useStandsList } from "@/hooks/stands/useStandsList";
 import { useApp } from "@/hooks/useApp";
@@ -21,9 +22,11 @@ export const StandsList = () => {
     orderBy,
     orderDir,
     isLoading,
+    isLoadMore,
+    showLoadMoreBtn,
     handleRefresh,
-    handleInfinite,
     handleShorting,
+    handleLoadMore,
   } = useStandsList();
 
   const actionCssClasses = (isOrderBy = false, isOrderDir = false) => {
@@ -91,27 +94,34 @@ export const StandsList = () => {
 
       <Fetcher
         handleRefresh={handleRefresh}
-        handleInfiniteScroll={handleInfinite}
         classNameSection="animate__animated animate__screenInUp"
         isLoading={isLoading || isLoading}
       >
-        <div
-          className={`dataListContainer ${isCapacitor ? "isCapacitor" : ""}`}
-        >
-          {(isLoading && !list.length) || isLoading
-            ? Array(6)
-                .fill(0)
-                .map((_, i) => (
-                  <Skeleton
-                    key={i}
-                    height={130}
-                    className={styles.standListCardSkeleton}
-                  />
-                ))
-            : list.map((stand) => (
-                <StandCardList key={stand.id} stand={stand} />
-              ))}
-        </div>
+        <>
+          <div
+            className={`dataListContainer ${isCapacitor ? "isCapacitor" : ""}`}
+          >
+            {(isLoading && !list.length) || isLoading
+              ? Array(6)
+                  .fill(0)
+                  .map((_, i) => (
+                    <Skeleton
+                      key={i}
+                      height={130}
+                      className={styles.standListCardSkeleton}
+                    />
+                  ))
+              : list.map((stand) => (
+                  <StandCardList key={stand.id} stand={stand} />
+                ))}
+          </div>
+          {showLoadMoreBtn && (
+            <ButtonLoadMore
+              handleLoadMore={handleLoadMore}
+              isLoading={isLoadMore}
+            />
+          )}
+        </>
       </Fetcher>
     </>
   );

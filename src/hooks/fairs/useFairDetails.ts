@@ -18,7 +18,7 @@ import { TPost, TPostForm } from "@/types/TPost";
 import { FormikHelpers } from "formik";
 
 const DEFAULT_LAST_INDEX_LIST = 0;
-const DEFAULT_LIMIT_LIST = 9;
+const DEFAULT_LIMIT_LIST = 10;
 
 export const useFairDetails = (
   fairID: string,
@@ -33,6 +33,18 @@ export const useFairDetails = (
   const [isSavingPost, setIsSavingPost] = useState(false);
   const [isRefresh, setIsRefresh] = useState(false);
   const [activePhoto, setActivePhoto] = useState<TPhotograph>();
+  const [isLoadMoreReviews, setIsLoadMoreReviews] = useState(false);
+  const [isLoadMorePosts, setIsLoadMorePosts] = useState(false);
+  const [paginationReviews, setPaginationReviews] = useState<TPagination>({
+    lastIndex: DEFAULT_LAST_INDEX_LIST,
+    limit: DEFAULT_LIMIT_LIST,
+    total: 0,
+  });
+  const [paginationPosts, setPaginationPosts] = useState<TPagination>({
+    lastIndex: DEFAULT_LAST_INDEX_LIST,
+    limit: DEFAULT_LIMIT_LIST,
+    total: 0,
+  });
 
   const SWR_KEY_FAIRS_DETAILS = `/fairs/${fairID}`;
   const SWR_KEY_FAIRS_REVIEWS = `/fairs/${fairID}/reviews`;
@@ -65,12 +77,25 @@ export const useFairDetails = (
 
   const { isLoading: isLoadingReviews, mutate: mutateReviews } = useSWR(
     SWR_KEY_FAIRS_REVIEWS,
-    async () => await getFairReviewsRequest(fairID),
+    async () => await getFairReviewsRequest(fairID, paginationReviews),
     {
       onSuccess(data) {
         if (data) {
-          setReviews(data.list);
+          const newList =
+            paginationReviews.lastIndex != 0
+              ? infiteScrollData(
+                  "id",
+                  data.list,
+                  data.pagination.lastIndex === DEFAULT_LAST_INDEX_LIST
+                    ? []
+                    : reviews
+                )
+              : data.list;
+
+          setReviews(newList);
           setReview(data.form);
+          setPaginationReviews(data.pagination);
+          setIsLoadMoreReviews(false);
         }
       },
       onError(error) {
@@ -82,11 +107,24 @@ export const useFairDetails = (
 
   const { isLoading: isLoadingPosts, mutate: mutatePosts } = useSWR(
     SWR_KEY_FAIRS_POSTS,
-    async () => await getFairPostsRequest(fairID),
+    async () => await getFairPostsRequest(fairID, paginationPosts),
     {
       onSuccess(data) {
         if (data) {
-          setPosts(data.list);
+          const newList =
+            paginationPosts.lastIndex != 0
+              ? infiteScrollData(
+                  "id",
+                  data.list,
+                  data.pagination.lastIndex === DEFAULT_LAST_INDEX_LIST
+                    ? []
+                    : posts
+                )
+              : data.list;
+
+          setPosts(newList);
+          setPaginationPosts(data.pagination);
+          setIsLoadMorePosts(false);
         }
       },
       onError(error) {
@@ -107,6 +145,12 @@ export const useFairDetails = (
       if (fair) mutateDetails({ ...fair, stars: fairStars });
 
       toast("Opinión guardada con éxito", { type: "success" });
+
+      setPaginationReviews({
+        lastIndex: DEFAULT_LAST_INDEX_LIST,
+        limit: DEFAULT_LIMIT_LIST,
+        total: 0,
+      });
 
       setIsRefresh(true);
     } catch (error) {
@@ -143,11 +187,26 @@ export const useFairDetails = (
   };
 
   const handleLoadAll = async () => {
+    setPaginationReviews({
+      lastIndex: DEFAULT_LAST_INDEX_LIST,
+      limit: DEFAULT_LIMIT_LIST,
+      total: 0,
+    });
+    setPaginationPosts({
+      lastIndex: DEFAULT_LAST_INDEX_LIST,
+      limit: DEFAULT_LIMIT_LIST,
+      total: 0,
+    });
     setIsRefresh(true);
   };
 
-  const handleInfiniteScroll = async () => {
+  const handleLoadMoreReviews = async () => {
+    setIsLoadMoreReviews(true);
     mutateReviews();
+  };
+
+  const handleLoadMorePost = async () => {
+    setIsLoadMorePosts(true);
     mutatePosts();
   };
 
@@ -182,9 +241,18 @@ export const useFairDetails = (
     posts,
     isSavingPost,
     isLoadingPosts,
+    isLoadMoreReviews,
+    isLoadMorePosts,
+    showLoadMoreReviewBtn:
+      paginationReviews.total > DEFAULT_LIMIT_LIST &&
+      reviews.length !== paginationReviews.total,
+    showLoadMorePostBtn:
+      paginationPosts.total > DEFAULT_LIMIT_LIST &&
+      posts.length !== paginationPosts.total,
     setActivePhoto,
     handleLoadAll,
-    handleInfiniteScroll,
+    handleLoadMoreReviews,
+    handleLoadMorePost,
     handleSaveReview,
     handleSavePost,
     handleLoadDetails: mutateDetails,

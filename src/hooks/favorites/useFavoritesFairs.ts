@@ -5,25 +5,13 @@ import { TFair } from "@/types/TFair";
 
 export const useFavoritesFairs = () => {
   const { user } = useUser();
-  const {
-    list,
-    orderBy,
-    orderDir,
-    isLoading,
-    isEmpty,
-    handleRefresh,
-    handleInfinite,
-    handleShorting,
-  } = useSWRLists<TFair>("/favorites/fairs", getFavoritesFairRequest);
+  const { list, ...listProps } = useSWRLists<TFair>(
+    "/favorites/fairs",
+    getFavoritesFairRequest
+  );
 
   return {
     list: list.filter(({ id }) => user?.favoriteFairs.includes(id)),
-    orderBy,
-    orderDir,
-    isLoading,
-    isEmpty,
-    handleRefresh,
-    handleInfinite,
-    handleShorting,
+    ...listProps,
   };
 };

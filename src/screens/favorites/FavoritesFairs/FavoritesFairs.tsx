@@ -5,6 +5,7 @@ import { EmptyList } from "@/components/common/EmptyList";
 import { Fetcher } from "@/components/common/Fetcher";
 import { Skeleton } from "@/components/common/Skeleton";
 import { Button } from "@/components/common/buttons/Button";
+import { ButtonLoadMore } from "@/components/common/buttons/ButtonLoadMore";
 import { FairCardList } from "@/components/modules/fairs/FairCardList";
 import { useFavoritesFairs } from "@/hooks/favorites/useFavoritesFairs";
 import { useApp } from "@/hooks/useApp";
@@ -23,10 +24,12 @@ export const FavoritesFairs = () => {
     orderBy,
     orderDir,
     isLoading,
+    isLoadMore,
     isEmpty,
+    showLoadMoreBtn,
     handleRefresh,
-    handleInfinite,
     handleShorting,
+    handleLoadMore,
   } = useFavoritesFairs();
 
   const actionCssClasses = (isOrderBy = false, isOrderDir = false) => {
@@ -102,7 +105,6 @@ export const FavoritesFairs = () => {
 
       <Fetcher
         handleRefresh={handleRefresh}
-        handleInfiniteScroll={handleInfinite}
         classNameSection="animate__animated animate__screenInUp"
         isLoading={isLoading}
       >
@@ -134,6 +136,12 @@ export const FavoritesFairs = () => {
                   />
                 ))}
           </div>
+          {showLoadMoreBtn && (
+            <ButtonLoadMore
+              handleLoadMore={handleLoadMore}
+              isLoading={isLoadMore}
+            />
+          )}
         </>
       </Fetcher>
     </>

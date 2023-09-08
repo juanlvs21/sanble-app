@@ -11,7 +11,7 @@ export type TAxiosResp<T> = AxiosResponse<TAxiosResult<T>>;
 export type TPagination = {
   lastIndex: number;
   limit: number;
-  // total: number;
+  total: number;
 };
 
 export type TOrder = {

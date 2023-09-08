@@ -7,7 +7,7 @@ export type ComponentProps = TButton & {
   /**
    * Children element
    */
-  children: React.ReactElement | React.ReactElement[] | string;
+  children: React.ReactNode[] | React.ReactNode | string;
   /**
    * Button Loading
    */

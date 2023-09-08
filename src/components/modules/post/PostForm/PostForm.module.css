@@ -10,3 +10,54 @@
 .postFormInput textarea {
   height: 120px !important;
 }
+
+.postFormFileContainer {
+  position: relative;
+  min-height: 64px;
+  margin-bottom: 20px;
+}
+
+.postFormFile {
+  display: flex;
+  align-items: center;
+  min-height: 64px;
+  padding: 5px 15px;
+  border-radius: var(--sanble-border-radius);
+  border: 2px dashed var(--sanble-gray-color-1);
+}
+
+.postFormFileDescription {
+  margin-left: 20px;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-right: 40px;
+}
+
+.postFormFileDescription p {
+  margin: 0;
+  color: var(--ion-text-color);
+  font-size: 16px;
+}
+
+.postFormFileDeleteBtnContainer {
+  position: absolute;
+  top: 0;
+  right: 10px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.postFormFileDeleteBtn {
+  --padding-bottom: 0;
+  --padding-end: 0;
+  --padding-start: 0;
+  --padding-top: 0;
+}
+
+.postFormFileDeleteBtn::part(native) {
+  width: 30px;
+  height: 30px;
+}

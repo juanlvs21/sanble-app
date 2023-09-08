@@ -18,6 +18,7 @@ export const useFairStands = (fairID: string) => {
   const [pagination, setPagination] = useState<TPagination>({
     lastIndex: DEFAULT_LAST_INDEX,
     limit: DEFAULT_LIMIT,
+    total: 0,
   });
 
   const SWR_KEY_FAIRS_STANDS = `/fairs/${fairID}/stands`;
@@ -52,6 +53,7 @@ export const useFairStands = (fairID: string) => {
     setPagination({
       lastIndex: DEFAULT_LAST_INDEX,
       limit: DEFAULT_LIMIT,
+      total: 0,
     });
     setIsRefresh(true);
   };

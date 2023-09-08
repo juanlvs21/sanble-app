@@ -21,12 +21,14 @@ export const useSWRLists = <T = any>(
   defaultParams?: TDefaultParams
 ) => {
   const [isInitializing, setIsInitializing] = useState(true);
+  const [isLoadMore, setIsLoadMore] = useState(false);
 
   const paramsDefault: Required<TDefaultParams> = {
     lastIndex: defaultParams?.lastIndex ?? DEFAULT_LAST_INDEX,
     limit: defaultParams?.limit ?? DEFAULT_LIMIT,
     orderBy: defaultParams?.orderBy ?? DEFAULT_ORDER_BY,
     orderDir: defaultParams?.orderDir ?? DEFAULT_ORDER_DIR,
+    total: 0,
   };
 
   const { toast, toastDismiss } = useToast();
@@ -38,6 +40,7 @@ export const useSWRLists = <T = any>(
   const [pagination, setPagination] = useState<TPagination>({
     lastIndex: paramsDefault.lastIndex,
     limit: paramsDefault.limit,
+    total: 0,
   });
   const [isEmpty, setIsEmpty] = useState(false);
 
@@ -67,6 +70,7 @@ export const useSWRLists = <T = any>(
           setIsEmpty(!newList.length);
           setList(newList);
           setPagination(data.pagination);
+          setIsLoadMore(false);
         }
       },
       onError: (error) => {
@@ -83,6 +87,7 @@ export const useSWRLists = <T = any>(
     setPagination({
       lastIndex: paramsDefault.lastIndex,
       limit: paramsDefault.limit,
+      total: 0,
     });
     setOrder({
       orderBy: paramsDefault.orderBy,
@@ -90,8 +95,9 @@ export const useSWRLists = <T = any>(
     });
   };
 
-  const handleInfinite = async () => {
+  const handleLoadMore = async () => {
     toastDismiss(SWRKey);
+    setIsLoadMore(true);
     mutate();
   };
 
@@ -102,6 +108,7 @@ export const useSWRLists = <T = any>(
     setPagination({
       lastIndex: paramsDefault.lastIndex,
       limit: paramsDefault.limit,
+      total: 0,
     });
     setOrder({ orderBy, orderDir });
   };
@@ -111,15 +118,21 @@ export const useSWRLists = <T = any>(
     mutate();
   }, [order]);
 
+  console.log(list);
+
   return {
     list,
+    pagination,
     orderBy: order.orderBy,
     orderDir: order.orderDir,
     isLoading: isLoading || isInitializing,
     isValidating,
     isEmpty,
+    isLoadMore,
+    showLoadMoreBtn:
+      pagination.total > DEFAULT_LIMIT && list.length !== pagination.total,
     handleRefresh,
-    handleInfinite,
     handleShorting,
+    handleLoadMore,
   };
 };

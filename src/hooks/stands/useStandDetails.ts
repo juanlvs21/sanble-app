@@ -13,8 +13,8 @@ import { TPagination } from "@/types/THttp";
 import { TPhotograph } from "@/types/TPhotograph";
 import { TReview, TReviewForm } from "@/types/TReview";
 
-const DEFAULT_LAST_INDEX_REVIEWS = 0;
-const DEFAULT_LIMIT_REVIEWS = 9;
+const DEFAULT_LAST_INDEX_LIST = 0;
+const DEFAULT_LIMIT_LIST = 10;
 
 export const useStandDetails = (
   standID: string,
@@ -25,7 +25,13 @@ export const useStandDetails = (
   const [reviews, setReviews] = useState<TReview[]>([]);
   const [isSaving, setIsSaving] = useState(false);
   const [isRefresh, setIsRefresh] = useState(false);
+  const [isLoadMoreReviews, setIsLoadMoreReviews] = useState(false);
   const [activePhoto, setActivePhoto] = useState<TPhotograph>();
+  const [paginationReviews, setPaginationReviews] = useState<TPagination>({
+    lastIndex: DEFAULT_LAST_INDEX_LIST,
+    limit: DEFAULT_LIMIT_LIST,
+    total: 0,
+  });
 
   const SWR_KEY_STANDS_DETAILS = `/stands/${standID}`;
   const SWR_KEY_STANDS_REVIEWS = `/stands/${standID}/reviews`;
@@ -57,12 +63,25 @@ export const useStandDetails = (
 
   const { isLoading: isLoadingReviews, mutate: mutateReviews } = useSWR(
     SWR_KEY_STANDS_REVIEWS,
-    async () => await getStandReviewsRequest(standID),
+    async () => await getStandReviewsRequest(standID, paginationReviews),
     {
       onSuccess(data) {
         if (data) {
-          setReviews(data.list);
+          const newList =
+            paginationReviews.lastIndex != 0
+              ? infiteScrollData(
+                  "id",
+                  data.list,
+                  data.pagination.lastIndex === DEFAULT_LAST_INDEX_LIST
+                    ? []
+                    : reviews
+                )
+              : data.list;
+
+          setReviews(newList);
           setReview(data.form);
+          setPaginationReviews(data.pagination);
+          setIsLoadMoreReviews(false);
         }
       },
       onError(error) {
@@ -86,6 +105,13 @@ export const useStandDetails = (
       if (stand) mutateDetails({ ...stand, stars: standStars });
 
       toast("Opinión guardada con éxito", { type: "success" });
+
+      setPaginationReviews({
+        lastIndex: DEFAULT_LAST_INDEX_LIST,
+        limit: DEFAULT_LIMIT_LIST,
+        total: 0,
+      });
+
       setIsRefresh(true);
     } catch (error) {
       toast(error, { type: "error" });
@@ -95,10 +121,21 @@ export const useStandDetails = (
   };
 
   const handleLoadAll = async () => {
+    setPaginationReviews({
+      lastIndex: DEFAULT_LAST_INDEX_LIST,
+      limit: DEFAULT_LIMIT_LIST,
+      total: 0,
+    });
+    // setPaginationPosts({
+    //   lastIndex: DEFAULT_LAST_INDEX_LIST,
+    //   limit: DEFAULT_LIMIT_LIST,
+    //   total: 0,
+    // });
     setIsRefresh(true);
   };
 
-  const handleInfiniteReviews = async () => {
+  const handleLoadMoreReviews = async () => {
+    setIsLoadMoreReviews(true);
     mutateReviews();
   };
 
@@ -128,10 +165,17 @@ export const useStandDetails = (
     isSaving,
     isLoadingDetails,
     isLoadingReviews,
+    isLoadMoreReviews,
+    showLoadMoreReviewBtn:
+      paginationReviews.total > DEFAULT_LIMIT_LIST &&
+      reviews.length !== paginationReviews.total,
+    // showLoadMorePostBtn:
+    //   paginationPosts.total > DEFAULT_LIMIT_LIST &&
+    //   posts.length !== paginationPosts.total,
     activePhoto,
     setActivePhoto,
     handleLoadAll,
-    handleInfiniteReviews,
+    handleLoadMoreReviews,
     handleSaveReview,
     handleLoadDetails: mutateDetails,
     getIndexPhoto,

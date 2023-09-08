@@ -35,10 +35,23 @@ export const getStandDetailsRequest = (standID: string) =>
     .get<AxiosResponse<TStand>>(`${URL_PREFIX}/${standID}`)
     .then(({ data }) => data.data);
 
-export const getStandReviewsRequest = (standID: string) =>
+export const getStandReviewsRequest = (
+  standID: string,
+  params?: TGetListParams,
+  config?: AxiosRequestConfig
+) =>
   api
     .get<AxiosResponse<TResponseList<TReview[]> & { form?: TReview }>>(
-      `${URL_PREFIX}/${standID}/reviews`
+      `${URL_PREFIX}/${standID}/reviews`,
+      {
+        ...config,
+        params: {
+          orderBy: params?.orderBy || "stars",
+          orderDir: params?.orderDir || "desc",
+          lastIndex: params?.lastIndex || 0,
+          limit: params?.limit || 9,
+        },
+      }
     )
     .then(({ data }) => data.data);
 

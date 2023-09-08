@@ -53,10 +53,15 @@ export const FairDetails = () => {
     isSavingReview,
     isLoadingReviews,
     isSavingPost,
+    isLoadMoreReviews,
+    // isLoadMorePosts,
+    showLoadMoreReviewBtn,
+    // showLoadMorePostBtn,
     // isLoadingPosts,
     handleLoadAll,
     handleSaveReview,
     handleSavePost,
+    handleLoadMoreReviews,
   } = useFairDetails(finalFairID);
   const {
     stands,
@@ -259,6 +264,9 @@ export const FairDetails = () => {
                 <ReviewsList
                   reviews={reviews}
                   isLoading={isLoadingReviews && !reviews?.length}
+                  isLoadMore={isLoadMoreReviews}
+                  showLoadMoreBtn={showLoadMoreReviewBtn}
+                  handleLoadMore={handleLoadMoreReviews}
                   className={styles.fairList}
                 />
               </section>
