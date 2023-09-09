@@ -1,0 +1,48 @@
+.postList {
+  margin-top: 30px;
+  padding-left: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.postCard {
+  border-radius: var(--sanble-border-radius);
+  border: 1px solid var(--sanble-gray-color-1);
+  margin-bottom: 20px;
+  padding: 10px 20px;
+  position: relative;
+}
+
+.postClose {
+  position: absolute;
+  right: -3px;
+  top: -3px;
+}
+
+.postClose::part(native) {
+  width: 30px;
+  height: 30px;
+  padding: 0;
+}
+
+.postText {
+  font-size: 14px !important;
+  margin-bottom: 5px;
+  color: var(--ion-text-color) !important;
+}
+
+.postDate {
+  font-size: 12px !important;
+  color: var(--sanble-gray-color-1);
+}
+
+.postFileContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.postSpinner {
+  margin-top: 30px;
+}

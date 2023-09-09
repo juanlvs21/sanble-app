@@ -1,10 +1,12 @@
 import { RefObject, useEffect, useState } from "react";
 import { SwiperRef } from "swiper/react";
 import useSWR from "swr";
+import { useIonAlert, useIonLoading } from "@ionic/react";
 
 import { infiteScrollData } from "@/helpers/infiniteScrollData";
 import { useToast } from "@/hooks/useToast";
 import {
+  deleteFairPostRequest,
   getFairDetailsRequest,
   getFairPostsRequest,
   getFairReviewsRequest,
@@ -24,6 +26,8 @@ export const useFairDetails = (
   fairID: string,
   slidesPhotoRef?: RefObject<SwiperRef>
 ) => {
+  const [presentAlert] = useIonAlert();
+  const [presentLoading, dismissLoading] = useIonLoading();
   const { toast, toastDismiss } = useToast();
   const [review, setReview] = useState<TReview>();
   const [reviews, setReviews] = useState<TReview[]>([]);
@@ -75,7 +79,11 @@ export const useFairDetails = (
     }
   );
 
-  const { isLoading: isLoadingReviews, mutate: mutateReviews } = useSWR(
+  const {
+    isLoading: isLoadingReviews,
+    isValidating: isValidatingReviews,
+    mutate: mutateReviews,
+  } = useSWR(
     SWR_KEY_FAIRS_REVIEWS,
     async () => await getFairReviewsRequest(fairID, paginationReviews),
     {
@@ -105,7 +113,11 @@ export const useFairDetails = (
     }
   );
 
-  const { isLoading: isLoadingPosts, mutate: mutatePosts } = useSWR(
+  const {
+    isLoading: isLoadingPosts,
+    isValidating: isValidatingPosts,
+    mutate: mutatePosts,
+  } = useSWR(
     SWR_KEY_FAIRS_POSTS,
     async () => await getFairPostsRequest(fairID, paginationPosts),
     {
@@ -178,6 +190,12 @@ export const useFairDetails = (
 
       toast("Información publicada con éxito", { type: "success" });
 
+      setPaginationPosts({
+        lastIndex: DEFAULT_LAST_INDEX_LIST,
+        limit: DEFAULT_LIMIT_LIST,
+        total: 0,
+      });
+
       setIsRefresh(true);
     } catch (error) {
       toast(error, { type: "error" });
@@ -210,6 +228,43 @@ export const useFairDetails = (
     mutatePosts();
   };
 
+  const handleDeletePost = async (postID: string) => {
+    presentAlert({
+      header: "¿Estás seguro de eliminar permanentemente esta publicación?",
+      buttons: [
+        {
+          text: "Cancelar",
+          role: "cancel",
+        },
+        {
+          text: "Eliminar",
+          role: "confirm",
+          handler: async () => {
+            try {
+              presentLoading();
+
+              await deleteFairPostRequest(fairID, postID);
+
+              setPaginationPosts({
+                lastIndex: DEFAULT_LAST_INDEX_LIST,
+                limit: DEFAULT_LIMIT_LIST,
+                total: 0,
+              });
+
+              setIsRefresh(true);
+
+              toast("Publicación eliminada con éxito", { type: "success" });
+            } catch (error) {
+              toast(error, { type: "error" });
+            } finally {
+              dismissLoading();
+            }
+          },
+        },
+      ],
+    });
+  };
+
   const getIndexPhoto = (
     photoID: string = "",
     photographs: TPhotograph[] = []
@@ -237,10 +292,10 @@ export const useFairDetails = (
     reviews,
     isSavingReview,
     isLoadingDetails,
-    isLoadingReviews,
+    isLoadingReviews: isLoadingReviews || isValidatingReviews,
     posts,
     isSavingPost,
-    isLoadingPosts,
+    isLoadingPosts: isLoadingPosts || isValidatingPosts,
     isLoadMoreReviews,
     isLoadMorePosts,
     showLoadMoreReviewBtn:
@@ -256,6 +311,7 @@ export const useFairDetails = (
     handleSaveReview,
     handleSavePost,
     handleLoadDetails: mutateDetails,
+    handleDeletePost,
     getIndexPhoto,
   };
 };

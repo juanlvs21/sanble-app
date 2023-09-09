@@ -6,13 +6,14 @@
 
 .reviewsList li {
   width: 100%;
-  padding: 10px 10px 0;
-  margin-bottom: 30px;
+  padding: 15px 20px 3px;
+  margin-bottom: 20px;
   border-radius: var(--sanble-border-radius);
+  border: 1px solid var(--sanble-gray-color-1);
 }
 
 .reviewsList li.myReview {
-  border: 1px solid var(--ion-color-primary);
+  border-color: var(--ion-color-primary);
 }
 
 .reviewOwnerContainer {

@@ -122,6 +122,11 @@ export const saveFairPostRequest = (fairID: string, formData: FormData) =>
     )
     .then(({ data }) => data.data);
 
+export const deleteFairPostRequest = (fairID: string, postID: string) =>
+  api
+    .delete<AxiosResponse>(`${URL_PREFIX}/${fairID}/posts/${postID}`)
+    .then(({ data }) => data.data);
+
 export const uploadFairPhotoRequest = (fairID: string, formData: FormData) =>
   api
     .post<AxiosResponse<TPhotographDetails>>(

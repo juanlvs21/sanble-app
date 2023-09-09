@@ -11,7 +11,7 @@ export type ComponentProps = {
   /**
    * User review with the session logged
    */
-  reviews?: TReview[];
+  reviews: TReview[];
   /**
    * Load more data
    */
@@ -59,12 +59,12 @@ export const ReviewsList = ({
                   className="animate__animated animate__fadeIn"
                 />
               ))
-          : reviews?.map((review) => (
+          : reviews.map((review) => (
               <li
                 key={review.id}
                 className={`${
                   user?.uid === review.owner.uid ? styles.myReview : ""
-                }`}
+                } animate__animated animate__fadeIn`}
               >
                 <div className={styles.reviewOwnerContainer}>
                   <ImageExtended

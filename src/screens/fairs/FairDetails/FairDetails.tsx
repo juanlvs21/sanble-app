@@ -29,6 +29,7 @@ import styles from "./FairDetails.module.css";
 import { useSegmentDetails } from "@/hooks/useSegmentDetails";
 import { useEffect } from "react";
 import { PostForm } from "@/components/modules/post/PostForm";
+import { PostList } from "@/components/modules/post/PostList";
 
 const MODAL_INFO_ID = "fair-info-open-modal";
 const MODAL_STANDS_ID = "fair-stands-open-modal";
@@ -49,19 +50,22 @@ export const FairDetails = () => {
     fair,
     review,
     reviews,
+    posts,
     isLoadingDetails,
     isSavingReview,
     isLoadingReviews,
     isSavingPost,
     isLoadMoreReviews,
-    // isLoadMorePosts,
+    isLoadMorePosts,
     showLoadMoreReviewBtn,
-    // showLoadMorePostBtn,
-    // isLoadingPosts,
+    showLoadMorePostBtn,
+    isLoadingPosts,
     handleLoadAll,
     handleSaveReview,
     handleSavePost,
     handleLoadMoreReviews,
+    handleLoadMorePost,
+    handleDeletePost,
   } = useFairDetails(finalFairID);
   const {
     stands,
@@ -247,6 +251,16 @@ export const FairDetails = () => {
                     />
                   </>
                 )}
+
+                <PostList
+                  posts={posts}
+                  isLoading={isLoadingPosts}
+                  isLoadMore={isLoadMorePosts}
+                  showLoadMoreBtn={showLoadMorePostBtn}
+                  handleLoadMore={handleLoadMorePost}
+                  handleDelete={handleDeletePost}
+                  isOwner={fair?.owner.uid === user?.uid}
+                />
               </section>
             )}
             {segmentValue === 1 && (

@@ -7,8 +7,4 @@ export const postSchema = yup.object({
     .string()
     .required("Ingrese el texto de su publicación")
     .max(lengthMax, `El text debe tener máximo ${lengthMax} caracteres`),
-  image: yup.mixed().test("image", "Agregue una fotografía", function (value) {
-    if (!value) return Boolean(this.parent.id);
-    return true;
-  }),
 });
