@@ -25,11 +25,17 @@ import { useTopBarMain } from "@/hooks/useTopBarMain";
 import { useUser } from "@/hooks/useUser";
 import { ERoutesName } from "@/types/TRoutes";
 import styles from "./StandDetails.module.css";
+import { useSegmentDetails } from "@/hooks/useSegmentDetails";
+import { SegmentDetails } from "@/components/common/SegmentDetails";
+import { PostForm } from "@/components/modules/post/PostForm";
+import { PostList } from "@/components/modules/post/PostList";
 
 const MODAL_INFO_ID = "stand-info-open-modal";
 const MODAL_FAIRS_ID = "stand-fairs-open-modal";
 
 type TRouteParams = { standID: string };
+
+const SEGMENT_ITEMS = ["Publicaciónes", "Opiniones"];
 
 export const StandDetails = () => {
   const { standID } = useParams<TRouteParams>();
@@ -42,15 +48,26 @@ export const StandDetails = () => {
     stand,
     review,
     reviews,
-    isLoadingDetails,
+    posts,
     isSaving,
+    isSavingPost,
+    isLoadingDetails,
     isLoadingReviews,
     isLoadMoreReviews,
+    isLoadingPosts,
+    isLoadMorePosts,
     showLoadMoreReviewBtn,
+    showLoadMorePostBtn,
+    handleLoadMorePost,
+    handleDeletePost,
     handleLoadAll,
     handleSaveReview,
+    handleSavePost,
     handleLoadMoreReviews,
   } = useStandDetails(finalStandID);
+
+  const { value: segmentValue, handleChange: segmentHandleChange } =
+    useSegmentDetails();
 
   useDocumentTitleApp(
     `${
@@ -195,26 +212,65 @@ export const StandDetails = () => {
               </div>
             </section>
 
-            <section
-              className={`${styles.standReviewsContainer} animate__animated animate__fadeIn`}
-            >
-              <h3>Califica este Stand</h3>
-              <p>Comparte tu opinión con otros usuarios</p>
+            <SegmentDetails
+              value={segmentValue}
+              items={SEGMENT_ITEMS}
+              onChange={segmentHandleChange}
+              className={`${styles.standSegment}`}
+            />
 
-              <ReviewForm
-                review={review}
-                handleSave={handleSaveReview}
-                isLoading={isSaving || isLoadingDetails}
-              />
-              <ReviewsList
-                reviews={reviews}
-                isLoading={isLoadingReviews && !reviews?.length}
-                isLoadMore={isLoadMoreReviews}
-                showLoadMoreBtn={showLoadMoreReviewBtn}
-                handleLoadMore={handleLoadMoreReviews}
-                className={styles.standReviewsList}
-              />
-            </section>
+            {segmentValue === 0 && (
+              <section
+                className={`${styles.standFormContainer} animate__animated animate__fadeIn`}
+              >
+                {user?.uid === stand?.owner.uid && (
+                  <h3>Hacer una publicación</h3>
+                )}
+
+                {user?.uid === stand?.owner.uid && (
+                  <>
+                    <p>Comparte información con tu público</p>
+
+                    <PostForm
+                      handleSave={handleSavePost}
+                      isLoading={isSavingPost || isLoadingDetails}
+                    />
+                  </>
+                )}
+
+                <PostList
+                  posts={posts}
+                  isLoading={isLoadingPosts}
+                  isLoadMore={isLoadMorePosts}
+                  showLoadMoreBtn={showLoadMorePostBtn}
+                  handleLoadMore={handleLoadMorePost}
+                  handleDelete={handleDeletePost}
+                  isOwner={stand?.owner.uid === user?.uid}
+                />
+              </section>
+            )}
+            {segmentValue === 1 && (
+              <section
+                className={`${styles.standReviewsContainer} animate__animated animate__fadeIn`}
+              >
+                <h3>Califica este Stand</h3>
+                <p>Comparte tu opinión con otros usuarios</p>
+
+                <ReviewForm
+                  review={review}
+                  handleSave={handleSaveReview}
+                  isLoading={isSaving || isLoadingDetails}
+                />
+                <ReviewsList
+                  reviews={reviews}
+                  isLoading={isLoadingReviews && !reviews?.length}
+                  isLoadMore={isLoadMoreReviews}
+                  showLoadMoreBtn={showLoadMoreReviewBtn}
+                  handleLoadMore={handleLoadMoreReviews}
+                  className={styles.standReviewsList}
+                />
+              </section>
+            )}
           </div>
         </section>
       </Fetcher>

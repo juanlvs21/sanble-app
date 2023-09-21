@@ -32,7 +32,6 @@ export const useFairDetails = (
   const [review, setReview] = useState<TReview>();
   const [reviews, setReviews] = useState<TReview[]>([]);
   const [posts, setPosts] = useState<TPost[]>([]);
-
   const [isSavingReview, setIsSavingReview] = useState(false);
   const [isSavingPost, setIsSavingPost] = useState(false);
   const [isRefresh, setIsRefresh] = useState(false);
@@ -140,8 +139,8 @@ export const useFairDetails = (
         }
       },
       onError(error) {
-        toastDismiss(SWR_KEY_FAIRS_REVIEWS);
-        toast(error, { type: "error", toastId: SWR_KEY_FAIRS_REVIEWS });
+        toastDismiss(SWR_KEY_FAIRS_POSTS);
+        toast(error, { type: "error", toastId: SWR_KEY_FAIRS_POSTS });
       },
     }
   );

@@ -235,11 +235,9 @@ export const FairDetails = () => {
               <section
                 className={`${styles.fairFormContainer} animate__animated animate__fadeIn`}
               >
-                <h3>
-                  {user?.uid === fair?.owner.uid
-                    ? "Hacer una publicación"
-                    : "Pubicaciones de la Feria"}
-                </h3>
+                {user?.uid === fair?.owner.uid && (
+                  <h3>Hacer una publicación</h3>
+                )}
 
                 {user?.uid === fair?.owner.uid && (
                   <>

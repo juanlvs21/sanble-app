@@ -193,6 +193,10 @@
   transition: all 400ms ease-in-out;
 }
 
+.standSegment {
+  margin-top: 42px;
+}
+
 .standReviewsContainer {
   margin-top: 40px;
 }
@@ -203,6 +207,21 @@
 }
 
 .standReviewsContainer p {
+  color: var(--sanble-gray-color-2);
+  font-weight: 500;
+  font-size: 12px;
+}
+
+.standFormContainer {
+  margin-top: 40px;
+}
+
+.standFormContainer h3 {
+  font-weight: 600;
+  font-size: 18px;
+}
+
+.standFormContainer p {
   color: var(--sanble-gray-color-2);
   font-weight: 500;
   font-size: 12px;

@@ -1,16 +1,22 @@
+import { FormikHelpers } from "formik";
 import { RefObject, useEffect, useState } from "react";
 import { SwiperRef } from "swiper/react";
 import useSWR from "swr";
+import { useIonAlert, useIonLoading } from "@ionic/react";
 
 import { infiteScrollData } from "@/helpers/infiniteScrollData";
 import { useToast } from "@/hooks/useToast";
 import {
+  deleteStandPostRequest,
   getStandDetailsRequest,
+  getStandPostsRequest,
   getStandReviewsRequest,
+  saveStandPostRequest,
   saveStandReviewRequest,
 } from "@/services";
 import { TPagination } from "@/types/THttp";
 import { TPhotograph } from "@/types/TPhotograph";
+import { TPost, TPostForm } from "@/types/TPost";
 import { TReview, TReviewForm } from "@/types/TReview";
 
 const DEFAULT_LAST_INDEX_LIST = 0;
@@ -20,14 +26,24 @@ export const useStandDetails = (
   standID: string,
   slidesPhotoRef?: RefObject<SwiperRef>
 ) => {
+  const [presentAlert] = useIonAlert();
+  const [presentLoading, dismissLoading] = useIonLoading();
   const { toast, toastDismiss } = useToast();
   const [review, setReview] = useState<TReview>();
   const [reviews, setReviews] = useState<TReview[]>([]);
+  const [posts, setPosts] = useState<TPost[]>([]);
   const [isSaving, setIsSaving] = useState(false);
+  const [isSavingPost, setIsSavingPost] = useState(false);
   const [isRefresh, setIsRefresh] = useState(false);
   const [isLoadMoreReviews, setIsLoadMoreReviews] = useState(false);
   const [activePhoto, setActivePhoto] = useState<TPhotograph>();
+  const [isLoadMorePosts, setIsLoadMorePosts] = useState(false);
   const [paginationReviews, setPaginationReviews] = useState<TPagination>({
+    lastIndex: DEFAULT_LAST_INDEX_LIST,
+    limit: DEFAULT_LIMIT_LIST,
+    total: 0,
+  });
+  const [paginationPosts, setPaginationPosts] = useState<TPagination>({
     lastIndex: DEFAULT_LAST_INDEX_LIST,
     limit: DEFAULT_LIMIT_LIST,
     total: 0,
@@ -35,6 +51,7 @@ export const useStandDetails = (
 
   const SWR_KEY_STANDS_DETAILS = `/stands/${standID}`;
   const SWR_KEY_STANDS_REVIEWS = `/stands/${standID}/reviews`;
+  const SWR_KEY_STANDS_POSTS = `/stands/${standID}/posts`;
 
   const {
     data: stand,
@@ -91,6 +108,39 @@ export const useStandDetails = (
     }
   );
 
+  const {
+    isLoading: isLoadingPosts,
+    isValidating: isValidatingPosts,
+    mutate: mutatePosts,
+  } = useSWR(
+    SWR_KEY_STANDS_POSTS,
+    async () => await getStandPostsRequest(standID, paginationPosts),
+    {
+      onSuccess(data) {
+        if (data) {
+          const newList =
+            paginationPosts.lastIndex != 0
+              ? infiteScrollData(
+                  "id",
+                  data.list,
+                  data.pagination.lastIndex === DEFAULT_LAST_INDEX_LIST
+                    ? []
+                    : posts
+                )
+              : data.list;
+
+          setPosts(newList);
+          setPaginationPosts(data.pagination);
+          setIsLoadMorePosts(false);
+        }
+      },
+      onError(error) {
+        toastDismiss(SWR_KEY_STANDS_POSTS);
+        toast(error, { type: "error", toastId: SWR_KEY_STANDS_POSTS });
+      },
+    }
+  );
+
   const handleSaveReview = async (data: TReviewForm) => {
     try {
       setIsSaving(true);
@@ -120,23 +170,97 @@ export const useStandDetails = (
     }
   };
 
+  const handleSavePost = async (
+    data: TPostForm,
+    formikHelpers: FormikHelpers<TPostForm>
+  ) => {
+    try {
+      setIsSavingPost(true);
+
+      const formData = new FormData();
+
+      formData.append("text", data.text);
+      if (data.image) formData.append("image", data.image);
+
+      await saveStandPostRequest(standID, formData);
+
+      formikHelpers.resetForm();
+
+      toast("Información publicada con éxito", { type: "success" });
+
+      setPaginationPosts({
+        lastIndex: DEFAULT_LAST_INDEX_LIST,
+        limit: DEFAULT_LIMIT_LIST,
+        total: 0,
+      });
+
+      setIsRefresh(true);
+    } catch (error) {
+      toast(error, { type: "error" });
+    } finally {
+      setIsSavingPost(false);
+    }
+  };
+
+  const handleDeletePost = async (postID: string) => {
+    presentAlert({
+      header: "¿Estás seguro de eliminar permanentemente esta publicación?",
+      buttons: [
+        {
+          text: "Cancelar",
+          role: "cancel",
+        },
+        {
+          text: "Eliminar",
+          role: "confirm",
+          handler: async () => {
+            try {
+              presentLoading();
+
+              await deleteStandPostRequest(standID, postID);
+
+              setPaginationPosts({
+                lastIndex: DEFAULT_LAST_INDEX_LIST,
+                limit: DEFAULT_LIMIT_LIST,
+                total: 0,
+              });
+
+              setIsRefresh(true);
+
+              toast("Publicación eliminada con éxito", { type: "success" });
+            } catch (error) {
+              toast(error, { type: "error" });
+            } finally {
+              dismissLoading();
+            }
+          },
+        },
+      ],
+    });
+  };
+
   const handleLoadAll = async () => {
     setPaginationReviews({
       lastIndex: DEFAULT_LAST_INDEX_LIST,
       limit: DEFAULT_LIMIT_LIST,
       total: 0,
     });
-    // setPaginationPosts({
-    //   lastIndex: DEFAULT_LAST_INDEX_LIST,
-    //   limit: DEFAULT_LIMIT_LIST,
-    //   total: 0,
-    // });
+    setPaginationPosts({
+      lastIndex: DEFAULT_LAST_INDEX_LIST,
+      limit: DEFAULT_LIMIT_LIST,
+      total: 0,
+    });
     setIsRefresh(true);
   };
 
   const handleLoadMoreReviews = async () => {
     setIsLoadMoreReviews(true);
     mutateReviews();
+  };
+
+  const handleLoadMorePost = async () => {
+    setIsLoadMorePosts(true);
+    mutatePosts();
   };
 
   const getIndexPhoto = (
@@ -154,6 +278,7 @@ export const useStandDetails = (
     if (isRefresh) {
       mutateDetails();
       mutateReviews();
+      mutatePosts();
       setIsRefresh(false);
     }
   }, [isRefresh]);
@@ -162,21 +287,28 @@ export const useStandDetails = (
     stand,
     review,
     reviews,
+    posts,
     isSaving,
+    isSavingPost,
     isLoadingDetails,
     isLoadingReviews,
     isLoadMoreReviews,
+    isLoadMorePosts,
+    isLoadingPosts: isLoadingPosts || isValidatingPosts,
     showLoadMoreReviewBtn:
       paginationReviews.total > DEFAULT_LIMIT_LIST &&
       reviews.length !== paginationReviews.total,
-    // showLoadMorePostBtn:
-    //   paginationPosts.total > DEFAULT_LIMIT_LIST &&
-    //   posts.length !== paginationPosts.total,
+    showLoadMorePostBtn:
+      paginationPosts.total > DEFAULT_LIMIT_LIST &&
+      posts.length !== paginationPosts.total,
     activePhoto,
     setActivePhoto,
     handleLoadAll,
     handleLoadMoreReviews,
+    handleLoadMorePost,
     handleSaveReview,
+    handleSavePost,
+    handleDeletePost,
     handleLoadDetails: mutateDetails,
     getIndexPhoto,
   };
