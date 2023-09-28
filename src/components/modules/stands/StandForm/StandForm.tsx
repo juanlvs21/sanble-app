@@ -21,7 +21,7 @@ export type ComponentProps = {
   /**
    * Handle save photo
    */
-  onSubmit: (
+  handleSave: (
     values: TStandForm,
     formikHelpers: FormikHelpers<TStandForm>
   ) => void | Promise<void>;
@@ -31,13 +31,13 @@ export type ComponentProps = {
   isLoading?: boolean;
 };
 
-export const StandForm = ({ formValues, onSubmit }: ComponentProps) => {
+export const StandForm = ({ formValues, handleSave }: ComponentProps) => {
   const { handleSubmit, handleChange, handleBlur, values, touched, errors } =
     useFormik<TStandForm>({
       enableReinitialize: true,
       initialValues: formValues,
       validationSchema: newStandSchema,
-      onSubmit: onSubmit,
+      onSubmit: handleSave,
     });
 
   return (

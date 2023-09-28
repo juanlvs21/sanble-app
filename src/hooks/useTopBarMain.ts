@@ -30,6 +30,7 @@ export const useTopBarMain = () => {
   const isFairDetailsPhotoNew = useMatch(ERoutesName.FAIR_DETAILS_PHOTO_NEW);
   const isStands = useMatch(ERoutesName.STANDS_LIST);
   const isStandDetails = useMatch(ERoutesName.STAND_DETAILS);
+  const isStandDetailsUpdate = useMatch(ERoutesName.STAND_DETAILS_UPDATE);
   const isStandDetailsPhotoSlides = useMatch(
     ERoutesName.STAND_DETAILS_PHOTO_SLIDES
   );
@@ -78,6 +79,9 @@ export const useTopBarMain = () => {
           goBackUrl: state?.goBackUrl,
         })
       );
+      setRenderEnd(true);
+    } else if (isStandDetailsUpdate) {
+      setProps(getPropsTopBarMain(ERoutesName.STAND_DETAILS_UPDATE));
       setRenderEnd(true);
     } else if (isStandDetailsPhotoNew) {
       setProps(getPropsTopBarMain(ERoutesName.STAND_DETAILS_PHOTO_NEW));

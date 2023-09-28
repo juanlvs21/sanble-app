@@ -66,6 +66,11 @@ export const getPropsTopBarMain = (
       titleLight: true,
       sticky: true,
     },
+    [ERoutesName.STAND_DETAILS_UPDATE]: {
+      title: "Actualizar Stand",
+      startGoBack: true,
+      sticky: true,
+    },
     [ERoutesName.STAND_DETAILS_PHOTO_SLIDES]: {
       title: "Fotografías Stand",
       sticky: true,

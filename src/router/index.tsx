@@ -88,6 +88,11 @@ const StandDetailsScreen = lazy(() =>
     default: StandDetails,
   }))
 );
+const StandUpdateScreen = lazy(() =>
+  import("@/screens/stands/StandUpdate").then(({ StandUpdate }) => ({
+    default: StandUpdate,
+  }))
+);
 const StandPhotoNewScreen = lazy(() =>
   import("@/screens/stands/StandPhotoNew").then(({ StandPhotoNew }) => ({
     default: StandPhotoNew,
@@ -338,6 +343,15 @@ export const router = createBrowserRouter([
             element: (
               <SuspenseComponent>
                 <StandDetailsScreen />
+              </SuspenseComponent>
+            ),
+          },
+          {
+            path: ERoutesName.STAND_DETAILS_UPDATE,
+            errorElement: <ErrorScreen />,
+            element: (
+              <SuspenseComponent>
+                <StandUpdateScreen />
               </SuspenseComponent>
             ),
           },

@@ -29,6 +29,14 @@ export const saveFairRequest = (values: TFairForm) =>
     .post<AxiosResponse<TFair>>(`${URL_PREFIX}/fairs`, values)
     .then(({ data }) => data.data);
 
+export const updateFairRequest = (values: TFairForm) =>
+  api
+    .patch<AxiosResponse<TFair>>(
+      `${URL_PREFIX}/fairs/${values?.id ?? ""}`,
+      values
+    )
+    .then(({ data }) => data.data);
+
 export const getMySanbleStandListRequest = (
   params?: TGetListParams,
   config?: AxiosRequestConfig
@@ -48,4 +56,12 @@ export const getMySanbleStandListRequest = (
 export const saveStandRequest = (values: TStandForm) =>
   api
     .post<AxiosResponse<TStand>>(`${URL_PREFIX}/stands`, values)
+    .then(({ data }) => data.data);
+
+export const updateStandRequest = (values: TStandForm) =>
+  api
+    .patch<AxiosResponse<TStand>>(
+      `${URL_PREFIX}/stands/${values?.id ?? ""}`,
+      values
+    )
     .then(({ data }) => data.data);

@@ -37,11 +37,6 @@ export const getFairDetailsRequest = (fairID: string) =>
     .get<AxiosResponse<TFair>>(`${URL_PREFIX}/${fairID}`)
     .then(({ data }) => data.data);
 
-export const updateFairRequest = (values: TFairForm) =>
-  api
-    .patch<AxiosResponse<TFair>>(`${URL_PREFIX}/${values?.id ?? ""}`, values)
-    .then(({ data }) => data.data);
-
 export const getFairListGeolocationRequest = () =>
   api
     .get<AxiosResponse<TFairGeo[]>>(`${URL_PREFIX}/geolocation`)

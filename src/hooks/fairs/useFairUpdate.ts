@@ -1,7 +1,9 @@
 import { useIonLoading } from "@ionic/react";
 import { LatLngTuple } from "leaflet";
+import parsePhoneNumberFromString from "libphonenumber-js";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useSWRConfig } from "swr";
 
 import { useFairDetails } from "@/hooks/fairs/useFairDetails";
 import { useToast } from "@/hooks/useToast";
@@ -10,6 +12,7 @@ import { TFairForm } from "@/types/TFair";
 import { ERoutesName } from "@/types/TRoutes";
 
 export const useFairUpdate = (fairID: string) => {
+  const { cache } = useSWRConfig();
   const navigate = useNavigate();
   const [presentLoading, dismissLoading] = useIonLoading();
   const { fair, isLoadingDetails } = useFairDetails(fairID ?? "");
@@ -42,7 +45,15 @@ export const useFairUpdate = (fairID: string) => {
     try {
       presentLoading();
 
-      const fair = await updateFairRequest(formValues);
+      const fair = await updateFairRequest({
+        ...formValues,
+        contactPhone: (
+          parsePhoneNumberFromString(formValues.contactPhone, "VE")
+            ?.nationalNumber || formValues.contactPhone
+        ).slice(0, 10),
+      });
+
+      cache.delete(`/fairs/${fairID}`);
 
       toast("Feria actualizada exitosamente", { type: "success" });
 

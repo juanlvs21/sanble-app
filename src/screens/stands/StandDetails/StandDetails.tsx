@@ -6,7 +6,7 @@ import { HiOutlinePhotograph, HiOutlineShoppingBag } from "react-icons/hi";
 import { IoIosArrowUp } from "react-icons/io";
 import { MdOutlineStorefront } from "react-icons/md";
 import { TiStar } from "react-icons/ti";
-import { Link, useLocation, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 
 import { ButtonFav } from "@/components/common/buttons/ButtonFav";
 import { Fetcher } from "@/components/common/Fetcher";
@@ -38,6 +38,7 @@ type TRouteParams = { standID: string };
 const SEGMENT_ITEMS = ["Publicaciónes", "Opiniones"];
 
 export const StandDetails = () => {
+  const navigate = useNavigate();
   const { standID } = useParams<TRouteParams>();
   const { state } = useLocation();
   const { renderTopBarActionEnd } = useTopBarMain();
@@ -286,7 +287,17 @@ export const StandDetails = () => {
             <IoIosArrowUp size={28} />
           </IonFabButton>
           <IonFabList side="top">
-            <IonFabButton color="secondary">
+            <IonFabButton
+              color="secondary"
+              onClick={() =>
+                navigate(
+                  `${ERoutesName.STAND_DETAILS_UPDATE.replace(
+                    ":standID",
+                    stand?.id ?? ""
+                  )}`
+                )
+              }
+            >
               <FiEdit2 size={22} />
             </IonFabButton>
             <IonFabButton color="secondary">
