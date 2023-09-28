@@ -1,11 +1,12 @@
+import { useIonLoading } from "@ionic/react";
 import { LatLngTuple } from "leaflet";
+import parsePhoneNumberFromString from "libphonenumber-js";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useIonLoading } from "@ionic/react";
 
+import { useToast } from "@/hooks/useToast";
 import { saveFairRequest } from "@/services";
 import { TFairForm } from "@/types/TFair";
-import { useToast } from "@/hooks/useToast";
 import { ERoutesName } from "@/types/TRoutes";
 
 export const useNewFair = () => {
@@ -39,7 +40,13 @@ export const useNewFair = () => {
     try {
       presentLoading();
 
-      const fair = await saveFairRequest(formValues);
+      const fair = await saveFairRequest({
+        ...formValues,
+        contactPhone: (
+          parsePhoneNumberFromString(formValues.contactPhone, "VE")
+            ?.nationalNumber || formValues.contactPhone
+        ).slice(0, 10),
+      });
 
       toast("Feria creada exitosamente", { type: "success" });
 

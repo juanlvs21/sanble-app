@@ -1,10 +1,11 @@
-import { useNavigate } from "react-router-dom";
 import { useIonLoading } from "@ionic/react";
+import parsePhoneNumberFromString from "libphonenumber-js";
+import { useNavigate } from "react-router-dom";
 
-import { saveFairRequest, saveStandRequest } from "@/services";
-import { TStandForm } from "@/types/TStand";
 import { useToast } from "@/hooks/useToast";
+import { saveStandRequest } from "@/services";
 import { ERoutesName } from "@/types/TRoutes";
+import { TStandForm } from "@/types/TStand";
 
 const formValues: TStandForm = {
   id: "",
@@ -24,7 +25,13 @@ export const useNewStand = () => {
   const handleSave = async (values: TStandForm) => {
     try {
       presentLoading();
-      const stand = await saveStandRequest(values);
+      const stand = await saveStandRequest({
+        ...values,
+        contactPhone: (
+          parsePhoneNumberFromString(values.contactPhone, "VE")
+            ?.nationalNumber || values.contactPhone
+        ).slice(0, 10),
+      });
 
       toast("Stand creado exitosamente", { type: "success" });
 
