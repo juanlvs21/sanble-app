@@ -19,6 +19,9 @@ const config: CapacitorConfig = {
       resize: "native",
       resizeOnFullScreen: true,
     },
+    PushNotifications: {
+      presentationOptions: ["badge", "sound", "alert"],
+    },
   },
   server: {
     url: "http://192.168.50.196:3000",

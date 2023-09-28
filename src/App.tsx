@@ -1,5 +1,6 @@
 import { IonApp, setupIonicReact } from "@ionic/react";
 import { RouterProvider } from "react-router-dom";
+import { useEffect } from "react";
 
 import "react-toastify/dist/ReactToastify.css";
 
@@ -24,6 +25,7 @@ import "./theme/global.css";
 import "./theme/transitions.css";
 import "./theme/variables.css";
 
+import { usePushNotifications } from "@/hooks/usePushNotifications";
 import { useStatusBar } from "@/hooks/useStatusBar";
 import { router } from "@/router";
 
@@ -31,8 +33,16 @@ setupIonicReact();
 
 const App = () => {
   const { overlaysStatusBar } = useStatusBar();
+  const { register, removeAllListeners } = usePushNotifications();
 
-  overlaysStatusBar(true);
+  useEffect(() => {
+    overlaysStatusBar(true);
+    register();
+
+    return () => {
+      removeAllListeners();
+    };
+  }, []);
 
   return (
     <IonApp className="animate__animated animate__fadeIn">
