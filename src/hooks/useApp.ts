@@ -1,4 +1,5 @@
 import { getPlatforms, ScrollDetail } from "@ionic/react";
+import { Device } from "@capacitor/device";
 
 import { appActions } from "@/context/actions/appActions";
 import { useAppContext } from "@/context/AppContext";
@@ -8,7 +9,14 @@ import { StorageHideMobileWelcomeKey } from "@/helpers/storageKeys";
 export const useApp = () => {
   const platforms = getPlatforms();
   const [
-    { readyToUse, showSidebar, scrollTop, isLoadingFull, hideMobileWelcome },
+    {
+      readyToUse,
+      showSidebar,
+      scrollTop,
+      isLoadingFull,
+      hideMobileWelcome,
+      deviceID,
+    },
     dispatch,
   ] = useAppContext();
   const {
@@ -17,6 +25,7 @@ export const useApp = () => {
     setScrollTop,
     setIsLoadingFull,
     setHideMobileWelcome,
+    setDeviceID,
   } = appActions(dispatch);
 
   const isPlatform = (
@@ -56,11 +65,17 @@ export const useApp = () => {
     setScrollTop(event ? event.detail.scrollTop : 0);
   };
 
+  const handleGetDeviceID = async () => {
+    const { identifier } = await Device.getId();
+    if (identifier) setDeviceID(identifier);
+  };
+
   return {
     handleSetReady,
     handleLoadData,
     handleShowSidebar,
     handleSetScrollTop,
+    handleGetDeviceID,
     setIsLoadingFull,
     isPlatform,
     readyToUse,
@@ -68,6 +83,7 @@ export const useApp = () => {
     scrollTop,
     isLoadingFull,
     hideMobileWelcome,
+    deviceID,
     isMobile: isPlatform("mobile"),
     isCapacitor: isPlatform("capacitor"),
   };

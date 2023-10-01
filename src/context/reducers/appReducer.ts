@@ -10,6 +10,7 @@ export const initialAppState: TApp = {
   scrollTop: 0,
   isLoadingFull: false,
   hideMobileWelcome: false,
+  deviceID: "",
 };
 
 export const appReducer = (state: TApp, action: TAction<TApp>): TApp => {
@@ -63,6 +64,14 @@ export const appReducer = (state: TApp, action: TAction<TApp>): TApp => {
       return {
         ...state,
         hideMobileWelcome,
+      };
+    }
+    case appConstants.SET_DEVICE_ID: {
+      const deviceID = action.payload?.deviceID ?? "";
+
+      return {
+        ...state,
+        deviceID,
       };
     }
 

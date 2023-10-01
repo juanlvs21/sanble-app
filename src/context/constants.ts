@@ -5,6 +5,7 @@ export const appConstants = {
   SET_SCROLL_TOP: "SET_SCROLL_TOP",
   SET_IS_LOADING_FULL: "SET_IS_LOADING_FULL",
   SET_HIDE_MOBILE_WELCOME: "SET_HIDE_MOBILE_WELCOME",
+  SET_DEVICE_ID: "SET_DEVICE_ID",
 };
 
 export const authConstants = {

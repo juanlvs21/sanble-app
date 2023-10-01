@@ -39,4 +39,9 @@ export const appActions = (dispatch: Dispatch<TAction>) => ({
       payload: { hideMobileWelcome },
     });
   },
+  setDeviceID: (deviceID: string) =>
+    dispatch({
+      type: appConstants.SET_DEVICE_ID,
+      payload: { deviceID },
+    }),
 });

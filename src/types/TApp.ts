@@ -5,4 +5,5 @@ export type TApp = {
   scrollTop: number;
   isLoadingFull: boolean;
   hideMobileWelcome: boolean;
+  deviceID: string;
 };
