@@ -5,7 +5,13 @@ import { HiOutlinePhotograph } from "react-icons/hi";
 import { IoIosArrowUp } from "react-icons/io";
 import { MdOutlineStorefront } from "react-icons/md";
 import { TiStar } from "react-icons/ti";
-import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
+import {
+  Link,
+  useLocation,
+  useNavigate,
+  useParams,
+  useSearchParams,
+} from "react-router-dom";
 
 import { Fetcher } from "@/components/common/Fetcher";
 import { ImageExtended } from "@/components/common/ImageExtended";
@@ -14,6 +20,8 @@ import { Skeleton } from "@/components/common/Skeleton";
 import { ButtonFav } from "@/components/common/buttons/ButtonFav";
 import { FairModalStands } from "@/components/modules/fairs/FairModalStands";
 import { InfoModal } from "@/components/modules/info/InfoModal";
+import { PostForm } from "@/components/modules/post/PostForm";
+import { PostList } from "@/components/modules/post/PostList";
 import { ReviewForm } from "@/components/modules/reviews/ReviewForm";
 import { ReviewsList } from "@/components/modules/reviews/ReviewsList";
 import { fairType } from "@/helpers/fairs";
@@ -22,14 +30,13 @@ import { useFairDetails } from "@/hooks/fairs/useFairDetails";
 import { useFairStands } from "@/hooks/fairs/useFairStands";
 import { useApp } from "@/hooks/useApp";
 import { useDocumentTitleApp } from "@/hooks/useDocumentTitle";
+import { useScrollTo } from "@/hooks/useScrollTo";
+import { useSegmentDetails } from "@/hooks/useSegmentDetails";
 import { useTopBarMain } from "@/hooks/useTopBarMain";
 import { useUser } from "@/hooks/useUser";
 import { ERoutesName } from "@/types/TRoutes";
-import styles from "./FairDetails.module.css";
-import { useSegmentDetails } from "@/hooks/useSegmentDetails";
 import { useEffect } from "react";
-import { PostForm } from "@/components/modules/post/PostForm";
-import { PostList } from "@/components/modules/post/PostList";
+import styles from "./FairDetails.module.css";
 
 const MODAL_INFO_ID = "fair-info-open-modal";
 const MODAL_STANDS_ID = "fair-stands-open-modal";
@@ -40,6 +47,7 @@ type TRouteParams = { fairID: string };
 
 export const FairDetails = () => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const { fairID } = useParams<TRouteParams>();
   const { state } = useLocation();
   const { renderTopBarActionEnd } = useTopBarMain();
@@ -73,6 +81,10 @@ export const FairDetails = () => {
     handleRefresh: handleRefreshStands,
     handleInfinite: handleInfiniteStands,
   } = useFairStands(finalFairID);
+  const { scrollRef, scrollKey } = useScrollTo({
+    searchParamName: "post_id",
+    canScrollTo: !isLoadingDetails && !isLoadingPosts,
+  });
 
   const { value: segmentValue, handleChange: segmentHandleChange } =
     useSegmentDetails();
@@ -258,6 +270,8 @@ export const FairDetails = () => {
                   handleLoadMore={handleLoadMorePost}
                   handleDelete={handleDeletePost}
                   isOwner={fair?.owner.uid === user?.uid}
+                  scrollRef={scrollRef}
+                  scrollPostID={scrollKey}
                 />
               </section>
             )}

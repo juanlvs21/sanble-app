@@ -8,6 +8,7 @@ import { Button } from "@/components/common/buttons/Button";
 import { ButtonLoadMore } from "@/components/common/buttons/ButtonLoadMore";
 import { Spinner } from "@/components/common/loaders/Spinner";
 import styles from "./PostList.module.css";
+import { RefObject } from "react";
 
 export type ComponentProps = {
   /**
@@ -42,6 +43,14 @@ export type ComponentProps = {
    * Custom className component
    */
   className?: string;
+  /**
+   * ID post scroll to
+   */
+  scrollPostID?: string | null;
+  /**
+   * Ref scroll to
+   */
+  scrollRef?: RefObject<any>;
 };
 
 export const PostList = ({
@@ -53,6 +62,8 @@ export const PostList = ({
   handleDelete,
   handleLoadMore,
   className,
+  scrollPostID,
+  scrollRef,
 }: ComponentProps) => {
   return (
     <>
@@ -73,7 +84,10 @@ export const PostList = ({
           : posts.map((post) => (
               <li
                 key={post.id}
-                className={`${styles.postCard} animate__animated animate__fadeIn`}
+                className={`${styles.postCard} ${
+                  scrollPostID === post.id ? styles.postCardSelect : ""
+                } animate__animated animate__fadeIn`}
+                ref={scrollPostID === post.id ? scrollRef : undefined}
               >
                 {isOwner && (
                   <Button

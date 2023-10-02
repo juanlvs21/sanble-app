@@ -14,6 +14,10 @@
   position: relative;
 }
 
+.postCard.postCardSelect {
+  border-color: var(--ion-color-primary);
+}
+
 .postClose {
   position: absolute;
   right: -3px;
