@@ -1,14 +1,27 @@
-import { dayjs } from "@/helpers/time";
-import { TPost } from "@/types/TPost";
+import {
+  IonButtons,
+  IonContent,
+  IonModal,
+  IonTitle,
+  IonToolbar,
+  useIonActionSheet,
+} from "@ionic/react";
+import { FormikHelpers } from "formik";
+import { RefObject, useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
+import { BsThreeDotsVertical } from "react-icons/bs";
+import { useBoolean } from "usehooks-ts";
 
+import { HeaderModal } from "@/components/common/HeaderModal";
 import { ImageExtended } from "@/components/common/ImageExtended";
 import { Skeleton } from "@/components/common/Skeleton";
 import { Button } from "@/components/common/buttons/Button";
 import { ButtonLoadMore } from "@/components/common/buttons/ButtonLoadMore";
 import { Spinner } from "@/components/common/loaders/Spinner";
+import { PostForm } from "@/components/modules/post/PostForm";
+import { dayjs } from "@/helpers/time";
+import { TPost, TPostForm } from "@/types/TPost";
 import styles from "./PostList.module.css";
-import { RefObject } from "react";
 
 export type ComponentProps = {
   /**
@@ -28,6 +41,14 @@ export type ComponentProps = {
    */
   handleDelete: (postID: string) => Promise<void>;
   /**
+   * Update post
+   */
+  handleUpdate: (
+    values: TPostForm,
+    formikHelpers: FormikHelpers<TPostForm>,
+    dismissModal: () => void
+  ) => void | Promise<any>;
+  /**
    * Show button load more
    */
   showLoadMoreBtn?: boolean;
@@ -39,6 +60,10 @@ export type ComponentProps = {
    * Review is loading
    */
   isLoading?: boolean;
+  /**
+   * Update is loading
+   */
+  isUpdating?: boolean;
   /**
    * Custom className component
    */
@@ -56,15 +81,48 @@ export type ComponentProps = {
 export const PostList = ({
   posts,
   isLoading,
+  isUpdating,
   showLoadMoreBtn,
   isLoadMore,
   isOwner,
+  handleUpdate,
   handleDelete,
   handleLoadMore,
   className,
   scrollPostID,
   scrollRef,
 }: ComponentProps) => {
+  const [present] = useIonActionSheet();
+  const { value: showModalUpate, toggle: toggleModalUpdate } = useBoolean();
+  const [postUpdate, setPostUpdate] = useState<TPost>();
+
+  const handleOpenMenu = (post: TPost) => {
+    present({
+      header: "Acciones",
+      buttons: [
+        {
+          text: "Editar Publicación",
+          handler: () => {
+            setPostUpdate(post);
+            toggleModalUpdate();
+          },
+        },
+        {
+          text: "Eliminar Publicación",
+          handler: () => handleDelete(post.id),
+        },
+        {
+          text: "Cancelar",
+          cssClass: "danger-color",
+          role: "cancel",
+          data: {
+            action: "cancel",
+          },
+        },
+      ],
+    });
+  };
+
   return (
     <>
       {isLoading && <Spinner className={`${styles.postSpinner}`} center />}
@@ -95,9 +153,9 @@ export const PostList = ({
                     fill="clear"
                     color="secondary"
                     className={`${styles.postClose}`}
-                    onClick={() => handleDelete(post.id)}
+                    onClick={() => handleOpenMenu(post)}
                   >
-                    <AiOutlineClose size={16} />
+                    <BsThreeDotsVertical size={16} />
                   </Button>
                 )}
 
@@ -122,6 +180,31 @@ export const PostList = ({
           isLoading={isLoadMore}
         />
       )}
+
+      <IonModal isOpen={showModalUpate}>
+        <HeaderModal>
+          <IonToolbar>
+            <IonTitle>Editar Publicación</IonTitle>
+            <Button
+              onClick={() => toggleModalUpdate()}
+              fill="clear"
+              color="medium"
+              className={styles.postListModalEditClose}
+            >
+              <AiOutlineClose size={24} />
+            </Button>
+          </IonToolbar>
+        </HeaderModal>
+        <IonContent className={styles.postListModalEditContent}>
+          <PostForm
+            handleSave={(values, formikHelpers) =>
+              handleUpdate(values, formikHelpers, toggleModalUpdate)
+            }
+            post={postUpdate}
+            isLoading={isUpdating}
+          />
+        </IonContent>
+      </IonModal>
     </>
   );
 };

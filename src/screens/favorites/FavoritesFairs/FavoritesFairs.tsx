@@ -88,7 +88,7 @@ export const FavoritesFairs = () => {
                   handler: () => handleShorting("stars", "desc"),
                 },
                 {
-                  text: "Cancel",
+                  text: "Cancelar",
                   cssClass: "danger-color",
                   role: "cancel",
                   data: {

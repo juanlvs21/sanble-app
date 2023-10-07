@@ -117,6 +117,23 @@ export const saveFairPostRequest = (fairID: string, formData: FormData) =>
     )
     .then(({ data }) => data.data);
 
+export const updateFairPostRequest = (
+  fairID: string,
+  postID: string,
+  formData: FormData
+) =>
+  api
+    .put<AxiosResponse<{ post: TPost }>>(
+      `${URL_PREFIX}/${fairID}/posts/${postID}`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    )
+    .then(({ data }) => data.data);
+
 export const deleteFairPostRequest = (fairID: string, postID: string) =>
   api
     .delete<AxiosResponse>(`${URL_PREFIX}/${fairID}/posts/${postID}`)

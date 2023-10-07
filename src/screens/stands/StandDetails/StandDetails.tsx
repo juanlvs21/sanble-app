@@ -258,6 +258,10 @@ export const StandDetails = () => {
                   showLoadMoreBtn={showLoadMorePostBtn}
                   handleLoadMore={handleLoadMorePost}
                   handleDelete={handleDeletePost}
+                  handleUpdate={(postID) => {
+                    alert(postID);
+                    return Promise.resolve();
+                  }}
                   isOwner={stand?.owner.uid === user?.uid}
                   scrollRef={scrollRef}
                   scrollPostID={scrollKey}

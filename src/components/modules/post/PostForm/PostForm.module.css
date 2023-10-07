@@ -61,3 +61,21 @@
   width: 30px;
   height: 30px;
 }
+
+.postFormFileError {
+  font-size: 12px;
+  color: var(--ion-color-danger);
+}
+
+.postFormFileInfo {
+  font-size: 12px;
+  color: var(--sanble-gray-color-1);
+}
+
+.postFormOldImg {
+  width: 30px;
+  height: 30px;
+  object-fit: cover;
+  border-radius: var(--sanble-border-radius);
+  margin-right: 10px;
+}

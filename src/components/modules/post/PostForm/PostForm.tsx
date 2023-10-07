@@ -12,7 +12,7 @@ import { base64StringToBlob } from "@/helpers/file";
 import { getErrorMessage } from "@/helpers/getFormikErrorMsg";
 import { postSchema } from "@/helpers/validator/posts";
 import { useApp } from "@/hooks/useApp";
-import { TPostForm } from "@/types/TPost";
+import { TPost, TPostForm } from "@/types/TPost";
 import styles from "./PostForm.module.css";
 import { useToast } from "@/hooks/useToast";
 
@@ -30,6 +30,10 @@ export type ComponentProps = {
     values: TPostForm,
     formikHelpers: FormikHelpers<TPostForm>
   ) => void | Promise<any>;
+  /**
+   * Post data for edit
+   */
+  post?: TPost;
   /**
    * Allowed file types in the file input
    *
@@ -61,6 +65,7 @@ export type ComponentProps = {
 export const PostForm = ({
   isLoading,
   handleSave,
+  post,
   fileTypes = ["jpg", "png", "jpeg"],
   fileHoverTitle = "Suelte una imagen aquí",
   fileMaxSize = 10,
@@ -84,7 +89,8 @@ export const PostForm = ({
   } = useFormik<TPostForm>({
     enableReinitialize: true,
     initialValues: {
-      text: "",
+      id: post?.id ?? undefined,
+      text: post?.text ?? "",
       image: undefined,
     },
     validationSchema: postSchema,
@@ -182,6 +188,13 @@ export const PostForm = ({
               onClick={handleOpenCamera}
             >
               <div className={`${styles.postFormFile}`}>
+                {post?.fileUrl && !values.image && (
+                  <img
+                    src={post?.fileUrl}
+                    alt="Imagen Actual"
+                    className={styles.postFormOldImg}
+                  />
+                )}
                 <MdOutlineAddPhotoAlternate size={32} />
                 <div className={`${styles.postFormFileDescription}`}>
                   <p>
@@ -216,6 +229,13 @@ export const PostForm = ({
                 }}
               >
                 <div className={`${styles.postFormFile}`}>
+                  {post?.fileUrl && !values.image && (
+                    <img
+                      src={post?.fileUrl}
+                      alt="Imagen Actual"
+                      className={styles.postFormOldImg}
+                    />
+                  )}
                   <MdOutlineAddPhotoAlternate size={32} />
                   <div className={`${styles.postFormFileDescription}`}>
                     <p>
@@ -258,6 +278,11 @@ export const PostForm = ({
               <HiOutlineTrash size={18} />
             </Button>
           </div>
+        )}
+        {post?.fileUrl && (
+          <IonNote className={styles.postFormFileInfo}>
+            La nueva fotografía reemplazará a la anterior
+          </IonNote>
         )}
       </section>
 

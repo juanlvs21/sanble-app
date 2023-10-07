@@ -1,6 +1,7 @@
 import { RefObject, useEffect, useState } from "react";
 import { SwiperRef } from "swiper/react";
 import useSWR from "swr";
+import useSWRImmutable from "swr/immutable";
 import { useIonAlert, useIonLoading } from "@ionic/react";
 
 import { infiteScrollData } from "@/helpers/infiniteScrollData";
@@ -12,6 +13,7 @@ import {
   getFairReviewsRequest,
   saveFairPostRequest,
   saveFairReviewRequest,
+  updateFairPostRequest,
 } from "@/services";
 import { TPagination } from "@/types/THttp";
 import { TPhotograph } from "@/types/TPhotograph";
@@ -34,6 +36,7 @@ export const useFairDetails = (
   const [posts, setPosts] = useState<TPost[]>([]);
   const [isSavingReview, setIsSavingReview] = useState(false);
   const [isSavingPost, setIsSavingPost] = useState(false);
+  const [isUpdatingPost, setIsUpdatingPost] = useState(false);
   const [isRefresh, setIsRefresh] = useState(false);
   const [activePhoto, setActivePhoto] = useState<TPhotograph>();
   const [isLoadMoreReviews, setIsLoadMoreReviews] = useState(false);
@@ -82,7 +85,7 @@ export const useFairDetails = (
     isLoading: isLoadingReviews,
     isValidating: isValidatingReviews,
     mutate: mutateReviews,
-  } = useSWR(
+  } = useSWRImmutable(
     SWR_KEY_FAIRS_REVIEWS,
     async () => await getFairReviewsRequest(fairID, paginationReviews),
     {
@@ -116,7 +119,7 @@ export const useFairDetails = (
     isLoading: isLoadingPosts,
     isValidating: isValidatingPosts,
     mutate: mutatePosts,
-  } = useSWR(
+  } = useSWRImmutable(
     SWR_KEY_FAIRS_POSTS,
     async () => await getFairPostsRequest(fairID, paginationPosts),
     {
@@ -264,6 +267,43 @@ export const useFairDetails = (
     });
   };
 
+  const handleUpdatePost = async (
+    data: TPostForm,
+    formikHelpers: FormikHelpers<TPostForm>,
+    dismissModal: () => void
+  ) => {
+    try {
+      if (data.id) {
+        setIsUpdatingPost(true);
+
+        const formData = new FormData();
+
+        formData.append("text", data.text);
+        if (data.image) formData.append("image", data.image);
+
+        await updateFairPostRequest(fairID, data.id, formData);
+
+        formikHelpers.resetForm();
+
+        toast("Información editada con éxito", { type: "success" });
+
+        setPaginationPosts({
+          lastIndex: DEFAULT_LAST_INDEX_LIST,
+          limit: DEFAULT_LIMIT_LIST,
+          total: 0,
+        });
+
+        dismissModal();
+
+        setIsRefresh(true);
+      }
+    } catch (error) {
+      toast(error, { type: "error" });
+    } finally {
+      setIsUpdatingPost(false);
+    }
+  };
+
   const getIndexPhoto = (
     photoID: string = "",
     photographs: TPhotograph[] = []
@@ -294,6 +334,7 @@ export const useFairDetails = (
     isLoadingReviews: isLoadingReviews || isValidatingReviews,
     posts,
     isSavingPost,
+    isUpdatingPost,
     isLoadingPosts: isLoadingPosts || isValidatingPosts,
     isLoadMoreReviews,
     isLoadMorePosts,
@@ -311,6 +352,7 @@ export const useFairDetails = (
     handleSavePost,
     handleLoadDetails: mutateDetails,
     handleDeletePost,
+    handleUpdatePost,
     getIndexPhoto,
   };
 };

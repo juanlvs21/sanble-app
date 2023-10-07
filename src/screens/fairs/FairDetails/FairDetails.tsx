@@ -63,6 +63,7 @@ export const FairDetails = () => {
     isSavingReview,
     isLoadingReviews,
     isSavingPost,
+    isUpdatingPost,
     isLoadMoreReviews,
     isLoadMorePosts,
     showLoadMoreReviewBtn,
@@ -74,6 +75,7 @@ export const FairDetails = () => {
     handleLoadMoreReviews,
     handleLoadMorePost,
     handleDeletePost,
+    handleUpdatePost,
   } = useFairDetails(finalFairID);
   const {
     stands,
@@ -268,6 +270,8 @@ export const FairDetails = () => {
                   isLoadMore={isLoadMorePosts}
                   showLoadMoreBtn={showLoadMorePostBtn}
                   handleLoadMore={handleLoadMorePost}
+                  handleUpdate={handleUpdatePost}
+                  isUpdating={isUpdatingPost}
                   handleDelete={handleDeletePost}
                   isOwner={fair?.owner.uid === user?.uid}
                   scrollRef={scrollRef}

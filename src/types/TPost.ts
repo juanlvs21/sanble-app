@@ -10,6 +10,7 @@ export type TPost = {
   fileName?: string;
 };
 
-export type TPostForm = Pick<TPost, "text"> & {
-  image?: string;
-};
+export type TPostForm = Pick<TPost, "text"> &
+  Partial<Pick<TPost, "id">> & {
+    image?: string;
+  };
