@@ -60,6 +60,7 @@ export const StandDetails = () => {
     posts,
     isSaving,
     isSavingPost,
+    isUpdatingPost,
     isLoadingDetails,
     isLoadingReviews,
     isLoadMoreReviews,
@@ -69,6 +70,7 @@ export const StandDetails = () => {
     showLoadMorePostBtn,
     handleLoadMorePost,
     handleDeletePost,
+    handleUpdatePost,
     handleLoadAll,
     handleSaveReview,
     handleSavePost,
@@ -258,10 +260,8 @@ export const StandDetails = () => {
                   showLoadMoreBtn={showLoadMorePostBtn}
                   handleLoadMore={handleLoadMorePost}
                   handleDelete={handleDeletePost}
-                  handleUpdate={(postID) => {
-                    alert(postID);
-                    return Promise.resolve();
-                  }}
+                  handleUpdate={handleUpdatePost}
+                  isUpdating={isUpdatingPost}
                   isOwner={stand?.owner.uid === user?.uid}
                   scrollRef={scrollRef}
                   scrollPostID={scrollKey}

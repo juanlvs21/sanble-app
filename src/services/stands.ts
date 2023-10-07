@@ -95,6 +95,23 @@ export const saveStandPostRequest = (standID: string, formData: FormData) =>
     )
     .then(({ data }) => data.data);
 
+export const updateStandPostRequest = (
+  standID: string,
+  postID: string,
+  formData: FormData
+) =>
+  api
+    .put<AxiosResponse<{ post: TPost }>>(
+      `${URL_PREFIX}/${standID}/posts/${postID}`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    )
+    .then(({ data }) => data.data);
+
 export const deleteStandPostRequest = (standID: string, postID: string) =>
   api
     .delete<AxiosResponse>(`${URL_PREFIX}/${standID}/posts/${postID}`)

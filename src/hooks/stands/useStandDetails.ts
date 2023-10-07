@@ -13,6 +13,7 @@ import {
   getStandReviewsRequest,
   saveStandPostRequest,
   saveStandReviewRequest,
+  updateStandPostRequest,
 } from "@/services";
 import { TPagination } from "@/types/THttp";
 import { TPhotograph } from "@/types/TPhotograph";
@@ -33,6 +34,7 @@ export const useStandDetails = (
   const [reviews, setReviews] = useState<TReview[]>([]);
   const [posts, setPosts] = useState<TPost[]>([]);
   const [isSaving, setIsSaving] = useState(false);
+  const [isUpdatingPost, setIsUpdatingPost] = useState(false);
   const [isSavingPost, setIsSavingPost] = useState(false);
   const [isRefresh, setIsRefresh] = useState(false);
   const [isLoadMoreReviews, setIsLoadMoreReviews] = useState(false);
@@ -202,6 +204,43 @@ export const useStandDetails = (
     }
   };
 
+  const handleUpdatePost = async (
+    data: TPostForm,
+    formikHelpers: FormikHelpers<TPostForm>,
+    dismissModal: () => void
+  ) => {
+    try {
+      if (data.id) {
+        setIsUpdatingPost(true);
+
+        const formData = new FormData();
+
+        formData.append("text", data.text);
+        if (data.image) formData.append("image", data.image);
+
+        await updateStandPostRequest(standID, data.id, formData);
+
+        formikHelpers.resetForm();
+
+        toast("Información editada con éxito", { type: "success" });
+
+        setPaginationPosts({
+          lastIndex: DEFAULT_LAST_INDEX_LIST,
+          limit: DEFAULT_LIMIT_LIST,
+          total: 0,
+        });
+
+        dismissModal();
+
+        setIsRefresh(true);
+      }
+    } catch (error) {
+      toast(error, { type: "error" });
+    } finally {
+      setIsUpdatingPost(false);
+    }
+  };
+
   const handleDeletePost = async (postID: string) => {
     presentAlert({
       header: "¿Estás seguro de eliminar permanentemente esta publicación?",
@@ -290,6 +329,7 @@ export const useStandDetails = (
     posts,
     isSaving,
     isSavingPost,
+    isUpdatingPost,
     isLoadingDetails,
     isLoadingReviews,
     isLoadMoreReviews,
@@ -308,6 +348,7 @@ export const useStandDetails = (
     handleLoadMorePost,
     handleSaveReview,
     handleSavePost,
+    handleUpdatePost,
     handleDeletePost,
     handleLoadDetails: mutateDetails,
     getIndexPhoto,
