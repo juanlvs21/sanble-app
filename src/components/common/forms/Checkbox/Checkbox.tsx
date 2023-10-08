@@ -1,4 +1,5 @@
 import { IonCheckbox, IonItem, IonLabel, IonNote } from "@ionic/react";
+import { forwardRef } from "react";
 
 import { TCheckbox } from "@/types/TComponents";
 
@@ -11,15 +12,14 @@ export type ComponentProps = TCheckbox & {
   label?: string;
 };
 
-export const Checkbox = ({
-  label,
-  helper,
-  helperIsError,
-  ...rest
-}: ComponentProps) => (
-  <IonItem fill="outline" className="inputItem inputCheckbox">
-    <IonCheckbox slot="start" {...rest} />
-    {label && <IonLabel>{label}</IonLabel>}
-    <IonNote slot={helperIsError ? "error" : "helper"}>{helper}</IonNote>
-  </IonItem>
+export const Checkbox = forwardRef<HTMLIonCheckboxElement, ComponentProps>(
+  function ({ label, helper, helperIsError, ...rest }: ComponentProps, ref) {
+    return (
+      <IonItem fill="outline" className="inputItem inputCheckbox">
+        <IonCheckbox ref={ref} slot="start" {...rest} />
+        {label && <IonLabel>{label}</IonLabel>}
+        <IonNote slot={helperIsError ? "error" : "helper"}>{helper}</IonNote>
+      </IonItem>
+    );
+  }
 );

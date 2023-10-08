@@ -1,5 +1,4 @@
 import { useIonAlert, useIonLoading } from "@ionic/react";
-import { FormikHelpers } from "formik";
 import { RefObject, useEffect, useState } from "react";
 import { UseFormReset } from "react-hook-form";
 import { SwiperRef } from "swiper/react";
@@ -177,7 +176,7 @@ export const useStandDetails = (
 
   const handleSavePost = async (
     data: TPostForm,
-    formikHelpers: FormikHelpers<TPostForm>
+    reset: UseFormReset<TPostForm>
   ) => {
     try {
       setIsSavingPost(true);
@@ -189,7 +188,7 @@ export const useStandDetails = (
 
       await saveStandPostRequest(standID, formData);
 
-      formikHelpers.resetForm();
+      reset();
 
       toast("Información publicada con éxito", { type: "success" });
 
@@ -209,7 +208,7 @@ export const useStandDetails = (
 
   const handleUpdatePost = async (
     data: TPostForm,
-    formikHelpers: FormikHelpers<TPostForm>,
+    reset: UseFormReset<TPostForm>,
     dismissModal: () => void
   ) => {
     try {
@@ -223,7 +222,7 @@ export const useStandDetails = (
 
         await updateStandPostRequest(standID, data.id, formData);
 
-        formikHelpers.resetForm();
+        reset();
 
         toast("Información editada con éxito", { type: "success" });
 

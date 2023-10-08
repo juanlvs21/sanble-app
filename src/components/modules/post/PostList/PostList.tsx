@@ -1,13 +1,12 @@
 import {
-  IonButtons,
   IonContent,
   IonModal,
   IonTitle,
   IonToolbar,
   useIonActionSheet,
 } from "@ionic/react";
-import { FormikHelpers } from "formik";
 import { RefObject, useState } from "react";
+import { UseFormReset } from "react-hook-form";
 import { AiOutlineClose } from "react-icons/ai";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { useBoolean } from "usehooks-ts";
@@ -45,7 +44,7 @@ export type ComponentProps = {
    */
   handleUpdate: (
     values: TPostForm,
-    formikHelpers: FormikHelpers<TPostForm>,
+    reset: UseFormReset<TPostForm>,
     dismissModal: () => void
   ) => void | Promise<any>;
   /**
@@ -197,8 +196,8 @@ export const PostList = ({
         </HeaderModal>
         <IonContent className={styles.postListModalEditContent}>
           <PostForm
-            handleSave={(values, formikHelpers) =>
-              handleUpdate(values, formikHelpers, toggleModalUpdate)
+            handleSave={(values, reset) =>
+              handleUpdate(values, reset, toggleModalUpdate)
             }
             post={postUpdate}
             isLoading={isUpdating}

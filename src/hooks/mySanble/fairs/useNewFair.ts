@@ -22,7 +22,7 @@ export const useNewFair = () => {
     description: "",
     address: "",
     type: undefined,
-    celebrationDate: "",
+    celebrationDate: undefined,
     contactEmail: "",
     contactPhone: "",
   });

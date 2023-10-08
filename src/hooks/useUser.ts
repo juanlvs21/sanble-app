@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FormikHelpers } from "formik";
+import { UseFormReset } from "react-hook-form";
 
 import { authActions } from "@/context/actions/authActions";
 import { useAuthContext } from "@/context/AuthContext";
@@ -77,7 +77,7 @@ export const useUser = () => {
 
   const handleChangePasswordUser = async (
     { password }: TChangePassword,
-    formikHelpers: FormikHelpers<TChangePassword>
+    reset: UseFormReset<TChangePassword>
   ) => {
     try {
       setIsLoading(true);
@@ -86,7 +86,7 @@ export const useUser = () => {
 
       toast("Contraseña cambiada existosamente", { type: "success" });
 
-      formikHelpers.resetForm();
+      reset();
     } catch (error) {
       toast(error, { type: "error" });
     } finally {

@@ -2,7 +2,7 @@ export type TPhotographBase = {
   id: string;
   url: string;
   name: string;
-  image: string;
+  image: string | File;
   description: string;
   creationTime: string;
   isCover: boolean;

@@ -15,9 +15,10 @@ import {
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
-import { FormikHelpers, useFormik } from "formik";
 import { LatLngTuple } from "leaflet";
 import { parsePhoneNumberFromString } from "libphonenumber-js";
+import { useRef } from "react";
+import { Controller, useForm } from "react-hook-form";
 import { BiDirections, BiEnvelope, BiPhone } from "react-icons/bi";
 import { HiOutlineCalendar } from "react-icons/hi";
 import { MdOutlineDescription, MdTitle } from "react-icons/md";
@@ -30,9 +31,8 @@ import { Input } from "@/components/common/forms/Input";
 import { Select } from "@/components/common/forms/Select";
 import { TextArea } from "@/components/common/forms/TextArea";
 import { Map } from "@/components/modules/geolocation/Map";
-import { getErrorMessage } from "@/helpers/getFormikErrorMsg";
 import { dayjs } from "@/helpers/time";
-import { newFairSchema } from "@/helpers/validator/fair";
+import { fairSchema } from "@/helpers/validator/fair";
 import { EFairType, TFairForm } from "@/types/TFair";
 import { Tooltip } from "react-leaflet";
 import styles from "./FairForm.module.css";
@@ -45,10 +45,7 @@ export type ComponentProps = {
   /**
    * Handle save photo
    */
-  handleFormNext: (
-    values: TFairForm,
-    formikHelpers: FormikHelpers<TFairForm>
-  ) => void | Promise<void>;
+  handleFormNext: (values: TFairForm) => void | Promise<void>;
   /**
    * Open next step (Set location in the map)
    */
@@ -79,140 +76,196 @@ export const FairForm = ({
   handleSave,
   onOpenMapModal,
 }: ComponentProps) => {
+  const formRef = useRef<HTMLFormElement>(null);
   const {
+    control,
     handleSubmit,
-    handleChange,
-    handleBlur,
-    setFieldValue,
-    values,
-    touched,
-    errors,
-  } = useFormik<TFairForm>({
-    enableReinitialize: true,
-    initialValues: formValues,
-    validationSchema: newFairSchema,
-    onSubmit: handleFormNext,
+    setValue,
+    watch,
+    formState: { isSubmitting },
+  } = useForm<TFairForm>({
+    mode: "all",
+    values: formValues,
+    resolver: fairSchema,
   });
 
   const handleSetValueDate = (
     e: IonDatetimeCustomEvent<DatetimeChangeEventDetail>
   ) => {
-    setFieldValue(e.target.name, e.detail.value);
+    setValue("celebrationDate", e.detail.value?.toString());
   };
 
   const handleSetValueType = (
     e: IonSelectCustomEvent<SelectChangeEventDetail<EFairType>>
   ) => {
-    setFieldValue(e.target.name, e.detail.value);
+    setValue("type", e.detail.value);
   };
+
+  const valueGeoPoint = watch("geopoint");
+  const valueName = watch("name");
 
   return (
     <form
+      ref={formRef}
+      onSubmit={handleSubmit(handleFormNext)}
+      onKeyUp={(e) => e.key === "Enter" && formRef.current?.requestSubmit()}
       className={styles.formFairContainer}
-      onSubmit={handleSubmit}
-      onKeyUp={(e) => e.key === "Enter" && handleSubmit()}
     >
       <IonGrid>
         <IonRow>
           <IonCol size="12">
-            <Input
-              placeholder="Nombre"
+            <Controller
+              control={control}
               name="name"
-              Icon={<MdTitle />}
-              onIonInput={handleChange}
-              onIonBlur={handleBlur}
-              value={values.name}
-              helper={getErrorMessage("name", touched, errors)}
-              helperIsError
+              render={({
+                field: { onChange, onBlur, ...field },
+                fieldState: { error },
+              }) => (
+                <Input
+                  placeholder="Nombre"
+                  Icon={<MdTitle />}
+                  onIonInput={onChange}
+                  onIonBlur={onBlur}
+                  helper={error?.message}
+                  helperIsError
+                  {...field}
+                />
+              )}
             />
           </IonCol>
           <IonCol size="12" size-sm="6">
-            <Select
-              placeholder="Tipo de Feria"
-              Icon={<BiDirections />}
-              interface="action-sheet"
+            <Controller
+              control={control}
               name="type"
-              onIonChange={handleSetValueType}
-              onIonBlur={handleBlur}
-              helper={getErrorMessage("type", touched, errors)}
-              value={values.type}
-              cancelText="Cancelar"
-              helperIsError
-            >
-              <IonSelectOption value={EFairType.ENTREPRENEURSHIP}>
-                Feria de Emprendimiento
-              </IonSelectOption>
-              <IonSelectOption value={EFairType.GASTRONOMIC}>
-                Feria Gastronómica
-              </IonSelectOption>
-            </Select>
-            <Datetime
-              placeholder="Fecha de celebración"
-              onSetValue={handleSetValueDate}
-              name="celebrationDate"
-              Icon={<HiOutlineCalendar />}
-              onIonBlur={handleBlur}
-              value={
-                values.celebrationDate
-                  ? dayjs(values.celebrationDate).format("DD MMM - hh:mm a")
-                  : ""
-              }
-              helper={getErrorMessage("celebrationDate", touched, errors)}
-              helperIsError
+              render={({
+                field: { onBlur, ...field },
+                fieldState: { error },
+              }) => (
+                <Select
+                  placeholder="Tipo de Feria"
+                  Icon={<BiDirections />}
+                  interface="action-sheet"
+                  onIonChange={handleSetValueType}
+                  onIonBlur={onBlur}
+                  helper={error?.message}
+                  cancelText="Cancelar"
+                  helperIsError
+                  {...field}
+                >
+                  <IonSelectOption value={EFairType.ENTREPRENEURSHIP}>
+                    Feria de Emprendimiento
+                  </IonSelectOption>
+                  <IonSelectOption value={EFairType.GASTRONOMIC}>
+                    Feria Gastronómica
+                  </IonSelectOption>
+                </Select>
+              )}
             />
-            <TextArea
-              placeholder="Descripción"
+            <Controller
+              control={control}
+              name="celebrationDate"
+              render={({
+                field: { onBlur, value, ...field },
+                fieldState: { error },
+              }) => (
+                <Datetime
+                  placeholder="Fecha de celebración"
+                  onSetValue={handleSetValueDate}
+                  Icon={<HiOutlineCalendar />}
+                  onIonBlur={onBlur}
+                  value={value ? dayjs(value).format("DD MMM - hh:mm a") : ""}
+                  helper={error?.message}
+                  helperIsError
+                  {...field}
+                />
+              )}
+            />
+            <Controller
+              control={control}
               name="description"
-              Icon={<MdOutlineDescription />}
-              onIonInput={handleChange}
-              onIonBlur={handleBlur}
-              value={values.description}
-              helper={getErrorMessage("description", touched, errors)}
-              className={styles.formFairTextArea}
-              maxlength={500}
-              helperIsError
+              render={({
+                field: { onChange, onBlur, ...field },
+                fieldState: { error },
+              }) => (
+                <TextArea
+                  placeholder="Descripción"
+                  Icon={<MdOutlineDescription />}
+                  onIonInput={onChange}
+                  onIonBlur={onBlur}
+                  helper={error?.message}
+                  className={styles.formFairTextArea}
+                  maxlength={500}
+                  helperIsError
+                  {...field}
+                />
+              )}
             />
           </IonCol>
           <IonCol>
-            <Input
-              placeholder="Correo electrónico de contacto"
+            <Controller
+              control={control}
               name="contactEmail"
-              type="email"
-              inputmode="email"
-              Icon={<BiEnvelope />}
-              onIonInput={handleChange}
-              onIonBlur={handleBlur}
-              value={values.contactEmail}
-              helper={getErrorMessage("contactEmail", touched, errors)}
-              helperIsError
+              render={({
+                field: { onChange, onBlur, ...field },
+                fieldState: { error },
+              }) => (
+                <Input
+                  placeholder="Correo electrónico de contacto"
+                  type="email"
+                  inputmode="email"
+                  Icon={<BiEnvelope />}
+                  onIonInput={onChange}
+                  onIonBlur={onBlur}
+                  helper={error?.message}
+                  helperIsError
+                  {...field}
+                />
+              )}
             />
-            <Input
-              placeholder="Teléfono de contacto"
+            <Controller
+              control={control}
               name="contactPhone"
-              type="tel"
-              inputmode="tel"
-              Icon={<BiPhone />}
-              onIonInput={handleChange}
-              onIonBlur={handleBlur}
-              label="+58"
-              value={(
-                parsePhoneNumberFromString(values.contactPhone, "VE")
-                  ?.nationalNumber || values.contactPhone
-              ).slice(0, 10)}
-              helper={getErrorMessage("contactPhone", touched, errors)}
-              helperIsError
+              render={({
+                field: { onChange, onBlur, value, ...field },
+                fieldState: { error },
+              }) => (
+                <Input
+                  placeholder="Teléfono de contacto"
+                  type="tel"
+                  inputmode="tel"
+                  Icon={<BiPhone />}
+                  onIonInput={onChange}
+                  onIonBlur={onBlur}
+                  label="+58"
+                  value={(
+                    parsePhoneNumberFromString(value, "VE")?.nationalNumber ||
+                    value
+                  ).slice(0, 10)}
+                  helper={error?.message}
+                  helperIsError
+                  {...field}
+                />
+              )}
             />
-            <TextArea
-              placeholder="Direccion"
+            <Controller
+              control={control}
               name="address"
-              Icon={<TbMap2 />}
-              onIonInput={handleChange}
-              onIonBlur={handleBlur}
-              value={values.address}
-              helper={getErrorMessage("address", touched, errors)}
-              maxlength={500}
-              className={styles.formFairTextArea}
-              helperIsError
+              render={({
+                field: { onChange, onBlur, ...field },
+                fieldState: { error },
+              }) => (
+                <TextArea
+                  placeholder="Direccion"
+                  Icon={<TbMap2 />}
+                  onIonInput={onChange}
+                  onIonBlur={onBlur}
+                  helper={error?.message}
+                  maxlength={500}
+                  className={styles.formFairTextArea}
+                  helperIsError
+                  {...field}
+                />
+              )}
             />
           </IonCol>
         </IonRow>
@@ -242,10 +295,10 @@ export const FairForm = ({
         <IonContent>
           <Map
             draggableMarkerEvent={handleSetLocation}
-            center={values.geopoint}
+            center={valueGeoPoint}
             DraggableMarkerTooltip={
               <Tooltip direction="bottom" offset={[0, 30]} permanent>
-                <b>{values.name}</b>
+                <b>{valueName}</b>
               </Tooltip>
             }
           />

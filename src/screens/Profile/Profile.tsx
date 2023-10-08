@@ -1,6 +1,7 @@
 import { IonAvatar, IonButton, IonCol, IonGrid, IonRow } from "@ionic/react";
-import { useFormik } from "formik";
 import parsePhoneNumberFromString from "libphonenumber-js";
+import { useRef } from "react";
+import { Controller, useForm } from "react-hook-form";
 import { BiEnvelope, BiImageAdd, BiPhone, BiUser } from "react-icons/bi";
 
 import { Fetcher } from "@/components/common/Fetcher";
@@ -9,7 +10,6 @@ import { Button } from "@/components/common/buttons/Button";
 import { Input } from "@/components/common/forms/Input";
 import { InputPassword } from "@/components/common/forms/InputPassword";
 import { ChangeAvatarModal } from "@/components/modules/profile/ChangeAvatarModal";
-import { getErrorMessage } from "@/helpers/getFormikErrorMsg";
 import { changePasswordSchema } from "@/helpers/validator/auth";
 import { userSchema } from "@/helpers/validator/user";
 import { useChangeAvatar } from "@/hooks/profile/useChangeAvatar";
@@ -23,43 +23,35 @@ export const Profile = () => {
   const title = user?.displayName || user?.email || "Mi Perfil";
   useDocumentTitleApp(`${title} 👤`);
 
+  const formUpdateRef = useRef<HTMLFormElement>(null);
+  const formChangePassRef = useRef<HTMLFormElement>(null);
+
   const changeAvatarProps = useChangeAvatar();
   const { handleUpdateUser, handleChangePasswordUser } = useUser();
   const {
+    control: controlUpdate,
     handleSubmit: handleSubmitUpdate,
-    handleChange: handleChangeUpdate,
-    handleBlur: handleBlurUpdate,
-    values: valuesUpdate,
-    touched: touchedUpdate,
-    errors: errorsUpdate,
-    isSubmitting: isSubmittingUpdate,
-  } = useFormik<TUpdateUser>({
-    initialValues: {
+    formState: { isSubmitting: isSubmittingUpdate },
+  } = useForm<TUpdateUser>({
+    values: {
       displayName: user?.displayName ?? "",
       email: user?.email ?? "",
       phoneNumber: user?.phoneNumber ?? "",
     },
-    validationSchema: userSchema,
-    onSubmit: handleUpdateUser,
-    enableReinitialize: true,
+    resolver: userSchema,
   });
 
   const {
+    control: controlChangePass,
     handleSubmit: handleSubmitChangePass,
-    handleChange: handleChangeChangePass,
-    handleBlur: handleBlurChangePass,
-    values: valuesChangePass,
-    touched: touchedChangePass,
-    errors: errorsChangePass,
-    isSubmitting: isSubmittingChangePass,
-  } = useFormik<TChangePassword>({
-    initialValues: {
+    reset: resetChangePass,
+    formState: { isSubmitting: isSubmittingChangePass },
+  } = useForm<TChangePassword>({
+    defaultValues: {
       password: "",
       confirmPassword: "",
     },
-    validationSchema: changePasswordSchema,
-    onSubmit: handleChangePasswordUser,
-    enableReinitialize: true,
+    resolver: changePasswordSchema,
   });
 
   return (
@@ -99,58 +91,80 @@ export const Profile = () => {
             className={`${styles.profileCol} ${styles.colLeft}`}
           >
             <form
-              onSubmit={handleSubmitUpdate}
-              onKeyUp={(e) => e.key === "Enter" && handleSubmitUpdate()}
+              ref={formUpdateRef}
+              onSubmit={handleSubmitUpdate(handleUpdateUser)}
+              onKeyUp={(e) =>
+                e.key === "Enter" && formUpdateRef.current?.requestSubmit()
+              }
               className={`${styles.profileForm}`}
             >
               <h2 className={`${styles.profileTitle}`}>Datos del Usuario</h2>
 
-              <Input
-                placeholder="Nombre"
-                type="text"
+              <Controller
+                control={controlUpdate}
                 name="displayName"
-                Icon={<BiUser />}
-                onIonInput={handleChangeUpdate}
-                onIonBlur={handleBlurUpdate}
-                disabled={isSubmittingUpdate}
-                value={valuesUpdate.displayName}
-                helper={getErrorMessage("email", touchedUpdate, errorsUpdate)}
-                helperIsError
-              />
-
-              <Input
-                placeholder="Correo electrónico"
-                type="email"
-                name="email"
-                inputmode="email"
-                Icon={<BiEnvelope />}
-                onIonInput={handleChangeUpdate}
-                onIonBlur={handleBlurUpdate}
-                disabled={isSubmittingUpdate}
-                value={valuesUpdate.email}
-                helper={getErrorMessage("email", touchedUpdate, errorsUpdate)}
-                helperIsError
-              />
-
-              <Input
-                placeholder="Teléfono"
-                name="phoneNumber"
-                type="tel"
-                inputmode="tel"
-                Icon={<BiPhone />}
-                onIonInput={handleChangeUpdate}
-                onIonBlur={handleBlurUpdate}
-                label="+58"
-                value={(
-                  parsePhoneNumberFromString(valuesUpdate.phoneNumber, "VE")
-                    ?.nationalNumber || valuesUpdate.phoneNumber
-                ).slice(0, 10)}
-                helper={getErrorMessage(
-                  "phoneNumber",
-                  touchedUpdate,
-                  errorsUpdate
+                render={({
+                  field: { onChange, onBlur, ...field },
+                  fieldState: { error },
+                }) => (
+                  <Input
+                    placeholder="Nombre"
+                    type="text"
+                    Icon={<BiUser />}
+                    onIonInput={onChange}
+                    onIonBlur={onBlur}
+                    disabled={isSubmittingUpdate}
+                    helper={error?.message}
+                    helperIsError
+                    {...field}
+                  />
                 )}
-                helperIsError
+              />
+              <Controller
+                control={controlUpdate}
+                name="email"
+                render={({
+                  field: { onChange, onBlur, ...field },
+                  fieldState: { error },
+                }) => (
+                  <Input
+                    placeholder="Correo electrónico"
+                    type="email"
+                    inputmode="email"
+                    Icon={<BiEnvelope />}
+                    onIonInput={onChange}
+                    onIonBlur={onBlur}
+                    disabled={isSubmittingUpdate}
+                    helper={error?.message}
+                    helperIsError
+                    {...field}
+                  />
+                )}
+              />
+              <Controller
+                control={controlUpdate}
+                name="phoneNumber"
+                render={({
+                  field: { onChange, onBlur, value, ...field },
+                  fieldState: { error },
+                }) => (
+                  <Input
+                    placeholder="Teléfono"
+                    type="tel"
+                    inputmode="tel"
+                    Icon={<BiPhone />}
+                    onIonInput={onChange}
+                    onIonBlur={onBlur}
+                    label="+58"
+                    value={(
+                      parsePhoneNumberFromString(value, "VE")?.nationalNumber ||
+                      value
+                    ).slice(0, 10)}
+                    helper={error?.message}
+                    helperIsError
+                    {...field}
+                  />
+                )}
               />
 
               <Button
@@ -166,40 +180,52 @@ export const Profile = () => {
             <span className={`${styles.divider}`} />
 
             <form
-              onSubmit={handleSubmitChangePass}
-              onKeyUp={(e) => e.key === "Enter" && handleSubmitChangePass()}
+              ref={formChangePassRef}
+              onSubmit={handleSubmitChangePass((values) =>
+                handleChangePasswordUser(values, resetChangePass)
+              )}
+              onKeyUp={(e) =>
+                e.key === "Enter" && formChangePassRef.current?.requestSubmit()
+              }
               className={`${styles.profileForm}`}
             >
               <h2 className={`${styles.profileTitle}`}>Cambiar Contraseña</h2>
 
-              <InputPassword
-                placeholder="Contraseña"
+              <Controller
+                control={controlChangePass}
                 name="password"
-                onIonInput={handleChangeChangePass}
-                onIonBlur={handleBlurChangePass}
-                disabled={isSubmittingChangePass}
-                value={valuesChangePass.password}
-                helper={getErrorMessage(
-                  "password",
-                  touchedChangePass,
-                  errorsChangePass
+                render={({
+                  field: { onChange, onBlur, ...field },
+                  fieldState: { error },
+                }) => (
+                  <InputPassword
+                    placeholder="Contraseña"
+                    onIonInput={onChange}
+                    onIonBlur={onBlur}
+                    disabled={isSubmittingChangePass}
+                    helper={error?.message}
+                    helperIsError
+                    {...field}
+                  />
                 )}
-                helperIsError
               />
-
-              <InputPassword
-                placeholder="Confirmar Contraseña"
+              <Controller
+                control={controlChangePass}
                 name="confirmPassword"
-                onIonInput={handleChangeChangePass}
-                onIonBlur={handleBlurChangePass}
-                disabled={isSubmittingChangePass}
-                value={valuesChangePass.confirmPassword}
-                helper={getErrorMessage(
-                  "confirmPassword",
-                  touchedChangePass,
-                  errorsChangePass
+                render={({
+                  field: { onChange, onBlur, ...field },
+                  fieldState: { error },
+                }) => (
+                  <InputPassword
+                    placeholder="Confirmar Contraseña"
+                    onIonInput={onChange}
+                    onIonBlur={onBlur}
+                    disabled={isSubmittingChangePass}
+                    helper={error?.message}
+                    helperIsError
+                    {...field}
+                  />
                 )}
-                helperIsError
               />
 
               <Button

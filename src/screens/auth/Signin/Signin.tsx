@@ -1,5 +1,6 @@
 import { IonCol, IonGrid, IonRow } from "@ionic/react";
-import { useFormik } from "formik";
+import { useRef } from "react";
+import { Controller, useForm } from "react-hook-form";
 import { BiEnvelope } from "react-icons/bi";
 import { FcGoogle } from "react-icons/fc";
 import { Link } from "react-router-dom";
@@ -7,7 +8,6 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/common/buttons/Button";
 import { Input } from "@/components/common/forms/Input";
 import { InputPassword } from "@/components/common/forms/InputPassword";
-import { getErrorMessage } from "@/helpers/getFormikErrorMsg";
 import { signInSchema } from "@/helpers/validator/auth";
 import { useAuth } from "@/hooks/useAuth";
 import { useDocumentTitleApp } from "@/hooks/useDocumentTitle";
@@ -17,22 +17,19 @@ import styles from "../Auth.module.css";
 
 export const Signin = () => {
   useDocumentTitleApp("Iniciar Sesión");
+  const formRef = useRef<HTMLFormElement>(null);
   const { handleSignin, handleSigninGoogle } = useAuth();
   const {
+    control,
     handleSubmit,
-    handleChange,
-    handleBlur,
-    values,
-    touched,
-    errors,
-    isSubmitting,
-  } = useFormik<TAuthSigInForm>({
-    initialValues: {
+    formState: { isSubmitting },
+  } = useForm<TAuthSigInForm>({
+    mode: "all",
+    defaultValues: {
       email: "",
       password: "",
     },
-    validationSchema: signInSchema,
-    onSubmit: handleSignin,
+    resolver: signInSchema,
   });
 
   return (
@@ -48,30 +45,47 @@ export const Signin = () => {
       </IonRow>
       <IonRow className={styles.formContainer}>
         <form
-          onSubmit={handleSubmit}
-          onKeyUp={(e) => e.key === "Enter" && handleSubmit()}
+          ref={formRef}
+          onSubmit={handleSubmit(handleSignin)}
+          onKeyUp={(e) => e.key === "Enter" && formRef.current?.requestSubmit()}
         >
-          <Input
-            placeholder="Correo electrónico"
-            type="email"
+          <Controller
+            control={control}
             name="email"
-            inputmode="email"
-            Icon={<BiEnvelope />}
-            onIonInput={handleChange}
-            onIonBlur={handleBlur}
-            disabled={isSubmitting}
-            value={values.email}
-            helper={getErrorMessage("email", touched, errors)}
-            helperIsError
+            render={({
+              field: { onChange, onBlur, ...field },
+              fieldState: { error },
+            }) => (
+              <Input
+                placeholder="Correo electrónico"
+                type="email"
+                inputmode="email"
+                Icon={<BiEnvelope />}
+                onIonInput={onChange}
+                onIonBlur={onBlur}
+                disabled={isSubmitting}
+                helper={error?.message}
+                helperIsError
+                {...field}
+              />
+            )}
           />
-          <InputPassword
+          <Controller
+            control={control}
             name="password"
-            onIonInput={handleChange}
-            onIonBlur={handleBlur}
-            disabled={isSubmitting}
-            value={values.password}
-            helper={getErrorMessage("password", touched, errors)}
-            helperIsError
+            render={({
+              field: { onChange, onBlur, ...field },
+              fieldState: { error },
+            }) => (
+              <InputPassword
+                onIonInput={onChange}
+                onIonBlur={onBlur}
+                disabled={isSubmitting}
+                helper={error?.message}
+                helperIsError
+                {...field}
+              />
+            )}
           />
 
           <Link

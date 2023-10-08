@@ -1,37 +1,34 @@
 import { IonCol, IonGrid, IonRow } from "@ionic/react";
-import { useFormik } from "formik";
+import { useRef } from "react";
+import { Controller, useForm } from "react-hook-form";
 import { BiEnvelope, BiUser } from "react-icons/bi";
 import { FcGoogle } from "react-icons/fc";
 
 import { Button } from "@/components/common/buttons/Button";
 import { Input } from "@/components/common/forms/Input";
 import { InputPassword } from "@/components/common/forms/InputPassword";
-import { getErrorMessage } from "@/helpers/getFormikErrorMsg";
 import { signUpSchema } from "@/helpers/validator/auth";
 import { useAuth } from "@/hooks/useAuth";
-import { TAuthSignupForm } from "@/types/TUser";
 import { useDocumentTitleApp } from "@/hooks/useDocumentTitle";
+import { TAuthSignupForm } from "@/types/TUser";
 import styles from "../Auth.module.css";
 
 export const Signup = () => {
   useDocumentTitleApp("Registrarse");
+  const formRef = useRef<HTMLFormElement>(null);
   const { handleSignup, handleSigninGoogle } = useAuth();
   const {
+    control,
     handleSubmit,
-    handleChange,
-    handleBlur,
-    values,
-    touched,
-    errors,
-    isSubmitting,
-  } = useFormik<TAuthSignupForm>({
-    initialValues: {
+    formState: { isSubmitting },
+  } = useForm<TAuthSignupForm>({
+    mode: "all",
+    defaultValues: {
       name: "",
       email: "",
       password: "",
     },
-    validationSchema: signUpSchema,
-    onSubmit: handleSignup,
+    resolver: signUpSchema,
   });
 
   return (
@@ -47,41 +44,68 @@ export const Signup = () => {
       </IonRow>
       <IonRow className={styles.formContainer}>
         <form
-          onSubmit={handleSubmit}
-          onKeyUp={(e) => e.key === "Enter" && handleSubmit()}
+          ref={formRef}
+          onSubmit={handleSubmit(handleSignup)}
+          onKeyUp={(e) => e.key === "Enter" && formRef.current?.requestSubmit()}
         >
-          <Input
-            placeholder="Nombre"
+          <Controller
+            control={control}
             name="name"
-            Icon={<BiUser />}
-            onIonInput={handleChange}
-            onIonBlur={handleBlur}
-            disabled={isSubmitting}
-            value={values.name}
-            helper={getErrorMessage("name", touched, errors)}
-            helperIsError
+            render={({
+              field: { onChange, onBlur, ...field },
+              fieldState: { error },
+            }) => (
+              <Input
+                placeholder="Nombre"
+                Icon={<BiUser />}
+                onIonInput={onChange}
+                onIonBlur={onBlur}
+                disabled={isSubmitting}
+                helper={error?.message}
+                helperIsError
+                {...field}
+              />
+            )}
           />
-          <Input
-            placeholder="Correo electrónico"
-            type="email"
+
+          <Controller
+            control={control}
             name="email"
-            inputmode="email"
-            Icon={<BiEnvelope />}
-            onIonInput={handleChange}
-            onIonBlur={handleBlur}
-            disabled={isSubmitting}
-            value={values.email}
-            helper={getErrorMessage("email", touched, errors)}
-            helperIsError
+            render={({
+              field: { onChange, onBlur, ...field },
+              fieldState: { error },
+            }) => (
+              <Input
+                placeholder="Correo electrónico"
+                type="email"
+                inputmode="email"
+                Icon={<BiEnvelope />}
+                onIonInput={onChange}
+                onIonBlur={onBlur}
+                disabled={isSubmitting}
+                helper={error?.message}
+                helperIsError
+                {...field}
+              />
+            )}
           />
-          <InputPassword
+
+          <Controller
+            control={control}
             name="password"
-            onIonInput={handleChange}
-            onIonBlur={handleBlur}
-            disabled={isSubmitting}
-            value={values.password}
-            helper={getErrorMessage("password", touched, errors)}
-            helperIsError
+            render={({
+              field: { onChange, onBlur, ...field },
+              fieldState: { error },
+            }) => (
+              <InputPassword
+                onIonInput={onChange}
+                onIonBlur={onBlur}
+                disabled={isSubmitting}
+                helper={error?.message}
+                helperIsError
+                {...field}
+              />
+            )}
           />
           <Button
             expand="block"

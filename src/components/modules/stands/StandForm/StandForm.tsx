@@ -1,6 +1,7 @@
 import { IonCol, IonGrid, IonRow } from "@ionic/react";
-import { FormikHelpers, useFormik } from "formik";
 import { parsePhoneNumberFromString } from "libphonenumber-js";
+import { useRef } from "react";
+import { Controller, useForm } from "react-hook-form";
 import { BiEnvelope, BiPhone } from "react-icons/bi";
 import { MdOutlineDescription, MdTitle } from "react-icons/md";
 import { TbMap2 } from "react-icons/tb";
@@ -8,8 +9,7 @@ import { TbMap2 } from "react-icons/tb";
 import { Button } from "@/components/common/buttons/Button";
 import { Input } from "@/components/common/forms/Input";
 import { TextArea } from "@/components/common/forms/TextArea";
-import { getErrorMessage } from "@/helpers/getFormikErrorMsg";
-import { newStandSchema } from "@/helpers/validator/stand";
+import { standSchema } from "@/helpers/validator/stand";
 import { TStandForm } from "@/types/TStand";
 import styles from "./StandForm.module.css";
 
@@ -21,10 +21,7 @@ export type ComponentProps = {
   /**
    * Handle save photo
    */
-  handleSave: (
-    values: TStandForm,
-    formikHelpers: FormikHelpers<TStandForm>
-  ) => void | Promise<void>;
+  handleSave: (values: TStandForm) => void | Promise<void>;
   /**
    * Form Loading
    */
@@ -32,94 +29,152 @@ export type ComponentProps = {
 };
 
 export const StandForm = ({ formValues, handleSave }: ComponentProps) => {
-  const { handleSubmit, handleChange, handleBlur, values, touched, errors } =
-    useFormik<TStandForm>({
-      enableReinitialize: true,
-      initialValues: formValues,
-      validationSchema: newStandSchema,
-      onSubmit: handleSave,
-    });
+  const formRef = useRef<HTMLFormElement>(null);
+  const {
+    control,
+    handleSubmit,
+    formState: { isSubmitting },
+  } = useForm<TStandForm>({
+    values: formValues,
+    resolver: standSchema,
+  });
 
   return (
-    <form className={styles.formStandContainer} onSubmit={handleSubmit}>
+    <form
+      ref={formRef}
+      onSubmit={handleSubmit(handleSave)}
+      onKeyUp={(e) => e.key === "Enter" && formRef.current?.requestSubmit()}
+      className={styles.formStandContainer}
+    >
       <IonGrid>
         <IonRow>
           <IonCol size="12">
-            <Input
-              placeholder="Nombre"
+            <Controller
+              control={control}
               name="name"
-              Icon={<MdTitle />}
-              onIonInput={handleChange}
-              onIonBlur={handleBlur}
-              value={values.name}
-              helper={getErrorMessage("name", touched, errors)}
-              helperIsError
+              render={({
+                field: { onChange, onBlur, ...field },
+                fieldState: { error },
+              }) => (
+                <Input
+                  placeholder="Nombre"
+                  Icon={<MdTitle />}
+                  onIonInput={onChange}
+                  onIonBlur={onBlur}
+                  disabled={isSubmitting}
+                  helper={error?.message}
+                  helperIsError
+                  {...field}
+                />
+              )}
             />
           </IonCol>
           <IonCol size="12" size-sm="6">
-            <Input
-              placeholder="Teléfono de contacto"
+            <Controller
+              control={control}
               name="contactPhone"
-              type="tel"
-              inputmode="tel"
-              Icon={<BiPhone />}
-              onIonInput={handleChange}
-              onIonBlur={handleBlur}
-              label="+58"
-              value={(
-                parsePhoneNumberFromString(values.contactPhone, "VE")
-                  ?.nationalNumber || values.contactPhone
-              ).slice(0, 10)}
-              helper={getErrorMessage("contactPhone", touched, errors)}
-              helperIsError
+              render={({
+                field: { onChange, onBlur, value, ...field },
+                fieldState: { error },
+              }) => (
+                <Input
+                  placeholder="Teléfono de contacto"
+                  type="tel"
+                  inputmode="tel"
+                  Icon={<BiPhone />}
+                  onIonInput={onChange}
+                  onIonBlur={onBlur}
+                  label="+58"
+                  value={(
+                    parsePhoneNumberFromString(value, "VE")?.nationalNumber ||
+                    value
+                  ).slice(0, 10)}
+                  disabled={isSubmitting}
+                  helper={error?.message}
+                  helperIsError
+                  {...field}
+                />
+              )}
             />
           </IonCol>
           <IonCol size="12" size-sm="6">
-            <Input
-              placeholder="Correo electrónico de contacto"
+            <Controller
+              control={control}
               name="contactEmail"
-              type="email"
-              inputmode="email"
-              Icon={<BiEnvelope />}
-              onIonInput={handleChange}
-              onIonBlur={handleBlur}
-              value={values.contactEmail}
-              helper={getErrorMessage("contactEmail", touched, errors)}
-              helperIsError
+              render={({
+                field: { onChange, onBlur, ...field },
+                fieldState: { error },
+              }) => (
+                <Input
+                  placeholder="Correo electrónico de contacto"
+                  type="email"
+                  inputmode="email"
+                  Icon={<BiEnvelope />}
+                  onIonInput={onChange}
+                  onIonBlur={onBlur}
+                  disabled={isSubmitting}
+                  helper={error?.message}
+                  helperIsError
+                  {...field}
+                />
+              )}
             />
           </IonCol>
           <IonCol size="12" size-sm="6">
-            <TextArea
-              placeholder="Descripción"
+            <Controller
+              control={control}
               name="description"
-              Icon={<MdOutlineDescription />}
-              onIonInput={handleChange}
-              onIonBlur={handleBlur}
-              value={values.description}
-              helper={getErrorMessage("description", touched, errors)}
-              className={styles.formStandTextArea}
-              maxlength={500}
-              helperIsError
+              render={({
+                field: { onChange, onBlur, ...field },
+                fieldState: { error },
+              }) => (
+                <TextArea
+                  placeholder="Descripción"
+                  Icon={<MdOutlineDescription />}
+                  onIonInput={onChange}
+                  onIonBlur={onBlur}
+                  disabled={isSubmitting}
+                  className={styles.formStandTextArea}
+                  maxlength={500}
+                  helper={error?.message}
+                  helperIsError
+                  {...field}
+                />
+              )}
             />
           </IonCol>
           <IonCol size="12" size-sm="6">
-            <TextArea
-              placeholder="Slogan"
+            <Controller
+              control={control}
               name="slogan"
-              Icon={<TbMap2 />}
-              onIonInput={handleChange}
-              onIonBlur={handleBlur}
-              value={values.slogan}
-              helper={getErrorMessage("slogan", touched, errors)}
-              maxlength={500}
-              className={styles.formStandTextArea}
-              helperIsError
+              render={({
+                field: { onChange, onBlur, ...field },
+                fieldState: { error },
+              }) => (
+                <TextArea
+                  placeholder="Slogan"
+                  Icon={<TbMap2 />}
+                  onIonInput={onChange}
+                  onIonBlur={onBlur}
+                  disabled={isSubmitting}
+                  className={styles.formStandTextArea}
+                  maxlength={500}
+                  helper={error?.message}
+                  helperIsError
+                  {...field}
+                />
+              )}
             />
           </IonCol>
         </IonRow>
         <IonRow className={styles.formStandNextRow}>
           <IonCol size="12" size-sm="6">
-            <Button expand="block" color="primary" type="submit">
+            <Button
+              expand="block"
+              color="primary"
+              type="submit"
+              isLoading={isSubmitting}
+            >
               Guardar
             </Button>
           </IonCol>

@@ -6,7 +6,7 @@ import {
   IonNote,
 } from "@ionic/react";
 import { DatetimeChangeEventDetail, IonDatetimeCustomEvent } from "@ionic/core";
-import { useState } from "react";
+import { forwardRef, useState } from "react";
 
 import { TInputHelpers } from "@/types/TComponents";
 import styles from "./Datetime.module.css";
@@ -39,58 +39,64 @@ export type ComponentProps = typeof IonInput.defaultProps &
     datetimeProps?: typeof IonDatetime.defaultProps;
   };
 
-export const Datetime = ({
-  Icon,
-  helper,
-  helperIsError,
-  onSetValue,
-  modalProps,
-  datetimeProps,
-  ...rest
-}: ComponentProps) => {
-  const [open, setOpen] = useState(false);
+export const Datetime = forwardRef<HTMLIonDatetimeElement, ComponentProps>(
+  function (
+    {
+      Icon,
+      helper,
+      helperIsError,
+      onSetValue,
+      modalProps,
+      datetimeProps,
+      ...rest
+    }: ComponentProps,
+    ref
+  ) {
+    const [open, setOpen] = useState(false);
 
-  const handleChange = (
-    e: IonDatetimeCustomEvent<DatetimeChangeEventDetail>
-  ) => {
-    if (onSetValue) {
-      e.target.name = rest.name || "";
-      onSetValue(e);
-      setOpen(false);
-    }
-  };
+    const handleChange = (
+      e: IonDatetimeCustomEvent<DatetimeChangeEventDetail>
+    ) => {
+      if (onSetValue) {
+        e.target.name = rest.name || "";
+        onSetValue(e);
+        setOpen(false);
+      }
+    };
 
-  return (
-    <IonItem
-      fill="outline"
-      className={`inputItem  ${Icon ? "inputWithIcon" : ""}`}
-    >
-      {Icon && (
-        <span slot="start" className="slotIconStart">
-          {Icon}
-        </span>
-      )}
-      <IonInput {...rest} onClick={() => setOpen(true)} />
-
-      <IonNote slot={helperIsError ? "error" : "helper"}>{helper}</IonNote>
-
-      <IonModal
-        {...modalProps}
-        isOpen={open}
-        className={`${styles.datetimeModal} ${modalProps?.className}`}
-        onDidDismiss={() => setOpen(false)}
-        canDismiss
-        backdropDismiss
+    return (
+      <IonItem
+        fill="outline"
+        className={`inputItem  ${Icon ? "inputWithIcon" : ""}`}
       >
-        <IonDatetime
-          {...datetimeProps}
-          showDefaultButtons
-          doneText="Aceptar"
-          cancelText="Cancelar"
-          onIonChange={handleChange}
-          onIonCancel={() => setOpen(false)}
-        />
-      </IonModal>
-    </IonItem>
-  );
-};
+        {Icon && (
+          <span slot="start" className="slotIconStart">
+            {Icon}
+          </span>
+        )}
+        <IonInput {...rest} onClick={() => setOpen(true)} />
+
+        <IonNote slot={helperIsError ? "error" : "helper"}>{helper}</IonNote>
+
+        <IonModal
+          {...modalProps}
+          isOpen={open}
+          className={`${styles.datetimeModal} ${modalProps?.className}`}
+          onDidDismiss={() => setOpen(false)}
+          canDismiss
+          backdropDismiss
+        >
+          <IonDatetime
+            ref={ref}
+            {...datetimeProps}
+            showDefaultButtons
+            doneText="Aceptar"
+            cancelText="Cancelar"
+            onIonChange={handleChange}
+            onIonCancel={() => setOpen(false)}
+          />
+        </IonModal>
+      </IonItem>
+    );
+  }
+);

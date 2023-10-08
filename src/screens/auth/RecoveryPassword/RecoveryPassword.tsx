@@ -1,11 +1,11 @@
 import { IonCol, IonGrid, IonRow } from "@ionic/react";
-import { useFormik } from "formik";
+import { useRef } from "react";
+import { Controller, useForm } from "react-hook-form";
 import { BiEnvelope } from "react-icons/bi";
 import { Link } from "react-router-dom";
 
 import { Button } from "@/components/common/buttons/Button";
 import { Input } from "@/components/common/forms/Input";
-import { getErrorMessage } from "@/helpers/getFormikErrorMsg";
 import { recoveryPasswordSchema } from "@/helpers/validator/auth";
 import { useDocumentTitleApp } from "@/hooks/useDocumentTitle";
 import { useRecoveryPassword } from "@/hooks/useRecoveryPassword";
@@ -15,21 +15,17 @@ import styles from "../Auth.module.css";
 
 export const RecoveryPassword = () => {
   useDocumentTitleApp("Recuperar contraseña");
+  const formRef = useRef<HTMLFormElement>(null);
   const { handleRecoveryPassword, isLoading } = useRecoveryPassword();
   const {
+    control,
     handleSubmit,
-    handleChange,
-    handleBlur,
-    values,
-    touched,
-    errors,
-    isSubmitting,
-  } = useFormik<TRecoverPassword>({
-    initialValues: {
+    formState: { isSubmitting },
+  } = useForm<TRecoverPassword>({
+    defaultValues: {
       email: "",
     },
-    validationSchema: recoveryPasswordSchema,
-    onSubmit: handleRecoveryPassword,
+    resolver: recoveryPasswordSchema,
   });
 
   return (
@@ -48,21 +44,30 @@ export const RecoveryPassword = () => {
       </IonRow>
       <IonRow className={styles.formContainer}>
         <form
-          onSubmit={handleSubmit}
-          onKeyUp={(e) => e.key === "Enter" && handleSubmit()}
+          ref={formRef}
+          onSubmit={handleSubmit(handleRecoveryPassword)}
+          onKeyUp={(e) => e.key === "Enter" && formRef.current?.requestSubmit()}
         >
-          <Input
-            placeholder="Correo electrónico"
-            type="email"
+          <Controller
+            control={control}
             name="email"
-            inputmode="email"
-            Icon={<BiEnvelope />}
-            onIonInput={handleChange}
-            onIonBlur={handleBlur}
-            disabled={isSubmitting || isLoading}
-            value={values.email}
-            helper={getErrorMessage("email", touched, errors)}
-            helperIsError
+            render={({
+              field: { onChange, onBlur, ...field },
+              fieldState: { error },
+            }) => (
+              <Input
+                placeholder="Correo electrónico"
+                type="email"
+                inputmode="email"
+                Icon={<BiEnvelope />}
+                onIonInput={onChange}
+                onIonBlur={onBlur}
+                disabled={isSubmitting || isLoading}
+                helper={error?.message}
+                helperIsError
+                {...field}
+              />
+            )}
           />
           <Button
             expand="block"

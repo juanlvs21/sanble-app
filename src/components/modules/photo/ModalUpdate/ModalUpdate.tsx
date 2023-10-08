@@ -5,7 +5,7 @@ import {
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
-import { FormikHelpers } from "formik";
+import { UseFormReset } from "react-hook-form";
 import { AiOutlineClose } from "react-icons/ai";
 import { useState } from "react";
 
@@ -30,7 +30,7 @@ export type ComponentProps = {
    */
   handleSave: (
     values: TPhotographForm,
-    formikHelpers: FormikHelpers<TPhotographForm>
+    reset: UseFormReset<TPhotographForm>
   ) => void | Promise<any>;
   /**
    * Handle close modal

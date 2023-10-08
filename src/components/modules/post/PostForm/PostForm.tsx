@@ -1,20 +1,19 @@
 import { Camera, CameraResultType } from "@capacitor/camera";
 import { IonNote, useIonAlert } from "@ionic/react";
-import { FormikHelpers, useFormik } from "formik";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { FileUploader } from "react-drag-drop-files";
-import { MdOutlineAddPhotoAlternate } from "react-icons/md";
+import { Controller, UseFormReset, useForm } from "react-hook-form";
 import { HiOutlineTrash } from "react-icons/hi";
+import { MdOutlineAddPhotoAlternate } from "react-icons/md";
 
 import { Button } from "@/components/common/buttons/Button";
 import { TextArea } from "@/components/common/forms/TextArea";
 import { base64StringToBlob } from "@/helpers/file";
-import { getErrorMessage } from "@/helpers/getFormikErrorMsg";
 import { postSchema } from "@/helpers/validator/posts";
 import { useApp } from "@/hooks/useApp";
+import { useToast } from "@/hooks/useToast";
 import { TPost, TPostForm } from "@/types/TPost";
 import styles from "./PostForm.module.css";
-import { useToast } from "@/hooks/useToast";
 
 const dropMessageStyle = {
   backgroundColor: "var(--sanble-gray-color-1)",
@@ -28,7 +27,7 @@ export type ComponentProps = {
    */
   handleSave: (
     values: TPostForm,
-    formikHelpers: FormikHelpers<TPostForm>
+    reset: UseFormReset<TPostForm>
   ) => void | Promise<any>;
   /**
    * Post data for edit
@@ -74,31 +73,28 @@ export const PostForm = ({
   const [presentAlert] = useIonAlert();
   const { toast } = useToast();
   const { isCapacitor } = useApp();
+  const formRef = useRef<HTMLFormElement>(null);
   const [errorFile, setErrorFile] = useState("");
   const [errorCamera, setErrorCamera] = useState(false);
 
   const {
+    control,
     handleSubmit,
-    handleChange,
-    handleBlur,
-    setFieldValue,
-    values,
-    touched,
-    errors,
-    isSubmitting,
-  } = useFormik<TPostForm>({
-    enableReinitialize: true,
-    initialValues: {
+    setValue,
+    reset,
+    watch,
+    formState: { isSubmitting, errors },
+  } = useForm<TPostForm>({
+    values: {
       id: post?.id ?? undefined,
       text: post?.text ?? "",
       image: undefined,
     },
-    validationSchema: postSchema,
-    onSubmit: handleSave,
+    resolver: postSchema,
   });
 
   const handleChangeFile = (file: any) => {
-    setFieldValue("image", file);
+    setValue("image", file);
   };
 
   const handleFileErrorType = () =>
@@ -135,7 +131,7 @@ export const PostForm = ({
           type: blob.type,
         });
 
-        setFieldValue("image", file);
+        setValue("image", file);
       }
     } catch (error) {
       console.error({ error });
@@ -158,26 +154,41 @@ export const PostForm = ({
             toast("La imagen ha sido eliminada", {
               type: "info",
             });
-            setFieldValue("image", undefined);
+            setValue("image", undefined);
           },
         },
       ],
     });
   };
 
+  const valueImage = watch("image");
+
   return (
-    <form onSubmit={handleSubmit} className={`${styles.postForm} ${className}`}>
-      <TextArea
-        placeholder="¿Que quieres compartir?"
+    <form
+      ref={formRef}
+      onSubmit={handleSubmit((values) => handleSave(values, reset))}
+      onKeyUp={(e) => e.key === "Enter" && formRef.current?.requestSubmit()}
+      className={`${styles.postForm} ${className}`}
+    >
+      <Controller
+        control={control}
         name="text"
-        onIonInput={handleChange}
-        onIonBlur={handleBlur}
-        disabled={isSubmitting || isLoading}
-        value={values.text}
-        helper={getErrorMessage("text", touched, errors)}
-        className={styles.postFormInput}
-        maxlength={500}
-        helperIsError
+        render={({
+          field: { onChange, onBlur, ...field },
+          fieldState: { error },
+        }) => (
+          <TextArea
+            placeholder="¿Que quieres compartir?"
+            onIonInput={onChange}
+            onIonBlur={onBlur}
+            disabled={isSubmitting || isLoading}
+            helper={error?.message}
+            className={styles.postFormInput}
+            maxlength={500}
+            helperIsError
+            {...field}
+          />
+        )}
       />
 
       <section className={`${styles.postFormFileContainer}`}>
@@ -188,7 +199,7 @@ export const PostForm = ({
               onClick={handleOpenCamera}
             >
               <div className={`${styles.postFormFile}`}>
-                {post?.fileUrl && !values.image && (
+                {post?.fileUrl && !valueImage && (
                   <img
                     src={post?.fileUrl}
                     alt="Imagen Actual"
@@ -198,8 +209,8 @@ export const PostForm = ({
                 <MdOutlineAddPhotoAlternate size={32} />
                 <div className={`${styles.postFormFileDescription}`}>
                   <p>
-                    {values.image
-                      ? (values.image as any).name
+                    {valueImage
+                      ? (valueImage as any).name
                       : "Elija una imagen de su Galería o use su Cámara"}
                   </p>
                 </div>
@@ -229,7 +240,7 @@ export const PostForm = ({
                 }}
               >
                 <div className={`${styles.postFormFile}`}>
-                  {post?.fileUrl && !values.image && (
+                  {post?.fileUrl && !valueImage && (
                     <img
                       src={post?.fileUrl}
                       alt="Imagen Actual"
@@ -239,12 +250,12 @@ export const PostForm = ({
                   <MdOutlineAddPhotoAlternate size={32} />
                   <div className={`${styles.postFormFileDescription}`}>
                     <p>
-                      {values.image
-                        ? (values.image as any).name
+                      {valueImage
+                        ? (valueImage as any).name
                         : "Haga clic o arrastre y suelte una imagen aquí"}
                     </p>
                     <small>
-                      {values.image
+                      {valueImage
                         ? "Haga clic o arrastre y suelte una imagen aquí para reemplazar por otra"
                         : `Máximo ${fileMaxSize}mb | Tipos de archivos permitidos ${fileTypes.join(
                             ", "
@@ -257,13 +268,12 @@ export const PostForm = ({
             <IonNote className={styles.postFormFileError}>
               {errorFile
                 ? errorFile
-                : getErrorMessage("image", touched, errors) &&
-                  getErrorMessage("image", touched, errors)}
+                : errors.image?.message && errors.image?.message}
             </IonNote>
           </>
         )}
 
-        {values.image && (
+        {valueImage && (
           <div
             className={`animate__animated animate__fadeIn ${styles.postFormFileDeleteBtnContainer}`}
           >

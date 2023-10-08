@@ -1,8 +1,9 @@
+import { useIonAlert, useIonLoading } from "@ionic/react";
 import { RefObject, useEffect, useState } from "react";
+import { UseFormReset } from "react-hook-form";
 import { SwiperRef } from "swiper/react";
 import useSWR from "swr";
 import useSWRImmutable from "swr/immutable";
-import { useIonAlert, useIonLoading } from "@ionic/react";
 
 import { infiteScrollData } from "@/helpers/infiniteScrollData";
 import { useToast } from "@/hooks/useToast";
@@ -17,9 +18,8 @@ import {
 } from "@/services";
 import { TPagination } from "@/types/THttp";
 import { TPhotograph } from "@/types/TPhotograph";
-import { TReview, TReviewForm } from "@/types/TReview";
 import { TPost, TPostForm } from "@/types/TPost";
-import { FormikHelpers } from "formik";
+import { TReview, TReviewForm } from "@/types/TReview";
 
 const DEFAULT_LAST_INDEX_LIST = 0;
 const DEFAULT_LIMIT_LIST = 10;
@@ -176,7 +176,7 @@ export const useFairDetails = (
 
   const handleSavePost = async (
     data: TPostForm,
-    formikHelpers: FormikHelpers<TPostForm>
+    reset: UseFormReset<TPostForm>
   ) => {
     try {
       setIsSavingPost(true);
@@ -188,7 +188,7 @@ export const useFairDetails = (
 
       await saveFairPostRequest(fairID, formData);
 
-      formikHelpers.resetForm();
+      reset();
 
       toast("Información publicada con éxito", { type: "success" });
 
@@ -269,7 +269,7 @@ export const useFairDetails = (
 
   const handleUpdatePost = async (
     data: TPostForm,
-    formikHelpers: FormikHelpers<TPostForm>,
+    reset: UseFormReset<TPostForm>,
     dismissModal: () => void
   ) => {
     try {
@@ -283,7 +283,7 @@ export const useFairDetails = (
 
         await updateFairPostRequest(fairID, data.id, formData);
 
-        formikHelpers.resetForm();
+        reset();
 
         toast("Información editada con éxito", { type: "success" });
 

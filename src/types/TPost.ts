@@ -12,5 +12,5 @@ export type TPost = {
 
 export type TPostForm = Pick<TPost, "text"> &
   Partial<Pick<TPost, "id">> & {
-    image?: string;
+    image?: string | File;
   };

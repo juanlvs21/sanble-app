@@ -1,16 +1,15 @@
 import { Camera, CameraResultType } from "@capacitor/camera";
 import { IonCheckboxCustomEvent } from "@ionic/core";
 import { CheckboxChangeEventDetail, IonNote } from "@ionic/react";
-import { FormikHelpers, useFormik } from "formik";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { FileUploader } from "react-drag-drop-files";
+import { Controller, UseFormReset, useForm } from "react-hook-form";
 import { MdOutlineAddPhotoAlternate } from "react-icons/md";
 
 import { Button } from "@/components/common/buttons/Button";
 import { Checkbox } from "@/components/common/forms/Checkbox";
 import { TextArea } from "@/components/common/forms/TextArea";
 import { base64StringToBlob } from "@/helpers/file";
-import { getErrorMessage } from "@/helpers/getFormikErrorMsg";
 import { photoSchema } from "@/helpers/validator/photo";
 import { useApp } from "@/hooks/useApp";
 import { TPhotograph, TPhotographForm } from "@/types/TPhotograph";
@@ -32,7 +31,7 @@ export type ComponentProps = {
    */
   handleSave: (
     values: TPhotographForm,
-    formikHelpers: FormikHelpers<TPhotographForm>
+    reset: UseFormReset<TPhotographForm>
   ) => void | Promise<void>;
   /**
    * Allowed file types in the file input
@@ -72,37 +71,33 @@ export const PhotoForm = ({
   fileMaxSize = 10,
 }: ComponentProps) => {
   const { isCapacitor } = useApp();
+  const formRef = useRef<HTMLFormElement>(null);
   const [errorFile, setErrorFile] = useState("");
   const [errorCamera, setErrorCamera] = useState(false);
   const [reviewSrc, setReviewSrc] = useState(photo?.url ?? "");
   const {
+    control,
     handleSubmit,
-    handleChange,
-    handleBlur,
-    setFieldValue,
-    values,
-    touched,
-    errors,
-    isSubmitting,
-  } = useFormik<TPhotographForm>({
-    enableReinitialize: true,
-    initialValues: {
+    setValue,
+    reset,
+    formState: { isSubmitting, errors },
+  } = useForm<TPhotographForm>({
+    values: {
       id: photo?.id ?? "",
       description: photo?.description ?? "",
       image: "",
       isCover: photo?.isCover || false,
     },
-    validationSchema: photoSchema,
-    onSubmit: handleSave,
+    resolver: photoSchema,
   });
 
   const handleChangeCheck = (
     event: IonCheckboxCustomEvent<CheckboxChangeEventDetail>
-  ) => setTimeout(() => setFieldValue("isCover", event.detail.checked), 100);
+  ) => setTimeout(() => setValue("isCover", event.detail.checked), 100);
 
   const handleChangeFile = (file: any) => {
     setReviewSrc("");
-    setFieldValue("image", file);
+    setValue("image", file);
     setTimeout(() => setReviewSrc(URL.createObjectURL(file)), 100);
   };
 
@@ -140,7 +135,7 @@ export const PhotoForm = ({
           type: blob.type,
         });
 
-        setFieldValue("image", file);
+        setValue("image", file);
         setReviewSrc(URL.createObjectURL(blob));
       }
     } catch (error) {
@@ -151,9 +146,10 @@ export const PhotoForm = ({
 
   return (
     <form
+      ref={formRef}
+      onSubmit={handleSubmit((values) => handleSave(values, reset))}
+      onKeyUp={(e) => e.key === "Enter" && formRef.current?.requestSubmit()}
       className={`${styles.photoFormContainer} ${className}`}
-      onSubmit={handleSubmit}
-      onKeyUp={(e) => e.key === "Enter" && handleSubmit()}
     >
       {!photo && (
         <section className={`${styles.photoFormFileSection}`}>
@@ -228,35 +224,51 @@ export const PhotoForm = ({
               <IonNote className={styles.photoFormFileError}>
                 {errorFile
                   ? errorFile
-                  : getErrorMessage("image", touched, errors) &&
-                    getErrorMessage("image", touched, errors)}
+                  : errors.image?.message && errors.image?.message}
               </IonNote>
             </>
           )}
         </section>
       )}
       <section>
-        <TextArea
-          placeholder="Descripción"
+        <Controller
+          control={control}
           name="description"
-          onIonInput={handleChange}
-          onIonBlur={handleBlur}
-          disabled={isSubmitting}
-          value={values.description}
-          helper={getErrorMessage("description", touched, errors)}
-          maxlength={500}
-          className={styles.photoFormTextarea}
-          helperIsError
+          render={({
+            field: { onChange, onBlur, ...field },
+            fieldState: { error },
+          }) => (
+            <TextArea
+              placeholder="Descripción"
+              onIonInput={onChange}
+              onIonBlur={onBlur}
+              disabled={isSubmitting}
+              maxlength={500}
+              className={styles.photoFormTextarea}
+              helper={error?.message}
+              helperIsError
+              {...field}
+            />
+          )}
         />
-        <Checkbox
-          label="Fotografía de perfil"
+        <Controller
+          control={control}
           name="isCover"
-          onIonChange={handleChangeCheck}
-          onIonBlur={handleBlur}
-          disabled={isSubmitting}
-          checked={values.isCover}
-          helper={getErrorMessage("isCover", touched, errors)}
-          helperIsError
+          render={({
+            field: { onBlur, value, ...field },
+            fieldState: { error },
+          }) => (
+            <Checkbox
+              label="Fotografía de perfil"
+              onIonChange={handleChangeCheck}
+              onIonBlur={onBlur}
+              disabled={isSubmitting}
+              checked={Boolean(value)}
+              helper={error?.message}
+              helperIsError
+              {...field}
+            />
+          )}
         />
         <Button
           expand="block"
