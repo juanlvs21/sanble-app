@@ -4,12 +4,19 @@ import { HiOutlineKey, HiOutlineEye, HiOutlineEyeOff } from "react-icons/hi";
 
 import { TInputHelpers } from "@/types/TComponents";
 
-export type ComponentProps = typeof IonInput.defaultProps & TInputHelpers;
+export type ComponentProps = typeof IonInput.defaultProps &
+  TInputHelpers & {
+    /**
+     * ClassName item css
+     */
+    classNameItem?: string;
+  };
 
 export const InputPassword = ({
   placeholder = "Contraseña",
   helper,
   helperIsError,
+  classNameItem = "",
   ...rest
 }: ComponentProps) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -17,7 +24,10 @@ export const InputPassword = ({
   const toggleShowPassword = () => setShowPassword(!showPassword);
 
   return (
-    <IonItem fill="outline" className="inputItem inputWithIcon">
+    <IonItem
+      fill="outline"
+      className={`inputItem inputWithIcon ${classNameItem}`}
+    >
       <span slot="start" className="slotIconStart">
         <HiOutlineKey />
       </span>

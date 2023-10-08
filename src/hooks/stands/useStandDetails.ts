@@ -1,8 +1,9 @@
+import { useIonAlert, useIonLoading } from "@ionic/react";
 import { FormikHelpers } from "formik";
 import { RefObject, useEffect, useState } from "react";
+import { UseFormReset } from "react-hook-form";
 import { SwiperRef } from "swiper/react";
 import useSWR from "swr";
-import { useIonAlert, useIonLoading } from "@ionic/react";
 
 import { infiteScrollData } from "@/helpers/infiniteScrollData";
 import { useToast } from "@/hooks/useToast";
@@ -18,6 +19,7 @@ import {
 import { TPagination } from "@/types/THttp";
 import { TPhotograph } from "@/types/TPhotograph";
 import { TPost, TPostForm } from "@/types/TPost";
+import { TProductForm } from "@/types/TProduct";
 import { TReview, TReviewForm } from "@/types/TReview";
 
 const DEFAULT_LAST_INDEX_LIST = 0;
@@ -36,6 +38,7 @@ export const useStandDetails = (
   const [isSaving, setIsSaving] = useState(false);
   const [isUpdatingPost, setIsUpdatingPost] = useState(false);
   const [isSavingPost, setIsSavingPost] = useState(false);
+  const [isSavingProduct, setIsSavingProduct] = useState(false);
   const [isRefresh, setIsRefresh] = useState(false);
   const [isLoadMoreReviews, setIsLoadMoreReviews] = useState(false);
   const [activePhoto, setActivePhoto] = useState<TPhotograph>();
@@ -278,6 +281,41 @@ export const useStandDetails = (
     });
   };
 
+  const handleSaveProduct = async (
+    data: TProductForm,
+    reset: UseFormReset<TProductForm>
+  ) => {
+    try {
+      setIsSavingProduct(true);
+
+      const formData = new FormData();
+
+      formData.append("description", data.description);
+      formData.append("amount", data.amount);
+      formData.append("currency", data.currency);
+      if (data.type) formData.append("type", data.type);
+      if (data.image) formData.append("image", data.image);
+
+      // await saveStandPostRequest(standID, formData);
+
+      reset();
+
+      toast("Producto guardado con éxito", { type: "success" });
+
+      // setPaginationPosts({
+      //   lastIndex: DEFAULT_LAST_INDEX_LIST,
+      //   limit: DEFAULT_LIMIT_LIST,
+      //   total: 0,
+      // });
+
+      // setIsRefresh(true);
+    } catch (error) {
+      toast(error, { type: "error" });
+    } finally {
+      setIsSavingProduct(false);
+    }
+  };
+
   const handleLoadAll = async () => {
     setPaginationReviews({
       lastIndex: DEFAULT_LAST_INDEX_LIST,
@@ -329,6 +367,7 @@ export const useStandDetails = (
     posts,
     isSaving,
     isSavingPost,
+    isSavingProduct,
     isUpdatingPost,
     isLoadingDetails,
     isLoadingReviews,
@@ -350,6 +389,7 @@ export const useStandDetails = (
     handleSavePost,
     handleUpdatePost,
     handleDeletePost,
+    handleSaveProduct,
     handleLoadDetails: mutateDetails,
     getIndexPhoto,
   };

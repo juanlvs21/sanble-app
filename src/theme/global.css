@@ -286,6 +286,10 @@ ion-segment-button {
   font-size: 18px;
 }
 
+ion-segment-button::before {
+  border: none;
+}
+
 /* List Data */
 .dataListContainer {
   display: grid;

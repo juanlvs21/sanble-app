@@ -1,4 +1,5 @@
 import { IonFab, IonFabButton, IonFabList } from "@ionic/react";
+import { useEffect } from "react";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import { BiStoreAlt } from "react-icons/bi";
 import { FiEdit2 } from "react-icons/fi";
@@ -6,13 +7,8 @@ import { HiOutlinePhotograph, HiOutlineShoppingBag } from "react-icons/hi";
 import { IoIosArrowUp } from "react-icons/io";
 import { MdOutlineStorefront } from "react-icons/md";
 import { TiStar } from "react-icons/ti";
-import {
-  Link,
-  useLocation,
-  useNavigate,
-  useParams,
-  useSearchParams,
-} from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
+import { useBoolean } from "usehooks-ts";
 
 import { ButtonFav } from "@/components/common/buttons/ButtonFav";
 import { Fetcher } from "@/components/common/Fetcher";
@@ -25,9 +21,11 @@ import { ReviewsList } from "@/components/modules/reviews/ReviewsList";
 import { getNavStateText } from "@/helpers/navigation";
 import { useStandDetails } from "@/hooks/stands/useStandDetails";
 // import { useFairStands } from "@/hooks/fairs/useFairStands";
+import { Button } from "@/components/common/buttons/Button";
 import { SegmentDetails } from "@/components/common/SegmentDetails";
 import { PostForm } from "@/components/modules/post/PostForm";
 import { PostList } from "@/components/modules/post/PostList";
+import { ProductForm } from "@/components/modules/products/ProductForm";
 import { useApp } from "@/hooks/useApp";
 import { useDocumentTitleApp } from "@/hooks/useDocumentTitle";
 import { useScrollTo } from "@/hooks/useScrollTo";
@@ -46,7 +44,6 @@ const SEGMENT_ITEMS = ["Publicaciónes", "Opiniones"];
 
 export const StandDetails = () => {
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
   const { standID } = useParams<TRouteParams>();
   const { state } = useLocation();
   const { renderTopBarActionEnd } = useTopBarMain();
@@ -54,12 +51,19 @@ export const StandDetails = () => {
   const finalStandID = standID || state?.standID || "";
   const { user, isLoading: loadingSetFav, handleSetFavoriteStand } = useUser();
   const {
+    value: showModalProductForm,
+    toggle: toggleModalProductForm,
+    setFalse: setFalseModalProductForm,
+  } = useBoolean();
+
+  const {
     stand,
     review,
     reviews,
     posts,
     isSaving,
     isSavingPost,
+    isSavingProduct,
     isUpdatingPost,
     isLoadingDetails,
     isLoadingReviews,
@@ -74,6 +78,7 @@ export const StandDetails = () => {
     handleLoadAll,
     handleSaveReview,
     handleSavePost,
+    handleSaveProduct,
     handleLoadMoreReviews,
   } = useStandDetails(finalStandID);
   const { scrollRef, scrollKey } = useScrollTo({
@@ -91,6 +96,10 @@ export const StandDetails = () => {
       "Feria"
     } 🛍️`
   );
+
+  useEffect(() => {
+    setFalseModalProductForm();
+  }, [segmentValue]);
 
   return (
     <>
@@ -206,16 +215,15 @@ export const StandDetails = () => {
                   <h5>Fotos</h5>
                 </div>
               </Link>
-              <Link to={`${ERoutesName.FAIRS_LIST}/${stand?.id}/productos`}>
-                <div
-                  className={`${styles.standInfoCard} ${
-                    isLoadingDetails ? styles.isLoading : ""
-                  }`}
-                >
-                  <HiOutlineShoppingBag size={35} />
-                  <h5>Productos</h5>
-                </div>
-              </Link>
+              <div
+                className={`${styles.standInfoCard} ${
+                  isLoadingDetails ? styles.isLoading : ""
+                }`}
+                onClick={toggleModalProductForm}
+              >
+                <HiOutlineShoppingBag size={35} />
+                <h5>Productos</h5>
+              </div>
               <div
                 className={`${styles.standInfoCard} ${
                   isLoadingDetails ? styles.isLoading : ""
@@ -239,11 +247,8 @@ export const StandDetails = () => {
                 className={`${styles.standFormContainer} animate__animated animate__fadeIn`}
               >
                 {user?.uid === stand?.owner.uid && (
-                  <h3>Hacer una publicación</h3>
-                )}
-
-                {user?.uid === stand?.owner.uid && (
                   <>
+                    <h3>Hacer una publicación</h3>
                     <p>Comparte información con tu público</p>
 
                     <PostForm
@@ -330,6 +335,13 @@ export const StandDetails = () => {
         trigger={MODAL_INFO_ID}
         contactPhone={stand?.contactPhone}
         contactEmail={stand?.contactEmail}
+      />
+
+      <ProductForm
+        showModal={showModalProductForm}
+        toggleModal={toggleModalProductForm}
+        handleSave={handleSaveProduct}
+        isLoading={isSavingProduct || isLoadingDetails}
       />
     </>
   );

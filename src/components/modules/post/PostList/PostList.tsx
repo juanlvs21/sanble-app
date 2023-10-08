@@ -93,7 +93,7 @@ export const PostList = ({
   scrollRef,
 }: ComponentProps) => {
   const [present] = useIonActionSheet();
-  const { value: showModalUpate, toggle: toggleModalUpdate } = useBoolean();
+  const { value: showModalUpdate, toggle: toggleModalUpdate } = useBoolean();
   const [postUpdate, setPostUpdate] = useState<TPost>();
 
   const handleOpenMenu = (post: TPost) => {
@@ -181,7 +181,7 @@ export const PostList = ({
         />
       )}
 
-      <IonModal isOpen={showModalUpate}>
+      <IonModal isOpen={showModalUpdate}>
         <HeaderModal>
           <IonToolbar>
             <IonTitle>Editar Publicación</IonTitle>

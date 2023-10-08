@@ -1,0 +1,95 @@
+.productFormModalContent {
+  --padding-top: 30px;
+  --padding-bottom: 50px;
+  --padding-end: 30px;
+  --padding-start: 30px;
+}
+
+.productFormModalClose {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.productFormInputDescription::part(native),
+.productFormInputDescription textarea {
+  height: 150px !important;
+}
+
+.productFormFileContainer {
+  position: relative;
+  min-height: 64px;
+  margin-bottom: 20px;
+}
+
+.productFormFile {
+  display: flex;
+  align-items: center;
+  min-height: 64px;
+  padding: 5px 15px;
+  border-radius: var(--sanble-border-radius);
+  border: 2px dashed var(--sanble-gray-color-1);
+}
+
+.productFormFileDescription {
+  margin-left: 20px;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-right: 40px;
+}
+
+.productFormFileDescription p {
+  margin: 0;
+  color: var(--ion-text-color);
+  font-size: 16px;
+}
+
+.productFormFileDeleteBtnContainer {
+  position: absolute;
+  top: 0;
+  right: 10px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.productFormFileDeleteBtn {
+  --padding-bottom: 0;
+  --padding-end: 0;
+  --padding-start: 0;
+  --padding-top: 0;
+}
+
+.productFormFileDeleteBtn::part(native) {
+  width: 30px;
+  height: 30px;
+}
+
+.productFormFileError {
+  font-size: 12px;
+  color: var(--ion-color-danger);
+}
+
+.productFormFileInfo {
+  font-size: 12px;
+  color: var(--sanble-gray-color-1);
+}
+
+.productFormOldImg {
+  width: 30px;
+  height: 30px;
+  object-fit: cover;
+  border-radius: var(--sanble-border-radius);
+  margin-right: 10px;
+}
+
+.productFormAmountContainer {
+  display: flex;
+  gap: 20px;
+}
+
+.productFormAmountContainer .productFormCurrency {
+  width: 150px;
+}

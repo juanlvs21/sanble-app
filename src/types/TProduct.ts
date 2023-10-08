@@ -1,3 +1,10 @@
+import { DocumentReference } from "firebase/firestore";
+
+export enum EProductCurrency {
+  BS = "Bs.",
+  USD = "$",
+}
+
 export enum EProductTypeKey {
   CLOTHES = "clothes",
   ACCESSORIES = "accessories",
@@ -11,3 +18,26 @@ export type TProductType = {
   key: EProductTypeKey;
   name: string;
 };
+
+export type TProduct = {
+  id: string;
+  name: string;
+  description: string;
+  amount: string;
+  type: EProductTypeKey;
+  currency: EProductCurrency;
+  parent: DocumentReference;
+  fileId?: string;
+  fileUrl?: string;
+  fileName?: string;
+  creationTime: string;
+};
+
+export type TProductForm = Pick<
+  TProduct,
+  "name" | "description" | "amount" | "currency"
+> &
+  Partial<Pick<TProduct, "id">> &
+  Partial<Pick<TProduct, "type">> & {
+    image?: File;
+  };

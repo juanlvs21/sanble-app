@@ -136,6 +136,7 @@ export const FairForm = ({
               onIonBlur={handleBlur}
               helper={getErrorMessage("type", touched, errors)}
               value={values.type}
+              cancelText="Cancelar"
               helperIsError
             >
               <IonSelectOption value={EFairType.ENTREPRENEURSHIP}>
