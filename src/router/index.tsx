@@ -108,6 +108,11 @@ const StandProductsScreen = lazy(() =>
     default: StandProducts,
   }))
 );
+const ProductsListScreen = lazy(() =>
+  import("@/screens/products/ProductsList").then(({ ProductsList }) => ({
+    default: ProductsList,
+  }))
+);
 const MySanbleFairsScreen = lazy(() =>
   import("@/screens/mySanble/fairs/MyFairsList").then(({ MyFairsList }) => ({
     default: MyFairsList,
@@ -194,6 +199,15 @@ export const router = createBrowserRouter([
                 element: (
                   <SuspenseComponent>
                     <StandsListScreen />
+                  </SuspenseComponent>
+                ),
+              },
+              {
+                path: ERoutesName.PRODUCT_LIST,
+                errorElement: <ErrorScreen />,
+                element: (
+                  <SuspenseComponent>
+                    <ProductsListScreen />
                   </SuspenseComponent>
                 ),
               },

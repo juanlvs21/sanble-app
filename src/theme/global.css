@@ -66,7 +66,7 @@ ion-item.inputItem {
   margin-bottom: 25px;
 }
 
-ion-item.inputItem.inputWithIcon {
+ion-item.inputItem.inputWithIcon::part(native) {
   --padding-start: 45px;
 }
 
@@ -172,7 +172,7 @@ ion-item.inputItem.textareItem textarea {
 }
 
 ion-item.inputItem.textareItem .textAreaError {
-  margin-left: 45px;
+  margin-left: 15px;
 }
 
 ion-item.inputItem.inputCheckbox {

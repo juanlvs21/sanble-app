@@ -12,7 +12,7 @@ import {
 import { useMaskito } from "@maskito/react";
 import { useEffect, useState } from "react";
 import { FileUploader } from "react-drag-drop-files";
-import { Controller, useForm, UseFormReset } from "react-hook-form";
+import { Controller, UseFormReset, useForm } from "react-hook-form";
 import { AiOutlineClose } from "react-icons/ai";
 import { HiOutlineTrash } from "react-icons/hi";
 import { MdOutlineAddPhotoAlternate } from "react-icons/md";
@@ -27,6 +27,7 @@ import { useApp } from "@/hooks/useApp";
 import { useToast } from "@/hooks/useToast";
 
 import { currencyMask } from "@/helpers/currencyMask";
+import { productSchema } from "@/helpers/validator/product";
 import {
   EProductCurrency,
   EProductTypeKey,
@@ -103,7 +104,7 @@ export const ProductForm = ({
   isLoading,
   product,
   fileTypes = ["jpg", "png", "jpeg"],
-  fileHoverTitle = "Agregar tu flyer imagen aquí",
+  fileHoverTitle = "Agregar la imagen de tu producto aquí",
   fileMaxSize = 10,
   className = "",
   toggleModal,
@@ -132,7 +133,7 @@ export const ProductForm = ({
       type: product?.type ?? undefined,
       image: undefined,
     },
-    // resolver: postSchema, // TODO add validation
+    resolver: productSchema,
   });
 
   const valueImage = watch("image");
@@ -426,7 +427,7 @@ export const ProductForm = ({
                       {product?.fileUrl && !valueImage && (
                         <img
                           src={product?.fileUrl}
-                          alt="Flyer Actual"
+                          alt="Imagen Actual"
                           className={styles.productFormOldImg}
                         />
                       )}
@@ -474,7 +475,7 @@ export const ProductForm = ({
             )}
             {product?.fileUrl && (
               <IonNote className={styles.productFormFileInfo}>
-                El nuevo flyer reemplazará el anterior
+                La nueva imagen reemplazará la anterior
               </IonNote>
             )}
           </section>

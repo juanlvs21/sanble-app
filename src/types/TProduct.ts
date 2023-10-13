@@ -31,6 +31,10 @@ export type TProduct = {
   fileUrl?: string;
   fileName?: string;
   creationTime: string;
+  stand?: {
+    id: string;
+    name: string;
+  };
 };
 
 export type TProductForm = Pick<

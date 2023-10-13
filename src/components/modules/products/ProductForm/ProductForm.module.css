@@ -70,6 +70,7 @@
 .productFormFileError {
   font-size: 12px;
   color: var(--ion-color-danger);
+  margin-left: 20px;
 }
 
 .productFormFileInfo {

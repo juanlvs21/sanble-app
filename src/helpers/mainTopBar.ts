@@ -88,6 +88,11 @@ export const getPropsTopBarMain = (
       sticky: true,
       stickyNoScroll: true,
     },
+    [ERoutesName.PRODUCTS_LIST]: {
+      title: "Productos",
+      startUser: true,
+      sticky: true,
+    },
     [ERoutesName.MY_SANBLE_FAIRS]: {
       title: "Mis Ferias",
       startUser: true,

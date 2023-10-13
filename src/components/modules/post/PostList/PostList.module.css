@@ -45,6 +45,13 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-top: 10px;
+}
+
+.postFileContainer img {
+  max-width: auto;
+  max-height: auto;
+  border-radius: var(--sanble-border-radius);
 }
 
 .postSpinner {
@@ -62,4 +69,11 @@
   --padding-bottom: 20px;
   --padding-end: 30px;
   --padding-start: 30px;
+}
+
+@media (min-width: 768px) {
+  .postFileContainer img {
+    max-width: 500px;
+    max-height: 400px;
+  }
 }

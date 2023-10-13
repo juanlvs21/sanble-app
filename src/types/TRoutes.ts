@@ -24,6 +24,7 @@ export enum ERoutesName {
   STAND_DETAILS_PHOTO_SLIDES = "/app/stands/:standID/fotos",
   STAND_DETAILS_PHOTO_NEW = "/app/stands/:standID/fotos/nueva",
   STAND_DETAILS_PRODUCTS = "/app/stands/:standID/productos",
+  PRODUCT_LIST = "/app/productos",
   SESSION = "/app/sesion",
   SESSION_SIGNIN = "/app/sesion/entrar",
   SESSION_SIGNUP = "/app/sesion/registrarse",

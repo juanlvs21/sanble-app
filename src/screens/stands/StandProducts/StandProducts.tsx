@@ -9,6 +9,7 @@ import { ProductForm } from "@/components/modules/products/ProductForm";
 import { ProductList } from "@/components/modules/products/ProductList";
 import { useStandProducts } from "@/hooks/stands/useStandProducts";
 import { useApp } from "@/hooks/useApp";
+import { useDocumentTitleApp } from "@/hooks/useDocumentTitle";
 import { useUser } from "@/hooks/useUser";
 import styles from "./StandProducts.module.css";
 
@@ -34,6 +35,8 @@ export const StandProducts = () => {
     handleOpenModalNewProduct,
     toggleModalProductForm,
   } = useStandProducts(standID ?? "");
+
+  useDocumentTitleApp(`${stand?.name || "Productos"} 🛒`);
 
   return (
     <section className={`${styles.productsContainer}`}>

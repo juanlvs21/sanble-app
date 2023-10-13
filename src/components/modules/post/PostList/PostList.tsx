@@ -161,15 +161,15 @@ export const PostList = ({
 
                 <p className={`${styles.postText}`}> {post.text}</p>
 
-                <small className={`${styles.postDate}`}>
-                  {dayjs(post.creationTime).format("DD/MM/YYYY")}
-                </small>
-
                 {post.fileId && (
                   <div className={styles.postFileContainer}>
                     <ImageExtended src={post.fileUrl} alt={post.fileName} />
                   </div>
                 )}
+
+                <small className={`${styles.postDate}`}>
+                  {dayjs(post.creationTime).format("DD/MM/YYYY")}
+                </small>
               </li>
             ))}
       </ul>
