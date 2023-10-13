@@ -1,4 +1,5 @@
 import {
+  IonButtons,
   IonContent,
   IonModal,
   IonTitle,
@@ -184,14 +185,16 @@ export const PostList = ({
         <HeaderModal>
           <IonToolbar>
             <IonTitle>Editar Publicación</IonTitle>
-            <Button
-              onClick={() => toggleModalUpdate()}
-              fill="clear"
-              color="medium"
-              className={styles.postListModalEditClose}
-            >
-              <AiOutlineClose size={24} />
-            </Button>
+            <IonButtons slot="end">
+              <Button
+                onClick={() => toggleModalUpdate()}
+                fill="clear"
+                color="medium"
+                className={styles.postListModalEditClose}
+              >
+                <AiOutlineClose size={24} />
+              </Button>
+            </IonButtons>
           </IonToolbar>
         </HeaderModal>
         <IonContent className={styles.postListModalEditContent}>

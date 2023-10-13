@@ -85,11 +85,15 @@
   margin-right: 10px;
 }
 
-.productFormAmountContainer {
+.productFormPriceContainer {
   display: flex;
   gap: 20px;
 }
 
-.productFormAmountContainer .productFormCurrency {
+.productFormPriceContainer .productFormCurrency {
   width: 150px;
+}
+
+.productFormBtn {
+  margin-top: 20px;
 }

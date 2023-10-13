@@ -35,6 +35,7 @@ export const useTopBarMain = () => {
     ERoutesName.STAND_DETAILS_PHOTO_SLIDES
   );
   const isStandDetailsPhotoNew = useMatch(ERoutesName.STAND_DETAILS_PHOTO_NEW);
+  const isStandDetailsProducts = useMatch(ERoutesName.STAND_DETAILS_PRODUCTS);
   const isMySanbleFairs = useMatch(ERoutesName.MY_SANBLE_FAIRS);
   const isMySanbleFairsNew = useMatch(ERoutesName.MY_SANBLE_FAIRS_NEW);
   const isMySanbleStands = useMatch(ERoutesName.MY_SANBLE_STANDS);
@@ -85,6 +86,9 @@ export const useTopBarMain = () => {
       setRenderEnd(true);
     } else if (isStandDetailsPhotoNew) {
       setProps(getPropsTopBarMain(ERoutesName.STAND_DETAILS_PHOTO_NEW));
+      setRenderStart(false);
+    } else if (isStandDetailsProducts) {
+      setProps(getPropsTopBarMain(ERoutesName.STAND_DETAILS_PRODUCTS));
       setRenderStart(false);
     } else if (isStandDetailsPhotoSlides) {
       setProps(getPropsTopBarMain(ERoutesName.STAND_DETAILS_PHOTO_SLIDES));

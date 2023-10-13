@@ -95,7 +95,7 @@ export const StandsList = () => {
       <Fetcher
         handleRefresh={handleRefresh}
         classNameSection="animate__animated animate__screenInUp"
-        isLoading={isLoading || isLoading}
+        isLoading={isLoading}
       >
         <>
           <div

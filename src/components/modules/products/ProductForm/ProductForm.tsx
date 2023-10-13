@@ -1,5 +1,6 @@
 import { Camera, CameraResultType } from "@capacitor/camera";
 import {
+  IonButtons,
   IonContent,
   IonModal,
   IonNote,
@@ -122,11 +123,11 @@ export const ProductForm = ({
     reset,
     formState: { isSubmitting, errors },
   } = useForm<TProductForm>({
-    defaultValues: {
+    values: {
       id: product?.id ?? undefined,
       name: product?.name ?? "",
       description: product?.description ?? "",
-      amount: product?.amount ?? "",
+      price: product?.price ?? "",
       currency: product?.currency ?? EProductCurrency.BS,
       type: product?.type ?? undefined,
       image: undefined,
@@ -221,14 +222,16 @@ export const ProductForm = ({
       <HeaderModal>
         <IonToolbar>
           <IonTitle>{product ? "Editar" : "Publicar"} Producto</IonTitle>
-          <Button
-            onClick={() => toggleModal()}
-            fill="clear"
-            color="medium"
-            className={styles.productFormModalClose}
-          >
-            <AiOutlineClose size={24} />
-          </Button>
+          <IonButtons slot="end">
+            <Button
+              onClick={() => toggleModal()}
+              fill="clear"
+              color="medium"
+              className={styles.productFormModalClose}
+            >
+              <AiOutlineClose size={24} />
+            </Button>
+          </IonButtons>
         </IonToolbar>
       </HeaderModal>
       <IonContent className={styles.productFormModalContent}>
@@ -255,7 +258,7 @@ export const ProductForm = ({
                 />
               )}
             />
-            <div className={styles.productFormAmountContainer}>
+            <div className={styles.productFormPriceContainer}>
               <Controller
                 control={control}
                 name="currency"
@@ -287,7 +290,7 @@ export const ProductForm = ({
 
               <Controller
                 control={control}
-                name="amount"
+                name="price"
                 render={({
                   field: { onChange, onBlur, ref, ...field },
                   fieldState: { error },
@@ -482,6 +485,7 @@ export const ProductForm = ({
             type="submit"
             disabled={isLoading}
             isLoading={isSubmitting || isLoading}
+            className={`${styles.productFormBtn}`}
           >
             Guardar
           </Button>

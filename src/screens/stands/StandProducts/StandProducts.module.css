@@ -1,0 +1,14 @@
+.productsContainer {
+  overflow-y: auto;
+  height: calc(100vh - 62px);
+}
+
+.productsCardSkeleton {
+  margin-bottom: 20px;
+}
+
+@media (min-width: 768px) {
+  .productsCardSkeleton {
+    margin: 20px;
+  }
+}

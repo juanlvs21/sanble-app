@@ -50,11 +50,6 @@ export const StandDetails = () => {
   const { isCapacitor } = useApp();
   const finalStandID = standID || state?.standID || "";
   const { user, isLoading: loadingSetFav, handleSetFavoriteStand } = useUser();
-  const {
-    value: showModalProductForm,
-    toggle: toggleModalProductForm,
-    setFalse: setFalseModalProductForm,
-  } = useBoolean();
 
   const {
     stand,
@@ -63,7 +58,6 @@ export const StandDetails = () => {
     posts,
     isSaving,
     isSavingPost,
-    isSavingProduct,
     isUpdatingPost,
     isLoadingDetails,
     isLoadingReviews,
@@ -78,7 +72,6 @@ export const StandDetails = () => {
     handleLoadAll,
     handleSaveReview,
     handleSavePost,
-    handleSaveProduct,
     handleLoadMoreReviews,
   } = useStandDetails(finalStandID);
   const { scrollRef, scrollKey } = useScrollTo({
@@ -96,10 +89,6 @@ export const StandDetails = () => {
       "Feria"
     } 🛍️`
   );
-
-  useEffect(() => {
-    setFalseModalProductForm();
-  }, [segmentValue]);
 
   return (
     <>
@@ -215,15 +204,16 @@ export const StandDetails = () => {
                   <h5>Fotos</h5>
                 </div>
               </Link>
-              <div
-                className={`${styles.standInfoCard} ${
-                  isLoadingDetails ? styles.isLoading : ""
-                }`}
-                onClick={toggleModalProductForm}
-              >
-                <HiOutlineShoppingBag size={35} />
-                <h5>Productos</h5>
-              </div>
+              <Link to={`${ERoutesName.STANDS_LIST}/${stand?.id}/productos`}>
+                <div
+                  className={`${styles.standInfoCard} ${
+                    isLoadingDetails ? styles.isLoading : ""
+                  }`}
+                >
+                  <HiOutlineShoppingBag size={35} />
+                  <h5>Productos</h5>
+                </div>
+              </Link>
               <div
                 className={`${styles.standInfoCard} ${
                   isLoadingDetails ? styles.isLoading : ""
@@ -304,7 +294,7 @@ export const StandDetails = () => {
           slot="fixed"
           vertical="bottom"
           horizontal="end"
-          className={`${styles.standFloatBtn} animate__animated animate__fadeIn`}
+          className={`animate__animated animate__fadeIn`}
         >
           <IonFabButton color="secondary">
             <IoIosArrowUp size={28} />
@@ -335,13 +325,6 @@ export const StandDetails = () => {
         trigger={MODAL_INFO_ID}
         contactPhone={stand?.contactPhone}
         contactEmail={stand?.contactEmail}
-      />
-
-      <ProductForm
-        showModal={showModalProductForm}
-        toggleModal={toggleModalProductForm}
-        handleSave={handleSaveProduct}
-        isLoading={isSavingProduct || isLoadingDetails}
       />
     </>
   );

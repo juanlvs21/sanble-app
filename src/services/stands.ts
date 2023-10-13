@@ -7,6 +7,7 @@ import { TGetListParams } from "@/types/TRequest";
 import { TReview, TReviewForm } from "@/types/TReview";
 import { TPhotographDetails } from "@/types/TPhotograph";
 import { TPost } from "@/types/TPost";
+import { TProduct } from "@/types/TProduct";
 
 const URL_PREFIX = "/stands";
 
@@ -152,4 +153,57 @@ export const deleteStandPhotoRequest = (standID: string, photoID: string) =>
     .delete<AxiosResponse<{ photographID: string }>>(
       `${URL_PREFIX}/${standID}/photograph/${photoID}`
     )
+    .then(({ data }) => data.data);
+
+export const saveStandProductRequest = (standID: string, formData: FormData) =>
+  api
+    .post<AxiosResponse<{ product: TProduct }>>(
+      `${URL_PREFIX}/${standID}/products`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    )
+    .then(({ data }) => data.data);
+
+export const getStandProductsRequest = (
+  standID: string,
+  params?: TGetListParams,
+  config?: AxiosRequestConfig
+) =>
+  api
+    .get<AxiosResponse<TResponseList<TProduct[]>>>(
+      `${URL_PREFIX}/${standID}/products`,
+      {
+        ...config,
+        params: {
+          lastIndex: params?.lastIndex || 0,
+          limit: params?.limit || 9,
+        },
+      }
+    )
+    .then(({ data }) => data.data);
+
+export const updateStandProductRequest = (
+  standID: string,
+  postID: string,
+  formData: FormData
+) =>
+  api
+    .put<AxiosResponse<{ post: TProduct }>>(
+      `${URL_PREFIX}/${standID}/products/${postID}`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    )
+    .then(({ data }) => data.data);
+
+export const deleteStandProductRequest = (standID: string, productID: string) =>
+  api
+    .delete<AxiosResponse>(`${URL_PREFIX}/${standID}/products/${productID}`)
     .then(({ data }) => data.data);

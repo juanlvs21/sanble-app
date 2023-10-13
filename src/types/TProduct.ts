@@ -23,7 +23,7 @@ export type TProduct = {
   id: string;
   name: string;
   description: string;
-  amount: string;
+  price: string;
   type: EProductTypeKey;
   currency: EProductCurrency;
   parent: DocumentReference;
@@ -35,7 +35,7 @@ export type TProduct = {
 
 export type TProductForm = Pick<
   TProduct,
-  "name" | "description" | "amount" | "currency"
+  "name" | "description" | "price" | "currency"
 > &
   Partial<Pick<TProduct, "id">> &
   Partial<Pick<TProduct, "type">> & {

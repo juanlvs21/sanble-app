@@ -103,6 +103,11 @@ const StandPhotoSlidesScreen = lazy(() =>
     default: StandPhotoSlides,
   }))
 );
+const StandProductsScreen = lazy(() =>
+  import("@/screens/stands/StandProducts").then(({ StandProducts }) => ({
+    default: StandProducts,
+  }))
+);
 const MySanbleFairsScreen = lazy(() =>
   import("@/screens/mySanble/fairs/MyFairsList").then(({ MyFairsList }) => ({
     default: MyFairsList,
@@ -370,6 +375,15 @@ export const router = createBrowserRouter([
             element: (
               <SuspenseComponent>
                 <StandPhotoNewScreen />
+              </SuspenseComponent>
+            ),
+          },
+          {
+            path: ERoutesName.STAND_DETAILS_PRODUCTS,
+            errorElement: <ErrorScreen />,
+            element: (
+              <SuspenseComponent>
+                <StandProductsScreen />
               </SuspenseComponent>
             ),
           },
