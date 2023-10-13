@@ -14,7 +14,7 @@ export enum EProductTypeKey {
 }
 
 export type TProductType = {
-  id: string;
+  // id: string;
   key: EProductTypeKey;
   name: string;
 };

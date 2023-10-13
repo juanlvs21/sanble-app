@@ -4,7 +4,7 @@ import { Carousel } from "@/components/common/Carousel";
 import { Fetcher } from "@/components/common/Fetcher";
 import { InputSearch } from "@/components/common/forms/InputSearch";
 import { FairCardBest } from "@/components/modules/fairs/FairCardBest";
-import { ProductCarouselCard } from "@/components/modules/products/ProductCard";
+// import { ProductCarouselCard } from "@/components/modules/products/ProductCard";
 import { TFair } from "@/types/TFair";
 import { TProductType } from "@/types/TProduct";
 import { useApp } from "@/hooks/useApp";
@@ -46,11 +46,11 @@ export const HomeScreenContent = ({
   handleLoadData,
   fairsBest,
   standsBest,
-  productTypes,
+  // productTypes,
   isLoadingFairsBest,
   isLoadingStandsBest,
-  isLoadingProductTypes,
-}: ComponentProps) => {
+}: // isLoadingProductTypes,
+ComponentProps) => {
   const isLaptop = useMediaQuery("(min-width: 1024px)");
   const { isCapacitor } = useApp();
 
@@ -80,13 +80,13 @@ export const HomeScreenContent = ({
         }}
         className={styles.homeCarousel}
       />
-      <Carousel
+      {/* <Carousel
         title="Productos"
         isLoading={isLoadingProductTypes}
         items={
           productTypes?.map((productType) => (
             <ProductCarouselCard
-              key={productType.id}
+              key={productType.key}
               productType={productType}
             />
           )) || []
@@ -106,7 +106,7 @@ export const HomeScreenContent = ({
           height: isLaptop ? 200 : 110,
         }}
         className={styles.homeCarousel}
-      />
+      /> */}
       <Carousel
         title="Mejores Stands"
         isLoading={isLoadingStandsBest}

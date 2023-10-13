@@ -14,9 +14,9 @@ export type ComponentProps = {
 export const ProductCarouselCard = ({ productType }: ComponentProps) => {
   return (
     <Link
-      to={`/app/productos/${productType.id}`}
+      to={`/app/productos/${productType.key}`}
       state={{
-        productTypeID: productType.id,
+        productTypeID: productType.key,
         productTypeName: productType.name,
       }}
       className={styles.productTypeCardLink}

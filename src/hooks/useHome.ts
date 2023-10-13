@@ -1,7 +1,11 @@
 import useSWR from "swr";
 
 import { useToast } from "@/hooks/useToast";
-import { getFairBestListRequest, getProductTypesRequest } from "@/services";
+import { productTypes } from "../helpers/productTypes";
+import {
+  getFairBestListRequest,
+  // getProductTypesRequest
+} from "@/services";
 
 const SWR_KEY_FAIRS_BEST = "/fairs/best";
 const SWR_KEY_STANDS_BEST = "/stands/best";
@@ -32,28 +36,33 @@ export const useHome = () => {
     },
   });
 
-  const {
-    data: dataProductType,
-    isLoading: isLoadingProductType,
-    mutate: mutateProductType,
-  } = useSWR(SWR_KEY_PRODUCTS_TYPES, getProductTypesRequest, {
-    onError(error) {
-      toastDismiss(SWR_KEY_PRODUCTS_TYPES);
-      toast(error, { type: "error", toastId: SWR_KEY_PRODUCTS_TYPES });
-    },
-  });
+  // const {
+  //   data: dataProductType,
+  //   isLoading: isLoadingProductType,
+  //   mutate: mutateProductType,
+  // } = useSWR(SWR_KEY_PRODUCTS_TYPES, getProductTypesRequest, {
+  //   onError(error) {
+  //     toastDismiss(SWR_KEY_PRODUCTS_TYPES);
+  //     toast(error, { type: "error", toastId: SWR_KEY_PRODUCTS_TYPES });
+  //   },
+  // });
 
   const handleLoadAllData = async () => {
-    await Promise.all([mutateFairs(), mutateStands(), mutateProductType()]);
+    await Promise.all([
+      mutateFairs(),
+      mutateStands(),
+      // mutateProductType()
+    ]);
   };
 
   return {
     isLoadingFairsBest: isLoadingFairs,
     isLoadingStandsBest: isLoadingStands,
-    isLoadingProductTypes: isLoadingProductType,
+    // isLoadingProductTypes: isLoadingProductType,
     fairsBest: dataFairs,
     standsBest: dataStands,
-    productTypes: dataProductType,
+    // productTypes: dataProductType,
+    productTypes,
     handleLoadAllData,
   };
 };

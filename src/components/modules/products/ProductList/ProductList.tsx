@@ -3,9 +3,10 @@ import { useNavigate } from "react-router-dom";
 
 import { ImageExtended } from "@/components/common/ImageExtended";
 import { Button } from "@/components/common/buttons/Button";
+import { getProductTypeNameByKey } from "@/helpers/productTypes";
 import { TProduct } from "@/types/TProduct";
-import styles from "./ProductList.module.css";
 import { ERoutesName } from "@/types/TRoutes";
+import styles from "./ProductList.module.css";
 
 export type ComponentProps = {
   /**
@@ -37,10 +38,13 @@ export const ProductList = ({
     >
       <div className={styles.productListContent}>
         <h1>{product.name}</h1>
-        <p className={styles.productListSlogan}>{product.description}</p>
+        <p className={styles.productListDescription}>{product.description}</p>
+        <p className={styles.productListText}>
+          <b>Categoría:</b> {getProductTypeNameByKey(product.type)}
+        </p>
         {product.stand && (
-          <p className={styles.productListSlogan}>
-            Stand: {product.stand?.name}
+          <p className={styles.productListText}>
+            <b>Stand:</b> {product.stand?.name}
           </p>
         )}
       </div>

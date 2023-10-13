@@ -23,7 +23,7 @@ export const Home = () => {
     productTypes,
     isLoadingFairsBest,
     isLoadingStandsBest,
-    isLoadingProductTypes,
+    // isLoadingProductTypes,
     handleLoadAllData,
   } = useHome();
 
@@ -43,7 +43,7 @@ export const Home = () => {
         productTypes={productTypes || []}
         isLoadingFairsBest={isLoadingFairsBest}
         isLoadingStandsBest={isLoadingStandsBest}
-        isLoadingProductTypes={isLoadingProductTypes}
+        // isLoadingProductTypes={isLoadingProductTypes}
       />
     </>
   );
