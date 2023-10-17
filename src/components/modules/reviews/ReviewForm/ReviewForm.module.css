@@ -16,3 +16,13 @@
 .reviewFormInput textarea {
   height: 120px !important;
 }
+
+.reviewFormBtnContainer {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+}
+
+.reviewFormBtnContainer ion-button {
+  width: 100%;
+}

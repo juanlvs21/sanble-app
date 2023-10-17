@@ -71,6 +71,7 @@ export const FairDetails = () => {
     isLoadingPosts,
     handleLoadAll,
     handleSaveReview,
+    handleDeleteReview,
     handleSavePost,
     handleLoadMoreReviews,
     handleLoadMorePost,
@@ -289,6 +290,7 @@ export const FairDetails = () => {
                 <ReviewForm
                   review={review}
                   handleSave={handleSaveReview}
+                  handleDelete={handleDeleteReview}
                   isLoading={isSavingReview || isLoadingDetails}
                 />
                 <ReviewsList

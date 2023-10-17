@@ -176,7 +176,7 @@ export const useStandProducts = (standID: string) => {
 
   const handleDeleteProduct = async (productID: string) => {
     presentAlert({
-      header: "¿Estás seguro de eliminar permanentemente este producto?",
+      header: "¿Estás seguro/a de eliminar permanentemente este producto?",
       buttons: [
         {
           text: "Cancelar",

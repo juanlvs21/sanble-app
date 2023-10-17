@@ -86,6 +86,11 @@ export const saveFairReviewRequest = (fairID: string, data: TReviewForm) =>
     )
     .then(({ data }) => data.data);
 
+export const deleteFairReviewRequest = (fairID: string) =>
+  api
+    .delete<AxiosResponse>(`${URL_PREFIX}/${fairID}/reviews`)
+    .then(({ data }) => data.data);
+
 export const getFairPostsRequest = (
   fairID: string,
   params?: TGetListParams,

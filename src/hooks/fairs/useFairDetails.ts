@@ -9,6 +9,7 @@ import { infiteScrollData } from "@/helpers/infiniteScrollData";
 import { useToast } from "@/hooks/useToast";
 import {
   deleteFairPostRequest,
+  deleteFairReviewRequest,
   getFairDetailsRequest,
   getFairPostsRequest,
   getFairReviewsRequest,
@@ -174,6 +175,45 @@ export const useFairDetails = (
     }
   };
 
+  const handleDeleteReview = async () => {
+    presentAlert({
+      header: "¿Estás seguro/a de eliminar permanentemente esta opinión?",
+      buttons: [
+        {
+          text: "Cancelar",
+          role: "cancel",
+        },
+        {
+          text: "Eliminar",
+          role: "confirm",
+          handler: async () => {
+            try {
+              presentLoading();
+
+              await deleteFairReviewRequest(fairID);
+
+              setReview(undefined);
+
+              setPaginationReviews({
+                lastIndex: DEFAULT_LAST_INDEX_LIST,
+                limit: DEFAULT_LIMIT_LIST,
+                total: 0,
+              });
+
+              setIsRefresh(true);
+
+              toast("Opinión eliminada con éxito", { type: "success" });
+            } catch (error) {
+              toast(error, { type: "error" });
+            } finally {
+              dismissLoading();
+            }
+          },
+        },
+      ],
+    });
+  };
+
   const handleSavePost = async (
     data: TPostForm,
     reset: UseFormReset<TPostForm>
@@ -232,7 +272,7 @@ export const useFairDetails = (
 
   const handleDeletePost = async (postID: string) => {
     presentAlert({
-      header: "¿Estás seguro de eliminar permanentemente esta publicación?",
+      header: "¿Estás seguro/a de eliminar permanentemente esta publicación?",
       buttons: [
         {
           text: "Cancelar",
@@ -349,6 +389,7 @@ export const useFairDetails = (
     handleLoadMoreReviews,
     handleLoadMorePost,
     handleSaveReview,
+    handleDeleteReview,
     handleSavePost,
     handleLoadDetails: mutateDetails,
     handleDeletePost,

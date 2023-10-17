@@ -83,6 +83,11 @@ export const saveStandReviewRequest = (standID: string, data: TReviewForm) =>
     )
     .then(({ data }) => data.data);
 
+export const deleteStandReviewRequest = (standID: string) =>
+  api
+    .delete<AxiosResponse>(`${URL_PREFIX}/${standID}/reviews`)
+    .then(({ data }) => data.data);
+
 export const saveStandPostRequest = (standID: string, formData: FormData) =>
   api
     .post<AxiosResponse<{ post: TPost }>>(

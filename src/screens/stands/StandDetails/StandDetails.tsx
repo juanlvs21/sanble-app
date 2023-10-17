@@ -67,6 +67,7 @@ export const StandDetails = () => {
     handleUpdatePost,
     handleLoadAll,
     handleSaveReview,
+    handleDeleteReview,
     handleSavePost,
     handleLoadMoreReviews,
   } = useStandDetails(finalStandID);
@@ -269,6 +270,7 @@ export const StandDetails = () => {
                 <ReviewForm
                   review={review}
                   handleSave={handleSaveReview}
+                  handleDelete={handleDeleteReview}
                   isLoading={isSaving || isLoadingDetails}
                 />
                 <ReviewsList

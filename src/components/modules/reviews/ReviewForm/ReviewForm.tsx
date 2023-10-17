@@ -17,6 +17,10 @@ export type ComponentProps = {
    */
   handleSave: (values: TReviewForm) => void | Promise<any>;
   /**
+   * Handle delete review
+   */
+  handleDelete?: () => void | Promise<any>;
+  /**
    * Review is loading
    */
   isLoading?: boolean;
@@ -30,6 +34,7 @@ export const ReviewForm = ({
   review,
   isLoading,
   handleSave,
+  handleDelete,
   className = "",
 }: ComponentProps) => {
   const {
@@ -82,15 +87,30 @@ export const ReviewForm = ({
           />
         )}
       />
-      <Button
-        expand="block"
-        color="primary"
-        type="submit"
-        disabled={isLoading}
-        isLoading={isSubmitting || isLoading}
-      >
-        {review ? "Editar" : "Guardar"}
-      </Button>
+      <div className={styles.reviewFormBtnContainer}>
+        {review && (
+          <Button
+            expand="block"
+            color="danger"
+            fill="outline"
+            type="button"
+            onClick={handleDelete}
+            disabled={isLoading}
+            isLoading={isSubmitting || isLoading}
+          >
+            Eliminar
+          </Button>
+        )}
+        <Button
+          expand="block"
+          color="primary"
+          type="submit"
+          disabled={isLoading}
+          isLoading={isSubmitting || isLoading}
+        >
+          {review ? "Editar" : "Guardar"}
+        </Button>
+      </div>
     </form>
   );
 };

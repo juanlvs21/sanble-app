@@ -8,6 +8,7 @@ import { infiteScrollData } from "@/helpers/infiniteScrollData";
 import { useToast } from "@/hooks/useToast";
 import {
   deleteStandPostRequest,
+  deleteStandReviewRequest,
   getStandDetailsRequest,
   getStandPostsRequest,
   getStandReviewsRequest,
@@ -168,6 +169,45 @@ export const useStandDetails = (
     }
   };
 
+  const handleDeleteReview = async () => {
+    presentAlert({
+      header: "¿Estás seguro/a de eliminar permanentemente esta opinión?",
+      buttons: [
+        {
+          text: "Cancelar",
+          role: "cancel",
+        },
+        {
+          text: "Eliminar",
+          role: "confirm",
+          handler: async () => {
+            try {
+              presentLoading();
+
+              await deleteStandReviewRequest(standID);
+
+              setReview(undefined);
+
+              setPaginationReviews({
+                lastIndex: DEFAULT_LAST_INDEX_LIST,
+                limit: DEFAULT_LIMIT_LIST,
+                total: 0,
+              });
+
+              setIsRefresh(true);
+
+              toast("Opinión eliminada con éxito", { type: "success" });
+            } catch (error) {
+              toast(error, { type: "error" });
+            } finally {
+              dismissLoading();
+            }
+          },
+        },
+      ],
+    });
+  };
+
   const handleSavePost = async (
     data: TPostForm,
     reset: UseFormReset<TPostForm>
@@ -239,7 +279,7 @@ export const useStandDetails = (
 
   const handleDeletePost = async (postID: string) => {
     presentAlert({
-      header: "¿Estás seguro de eliminar permanentemente esta publicación?",
+      header: "¿Estás seguro/a de eliminar permanentemente esta publicación?",
       buttons: [
         {
           text: "Cancelar",
@@ -343,6 +383,7 @@ export const useStandDetails = (
     handleLoadMoreReviews,
     handleLoadMorePost,
     handleSaveReview,
+    handleDeleteReview,
     handleSavePost,
     handleUpdatePost,
     handleDeletePost,

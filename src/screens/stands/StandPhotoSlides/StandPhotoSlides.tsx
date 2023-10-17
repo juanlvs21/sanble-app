@@ -89,7 +89,7 @@ export const StandPhotoSlides = () => {
           handler: () =>
             presentAlert({
               header:
-                "¿Estás seguro de eliminar permanentemente esta fotografía?",
+                "¿Estás seguro/a de eliminar permanentemente esta fotografía?",
               buttons: [
                 {
                   text: "Cancelar",
