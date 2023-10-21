@@ -76,6 +76,7 @@
   border-top-right-radius: var(--sanble-border-radius);
   background-color: #fff;
   margin-top: -160px !important;
+  margin-bottom: 50px !important;
   margin: auto;
   padding: 120px 16px 50px;
   transition: all 400ms ease-in-out;

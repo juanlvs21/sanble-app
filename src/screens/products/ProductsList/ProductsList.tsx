@@ -1,17 +1,17 @@
 import { useIonActionSheet } from "@ionic/react";
 import { BiFilterAlt } from "react-icons/bi";
 
+import { EmptyList } from "@/components/common/EmptyList";
 import { Fetcher } from "@/components/common/Fetcher";
 import { Skeleton } from "@/components/common/Skeleton";
 import { Button } from "@/components/common/buttons/Button";
 import { ButtonLoadMore } from "@/components/common/buttons/ButtonLoadMore";
-import { StandCardList } from "@/components/modules/stands/StandCardList";
+import { ProductList } from "@/components/modules/products/ProductList";
 import { useApp } from "@/hooks/useApp";
 import { useDocumentTitleApp } from "@/hooks/useDocumentTitle";
 import { useProductsList } from "@/hooks/useProductsList";
 import { useTopBarMain } from "@/hooks/useTopBarMain";
 import styles from "./ProductsList.module.css";
-import { ProductList } from "@/components/modules/products/ProductList";
 
 export const ProductsList = () => {
   useDocumentTitleApp("Lista de Productos 🛒");
@@ -24,6 +24,7 @@ export const ProductsList = () => {
     orderDir,
     isLoading,
     isLoadMore,
+    isEmpty,
     showLoadMoreBtn,
     handleRefresh,
     handleShorting,
@@ -107,6 +108,7 @@ export const ProductsList = () => {
         isLoading={isLoading}
       >
         <>
+          {isEmpty && <EmptyList title="No hay productos para mostrar" />}
           <div
             className={`dataListContainer ${isCapacitor ? "isCapacitor" : ""}`}
           >

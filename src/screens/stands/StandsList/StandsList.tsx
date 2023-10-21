@@ -1,6 +1,7 @@
 import { useIonActionSheet } from "@ionic/react";
 import { BiFilterAlt } from "react-icons/bi";
 
+import { EmptyList } from "@/components/common/EmptyList";
 import { Fetcher } from "@/components/common/Fetcher";
 import { Skeleton } from "@/components/common/Skeleton";
 import { Button } from "@/components/common/buttons/Button";
@@ -23,6 +24,7 @@ export const StandsList = () => {
     orderDir,
     isLoading,
     isLoadMore,
+    isEmpty,
     showLoadMoreBtn,
     handleRefresh,
     handleShorting,
@@ -98,6 +100,8 @@ export const StandsList = () => {
         isLoading={isLoading}
       >
         <>
+          {isEmpty && <EmptyList title="No hay Stands para mostrar" />}
+
           <div
             className={`dataListContainer ${isCapacitor ? "isCapacitor" : ""}`}
           >

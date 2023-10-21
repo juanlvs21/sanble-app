@@ -11,10 +11,19 @@ export type ComponentProps = {
    * Subtitle Message
    */
   subtitle?: React.ReactElement | React.ReactElement[] | string;
+
+  /**
+   * Custom className component
+   */
+  className?: string;
 };
 
-export const EmptyList = ({ title, subtitle }: ComponentProps) => (
-  <IonChip className={styles.emptyMessage} color="primary">
+export const EmptyList = ({
+  title,
+  subtitle,
+  className = "",
+}: ComponentProps) => (
+  <IonChip className={`${styles.emptyMessage} ${className}`} color="primary">
     <h1
       className={`${styles.emptyMessageTitle} ${
         subtitle ? styles.withSubtitle : ""

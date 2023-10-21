@@ -47,3 +47,11 @@
   margin-top: 3px;
   margin-left: 5px;
 }
+
+.reviewsEmpty {
+  margin: 0 !important;
+}
+
+.reviewsEmpty h1 {
+  font-size: 16px;
+}

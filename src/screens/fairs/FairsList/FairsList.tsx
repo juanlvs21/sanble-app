@@ -1,6 +1,7 @@
 import { useIonActionSheet } from "@ionic/react";
 import { BiFilterAlt } from "react-icons/bi";
 
+import { EmptyList } from "@/components/common/EmptyList";
 import { Fetcher } from "@/components/common/Fetcher";
 import { Skeleton } from "@/components/common/Skeleton";
 import { Button } from "@/components/common/buttons/Button";
@@ -23,6 +24,7 @@ export const FairsList = () => {
     orderDir,
     isLoading,
     isLoadMore,
+    isEmpty,
     showLoadMoreBtn,
     handleRefresh,
     handleShorting,
@@ -106,6 +108,8 @@ export const FairsList = () => {
         isLoading={isLoading || isLoading}
       >
         <>
+          {isEmpty && <EmptyList title="No hay Ferias para mostrar" />}
+
           <div
             className={`dataListContainer ${isCapacitor ? "isCapacitor" : ""}`}
           >

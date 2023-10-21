@@ -1,3 +1,4 @@
+import { EmptyList } from "@/components/common/EmptyList";
 import { ImageExtended } from "@/components/common/ImageExtended";
 import { Skeleton } from "@/components/common/Skeleton";
 import { Stars } from "@/components/common/Stars";
@@ -47,6 +48,12 @@ export const ReviewsList = ({
   return (
     <>
       <ul className={`${styles.reviewsList} ${className}`}>
+        {!isLoading && !reviews.length && (
+          <EmptyList
+            title="No hay opiniones que mostrar"
+            className={styles.reviewsEmpty}
+          />
+        )}
         {isLoading
           ? Array(5)
               .fill(0)

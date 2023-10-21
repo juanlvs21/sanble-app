@@ -71,6 +71,14 @@
   --padding-start: 30px;
 }
 
+.postsEmpty {
+  margin: 0 !important;
+}
+
+.postsEmpty h1 {
+  font-size: 16px;
+}
+
 @media (min-width: 768px) {
   .postFileContainer img {
     max-width: 500px;

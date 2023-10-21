@@ -2,6 +2,7 @@ import { IonFab, IonFabButton } from "@ionic/react";
 import { AiOutlinePlus } from "react-icons/ai";
 import { useParams } from "react-router-dom";
 
+import { EmptyList } from "@/components/common/EmptyList";
 import { Fetcher } from "@/components/common/Fetcher";
 import { Skeleton } from "@/components/common/Skeleton";
 import { ButtonLoadMore } from "@/components/common/buttons/ButtonLoadMore";
@@ -34,6 +35,7 @@ export const StandProducts = () => {
     handleActions,
     handleOpenModalNewProduct,
     toggleModalProductForm,
+    isEmpty,
   } = useStandProducts(standID ?? "");
 
   useDocumentTitleApp(`${stand?.name || "Productos"} 🛒`);
@@ -59,6 +61,10 @@ export const StandProducts = () => {
         isLoading={isLoading}
       >
         <>
+          {isEmpty && (
+            <EmptyList title="Este Stand no cuenta con productos actualmente" />
+          )}
+
           <div
             className={`dataListContainer ${isCapacitor ? "isCapacitor" : ""}`}
           >

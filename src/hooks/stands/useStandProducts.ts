@@ -261,6 +261,7 @@ export const useStandProducts = (standID: string) => {
     stand,
     products,
     product,
+    isEmpty: products.length === 0,
     isLoading: isLoadingDetails || isLoadingProducts,
     isLoadMoreProducts,
     showModalProductForm,

@@ -12,6 +12,7 @@ import { AiOutlineClose } from "react-icons/ai";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { useBoolean } from "usehooks-ts";
 
+import { EmptyList } from "@/components/common/EmptyList";
 import { HeaderModal } from "@/components/common/HeaderModal";
 import { ImageExtended } from "@/components/common/ImageExtended";
 import { Skeleton } from "@/components/common/Skeleton";
@@ -127,6 +128,12 @@ export const PostList = ({
     <>
       {isLoading && <Spinner className={`${styles.postSpinner}`} center />}
       <ul className={`${styles.postList} ${className}`}>
+        {!isLoading && !posts.length && (
+          <EmptyList
+            title="No hay publicaciones que mostrar"
+            className={styles.postsEmpty}
+          />
+        )}
         {isLoading
           ? Array(5)
               .fill(0)

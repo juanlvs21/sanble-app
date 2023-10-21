@@ -1,5 +1,5 @@
 import { UserInfo, UserMetadata } from "firebase/auth";
-import { Timestamp } from "firebase/firestore";
+import { Timestamp, DocumentReference } from "firebase/firestore";
 
 export enum EUserFav {
   FAIR = "fair",
@@ -28,6 +28,8 @@ export type TUser = {
   favoriteFairs: string[];
   favoriteStands: string[];
   favoriteProducts: string[];
+  ownerFairs: DocumentReference[];
+  ownerStands: DocumentReference[];
   disabled: boolean;
   metadata: UserMetadata;
   providerData: UserInfo[];

@@ -22,6 +22,7 @@ import { useStandDetails } from "@/hooks/stands/useStandDetails";
 import { SegmentDetails } from "@/components/common/SegmentDetails";
 import { PostForm } from "@/components/modules/post/PostForm";
 import { PostList } from "@/components/modules/post/PostList";
+import { InviteToMyFairModal } from "@/components/modules/stands/InviteToMyFairModal";
 import { useApp } from "@/hooks/useApp";
 import { useDocumentTitleApp } from "@/hooks/useDocumentTitle";
 import { useScrollTo } from "@/hooks/useScrollTo";
@@ -324,6 +325,8 @@ export const StandDetails = () => {
         contactPhone={stand?.contactPhone}
         contactEmail={stand?.contactEmail}
       />
+
+      {Boolean(user?.ownerFairs.length) && <InviteToMyFairModal />}
     </>
   );
 };
