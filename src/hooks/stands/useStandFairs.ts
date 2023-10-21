@@ -3,16 +3,16 @@ import useSWR from "swr";
 
 import { infiteScrollData } from "@/helpers/infiniteScrollData";
 import { useToast } from "@/hooks/useToast";
-import { getFairStandsListRequest } from "@/services";
+import { getFairStandsListRequest, getStandFairsListRequest } from "@/services";
+import { TFair } from "@/types/TFair";
 import { TPagination } from "@/types/THttp";
-import { TStand } from "@/types/TStand";
 
 const DEFAULT_LAST_INDEX = 0;
 const DEFAULT_LIMIT = 10;
 
-export const useFairStands = (fairID: string) => {
+export const useStandFairs = (standID: string) => {
   const { toast, toastDismiss } = useToast();
-  const [stands, setStands] = useState<TStand[]>([]);
+  const [fairs, setFairs] = useState<TFair[]>([]);
   const [isRefresh, setIsRefresh] = useState(false);
   const [isLoadMore, setIsLoadMore] = useState(false);
 
@@ -22,11 +22,11 @@ export const useFairStands = (fairID: string) => {
     total: 0,
   });
 
-  const SWR_KEY_FAIRS_STANDS = `/fairs/${fairID}/stands`;
+  const SWR_KEY_STANDS_FAIRS = `/stands/${standID}/fairs`;
 
-  const { isLoading, mutate } = useSWR(
-    SWR_KEY_FAIRS_STANDS,
-    async () => await getFairStandsListRequest(fairID, pagination),
+  const { data, isLoading, mutate } = useSWR(
+    SWR_KEY_STANDS_FAIRS,
+    async () => await getStandFairsListRequest(standID, pagination),
     {
       onSuccess(data) {
         if (data) {
@@ -35,18 +35,18 @@ export const useFairStands = (fairID: string) => {
               ? infiteScrollData(
                   "id",
                   data.list,
-                  data.pagination.lastIndex === DEFAULT_LAST_INDEX ? [] : stands
+                  data.pagination.lastIndex === DEFAULT_LAST_INDEX ? [] : fairs
                 )
               : data.list;
 
-          setStands(newList || []);
+          setFairs(newList || []);
           setPagination(data.pagination);
           setIsLoadMore(false);
         }
       },
       onError(error) {
-        toastDismiss(SWR_KEY_FAIRS_STANDS);
-        toast(error, { type: "error", toastId: SWR_KEY_FAIRS_STANDS });
+        toastDismiss(SWR_KEY_STANDS_FAIRS);
+        toast(error, { type: "error", toastId: SWR_KEY_STANDS_FAIRS });
       },
     }
   );
@@ -61,7 +61,7 @@ export const useFairStands = (fairID: string) => {
   };
 
   const handleLoadMore = async () => {
-    toastDismiss(SWR_KEY_FAIRS_STANDS);
+    toastDismiss(SWR_KEY_STANDS_FAIRS);
     setIsLoadMore(true);
     mutate();
   };
@@ -73,11 +73,11 @@ export const useFairStands = (fairID: string) => {
   }, [isRefresh]);
 
   return {
-    stands,
+    fairs,
     isLoading,
     isLoadMore,
     showLoadMoreBtn:
-      pagination.total > DEFAULT_LIMIT && stands.length !== pagination.total,
+      pagination.total > DEFAULT_LIMIT && fairs.length !== pagination.total,
     handleRefresh,
     handleLoadMore,
   };

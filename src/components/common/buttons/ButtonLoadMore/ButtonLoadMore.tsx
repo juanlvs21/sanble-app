@@ -8,7 +8,7 @@ export type ComponentProps = {
    */
   handleLoadMore?: () => Promise<void>;
   /**
-   * Is loading
+   * Is loading more
    */
   isLoading?: boolean;
   /**

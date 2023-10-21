@@ -17,7 +17,10 @@ export const InviteToMyFairModal = () => {
 
   return (
     <>
-      <div className={styles.inviteBtnContainer} onClick={toggleModal}>
+      <div
+        className={`${styles.inviteBtnContainer} animate__animated animate__fadeIn`}
+        onClick={toggleModal}
+      >
         <Button color="secondary">Invitar a mis Ferias</Button>
       </div>
 

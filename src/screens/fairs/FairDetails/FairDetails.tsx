@@ -5,13 +5,7 @@ import { HiOutlinePhotograph } from "react-icons/hi";
 import { IoIosArrowUp } from "react-icons/io";
 import { MdOutlineStorefront } from "react-icons/md";
 import { TiStar } from "react-icons/ti";
-import {
-  Link,
-  useLocation,
-  useNavigate,
-  useParams,
-  useSearchParams,
-} from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 
 import { Fetcher } from "@/components/common/Fetcher";
 import { ImageExtended } from "@/components/common/ImageExtended";
@@ -47,7 +41,6 @@ type TRouteParams = { fairID: string };
 
 export const FairDetails = () => {
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
   const { fairID } = useParams<TRouteParams>();
   const { state } = useLocation();
   const { renderTopBarActionEnd } = useTopBarMain();
@@ -81,8 +74,10 @@ export const FairDetails = () => {
   const {
     stands,
     isLoading: isLoadingStands,
+    isLoadMore: isLoadMoreStands,
+    showLoadMoreBtn: showLoadMoreStandsBtn,
     handleRefresh: handleRefreshStands,
-    handleInfinite: handleInfiniteStands,
+    handleLoadMore: handleLoadMoreStands,
   } = useFairStands(finalFairID);
   const { scrollRef, scrollKey } = useScrollTo({
     searchParamName: "post_id",
@@ -349,8 +344,10 @@ export const FairDetails = () => {
         trigger={MODAL_STANDS_ID}
         stands={stands}
         handleRefresh={handleRefreshStands}
-        handleInfinite={handleInfiniteStands}
+        handleLoadMore={handleLoadMoreStands}
         isLoading={isLoadingStands}
+        isLoadingMore={isLoadMoreStands}
+        showLoadMoreBtn={showLoadMoreStandsBtn}
       />
     </>
   );

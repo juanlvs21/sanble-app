@@ -1,0 +1,17 @@
+.standFairsModalFetcherContent::part(scroll) {
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+.standFairsModalFetcherSection {
+  height: 100%;
+  margin-top: 0;
+}
+
+.standFairsModalRefresh {
+  padding-top: 20px;
+}
+
+.standFairsCardSkeleton {
+  margin-bottom: 20px;
+}

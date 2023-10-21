@@ -8,6 +8,7 @@ import { TReview, TReviewForm } from "@/types/TReview";
 import { TPhotographDetails } from "@/types/TPhotograph";
 import { TPost } from "@/types/TPost";
 import { TProduct } from "@/types/TProduct";
+import { TFair } from "@/types/TFair";
 
 const URL_PREFIX = "/stands";
 
@@ -35,6 +36,24 @@ export const getStandBestListRequest = () =>
 export const getStandDetailsRequest = (standID: string) =>
   api
     .get<AxiosResponse<TStand>>(`${URL_PREFIX}/${standID}`)
+    .then(({ data }) => data.data);
+
+export const getStandFairsListRequest = (
+  standID: string,
+  params?: TGetListParams,
+  config?: AxiosRequestConfig
+) =>
+  api
+    .get<AxiosResponse<TResponseList<TFair[]>>>(
+      `${URL_PREFIX}/${standID}/fairs`,
+      {
+        ...config,
+        params: {
+          lastIndex: params?.lastIndex || 0,
+          limit: params?.limit || 10,
+        },
+      }
+    )
     .then(({ data }) => data.data);
 
 export const getStandReviewsRequest = (

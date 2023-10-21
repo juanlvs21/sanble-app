@@ -61,7 +61,7 @@ export const StandProducts = () => {
         isLoading={isLoading}
       >
         <>
-          {isEmpty && (
+          {isEmpty && !isLoading && (
             <EmptyList title="Este Stand no cuenta con productos actualmente" />
           )}
 

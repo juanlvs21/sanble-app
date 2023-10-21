@@ -8,21 +8,21 @@ import { MdOutlineStorefront } from "react-icons/md";
 import { TiStar } from "react-icons/ti";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 
-import { ButtonFav } from "@/components/common/buttons/ButtonFav";
 import { Fetcher } from "@/components/common/Fetcher";
 import { ImageExtended } from "@/components/common/ImageExtended";
-import { Skeleton } from "@/components/common/Skeleton";
-// import { FairModalStands } from "@/components/modules/fairs/FairModalStands";
-import { InfoModal } from "@/components/modules/info/InfoModal";
-import { ReviewForm } from "@/components/modules/reviews/ReviewForm";
-import { ReviewsList } from "@/components/modules/reviews/ReviewsList";
-import { getNavStateText } from "@/helpers/navigation";
-import { useStandDetails } from "@/hooks/stands/useStandDetails";
-// import { useFairStands } from "@/hooks/fairs/useFairStands";
 import { SegmentDetails } from "@/components/common/SegmentDetails";
+import { Skeleton } from "@/components/common/Skeleton";
+import { ButtonFav } from "@/components/common/buttons/ButtonFav";
+import { InfoModal } from "@/components/modules/info/InfoModal";
 import { PostForm } from "@/components/modules/post/PostForm";
 import { PostList } from "@/components/modules/post/PostList";
+import { ReviewForm } from "@/components/modules/reviews/ReviewForm";
+import { ReviewsList } from "@/components/modules/reviews/ReviewsList";
 import { InviteToMyFairModal } from "@/components/modules/stands/InviteToMyFairModal";
+import { StandModalFairs } from "@/components/modules/stands/StandModalFairs";
+import { getNavStateText } from "@/helpers/navigation";
+import { useStandDetails } from "@/hooks/stands/useStandDetails";
+import { useStandFairs } from "@/hooks/stands/useStandFairs";
 import { useApp } from "@/hooks/useApp";
 import { useDocumentTitleApp } from "@/hooks/useDocumentTitle";
 import { useScrollTo } from "@/hooks/useScrollTo";
@@ -72,6 +72,14 @@ export const StandDetails = () => {
     handleSavePost,
     handleLoadMoreReviews,
   } = useStandDetails(finalStandID);
+  const {
+    fairs,
+    isLoading: isLoadingFairs,
+    isLoadMore: isLoadMoreFairs,
+    showLoadMoreBtn: showLoadMoreFairsBtn,
+    handleRefresh: handleRefreshFairs,
+    handleLoadMore: handleLoadMoreFairs,
+  } = useStandFairs(finalStandID);
   const { scrollRef, scrollKey } = useScrollTo({
     searchParamName: "post_id",
     canScrollTo: !isLoadingDetails && !isLoadingPosts,
@@ -324,6 +332,16 @@ export const StandDetails = () => {
         trigger={MODAL_INFO_ID}
         contactPhone={stand?.contactPhone}
         contactEmail={stand?.contactEmail}
+      />
+
+      <StandModalFairs
+        trigger={MODAL_FAIRS_ID}
+        fairs={fairs}
+        handleRefresh={handleRefreshFairs}
+        handleLoadMore={handleLoadMoreFairs}
+        isLoading={isLoadingFairs}
+        isLoadingMore={isLoadMoreFairs}
+        showLoadMoreBtn={showLoadMoreFairsBtn}
       />
 
       {Boolean(user?.ownerFairs.length) && <InviteToMyFairModal />}

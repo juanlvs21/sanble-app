@@ -118,8 +118,6 @@ export const useSWRLists = <T = any>(
     mutate();
   }, [order]);
 
-  console.log(list);
-
   return {
     list,
     pagination,

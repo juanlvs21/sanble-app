@@ -8,24 +8,24 @@ import {
 import { useRef, useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 
-import { Button } from "@/components/common/buttons/Button";
 import { EmptyAlert } from "@/components/common/EmptyAlert";
 import { Fetcher } from "@/components/common/Fetcher";
 import { HeaderModal } from "@/components/common/HeaderModal";
 import { Skeleton } from "@/components/common/Skeleton";
-import { StandCardList } from "@/components/modules/stands/StandCardList";
-import { useModalGoBack } from "@/hooks/useModalGoBack";
-import { TStand } from "@/types/TStand";
-import styles from "./FairModalStands.module.css";
+import { Button } from "@/components/common/buttons/Button";
 import { ButtonLoadMore } from "@/components/common/buttons/ButtonLoadMore";
+import { FairCardList } from "@/components/modules/fairs/FairCardList";
+import { useModalGoBack } from "@/hooks/useModalGoBack";
+import { TFair } from "@/types/TFair";
+import styles from "./StandModalFairs.module.css";
 
 export type ComponentProps = {
   /**
-   * Stands list
+   * Fairs list
    */
-  stands: TStand[];
+  fairs: TFair[];
   /**
-   * Handle refresh get more Stands
+   * Handle refresh get more Fairs
    */
   handleRefresh: () => Promise<any>;
   /**
@@ -54,8 +54,8 @@ export type ComponentProps = {
   className?: string;
 };
 
-export const FairModalStands = ({
-  stands,
+export const StandModalFairs = ({
+  fairs,
   trigger,
   isLoading,
   isLoadingMore,
@@ -86,37 +86,36 @@ export const FairModalStands = ({
               <AiOutlineClose size={24} />
             </Button>
           </IonButtons>
-          <IonTitle>Stands Participantes</IonTitle>
+          <IonTitle>Ferias donde encontrarme</IonTitle>
         </IonToolbar>
       </HeaderModal>
       <IonContent>
         <Fetcher
           handleRefresh={handleRefresh}
-          classNameContent={styles.fairStandsModalFetcherContent}
-          classNameSection={styles.fairStandsModalFetcherSection}
-          classNameRefresh={styles.fairStandsModalRefresh}
+          classNameContent={styles.standFairsModalFetcherContent}
+          classNameSection={styles.standFairsModalFetcherSection}
+          classNameRefresh={styles.standFairsModalRefresh}
         >
           <>
-            {!stands.length && !isLoading ? (
-              <EmptyAlert message={`No hay Stands participantes`} />
+            {!fairs.length && !isLoading ? (
+              <EmptyAlert message={`No hay Ferias donde participe`} />
             ) : (
               <div className="dataListContainer col-1">
-                {isLoading && !stands.length
+                {isLoading && !fairs.length
                   ? Array(5)
                       .fill(0)
                       .map((_, i) => (
                         <Skeleton
                           key={i}
                           height={130}
-                          className={styles.fairStandsCardSkeleton}
+                          className={styles.standFairsCardSkeleton}
                         />
                       ))
-                  : stands.map((stand) => (
-                      <StandCardList key={stand.id} stand={stand} />
+                  : fairs.map((fair) => (
+                      <FairCardList key={fair.id} fair={fair} />
                     ))}
               </div>
             )}
-
             {showLoadMoreBtn && (
               <ButtonLoadMore
                 handleLoadMore={handleLoadMore}
