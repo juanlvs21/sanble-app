@@ -2,7 +2,7 @@ import { useMediaQuery } from "usehooks-ts";
 
 import { Carousel } from "@/components/common/Carousel";
 import { Fetcher } from "@/components/common/Fetcher";
-import { InputSearch } from "@/components/common/forms/InputSearch";
+// import { InputSearch } from "@/components/common/forms/InputSearch";
 import { FairCardBest } from "@/components/modules/fairs/FairCardBest";
 // import { ProductCarouselCard } from "@/components/modules/products/ProductCard";
 import { TFair } from "@/types/TFair";
@@ -60,12 +60,12 @@ ComponentProps) => {
       classNameContent={styles.homeContainer}
       classNameSection="animate__animated animate__screenInUp"
     >
-      <InputSearch
+      {/* <InputSearch
         placeholder="Buscar Ferias, Stands, etc..."
         classNameItem={`${styles.homeSearchInput} ${
           isCapacitor ? styles.homeSearchInputCapacitor : ""
         }`}
-      />
+      /> */}
       <Carousel
         title="Mejores Ferias"
         isLoading={isLoadingFairsBest}
@@ -109,6 +109,30 @@ ComponentProps) => {
       /> */}
       <Carousel
         title="Mejores Stands"
+        isLoading={isLoadingStandsBest}
+        items={
+          standsBest?.map((stand) => (
+            <div
+              key={stand.id}
+              style={{
+                width: "100%",
+                height: "100%",
+                background: "#ff8634",
+                borderRadius: 20,
+              }}
+            >
+              <span>{stand.name}</span>
+            </div>
+          )) || []
+        }
+        skeletonProps={{
+          width: "100%",
+          height: isLaptop ? 200 : 110,
+        }}
+        className={styles.homeCarousel}
+      />
+      <Carousel
+        title="Productos Recientes"
         isLoading={isLoadingStandsBest}
         items={
           standsBest?.map((stand) => (
