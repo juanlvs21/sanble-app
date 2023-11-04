@@ -5,3 +5,8 @@
   display: flex;
   justify-content: center;
 }
+
+.inviteModalSectionFetcher {
+  height: 100%;
+  margin-top: 0;
+}

@@ -1,0 +1,82 @@
+.invitationCard {
+  background-color: var(--ion-color-light);
+  border-radius: var(--sanble-border-radius);
+  margin-bottom: 20px;
+  position: relative;
+  display: flex;
+  height: 130px;
+  cursor: pointer;
+  -webkit-box-shadow: 0px 0px 5px 5px rgba(200, 200, 200, 0.05);
+  box-shadow: 0px 0px 5px 5px rgba(200, 200, 200, 0.05);
+  border: 1px solid rgba(200, 200, 200, 0.1);
+}
+
+.invitationCard .invitationCardPicture {
+  width: 100px;
+}
+
+.invitationCard .invitationCardImg {
+  border-radius: var(--sanble-border-radius);
+  width: 100px;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.invitationCardContent {
+  padding: 15px 20px;
+  width: calc(100% - 100px);
+  display: flex;
+  flex-direction: column;
+}
+
+.invitationCardContent h1 {
+  font-weight: 600;
+  font-size: 18px;
+  margin: 0;
+  margin-bottom: 5px;
+  max-height: 40px;
+  height: 40px;
+
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.invitationCardLink {
+  display: flex;
+  width: 100%;
+  color: var(--ion-text-color, #000);
+}
+
+.invitationCardBtn {
+  margin-top: 20px;
+}
+
+@media (min-width: 768px) {
+  .invitationCard {
+    margin: 20px;
+  }
+}
+
+@media (max-width: 380px) {
+  .invitationCard .invitationCardImg {
+    width: 60px;
+  }
+
+  .invitationCardContent {
+    width: calc(100% - 60px);
+  }
+}
+
+@media (max-width: 330px) {
+  .invitationCard img {
+    width: 80px;
+  }
+
+  .invitationCardContent h1 {
+    font-size: 14px;
+    height: 16px;
+  }
+}

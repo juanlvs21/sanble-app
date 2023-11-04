@@ -5,8 +5,10 @@ import styles from "./Stars.module.css";
 export type ComponentProps = {
   /**
    * Number of filled stars
+   *
+   * @default 0
    */
-  value: number;
+  value?: number;
   /**
    * onChange event
    */
@@ -29,7 +31,7 @@ export type ComponentProps = {
 
 export const Stars = ({
   onChange,
-  value,
+  value = 0,
   disable,
   size = 20,
   className = "",

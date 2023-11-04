@@ -45,7 +45,7 @@ export const StandDetails = () => {
   const { state } = useLocation();
   const { renderTopBarActionEnd } = useTopBarMain();
   const { isCapacitor } = useApp();
-  const finalStandID = standID || state?.standID || "";
+  const finalStandID: string = standID || state?.standID || "";
   const { user, isLoading: loadingSetFav, handleSetFavoriteStand } = useUser();
 
   const {
@@ -344,7 +344,9 @@ export const StandDetails = () => {
         showLoadMoreBtn={showLoadMoreFairsBtn}
       />
 
-      {Boolean(user?.ownerFairs.length) && <InviteToMyFairModal />}
+      {Boolean(user?.ownerFairs.length) && finalStandID && (
+        <InviteToMyFairModal standID={finalStandID} />
+      )}
     </>
   );
 };
