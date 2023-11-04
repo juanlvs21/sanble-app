@@ -13,6 +13,7 @@ import { SegmentDetails } from "@/components/common/SegmentDetails";
 import { Skeleton } from "@/components/common/Skeleton";
 import { ButtonFav } from "@/components/common/buttons/ButtonFav";
 import { FairModalStands } from "@/components/modules/fairs/FairModalStands";
+import { RequestToFairMyStandModal } from "@/components/modules/fairs/RequestToFairMyStandModal";
 import { InfoModal } from "@/components/modules/info/InfoModal";
 import { PostForm } from "@/components/modules/post/PostForm";
 import { PostList } from "@/components/modules/post/PostList";
@@ -45,7 +46,7 @@ export const FairDetails = () => {
   const { state } = useLocation();
   const { renderTopBarActionEnd } = useTopBarMain();
   const { isCapacitor } = useApp();
-  const finalFairID = fairID || state?.fairID || "";
+  const finalFairID: string = fairID || state?.fairID || "";
   const { user, isLoading: loadingSetFav, handleSetFavoriteFair } = useUser();
   const {
     fair,
@@ -349,6 +350,10 @@ export const FairDetails = () => {
         isLoadingMore={isLoadMoreStands}
         showLoadMoreBtn={showLoadMoreStandsBtn}
       />
+
+      {Boolean(user?.ownerFairs.length) && finalFairID && (
+        <RequestToFairMyStandModal fairID={finalFairID} />
+      )}
     </>
   );
 };

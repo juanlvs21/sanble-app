@@ -64,7 +64,13 @@ export const InvitationCard = ({ fair, stand, goBackUrl }: ComponentProps) => {
               expand="full"
               className={styles.invitationCardBtn}
             >
-              {requestSent ? "Cancelar Invitación" : "Enviar Invitación"}
+              {fair
+                ? fair.requestSent
+                  ? "Cancelar Solicitud"
+                  : "Enviar Solicitud"
+                : stand?.requestSent
+                ? "Cancelar Invitación"
+                : "Enviar Invitación"}
             </Button>
           </div>
         </Link>

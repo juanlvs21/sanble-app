@@ -15,28 +15,28 @@ import { Skeleton } from "@/components/common/Skeleton";
 import { Button } from "@/components/common/buttons/Button";
 import { ButtonLoadMore } from "@/components/common/buttons/ButtonLoadMore";
 import { InvitationCard } from "@/components/modules/invitations/InvitationCard";
-import { useStandRequestFair } from "@/hooks/fairs/invitations/useStandRequestFair";
+import { useFairInviteStand } from "@/hooks/fairs/invitations/useFairInviteStand";
 import { ERoutesName } from "@/types/TRoutes";
-import styles from "./InviteToMyFairModal.module.css";
+import styles from "./RequestToFairMyStandModal.module.css";
 
 export type ComponentProps = {
   /**
-   * Fair id
+   * Stand id
    */
-  fairID: string;
+  standID: string;
 };
 
-export const InviteToMyFairModal = ({ fairID }: ComponentProps) => {
+export const RequestToFairMyStandModal = ({ standID }: ComponentProps) => {
   const { value: showModal, toggle: toggleModal } = useBoolean();
 
   const {
-    stands,
+    fairs,
     handleRefresh,
     handleLoadMore,
     isLoading,
     isLoadingMore,
     showLoadMoreBtn,
-  } = useStandRequestFair(fairID);
+  } = useFairInviteStand(standID);
 
   return (
     <>
@@ -44,13 +44,13 @@ export const InviteToMyFairModal = ({ fairID }: ComponentProps) => {
         className={`${styles.inviteBtnContainer} animate__animated animate__fadeIn`}
         onClick={toggleModal}
       >
-        <Button color="secondary">Invitar a mis Ferias</Button>
+        <Button color="secondary">Solicitar unir mi Stand</Button>
       </div>
 
       <IonModal isOpen={showModal}>
         <HeaderModal>
           <IonToolbar>
-            <IonTitle>Invitar a mis Ferias</IonTitle>
+            <IonTitle>Solicitar unir mi Stand</IonTitle>
             <IonButtons slot="end">
               <Button
                 onClick={() => toggleModal()}
@@ -69,11 +69,11 @@ export const InviteToMyFairModal = ({ fairID }: ComponentProps) => {
             classNameSection={styles.inviteModalSectionFetcher}
           >
             <>
-              {!stands.length && !isLoading ? (
-                <EmptyAlert message={`No tienes stands creados`} />
+              {!fairs.length && !isLoading ? (
+                <EmptyAlert message={`No tienes ferias creadas`} />
               ) : (
                 <div className="dataListContainer col-1">
-                  {isLoading && !stands.length
+                  {isLoading && !fairs.length
                     ? Array(5)
                         .fill(0)
                         .map((_, i) => (
@@ -83,11 +83,11 @@ export const InviteToMyFairModal = ({ fairID }: ComponentProps) => {
                             className={styles.standFairsCardSkeleton}
                           />
                         ))
-                    : stands.map((stand) => (
+                    : fairs.map((fair) => (
                         <InvitationCard
-                          key={stand.id}
-                          stand={stand}
-                          goBackUrl={`${ERoutesName.FAIRS_LIST}/${fairID}`}
+                          key={fair.id}
+                          fair={fair}
+                          goBackUrl={`${ERoutesName.STANDS_LIST}/${standID}`}
                         />
                       ))}
                 </div>

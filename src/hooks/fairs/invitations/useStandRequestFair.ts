@@ -1,18 +1,18 @@
-import useSWR from "swr";
 import { useState } from "react";
+import useSWR from "swr";
 
-import { getInvitationFairsFormRequest } from "@/services/invitation";
-import { useToast } from "@/hooks/useToast";
-import { TPagination } from "@/types/THttp";
-import { TInvitationFormFair } from "@/types/TInvitation";
 import { infiteScrollData } from "@/helpers/infiniteScrollData";
+import { useToast } from "@/hooks/useToast";
+import { getInvitationStandFormRequest } from "@/services/invitation";
+import { TPagination } from "@/types/THttp";
+import { TInvitationFormStand } from "@/types/TInvitation";
 
 const DEFAULT_LAST_INDEX_LIST = 0;
 const DEFAULT_LIMIT_LIST = 10;
 
-export const useFairInviteStand = (standID: string) => {
+export const useStandRequestFair = (fairID: string) => {
   const { toast, toastDismiss } = useToast();
-  const [fairs, setFairs] = useState<TInvitationFormFair[]>([]);
+  const [stands, setStands] = useState<TInvitationFormStand[]>([]);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
 
   const [pagination, setPagination] = useState<TPagination>({
@@ -21,11 +21,11 @@ export const useFairInviteStand = (standID: string) => {
     total: 0,
   });
 
-  const SWR_KEY_INVITATION_FORM_FAIRS = `/fairs/${standID}`;
+  const SWR_KEY_INVITATION_STAND = `/stands/${fairID}`;
 
   const { isLoading, mutate } = useSWR(
-    SWR_KEY_INVITATION_FORM_FAIRS,
-    async () => await getInvitationFairsFormRequest(standID),
+    SWR_KEY_INVITATION_STAND,
+    async () => await getInvitationStandFormRequest(fairID),
     {
       onSuccess(data) {
         if (data) {
@@ -36,18 +36,18 @@ export const useFairInviteStand = (standID: string) => {
                   data.list,
                   data.pagination.lastIndex === DEFAULT_LAST_INDEX_LIST
                     ? []
-                    : fairs
+                    : stands
                 )
               : data.list;
 
-          setFairs(newList);
+          setStands(newList);
           setPagination(data.pagination);
           setIsLoadingMore(false);
         }
       },
       onError(error) {
-        toastDismiss(SWR_KEY_INVITATION_FORM_FAIRS);
-        toast(error, { type: "error", toastId: SWR_KEY_INVITATION_FORM_FAIRS });
+        toastDismiss(SWR_KEY_INVITATION_STAND);
+        toast(error, { type: "error", toastId: SWR_KEY_INVITATION_STAND });
       },
     }
   );
@@ -68,13 +68,13 @@ export const useFairInviteStand = (standID: string) => {
   };
 
   return {
-    fairs,
+    stands,
     isLoadingMore,
     isLoading,
     handleRefresh,
     handleLoadMore,
     showLoadMoreBtn:
       pagination.total > DEFAULT_LIMIT_LIST &&
-      fairs.length !== pagination.total,
+      stands.length !== pagination.total,
   };
 };
