@@ -15,28 +15,32 @@ import { Skeleton } from "@/components/common/Skeleton";
 import { Button } from "@/components/common/buttons/Button";
 import { ButtonLoadMore } from "@/components/common/buttons/ButtonLoadMore";
 import { InvitationCard } from "@/components/modules/invitations/InvitationCard";
-import { useFairInviteStand } from "@/hooks/fairs/invitations/useFairInviteStand";
+import { useInvitationListMyStand } from "@/hooks/invitations/useInvitationListMyStand";
+import { useInvitationSend } from "@/hooks/invitations/useInvitationSend";
+import { EInvitationType } from "@/types/TInvitation";
 import { ERoutesName } from "@/types/TRoutes";
 import styles from "./RequestToFairMyStandModal.module.css";
 
 export type ComponentProps = {
   /**
-   * Stand id
+   * Fair id
    */
-  standID: string;
+  fairID: string;
 };
 
-export const RequestToFairMyStandModal = ({ standID }: ComponentProps) => {
+export const RequestToFairMyStandModal = ({ fairID }: ComponentProps) => {
   const { value: showModal, toggle: toggleModal } = useBoolean();
 
   const {
-    fairs,
+    stands,
     handleRefresh,
     handleLoadMore,
     isLoading,
     isLoadingMore,
     showLoadMoreBtn,
-  } = useFairInviteStand(standID);
+  } = useInvitationListMyStand(fairID);
+
+  const { handleSendInvitation } = useInvitationSend(handleRefresh);
 
   return (
     <>
@@ -69,11 +73,11 @@ export const RequestToFairMyStandModal = ({ standID }: ComponentProps) => {
             classNameSection={styles.inviteModalSectionFetcher}
           >
             <>
-              {!fairs.length && !isLoading ? (
-                <EmptyAlert message={`No tienes ferias creadas`} />
+              {!stands.length && !isLoading ? (
+                <EmptyAlert message={`No tienes Stands creadas`} />
               ) : (
                 <div className="dataListContainer col-1">
-                  {isLoading && !fairs.length
+                  {isLoading && !stands.length
                     ? Array(5)
                         .fill(0)
                         .map((_, i) => (
@@ -83,11 +87,18 @@ export const RequestToFairMyStandModal = ({ standID }: ComponentProps) => {
                             className={styles.standFairsCardSkeleton}
                           />
                         ))
-                    : fairs.map((fair) => (
+                    : stands.map((stand) => (
                         <InvitationCard
-                          key={fair.id}
-                          fair={fair}
-                          goBackUrl={`${ERoutesName.STANDS_LIST}/${standID}`}
+                          key={stand.id}
+                          stand={stand}
+                          goBackUrl={`${ERoutesName.STANDS_LIST}/${stand.id}`}
+                          handleSendInvitation={() =>
+                            handleSendInvitation({
+                              fairID,
+                              standID: stand.id,
+                              type: EInvitationType.FAIR_REQUEST,
+                            })
+                          }
                         />
                       ))}
                 </div>

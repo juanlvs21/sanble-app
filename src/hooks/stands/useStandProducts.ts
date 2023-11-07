@@ -10,7 +10,6 @@ import {
   getStandDetailsRequest,
   getStandProductsRequest,
   saveStandProductRequest,
-  updateStandPostRequest,
   updateStandProductRequest,
 } from "@/services";
 import { TPagination } from "@/types/THttp";
@@ -142,8 +141,6 @@ export const useStandProducts = (standID: string) => {
         presentLoading();
 
         const formData = new FormData();
-
-        console.log({ data });
 
         formData.append("name", data.name);
         formData.append("description", data.description);

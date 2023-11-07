@@ -18,12 +18,21 @@ export type ComponentProps = {
    */
   stand?: TInvitationFormStand;
   /**
+   * Send invitation function
+   */
+  handleSendInvitation: () => Promise<void>;
+  /**
    *  Go back url details
    */
   goBackUrl?: string;
 };
 
-export const InvitationCard = ({ fair, stand, goBackUrl }: ComponentProps) => {
+export const InvitationCard = ({
+  fair,
+  stand,
+  handleSendInvitation,
+  goBackUrl,
+}: ComponentProps) => {
   const linkDetails = fair
     ? `${ERoutesName.FAIRS_LIST}/${fair.id}`
     : `${ERoutesName.STANDS_LIST}/${stand?.id}`;
@@ -63,6 +72,7 @@ export const InvitationCard = ({ fair, stand, goBackUrl }: ComponentProps) => {
               color={requestSent ? "danger" : "primary"}
               expand="full"
               className={styles.invitationCardBtn}
+              onClick={handleSendInvitation}
             >
               {fair
                 ? fair.requestSent
