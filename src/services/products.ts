@@ -12,6 +12,11 @@ export const getProductTypesRequest = () =>
     .get<AxiosResponse<TProductType[]>>(`${URL_PREFIX}/types`)
     .then(({ data }) => data.data);
 
+export const getProductsRecentRequest = () =>
+  api
+    .get<AxiosResponse<TProduct[]>>(`${URL_PREFIX}/recent`)
+    .then(({ data }) => data.data);
+
 export const getProductsListRequest = (
   params?: TGetListParams,
   config?: AxiosRequestConfig

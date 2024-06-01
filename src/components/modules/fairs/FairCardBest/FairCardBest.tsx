@@ -8,6 +8,7 @@ import { TFair } from "@/types/TFair";
 import { ERoutesName } from "@/types/TRoutes";
 import { HiOutlineCalendar } from "react-icons/hi";
 import styles from "./FairCardBest.module.css";
+import { Stars } from "@/components/common/Stars";
 
 export type ComponentProps = {
   /**
@@ -45,6 +46,8 @@ export const FairCardBest = ({ fair }: ComponentProps) => {
           <span className={styles.fairBestCardType}>
             {fairType[`${fair.type}${isMobileM ? "_short" : "_long"}`]}
           </span>
+
+          <Stars value={fair.stars} />
 
           <div className={styles.fairBestCardDate}>
             <HiOutlineCalendar size={15} />

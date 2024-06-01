@@ -20,10 +20,10 @@ export const Home = () => {
   const {
     fairsBest,
     standsBest,
-    productTypes,
+    productRecent,
     isLoadingFairsBest,
     isLoadingStandsBest,
-    // isLoadingProductTypes,
+    isLoadingProductsRecent,
     handleLoadAllData,
   } = useHome();
 
@@ -38,11 +38,11 @@ export const Home = () => {
       <HomeScreenContent
         handleLoadData={handleLoadAllData}
         fairsBest={fairsBest || []}
-        standsBest={(standsBest as any) || []}
-        productTypes={productTypes || []}
+        standsBest={standsBest || []}
+        productsRecent={productRecent || []}
         isLoadingFairsBest={isLoadingFairsBest}
         isLoadingStandsBest={isLoadingStandsBest}
-        // isLoadingProductTypes={isLoadingProductTypes}
+        isLoadingProductsRecent={isLoadingProductsRecent}
       />
     </>
   );

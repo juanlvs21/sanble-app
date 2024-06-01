@@ -1,0 +1,81 @@
+.productRecentCard {
+  background: var(--ion-color-light);
+  border-radius: var(--sanble-border-radius);
+  color: var(--ion-text-color);
+  position: relative;
+  display: flex;
+  height: 90px;
+  width: 100%;
+  padding: 0;
+  height: 100%;
+  cursor: pointer;
+  -webkit-box-shadow: 0px 0px 5px 5px rgba(200, 200, 200, 0.05);
+  box-shadow: 0px 0px 5px 5px rgba(200, 200, 200, 0.05);
+  transition: all 400ms ease-in-out;
+}
+
+.productRecentCover {
+  width: 100%;
+  height: 100%;
+  transition: all 400ms ease-in-out;
+}
+
+.productRecentCover .productRecentCoverImg {
+  border-radius: var(--sanble-border-radius);
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.productRecentContent {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  text-align: start;
+  border-radius: var(--sanble-border-radius);
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
+  padding: 20px;
+  font-size: 16px;
+  margin-bottom: 10px;
+  margin-top: auto;
+  color: var(--ion-color-light);
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.7) 10%, transparent 100%);
+  transition: all 400ms ease-in-out;
+}
+
+.productRecentContent h1 {
+  font-weight: 600;
+  font-size: 12px;
+  height: 14px;
+  margin: 0;
+  margin-bottom: 10px;
+  margin-top: auto;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: all 400ms ease-in-out;
+}
+
+.productRecentContent p {
+  margin: 0;
+  font-size: 14px;
+  color: #ebebeb;
+}
+
+@media (min-width: 425px) {
+  .productRecentContent h1 {
+    font-size: 14px;
+    height: 16px;
+    transition: all 400ms ease-in-out;
+  }
+}
+
+@media (min-width: 1024px) {
+  .productRecentContent h1 {
+    font-size: 16px;
+    transition: all 400ms ease-in-out;
+  }
+}

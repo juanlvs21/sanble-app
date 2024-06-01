@@ -5,9 +5,10 @@ import { Fetcher } from "@/components/common/Fetcher";
 // import { InputSearch } from "@/components/common/forms/InputSearch";
 import { FairCardBest } from "@/components/modules/fairs/FairCardBest";
 // import { ProductCarouselCard } from "@/components/modules/products/ProductCard";
+import { ProductCardRecent } from "@/components/modules/products/ProductCardRecent";
+import { StandCardBest } from "@/components/modules/stands/StandCardBest";
 import { TFair } from "@/types/TFair";
-import { TProductType } from "@/types/TProduct";
-import { useApp } from "@/hooks/useApp";
+import { TProduct } from "@/types/TProduct";
 import { TStand } from "@/types/TStand";
 import styles from "./HomeScreenContent.module.css";
 
@@ -25,9 +26,13 @@ export type ComponentProps = {
    */
   standsBest: TStand[];
   /**
+   * List Best Stands
+   */
+  productsRecent: TProduct[];
+  /**
    * List Product Types
    */
-  productTypes: TProductType[];
+  // productTypes: TProductType[];
   /**
    * Loading Best Fairs
    */
@@ -36,6 +41,10 @@ export type ComponentProps = {
    * Loading Best Stands
    */
   isLoadingStandsBest?: boolean;
+  /**
+   * Loading Product Recent
+   */
+  isLoadingProductsRecent?: boolean;
   /**
    * Loading Product Types
    */
@@ -46,13 +55,14 @@ export const HomeScreenContent = ({
   handleLoadData,
   fairsBest,
   standsBest,
+  productsRecent,
   // productTypes,
   isLoadingFairsBest,
   isLoadingStandsBest,
+  isLoadingProductsRecent,
 }: // isLoadingProductTypes,
 ComponentProps) => {
   const isLaptop = useMediaQuery("(min-width: 1024px)");
-  const { isCapacitor } = useApp();
 
   return (
     <Fetcher
@@ -70,9 +80,8 @@ ComponentProps) => {
         title="Mejores Ferias"
         isLoading={isLoadingFairsBest}
         items={
-          fairsBest?.map((fair) => (
-            <FairCardBest key={fair.id} fair={fair} />
-          )) || []
+          fairsBest.map((fair) => <FairCardBest key={fair.id} fair={fair} />) ||
+          []
         }
         skeletonProps={{
           width: "100%",
@@ -111,18 +120,8 @@ ComponentProps) => {
         title="Mejores Stands"
         isLoading={isLoadingStandsBest}
         items={
-          standsBest?.map((stand) => (
-            <div
-              key={stand.id}
-              style={{
-                width: "100%",
-                height: "100%",
-                background: "#ff8634",
-                borderRadius: 20,
-              }}
-            >
-              <span>{stand.name}</span>
-            </div>
+          standsBest.map((stand) => (
+            <StandCardBest key={stand.id} stand={stand} />
           )) || []
         }
         skeletonProps={{
@@ -133,9 +132,23 @@ ComponentProps) => {
       />
       <Carousel
         title="Productos Recientes"
-        isLoading={isLoadingStandsBest}
+        isLoading={isLoadingProductsRecent}
         items={
-          standsBest?.map((stand) => (
+          productsRecent.map((product) => (
+            <ProductCardRecent key={product.id} product={product} />
+          )) || []
+        }
+        skeletonProps={{
+          width: "100%",
+          height: isLaptop ? 200 : 110,
+        }}
+        className={styles.homeCarousel}
+      />
+      {/* <Carousel
+        title="Productos Recientes"
+        isLoading={isLoadingProductsRecent}
+        items={
+          productsRecent?.map((stand) => (
             <div
               key={stand.id}
               style={{
@@ -154,7 +167,7 @@ ComponentProps) => {
           height: isLaptop ? 200 : 110,
         }}
         className={styles.homeCarousel}
-      />
+      /> */}
     </Fetcher>
   );
 };
