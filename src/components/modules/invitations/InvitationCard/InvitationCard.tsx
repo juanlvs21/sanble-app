@@ -67,23 +67,23 @@ export const InvitationCard = ({
           <div className={styles.invitationCardContent}>
             <h1>{fair ? fair.name : stand?.name}</h1>
             <Stars value={fair ? fair.stars : stand?.stars} />
-
-            <Button
-              color={requestSent ? "danger" : "primary"}
-              expand="full"
-              className={styles.invitationCardBtn}
-              onClick={handleSendInvitation}
-            >
-              {fair
-                ? fair.requestSent
-                  ? "Cancelar Solicitud"
-                  : "Enviar Solicitud"
-                : stand?.requestSent
-                ? "Cancelar Invitación"
-                : "Enviar Invitación"}
-            </Button>
           </div>
         </Link>
+
+        <Button
+          color={requestSent ? "danger" : "primary"}
+          expand="full"
+          className={styles.invitationCardBtn}
+          onClick={handleSendInvitation}
+        >
+          {fair
+            ? fair.requestSent
+              ? "Cancelar Solicitud"
+              : "Enviar Solicitud"
+            : stand?.requestSent
+            ? "Cancelar Invitación"
+            : "Enviar Invitación"}
+        </Button>
       </article>
     )
   );

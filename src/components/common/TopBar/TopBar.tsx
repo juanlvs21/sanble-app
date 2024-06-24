@@ -71,10 +71,13 @@ export const TopBar = ({
   const navigate = useNavigate();
   const { scrollTop, showSidebar, isCapacitor } = useApp();
 
-  const navigateToBack = () =>
+  const navigateToBack = () => {
+    console.log({ startGoBackUrl });
+
     startGoBackUrl
       ? navigate(startGoBackUrl, { replace: true })
       : history.go(-1);
+  };
 
   return (
     <IonToolbar

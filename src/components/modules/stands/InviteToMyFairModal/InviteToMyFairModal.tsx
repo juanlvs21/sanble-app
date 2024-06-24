@@ -91,7 +91,7 @@ export const InviteToMyFairModal = ({ standID }: ComponentProps) => {
                         <InvitationCard
                           key={fair.id}
                           fair={fair}
-                          goBackUrl={`${ERoutesName.FAIRS_LIST}/${fair.id}`}
+                          goBackUrl={`${ERoutesName.STANDS_LIST}/${standID}`}
                           handleSendInvitation={() =>
                             handleSendInvitation({
                               standID,

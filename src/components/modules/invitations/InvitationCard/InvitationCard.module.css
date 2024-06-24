@@ -35,8 +35,8 @@
   font-size: 18px;
   margin: 0;
   margin-bottom: 5px;
-  max-height: 40px;
-  height: 40px;
+  max-height: 25px;
+  height: 25px;
 
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
@@ -51,7 +51,9 @@
 }
 
 .invitationCardBtn {
-  margin-top: 20px;
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
 }
 
 @media (min-width: 768px) {
