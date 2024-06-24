@@ -44,6 +44,10 @@ export const ProductCardRecent = ({ product }: ComponentProps) => {
               <b>Stand:</b> {product.stand?.name}
             </p>
           )}
+
+          <div className={styles.productRecentPrice}>
+            {product.currency} {product.price}
+          </div>
         </div>
       </article>
     </Link>

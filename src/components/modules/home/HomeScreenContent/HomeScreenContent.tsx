@@ -89,33 +89,6 @@ ComponentProps) => {
         }}
         className={styles.homeCarousel}
       />
-      {/* <Carousel
-        title="Productos"
-        isLoading={isLoadingProductTypes}
-        items={
-          productTypes?.map((productType) => (
-            <ProductCarouselCard
-              key={productType.key}
-              productType={productType}
-            />
-          )) || []
-        }
-        slidesPerView={1.9}
-        breakpoints={{
-          310: { slidesPerView: 2.2 },
-          425: { slidesPerView: 3.2 },
-          550: { slidesPerView: 3.8 },
-          630: { slidesPerView: 4.2 },
-          900: { slidesPerView: 4.8 },
-          991: { slidesPerView: 3.1 },
-          1600: { slidesPerView: 3.7 },
-        }}
-        skeletonProps={{
-          width: "100%",
-          height: isLaptop ? 200 : 110,
-        }}
-        className={styles.homeCarousel}
-      /> */}
       <Carousel
         title="Mejores Stands"
         isLoading={isLoadingStandsBest}
@@ -144,30 +117,6 @@ ComponentProps) => {
         }}
         className={styles.homeCarousel}
       />
-      {/* <Carousel
-        title="Productos Recientes"
-        isLoading={isLoadingProductsRecent}
-        items={
-          productsRecent?.map((stand) => (
-            <div
-              key={stand.id}
-              style={{
-                width: "100%",
-                height: "100%",
-                background: "#ff8634",
-                borderRadius: 20,
-              }}
-            >
-              <span>{stand.name}</span>
-            </div>
-          )) || []
-        }
-        skeletonProps={{
-          width: "100%",
-          height: isLaptop ? 200 : 110,
-        }}
-        className={styles.homeCarousel}
-      /> */}
     </Fetcher>
   );
 };
