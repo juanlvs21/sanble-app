@@ -3,6 +3,7 @@ import { AxiosRequestConfig, AxiosResponse } from "axios";
 import { api } from "@/services";
 import { TResponseList } from "@/types/THttp";
 import {
+  TInvitation,
   TInvitationForm,
   TInvitationFormFair,
   TInvitationFormStand,
@@ -53,4 +54,35 @@ export const sendInvitationRequest = (data: TInvitationForm) =>
       `${URL_PREFIX}`,
       data
     )
+    .then(({ data }) => data.data);
+
+export const getInvitationsReceivedRequest = (
+  params?: TGetListParams,
+  config?: AxiosRequestConfig
+) =>
+  api
+    .get<AxiosResponse<TResponseList<TInvitation[]>>>(
+      `${URL_PREFIX}/received`,
+      {
+        ...config,
+        params: {
+          lastIndex: params?.lastIndex || 0,
+          limit: params?.limit || 9,
+        },
+      }
+    )
+    .then(({ data }) => data.data);
+
+export const getInvitationsSentRequest = (
+  params?: TGetListParams,
+  config?: AxiosRequestConfig
+) =>
+  api
+    .get<AxiosResponse<TResponseList<TInvitation[]>>>(`${URL_PREFIX}/sent`, {
+      ...config,
+      params: {
+        lastIndex: params?.lastIndex || 0,
+        limit: params?.limit || 9,
+      },
+    })
     .then(({ data }) => data.data);

@@ -342,8 +342,11 @@ export const FairDetails = () => {
         showLoadMoreBtn={showLoadMoreStandsBtn}
       />
 
-      {Boolean(user?.ownerFairs.length) && finalFairID && (
-        <RequestToFairMyStandModal fairID={finalFairID} />
+      {Boolean(user?.ownerFairs.length) && fair && (
+        <RequestToFairMyStandModal
+          fairID={finalFairID}
+          fairOwnerUid={fair?.owner.uid}
+        />
       )}
     </>
   );

@@ -26,9 +26,16 @@ export type ComponentProps = {
    * Stand id
    */
   standID: string;
+  /**
+   * Owner uid
+   */
+  standOwnerUid: string;
 };
 
-export const InviteToMyFairModal = ({ standID }: ComponentProps) => {
+export const InviteToMyFairModal = ({
+  standID,
+  standOwnerUid,
+}: ComponentProps) => {
   const { value: showModal, toggle: toggleModal } = useBoolean();
 
   const {
@@ -96,6 +103,7 @@ export const InviteToMyFairModal = ({ standID }: ComponentProps) => {
                             handleSendInvitation({
                               standID,
                               fairID: fair.id,
+                              sentTo: standOwnerUid,
                               type: EInvitationType.STAND_INVITATION,
                             })
                           }

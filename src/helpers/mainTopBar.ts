@@ -113,6 +113,16 @@ export const getPropsTopBarMain = (
       startUser: true,
       sticky: true,
     },
+    [ERoutesName.INVITATIONS_RECEIVED]: {
+      title: "Invitaciones Recibidas",
+      startUser: true,
+      sticky: true,
+    },
+    [ERoutesName.INVITATIONS_SENT]: {
+      title: "Invitaciones Enviadas",
+      startUser: true,
+      sticky: true,
+    },
     [ERoutesName.FAVORITES_FAIRS]: {
       title: "Ferias Favoritas",
       startUser: true,

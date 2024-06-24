@@ -18,4 +18,22 @@ export type TInvitationForm = {
   fairID: string;
   standID: string;
   type: EInvitationType;
+  sentTo: string;
+};
+
+export type TInvitation = {
+  id: string;
+  sentBy: string;
+  sentTo: string;
+  creationTime: string;
+  fair: TFair;
+  stand: TStand;
+  fairOwner: {
+    id: string;
+    name: string;
+  };
+  standOwner: {
+    id: string;
+    name: string;
+  };
 };

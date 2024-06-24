@@ -334,8 +334,11 @@ export const StandDetails = () => {
         showLoadMoreBtn={showLoadMoreFairsBtn}
       />
 
-      {Boolean(user?.ownerFairs.length) && finalStandID && (
-        <InviteToMyFairModal standID={finalStandID} />
+      {Boolean(user?.ownerFairs.length) && stand && (
+        <InviteToMyFairModal
+          standID={finalStandID}
+          standOwnerUid={stand?.owner.uid}
+        />
       )}
     </>
   );

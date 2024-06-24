@@ -5,12 +5,18 @@
 }
 
 .slidesItem {
-  width: 220px;
+  width: 260px;
   height: 150px;
   transition: all 400ms ease-in-out;
 }
 
-@media (min-width: 820) {
+@media (min-width: 630px) {
+  .slidesItem {
+    width: 240px;
+  }
+}
+
+@media (min-width: 820px) {
   .slidesItem {
     width: 270px;
     transition: all 400ms ease-in-out;

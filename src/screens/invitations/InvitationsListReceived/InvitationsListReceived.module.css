@@ -1,0 +1,9 @@
+.invitationsListCardSkeleton {
+  margin-bottom: 20px;
+}
+
+@media (min-width: 768px) {
+  .invitationsListCardSkeleton {
+    margin: 20px;
+  }
+}

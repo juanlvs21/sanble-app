@@ -4,10 +4,11 @@ import { createBrowserRouter, Navigate } from "react-router-dom";
 
 import { SuspenseComponent } from "@/components/common/SuspenseComponent";
 import { AuthLayout } from "@/components/layouts/Auth";
-import { MainLayout } from "@/components/layouts/Main";
-import { HomeLayout } from "@/components/layouts/Home";
-import { MySanbleList } from "@/components/layouts/MySanbleList";
 import { FavoritesList } from "@/components/layouts/FavoritesList";
+import { HomeLayout } from "@/components/layouts/Home";
+import { InvitationsList } from "@/components/layouts/InvitationsList";
+import { MainLayout } from "@/components/layouts/Main";
+import { MySanbleList } from "@/components/layouts/MySanbleList";
 import { ProvidersLayout } from "@/components/layouts/Providers";
 import { ERoutesName } from "@/types/TRoutes";
 
@@ -133,6 +134,20 @@ const MySanbleNewStandScreen = lazy(() =>
     default: NewStand,
   }))
 );
+const InvitationsListReceivedScreen = lazy(() =>
+  import("@/screens/invitations/InvitationsListReceived").then(
+    ({ InvitationsListReceived }) => ({
+      default: InvitationsListReceived,
+    })
+  )
+);
+const InvitationsListSentScreen = lazy(() =>
+  import("@/screens/invitations/InvitationsListSent").then(
+    ({ InvitationsListSent }) => ({
+      default: InvitationsListSent,
+    })
+  )
+);
 const FavoriteFairsScreen = lazy(() =>
   import("@/screens/favorites/FavoritesFairs").then(({ FavoritesFairs }) => ({
     default: FavoritesFairs,
@@ -149,7 +164,7 @@ const ProfileScreen = lazy(() =>
   }))
 );
 
-const ErrorScreen = () => <h1 style={{ marginTop: 300 }}>Error :c :c</h1>;
+const ErrorScreen = () => <h1 style={{ marginTop: 300 }}>Error :c :c</h1>; // TODO: CHANGE THIS
 
 export const router = createBrowserRouter([
   {
@@ -261,6 +276,40 @@ export const router = createBrowserRouter([
                 <MySanbleNewStandScreen />
               </SuspenseComponent>
             ),
+          },
+          {
+            path: ERoutesName.INVITATIONS,
+            element: <InvitationsList />,
+            children: [
+              {
+                index: true,
+                errorElement: <ErrorScreen />,
+                element: (
+                  <Navigate
+                    to={ERoutesName.INVITATIONS_RECEIVED}
+                    replace={true}
+                  />
+                ),
+              },
+              {
+                path: ERoutesName.INVITATIONS_RECEIVED,
+                errorElement: <ErrorScreen />,
+                element: (
+                  <SuspenseComponent>
+                    <InvitationsListReceivedScreen />
+                  </SuspenseComponent>
+                ),
+              },
+              {
+                path: ERoutesName.INVITATIONS_SENT,
+                errorElement: <ErrorScreen />,
+                element: (
+                  <SuspenseComponent>
+                    <InvitationsListSentScreen />
+                  </SuspenseComponent>
+                ),
+              },
+            ],
           },
           {
             path: ERoutesName.FAVORITES,

@@ -8,6 +8,7 @@ import {
   useIonAlert,
 } from "@ionic/react";
 import { useMemo } from "react";
+import { BsEnvelope } from "react-icons/bs";
 import { FiHeart, FiHome, FiLogOut, FiMapPin, FiUser } from "react-icons/fi";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import { Link, useLocation, useMatch } from "react-router-dom";
@@ -31,10 +32,9 @@ export const Sidebar = () => {
   const matchStandsList = useMatch(ERoutesName.STANDS_LIST);
   const matchProductsList = useMatch(ERoutesName.PRODUCTS_LIST);
   const matchFavorites = useMatch(ERoutesName.FAVORITES);
-  const matchMySanbleFairs = useMatch(ERoutesName.MY_SANBLE_FAIRS);
-  const matchMySanbleStands = useMatch(ERoutesName.MY_SANBLE_STANDS);
+  const matchMySanble = useMatch(ERoutesName.MY_SANBLE);
+  const matchInvitations = useMatch(ERoutesName.INVITATIONS);
   const matchNearYou = useMatch(ERoutesName.NEAR_YOU);
-  // const matchMessages = useMatch("/app/mensajes");
   const matchProfile = useMatch(ERoutesName.PROFILE);
 
   const items = useMemo(
@@ -57,13 +57,17 @@ export const Sidebar = () => {
         path: ERoutesName.MY_SANBLE_FAIRS,
         icon: (
           <img
-            src={`/assets/icon/${
-              matchMySanbleFairs || matchMySanbleStands ? "logo" : "logoWhite"
-            }.png`}
+            src={`/assets/icon/${matchMySanble ? "logo" : "logoWhite"}.png`}
             alt="Sanble"
           />
         ),
-        active: matchMySanbleFairs || matchMySanbleStands,
+        active: matchMySanble,
+      },
+      {
+        label: "Invitaciones",
+        path: ERoutesName.INVITATIONS,
+        icon: <BsEnvelope size={28} />,
+        active: matchInvitations,
       },
       {
         label: "Cerca de ti",
@@ -71,12 +75,6 @@ export const Sidebar = () => {
         icon: <FiMapPin size={28} />,
         active: matchNearYou,
       },
-      // {
-      //   label: "Mensajes",
-      //   path: "/mensajes",
-      //   icon: <MdMessage size={28} />,
-      //   active:matchMessages,
-      // },
       {
         label: "Perfil",
         path: ERoutesName.PROFILE,
