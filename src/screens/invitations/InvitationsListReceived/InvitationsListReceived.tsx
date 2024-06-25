@@ -1,19 +1,12 @@
-import { useIonActionSheet } from "@ionic/react";
-import { BiFilterAlt } from "react-icons/bi";
-
 import { EmptyList } from "@/components/common/EmptyList";
 import { Fetcher } from "@/components/common/Fetcher";
 import { Skeleton } from "@/components/common/Skeleton";
-import { Button } from "@/components/common/buttons/Button";
 import { ButtonLoadMore } from "@/components/common/buttons/ButtonLoadMore";
-import { FairCardList } from "@/components/modules/fairs/FairCardList";
-import { useFavoritesFairs } from "@/hooks/favorites/useFavoritesFairs";
+import { InvitationCardListReceived } from "@/components/modules/invitations/InvitationCardListReceived";
+import { useInvitationsListReceived } from "@/hooks/invitations/useInvitationsListReceived";
 import { useApp } from "@/hooks/useApp";
 import { useDocumentTitleApp } from "@/hooks/useDocumentTitle";
-import { useTopBarMain } from "@/hooks/useTopBarMain";
-import { ERoutesName } from "@/types/TRoutes";
 import styles from "./InvitationsListReceived.module.css";
-import { useInvitationsListReceived } from "@/hooks/invitations/useInvitationsListReceived";
 
 export const InvitationsListReceived = () => {
   useDocumentTitleApp("Invitaciones Recibidas 📥");
@@ -37,7 +30,7 @@ export const InvitationsListReceived = () => {
       >
         <>
           {isEmpty && <EmptyList title="No tienes invitaciones recibidas" />}
-          {/* <div
+          <div
             className={`dataListContainer ${isCapacitor ? "isCapacitor" : ""} `}
           >
             {(isLoading && !list.length) || isLoading
@@ -50,14 +43,15 @@ export const InvitationsListReceived = () => {
                       className={styles.invitationsListCardSkeleton}
                     />
                   ))
-              : list.map((fair) => (
-                  <FairCardList
-                    key={fair.id}
-                    fair={fair}
-                    goBackUrl={ERoutesName.FAVORITES_FAIRS}
+              : list.map((invitation) => (
+                  <InvitationCardListReceived
+                    key={invitation.id}
+                    invitation={invitation}
+                    handleAccept={() => Promise.resolve()}
+                    handleCancel={() => Promise.resolve()}
                   />
                 ))}
-          </div> */}
+          </div>
           {showLoadMoreBtn && (
             <ButtonLoadMore
               handleLoadMore={handleLoadMore}

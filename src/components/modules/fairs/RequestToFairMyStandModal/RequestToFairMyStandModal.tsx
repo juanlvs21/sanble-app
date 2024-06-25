@@ -98,7 +98,7 @@ export const RequestToFairMyStandModal = ({
                         <InvitationCard
                           key={stand.id}
                           stand={stand}
-                          goBackUrl={`${ERoutesName.STANDS_LIST}/${stand.id}`}
+                          goBackUrl={`${ERoutesName.FAIRS_LIST}/${fairID}`}
                           handleSendInvitation={() =>
                             handleSendInvitation({
                               fairID,

@@ -37,7 +37,7 @@ export const InvitationCard = ({
     ? `${ERoutesName.FAIRS_LIST}/${fair.id}`
     : `${ERoutesName.STANDS_LIST}/${stand?.id}`;
 
-  const requestSent = fair?.requestSent || stand?.requestSent;
+  const requestSent = fair?.requestSent || stand?.invitationSent;
 
   return (
     (fair || stand) && (
@@ -78,11 +78,11 @@ export const InvitationCard = ({
         >
           {fair
             ? fair.requestSent
-              ? "Cancelar Solicitud"
-              : "Enviar Solicitud"
-            : stand?.requestSent
-            ? "Cancelar Invitación"
-            : "Enviar Invitación"}
+              ? "Cancelar Invitación"
+              : "Enviar Invitación"
+            : stand?.invitationSent
+            ? "Cancelar Solicitud"
+            : "Enviar Solicitud"}
         </Button>
       </article>
     )
