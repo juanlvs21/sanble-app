@@ -4,6 +4,7 @@ import { IoMdCheckmark, IoMdClose } from "react-icons/io";
 import { ImageExtended } from "@/components/common/ImageExtended";
 import { Button } from "@/components/common/buttons/Button";
 import styles from "./InvitationCardListReceived.module.css";
+import { useMemo } from "react";
 
 export type ComponentProps = {
   /**
@@ -18,17 +19,41 @@ export type ComponentProps = {
    * Cancel invitation function
    */
   handleCancel: () => Promise<void>;
+  /**
+   * Sent by me
+   */
+  sentByMe?: boolean;
 };
 
-export const InvitationCardListReceived = ({ invitation }: ComponentProps) => {
-  const invitationFrom =
-    invitation.type === EInvitationType.FAIR_REQUEST
+export const InvitationCardListReceived = ({
+  invitation,
+  handleAccept,
+  handleCancel,
+  sentByMe,
+}: ComponentProps) => {
+  const invitationFrom = useMemo(() => {
+    if (sentByMe) {
+      return invitation.type === EInvitationType.FAIR_REQUEST
+        ? invitation.fair
+        : invitation.stand;
+    }
+
+    return invitation.type === EInvitationType.FAIR_REQUEST
       ? invitation.stand
       : invitation.fair;
-  const invitationTo =
-    invitation.type === EInvitationType.FAIR_REQUEST
+  }, [invitation, sentByMe]);
+
+  const invitationTo = useMemo(() => {
+    if (sentByMe) {
+      return invitation.type === EInvitationType.FAIR_REQUEST
+        ? invitation.stand
+        : invitation.fair;
+    }
+
+    return invitation.type === EInvitationType.FAIR_REQUEST
       ? invitation.fair
       : invitation.stand;
+  }, [invitation, sentByMe]);
 
   return (
     invitation && (
@@ -45,32 +70,69 @@ export const InvitationCardListReceived = ({ invitation }: ComponentProps) => {
           }}
         />
         <div className={styles.invitationCardContent}>
-          {invitation.type === EInvitationType.FAIR_REQUEST && (
+          {!sentByMe && (
             <>
-              <h1>Solicitud de invitación</h1>
-              <p>
-                El Stand <b>{invitationFrom.name}</b> está solicitando formar
-                parte de tu Feria <b>{invitationTo.name}</b>
-              </p>
+              {invitation.type === EInvitationType.FAIR_REQUEST && (
+                <>
+                  <h1>Solicitud de invitación</h1>
+                  <p>
+                    El Stand <b>{invitationFrom.name}</b> está solicitando
+                    formar parte de tu Feria <b>{invitationTo.name}</b>
+                  </p>
+                </>
+              )}
+              {invitation.type === EInvitationType.STAND_INVITATION && (
+                <>
+                  <h1>Invitación a Feria</h1>
+                  <p>
+                    La Feria <b>{invitationFrom.name}</b> ha invitado a tu Stand
+                    <b> {invitationTo.name}</b> a formar parte de su evento
+                  </p>
+                </>
+              )}
             </>
           )}
-          {invitation.type === EInvitationType.STAND_INVITATION && (
+
+          {sentByMe && (
             <>
-              <h1>Invitación a Feria</h1>
-              <p>
-                La Feria <b>{invitationFrom.name}</b> ha invitado a tu Stand
-                <b> {invitationTo.name}</b> a formar parte de su evento
-              </p>
+              {invitation.type === EInvitationType.FAIR_REQUEST && (
+                <>
+                  <h1>Solicitud de invitación</h1>
+                  <p>
+                    Solicitaste formar parte de la Feria
+                    <b> {invitationFrom.name}</b> con tu Stant
+                    <b> {invitationTo.name}</b>
+                  </p>
+                </>
+              )}
+              {invitation.type === EInvitationType.STAND_INVITATION && (
+                <>
+                  <h1>Invitación enviada</h1>
+                  <p>
+                    Haz invitado al stand <b>{invitationFrom.name}</b> a formar
+                    parte de tu feria Feria <b>{invitationTo.name}</b>
+                  </p>
+                </>
+              )}
             </>
           )}
 
           <div className={styles.invitationCardBtns}>
-            <Button color="danger" className={styles.invitationCardBtn}>
+            <Button
+              color="danger"
+              className={styles.invitationCardBtn}
+              onClick={handleCancel}
+            >
               <IoMdClose size={24} />
             </Button>
-            <Button className={styles.invitationCardBtn}>
-              <IoMdCheckmark size={24} />
-            </Button>
+            {!sentByMe && (
+              <Button
+                className={styles.invitationCardBtn}
+                onClick={handleAccept}
+              >
+                <IoMdCheckmark size={24} />
+              </Button>
+            )}
           </div>
         </div>
       </article>
