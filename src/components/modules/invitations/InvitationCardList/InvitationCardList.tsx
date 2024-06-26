@@ -3,7 +3,7 @@ import { IoMdCheckmark, IoMdClose } from "react-icons/io";
 
 import { ImageExtended } from "@/components/common/ImageExtended";
 import { Button } from "@/components/common/buttons/Button";
-import styles from "./InvitationCardListReceived.module.css";
+import styles from "./InvitationCardList.module.css";
 import { useMemo } from "react";
 
 export type ComponentProps = {
@@ -18,14 +18,14 @@ export type ComponentProps = {
   /**
    * Cancel invitation function
    */
-  handleCancel: () => Promise<void>;
+  handleCancel: (invitationId: string) => Promise<void>;
   /**
    * Sent by me
    */
   sentByMe?: boolean;
 };
 
-export const InvitationCardListReceived = ({
+export const InvitationCardList = ({
   invitation,
   handleAccept,
   handleCancel,
@@ -121,7 +121,7 @@ export const InvitationCardListReceived = ({
             <Button
               color="danger"
               className={styles.invitationCardBtn}
-              onClick={handleCancel}
+              onClick={() => handleCancel(invitation.id)}
             >
               <IoMdClose size={24} />
             </Button>

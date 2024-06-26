@@ -2,7 +2,8 @@ import { EmptyList } from "@/components/common/EmptyList";
 import { Fetcher } from "@/components/common/Fetcher";
 import { Skeleton } from "@/components/common/Skeleton";
 import { ButtonLoadMore } from "@/components/common/buttons/ButtonLoadMore";
-import { InvitationCardListReceived } from "@/components/modules/invitations/InvitationCardListReceived";
+import { InvitationCardList } from "@/components/modules/invitations/InvitationCardList";
+import { useInvitationDecline } from "@/hooks/invitations/useInvitationDecline";
 import { useInvitationsListReceived } from "@/hooks/invitations/useInvitationsListReceived";
 import { useApp } from "@/hooks/useApp";
 import { useDocumentTitleApp } from "@/hooks/useDocumentTitle";
@@ -20,6 +21,9 @@ export const InvitationsListReceived = () => {
     handleRefresh,
     handleLoadMore,
   } = useInvitationsListReceived();
+  const { handleDecline } = useInvitationDecline({
+    handleReload: handleRefresh,
+  });
 
   return (
     <>
@@ -44,11 +48,11 @@ export const InvitationsListReceived = () => {
                     />
                   ))
               : list.map((invitation) => (
-                  <InvitationCardListReceived
+                  <InvitationCardList
                     key={invitation.id}
                     invitation={invitation}
                     handleAccept={() => Promise.resolve()}
-                    handleCancel={() => Promise.resolve()}
+                    handleCancel={handleDecline}
                   />
                 ))}
           </div>
