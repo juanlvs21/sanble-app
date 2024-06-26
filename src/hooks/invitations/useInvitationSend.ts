@@ -11,9 +11,9 @@ export const useInvitationSend = (fnCallback: () => Promise<void>) => {
     try {
       presentLoading();
 
-      const res = await sendInvitationRequest(data);
+      await sendInvitationRequest(data);
 
-      console.log({ res });
+      toast("Invitación enviada", { type: "success" });
 
       await fnCallback();
     } catch (error) {

@@ -89,14 +89,15 @@ export const getInvitationsSentRequest = (
 
 export const unsendInvitationRequest = (invitationId: string) =>
   api
-    .delete<AxiosResponse<TResponseList<TInvitation[]>>>(
-      `${URL_PREFIX}/${invitationId}/unsend`
-    )
+    .delete<AxiosResponse>(`${URL_PREFIX}/${invitationId}/unsend`)
     .then(({ data }) => data.data);
 
 export const declineInvitationRequest = (invitationId: string) =>
   api
-    .delete<AxiosResponse<TResponseList<TInvitation[]>>>(
-      `${URL_PREFIX}/${invitationId}/decline`
-    )
+    .delete<AxiosResponse>(`${URL_PREFIX}/${invitationId}/decline`)
+    .then(({ data }) => data.data);
+
+export const acceptInvitationRequest = (invitationId: string) =>
+  api
+    .patch<AxiosResponse>(`${URL_PREFIX}/${invitationId}`)
     .then(({ data }) => data.data);

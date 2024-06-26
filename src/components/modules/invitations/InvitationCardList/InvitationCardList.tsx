@@ -1,10 +1,11 @@
 import { EInvitationType, TInvitation } from "@/types/TInvitation";
+import { useIonAlert } from "@ionic/react";
+import { useMemo } from "react";
 import { IoMdCheckmark, IoMdClose } from "react-icons/io";
 
 import { ImageExtended } from "@/components/common/ImageExtended";
 import { Button } from "@/components/common/buttons/Button";
 import styles from "./InvitationCardList.module.css";
-import { useMemo } from "react";
 
 export type ComponentProps = {
   /**
@@ -14,7 +15,7 @@ export type ComponentProps = {
   /**
    * Accept invitation function
    */
-  handleAccept: () => Promise<void>;
+  handleAccept: (invitationId: string) => Promise<void>;
   /**
    * Cancel invitation function
    */
@@ -31,6 +32,8 @@ export const InvitationCardList = ({
   handleCancel,
   sentByMe,
 }: ComponentProps) => {
+  const [presentAlert] = useIonAlert();
+
   const invitationFrom = useMemo(() => {
     if (sentByMe) {
       return invitation.type === EInvitationType.FAIR_REQUEST
@@ -54,6 +57,26 @@ export const InvitationCardList = ({
       ? invitation.fair
       : invitation.stand;
   }, [invitation, sentByMe]);
+
+  const handleOpenConfirm = () => {
+    presentAlert({
+      header: sentByMe ? "Cancelar Invitiación" : "Rechazar Invitación",
+      message: sentByMe
+        ? "¿Estás seguro de que deseas cancelar la invitación?"
+        : "¿Estás seguro de que deseas rechazar la invitación?",
+      buttons: [
+        {
+          text: "Cerrar",
+          role: "cancel",
+        },
+        {
+          text: "Confirmar",
+          role: "confirm",
+          handler: () => handleCancel(invitation.id),
+        },
+      ],
+    });
+  };
 
   return (
     invitation && (
@@ -121,14 +144,14 @@ export const InvitationCardList = ({
             <Button
               color="danger"
               className={styles.invitationCardBtn}
-              onClick={() => handleCancel(invitation.id)}
+              onClick={handleOpenConfirm}
             >
               <IoMdClose size={24} />
             </Button>
             {!sentByMe && (
               <Button
                 className={styles.invitationCardBtn}
-                onClick={handleAccept}
+                onClick={() => handleAccept(invitation.id)}
               >
                 <IoMdCheckmark size={24} />
               </Button>

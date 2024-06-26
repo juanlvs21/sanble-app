@@ -3,6 +3,7 @@ import { Fetcher } from "@/components/common/Fetcher";
 import { Skeleton } from "@/components/common/Skeleton";
 import { ButtonLoadMore } from "@/components/common/buttons/ButtonLoadMore";
 import { InvitationCardList } from "@/components/modules/invitations/InvitationCardList";
+import { useInvitationAccept } from "@/hooks/invitations/useInvitationAccept";
 import { useInvitationDecline } from "@/hooks/invitations/useInvitationDecline";
 import { useInvitationsListReceived } from "@/hooks/invitations/useInvitationsListReceived";
 import { useApp } from "@/hooks/useApp";
@@ -22,6 +23,10 @@ export const InvitationsListReceived = () => {
     handleLoadMore,
   } = useInvitationsListReceived();
   const { handleDecline } = useInvitationDecline({
+    handleReload: handleRefresh,
+  });
+
+  const { handleAccept } = useInvitationAccept({
     handleReload: handleRefresh,
   });
 
@@ -51,7 +56,7 @@ export const InvitationsListReceived = () => {
                   <InvitationCardList
                     key={invitation.id}
                     invitation={invitation}
-                    handleAccept={() => Promise.resolve()}
+                    handleAccept={handleAccept}
                     handleCancel={handleDecline}
                   />
                 ))}
