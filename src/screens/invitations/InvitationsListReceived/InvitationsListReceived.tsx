@@ -23,7 +23,7 @@ export const InvitationsListReceived = () => {
     handleLoadMore,
   } = useInvitationsListReceived();
   const { handleDecline } = useInvitationDecline({
-    handleReload: handleRefresh,
+    handleRefresh,
   });
 
   const { handleAccept } = useInvitationAccept({

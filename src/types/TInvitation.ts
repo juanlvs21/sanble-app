@@ -3,10 +3,12 @@ import { TStand } from "./TStand";
 
 export type TInvitationFormFair = TFair & {
   requestSent: boolean;
+  invitationId: string;
 };
 
 export type TInvitationFormStand = TStand & {
   invitationSent: boolean;
+  invitationId: string;
 };
 
 export enum EInvitationType {

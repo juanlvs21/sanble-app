@@ -22,7 +22,7 @@ export const InvitationsListSent = () => {
     handleLoadMore,
   } = useInvitationsListSent();
   const { handleUnsend } = useInvitationUnsend({
-    handleReload: handleRefresh,
+    handleRefresh,
   });
 
   return (

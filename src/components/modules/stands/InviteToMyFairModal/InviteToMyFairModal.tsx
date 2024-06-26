@@ -17,6 +17,7 @@ import { ButtonLoadMore } from "@/components/common/buttons/ButtonLoadMore";
 import { InvitationCard } from "@/components/modules/invitations/InvitationCard";
 import { useInvitationListMyFairs } from "@/hooks/invitations/useInvitationListMyFairs";
 import { useInvitationSend } from "@/hooks/invitations/useInvitationSend";
+import { useInvitationUnsend } from "@/hooks/invitations/useInvitationUnsend";
 import { EInvitationType } from "@/types/TInvitation";
 import { ERoutesName } from "@/types/TRoutes";
 import styles from "./InviteToMyFairModal.module.css";
@@ -48,6 +49,9 @@ export const InviteToMyFairModal = ({
   } = useInvitationListMyFairs(standID);
 
   const { handleSendInvitation } = useInvitationSend(handleRefresh);
+  const { handleUnsend } = useInvitationUnsend({
+    handleRefresh,
+  });
 
   return (
     <>
@@ -107,6 +111,7 @@ export const InviteToMyFairModal = ({
                               type: EInvitationType.STAND_INVITATION,
                             })
                           }
+                          handleUnsendInvitation={handleUnsend}
                         />
                       ))}
                 </div>

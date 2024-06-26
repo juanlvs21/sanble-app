@@ -4,11 +4,11 @@ import { useToast } from "@/hooks/useToast";
 import { declineInvitationRequest } from "@/services/invitation";
 
 export type TUseInvitationDecline = {
-  handleReload: () => Promise<void>;
+  handleRefresh: () => Promise<void>;
 };
 
 export const useInvitationDecline = ({
-  handleReload,
+  handleRefresh,
 }: TUseInvitationDecline) => {
   const [presentLoading, dismissLoading] = useIonLoading();
   const { toast } = useToast();
@@ -21,7 +21,7 @@ export const useInvitationDecline = ({
 
       toast("Invitación rechazada", { type: "success" });
 
-      await handleReload();
+      await handleRefresh();
     } catch (error) {
       toast(error, { type: "error" });
     } finally {

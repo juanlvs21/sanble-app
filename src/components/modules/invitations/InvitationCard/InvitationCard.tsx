@@ -22,6 +22,10 @@ export type ComponentProps = {
    */
   handleSendInvitation: () => Promise<void>;
   /**
+   * Send invitation function
+   */
+  handleUnsendInvitation: (invitationId: string) => Promise<void>;
+  /**
    *  Go back url details
    */
   goBackUrl?: string;
@@ -30,14 +34,16 @@ export type ComponentProps = {
 export const InvitationCard = ({
   fair,
   stand,
-  handleSendInvitation,
   goBackUrl,
+  handleSendInvitation,
+  handleUnsendInvitation,
 }: ComponentProps) => {
   const linkDetails = fair
     ? `${ERoutesName.FAIRS_LIST}/${fair.id}`
     : `${ERoutesName.STANDS_LIST}/${stand?.id}`;
 
   const requestSent = fair?.requestSent || stand?.invitationSent;
+  const invitationId = fair?.invitationId || stand?.invitationId;
 
   return (
     (fair || stand) && (
@@ -74,7 +80,11 @@ export const InvitationCard = ({
           color={requestSent ? "danger" : "primary"}
           expand="full"
           className={styles.invitationCardBtn}
-          onClick={handleSendInvitation}
+          onClick={
+            invitationId
+              ? () => handleUnsendInvitation(invitationId)
+              : handleSendInvitation
+          }
         >
           {fair
             ? fair.requestSent

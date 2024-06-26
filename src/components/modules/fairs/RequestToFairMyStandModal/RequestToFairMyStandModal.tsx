@@ -17,6 +17,7 @@ import { ButtonLoadMore } from "@/components/common/buttons/ButtonLoadMore";
 import { InvitationCard } from "@/components/modules/invitations/InvitationCard";
 import { useInvitationListMyStand } from "@/hooks/invitations/useInvitationListMyStand";
 import { useInvitationSend } from "@/hooks/invitations/useInvitationSend";
+import { useInvitationUnsend } from "@/hooks/invitations/useInvitationUnsend";
 import { EInvitationType } from "@/types/TInvitation";
 import { ERoutesName } from "@/types/TRoutes";
 import styles from "./RequestToFairMyStandModal.module.css";
@@ -48,6 +49,9 @@ export const RequestToFairMyStandModal = ({
   } = useInvitationListMyStand(fairID);
 
   const { handleSendInvitation } = useInvitationSend(handleRefresh);
+  const { handleUnsend } = useInvitationUnsend({
+    handleRefresh,
+  });
 
   return (
     <>
@@ -107,6 +111,7 @@ export const RequestToFairMyStandModal = ({
                               type: EInvitationType.FAIR_REQUEST,
                             })
                           }
+                          handleUnsendInvitation={handleUnsend}
                         />
                       ))}
                 </div>

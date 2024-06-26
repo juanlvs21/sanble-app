@@ -4,10 +4,12 @@ import { useToast } from "@/hooks/useToast";
 import { unsendInvitationRequest } from "@/services/invitation";
 
 export type TUseInvitationUnsend = {
-  handleReload: () => Promise<void>;
+  handleRefresh: () => Promise<void>;
 };
 
-export const useInvitationUnsend = ({ handleReload }: TUseInvitationUnsend) => {
+export const useInvitationUnsend = ({
+  handleRefresh,
+}: TUseInvitationUnsend) => {
   const [presentLoading, dismissLoading] = useIonLoading();
   const { toast } = useToast();
 
@@ -19,7 +21,7 @@ export const useInvitationUnsend = ({ handleReload }: TUseInvitationUnsend) => {
 
       toast("Inivitacion cancelada", { type: "success" });
 
-      await handleReload();
+      await handleRefresh();
     } catch (error) {
       toast(error, { type: "error" });
     } finally {
