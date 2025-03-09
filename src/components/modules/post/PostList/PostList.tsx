@@ -6,7 +6,7 @@ import {
   IonToolbar,
   useIonActionSheet,
 } from "@ionic/react";
-import { RefObject, useState } from "react";
+import { RefObject, useEffect, useRef, useState } from "react";
 import { UseFormReset } from "react-hook-form";
 import { AiOutlineClose } from "react-icons/ai";
 import { BsThreeDotsVertical } from "react-icons/bs";
@@ -96,6 +96,7 @@ export const PostList = ({
   const [present] = useIonActionSheet();
   const { value: showModalUpdate, toggle: toggleModalUpdate } = useBoolean();
   const [postUpdate, setPostUpdate] = useState<TPost>();
+  const postRefs = useRef<{ [key: string]: HTMLLIElement | null }>({});
 
   const handleOpenMenu = (post: TPost) => {
     present({
@@ -124,6 +125,17 @@ export const PostList = ({
     });
   };
 
+  useEffect(() => {
+    setTimeout(() => {
+      if (scrollPostID && postRefs.current[scrollPostID]) {
+        postRefs.current[scrollPostID]?.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }
+    }, 1000);
+  }, [scrollPostID, postRefs.current]);
+
   return (
     <>
       {isLoading && <Spinner className={`${styles.postSpinner}`} center />}
@@ -148,11 +160,20 @@ export const PostList = ({
               ))
           : posts.map((post) => (
               <li
+                id={post.id}
                 key={post.id}
                 className={`${styles.postCard} ${
-                  scrollPostID === post.id ? styles.postCardSelect : ""
+                  scrollPostID == post.id ? styles.postCardSelect : ""
                 } animate__animated animate__fadeIn`}
-                ref={scrollPostID === post.id ? scrollRef : undefined}
+                ref={(el) => {
+                  if (el) {
+                    postRefs.current[post.id] = el;
+                    console.log(
+                      `Asignado ref a ${post.id}`,
+                      postRefs.current[post.id]
+                    );
+                  }
+                }}
               >
                 {isOwner && (
                   <Button

@@ -4,6 +4,8 @@
 
 .postFormInput {
   height: 120px;
+  padding-left: 12px;
+  padding-right: 12px;
 }
 
 .postFormInput::part(native),

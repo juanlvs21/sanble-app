@@ -4,7 +4,13 @@ import { FiEdit2, FiMapPin } from "react-icons/fi";
 import { HiOutlinePhotograph } from "react-icons/hi";
 import { MdOutlineStorefront } from "react-icons/md";
 import { TiStar } from "react-icons/ti";
-import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
+import {
+  Link,
+  useLocation,
+  useNavigate,
+  useParams,
+  useSearchParams,
+} from "react-router-dom";
 
 import { Fetcher } from "@/components/common/Fetcher";
 import { ImageExtended } from "@/components/common/ImageExtended";
@@ -24,7 +30,6 @@ import { useFairDetails } from "@/hooks/fairs/useFairDetails";
 import { useFairStands } from "@/hooks/fairs/useFairStands";
 import { useApp } from "@/hooks/useApp";
 import { useDocumentTitleApp } from "@/hooks/useDocumentTitle";
-import { useScrollTo } from "@/hooks/useScrollTo";
 import { useSegmentDetails } from "@/hooks/useSegmentDetails";
 import { useTopBarMain } from "@/hooks/useTopBarMain";
 import { useUser } from "@/hooks/useUser";
@@ -43,6 +48,7 @@ export const FairDetails = () => {
   const navigate = useNavigate();
   const { fairID } = useParams<TRouteParams>();
   const { state } = useLocation();
+  const [searchParams] = useSearchParams();
   const { renderTopBarActionEnd } = useTopBarMain();
   const { isCapacitor } = useApp();
   const finalFairID: string = fairID || state?.fairID || "";
@@ -71,6 +77,7 @@ export const FairDetails = () => {
     handleDeletePost,
     handleUpdatePost,
   } = useFairDetails(finalFairID);
+
   const {
     stands,
     isLoading: isLoadingStands,
@@ -79,10 +86,8 @@ export const FairDetails = () => {
     handleRefresh: handleRefreshStands,
     handleLoadMore: handleLoadMoreStands,
   } = useFairStands(finalFairID);
-  const { scrollRef, scrollKey } = useScrollTo({
-    searchParamName: "post_id",
-    canScrollTo: !isLoadingDetails && !isLoadingPosts,
-  });
+
+  const scrollKey = searchParams.get("post_id");
 
   const { value: segmentValue, handleChange: segmentHandleChange } =
     useSegmentDetails();
@@ -270,7 +275,6 @@ export const FairDetails = () => {
                   isUpdating={isUpdatingPost}
                   handleDelete={handleDeletePost}
                   isOwner={fair?.owner.uid === user?.uid}
-                  scrollRef={scrollRef}
                   scrollPostID={scrollKey}
                 />
               </section>

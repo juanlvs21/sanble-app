@@ -4,7 +4,13 @@ import { BiStoreAlt } from "react-icons/bi";
 import { FiEdit2 } from "react-icons/fi";
 import { HiOutlinePhotograph, HiOutlineShoppingBag } from "react-icons/hi";
 import { TiStar } from "react-icons/ti";
-import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
+import {
+  Link,
+  useLocation,
+  useNavigate,
+  useParams,
+  useSearchParams,
+} from "react-router-dom";
 
 import { Fetcher } from "@/components/common/Fetcher";
 import { ImageExtended } from "@/components/common/ImageExtended";
@@ -23,7 +29,6 @@ import { useStandDetails } from "@/hooks/stands/useStandDetails";
 import { useStandFairs } from "@/hooks/stands/useStandFairs";
 import { useApp } from "@/hooks/useApp";
 import { useDocumentTitleApp } from "@/hooks/useDocumentTitle";
-import { useScrollTo } from "@/hooks/useScrollTo";
 import { useSegmentDetails } from "@/hooks/useSegmentDetails";
 import { useTopBarMain } from "@/hooks/useTopBarMain";
 import { useUser } from "@/hooks/useUser";
@@ -41,6 +46,7 @@ export const StandDetails = () => {
   const navigate = useNavigate();
   const { standID } = useParams<TRouteParams>();
   const { state } = useLocation();
+  const [searchParams] = useSearchParams();
   const { renderTopBarActionEnd } = useTopBarMain();
   const { isCapacitor } = useApp();
   const finalStandID: string = standID || state?.standID || "";
@@ -78,10 +84,7 @@ export const StandDetails = () => {
     handleRefresh: handleRefreshFairs,
     handleLoadMore: handleLoadMoreFairs,
   } = useStandFairs(finalStandID);
-  const { scrollRef, scrollKey } = useScrollTo({
-    searchParamName: "post_id",
-    canScrollTo: !isLoadingDetails && !isLoadingPosts,
-  });
+  const scrollKey = searchParams.get("post_id");
 
   const { value: segmentValue, handleChange: segmentHandleChange } =
     useSegmentDetails();
@@ -262,7 +265,6 @@ export const StandDetails = () => {
                   handleUpdate={handleUpdatePost}
                   isUpdating={isUpdatingPost}
                   isOwner={stand?.owner.uid === user?.uid}
-                  scrollRef={scrollRef}
                   scrollPostID={scrollKey}
                 />
               </section>
