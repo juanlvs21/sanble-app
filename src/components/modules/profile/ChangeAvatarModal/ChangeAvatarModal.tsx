@@ -42,31 +42,27 @@ export const ChangeAvatarModal = ({
 
   const handleOpenCamera = async () => {
     try {
-      // const permissions = await Camera.requestPermissions();
+      const image = await Camera.getPhoto({
+        quality: 100,
+        resultType: CameraResultType.Base64,
+        promptLabelHeader: "Seleccionar imagen",
+        promptLabelPicture: "Usar Cámara",
+        promptLabelPhoto: "Usar Galería",
+        promptLabelCancel: "Cancelar",
+        saveToGallery: true,
+      });
 
-      if (true) {
-        const image = await Camera.getPhoto({
-          quality: 100,
-          resultType: CameraResultType.Base64,
-          promptLabelHeader: "Seleccionar imagen",
-          promptLabelPicture: "Usar Cámara",
-          promptLabelPhoto: "Usar Galería",
-          promptLabelCancel: "Cancelar",
-          saveToGallery: true,
-        });
+      const time = new Date().getTime();
 
-        const time = new Date().getTime();
+      const blob = base64StringToBlob(image.base64String ?? "");
 
-        const blob = base64StringToBlob(image.base64String ?? "");
+      const file = new File([blob], `${time}.${image.format}`, {
+        lastModified: time,
+        type: blob.type,
+      });
 
-        const file = new File([blob], `${time}.${image.format}`, {
-          lastModified: time,
-          type: blob.type,
-        });
-
-        setFile(file);
-        setReviewSrc(URL.createObjectURL(blob));
-      }
+      setFile(file);
+      setReviewSrc(URL.createObjectURL(blob));
     } catch (error) {
       console.info("Error al abrir la cámara");
       console.error({ error });
