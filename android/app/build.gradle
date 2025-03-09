@@ -3,7 +3,9 @@ apply plugin: 'com.android.application'
 android {
 
     namespace 'dev.juanl.sanble'
-    compileSdkVersion rootProject.ext.compileSdkVersion
+
+    compileSdk  rootProject.ext.compileSdkVersion
+    
     defaultConfig {
         applicationId 'dev.juanl.sanble'
         minSdkVersion rootProject.ext.minSdkVersion

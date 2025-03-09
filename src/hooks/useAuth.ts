@@ -1,6 +1,7 @@
 import { GoogleAuth } from "@codetrix-studio/capacitor-google-auth";
 import { useIonLoading } from "@ionic/react";
 import { useLocation, useMatch, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 import {
   auth,
@@ -165,6 +166,12 @@ export const useAuth = () => {
       toast(error, { type: "error" });
     }
   };
+
+  useEffect(() => {
+    if (isCapacitor) {
+      GoogleAuth.initialize();
+    }
+  }, []);
 
   return {
     handleSignup,

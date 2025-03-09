@@ -31,7 +31,7 @@ import { usePushNotifications } from "@/hooks/usePushNotifications";
 
 setupIonicReact();
 
-const App = () => {
+export const App = () => {
   const { overlaysStatusBar } = useStatusBar();
 
   useEffect(() => {
@@ -44,5 +44,3 @@ const App = () => {
     </IonApp>
   );
 };
-
-export default App;

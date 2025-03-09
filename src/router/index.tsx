@@ -1,7 +1,7 @@
-import { isPlatform } from "@ionic/react";
 import { lazy } from "react";
 import { createBrowserRouter, Navigate } from "react-router-dom";
 
+import { ErrorScreen } from "@/components/common/ErrorScreen";
 import { SuspenseComponent } from "@/components/common/SuspenseComponent";
 import { AuthLayout } from "@/components/layouts/Auth";
 import { FavoritesList } from "@/components/layouts/FavoritesList";
@@ -10,6 +10,7 @@ import { InvitationsList } from "@/components/layouts/InvitationsList";
 import { MainLayout } from "@/components/layouts/Main";
 import { MySanbleList } from "@/components/layouts/MySanbleList";
 import { ProvidersLayout } from "@/components/layouts/Providers";
+import { isNative } from "@/helpers/native";
 import { ERoutesName } from "@/types/TRoutes";
 
 const NotFoundScreen = lazy(() =>
@@ -164,8 +165,6 @@ const ProfileScreen = lazy(() =>
   }))
 );
 
-const ErrorScreen = () => <h1 style={{ marginTop: 300 }}>Error :c :c</h1>; // TODO: CHANGE THIS
-
 export const router = createBrowserRouter([
   {
     path: ERoutesName.ROOT,
@@ -175,11 +174,7 @@ export const router = createBrowserRouter([
       {
         index: true,
         errorElement: <ErrorScreen />,
-        element: isPlatform("capacitor") ? (
-          <WelcomeSlidesScreen />
-        ) : (
-          <LandingScreen />
-        ),
+        element: isNative() ? <WelcomeSlidesScreen /> : <LandingScreen />,
       },
       {
         path: ERoutesName.APP,

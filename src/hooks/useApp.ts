@@ -1,8 +1,9 @@
-import { getPlatforms, ScrollDetail } from "@ionic/react";
 import { Device } from "@capacitor/device";
+import { getPlatforms, ScrollDetail } from "@ionic/react";
 
 import { appActions } from "@/context/actions/appActions";
 import { useAppContext } from "@/context/AppContext";
+import { isNative } from "@/helpers/native";
 import { getStorage } from "@/helpers/storage";
 import { StorageHideMobileWelcomeKey } from "@/helpers/storageKeys";
 
@@ -84,7 +85,7 @@ export const useApp = () => {
     isLoadingFull,
     hideMobileWelcome,
     deviceID,
-    isMobile: isPlatform("mobile"),
-    isCapacitor: isPlatform("capacitor"),
+    isMobile: isNative() || isPlatform("mobile"),
+    isCapacitor: isNative() || isPlatform("capacitor"),
   };
 };

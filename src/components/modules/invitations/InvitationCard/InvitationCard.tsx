@@ -45,8 +45,8 @@ export const InvitationCard = ({
   const requestSent = fair?.requestSent || stand?.invitationSent;
   const invitationId = fair?.invitationId || stand?.invitationId;
 
-  return (
-    (fair || stand) && (
+  if (fair || stand)
+    return (
       <article
         className={`animate__animated animate__fadeIn ${styles.invitationCard}`}
       >
@@ -95,6 +95,7 @@ export const InvitationCard = ({
             : "Enviar Solicitud"}
         </Button>
       </article>
-    )
-  );
+    );
+
+  return null;
 };

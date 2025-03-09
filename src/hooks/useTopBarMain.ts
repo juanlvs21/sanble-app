@@ -133,15 +133,15 @@ export const useTopBarMain = () => {
     }
   };
 
-  const renderTopBarActionStart = (el: React.ReactElement) => {
+  const renderTopBarActionStart = (el: React.ReactNode) => {
     const portalEl = document.querySelector(`#${portalTopBarMainStartID}`);
 
-    return portalEl ? createPortal(el, portalEl) : undefined;
+    return portalEl ? createPortal(el as any, portalEl) : null;
   };
 
-  const renderTopBarActionEnd = (el: React.ReactElement) => {
+  const renderTopBarActionEnd = (el: React.ReactNode) => {
     const portalEl = document.querySelector(`#${portalTopBarMainEndID}`);
-    return portalEl ? createPortal(el, portalEl) : undefined;
+    return portalEl ? createPortal(el as any, portalEl) : null;
   };
 
   useEffect(() => {

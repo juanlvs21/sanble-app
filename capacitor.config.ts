@@ -8,7 +8,7 @@ const config: CapacitorConfig = {
   appId: "dev.juanl.sanble",
   appName: "Sanble",
   webDir: "dist",
-  bundledWebRuntime: false,
+  // bundledWebRuntime: false,
   plugins: {
     GoogleAuth: {
       scopes: ["profile", "email"],
@@ -24,7 +24,7 @@ const config: CapacitorConfig = {
     },
   },
   server: {
-    url: "http://192.168.50.195:3000",
+    url: "http://192.168.55.236:3000",
     cleartext: true,
   },
 };

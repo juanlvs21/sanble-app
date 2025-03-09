@@ -2,7 +2,6 @@ import { Camera, CameraResultType } from "@capacitor/camera";
 import {
   IonButtons,
   IonContent,
-  IonHeader,
   IonModal,
   IonNote,
   IonTitle,
@@ -17,6 +16,7 @@ import { base64StringToBlob } from "@/helpers/file";
 import { TChangeAvatarHook } from "@/hooks/profile/useChangeAvatar";
 import { useApp } from "@/hooks/useApp";
 import styles from "./ChangeAvatarModal.module.css";
+import { HeaderModal } from "@/components/common/HeaderModal";
 
 const fileMaxSize = 10;
 const fileTypes = ["jpg", "png", "jpeg"];
@@ -42,12 +42,9 @@ export const ChangeAvatarModal = ({
 
   const handleOpenCamera = async () => {
     try {
-      const permissions = await Camera.requestPermissions();
+      // const permissions = await Camera.requestPermissions();
 
-      if (
-        permissions.photos === "granted" &&
-        permissions.camera === "granted"
-      ) {
+      if (true) {
         const image = await Camera.getPhoto({
           quality: 100,
           resultType: CameraResultType.Base64,
@@ -71,6 +68,7 @@ export const ChangeAvatarModal = ({
         setReviewSrc(URL.createObjectURL(blob));
       }
     } catch (error) {
+      console.info("Error al abrir la cámara");
       console.error({ error });
       setErrorCamera(false);
     }
@@ -94,9 +92,11 @@ export const ChangeAvatarModal = ({
     }
   }, [isOpen]);
 
+  console.log({ isCapacitor });
+
   return (
     <IonModal isOpen={isOpen} backdropDismiss={false}>
-      <IonHeader>
+      <HeaderModal>
         <IonToolbar>
           <IonButtons slot="start">
             <Button onClick={() => onOpen(false)}>Cerrar</Button>
@@ -108,7 +108,7 @@ export const ChangeAvatarModal = ({
             </Button>
           </IonButtons>
         </IonToolbar>
-      </IonHeader>
+      </HeaderModal>
       <IonContent>
         <section className={`${styles.avatarSection}`}>
           {isCapacitor ? (

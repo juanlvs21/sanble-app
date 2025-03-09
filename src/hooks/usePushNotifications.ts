@@ -47,9 +47,11 @@ export const usePushNotifications = () => {
         PushNotifications.addListener(
           "pushNotificationActionPerformed",
           (notification: TNotification) => {
+            console.log({ notification });
             if (notification.notification.data?.redirectURL) {
               navigate(notification.notification.data?.redirectURL, {
                 replace: true,
+                state: notification,
               });
             }
           }

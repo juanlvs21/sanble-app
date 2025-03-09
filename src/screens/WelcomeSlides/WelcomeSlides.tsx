@@ -75,7 +75,7 @@ export const WelcomeSlides = () => {
           "¿Estás listo para vivir tus ferias favoritas de una manera más cercana a ti?",
         actions: (
           <div className={styles.slidesWelcomeStart}>
-            <span>Deliza para ver más</span>
+            <span>Desliza para ver más</span>
             <MdKeyboardArrowRight size={20} color="#232020a1" />
             <MdKeyboardArrowRight size={30} color="#232020" />
           </div>
@@ -132,7 +132,7 @@ export const WelcomeSlides = () => {
       {
         bg: "welcomeBg5",
         img: "welcomeIlustration5",
-        title: "¿Bueno, qué estás esperando?",
+        title: "Bueno, ¿qué estás esperando?",
 
         actions: (
           <Button color="primary" expand="block" onClick={handleGoSignup}>
