@@ -38,7 +38,7 @@
     "@hookform/resolvers": "3.1.1",
     "@ionic/core": "7.0.0",
     "@ionic/pwa-elements": "3.1.1",
-    "@ionic/react": "8.4.3",
+    "@ionic/react": "7.0.0",
     "@maskito/core": "1.7.0",
     "@maskito/kit": "1.7.0",
     "@maskito/react": "1.7.0",

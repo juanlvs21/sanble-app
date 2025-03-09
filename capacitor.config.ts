@@ -23,10 +23,10 @@ const config: CapacitorConfig = {
       presentationOptions: ["badge", "sound", "alert"],
     },
   },
-  server: {
-    url: "http://192.168.55.236:3000",
-    cleartext: true,
-  },
+  // server: {
+  //   url: "http://192.168.55.236:3000",
+  //   cleartext: true,
+  // },
 };
 
 export default config;

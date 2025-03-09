@@ -1461,26 +1461,17 @@
     ionicons "^7.1.0"
     tslib "^2.1.0"
 
-"@ionic/core@8.4.3":
-  version "8.4.3"
-  resolved "https://registry.yarnpkg.com/@ionic/core/-/core-8.4.3.tgz#109868f5b44b178a46489c1de56f16f300684b6e"
-  integrity sha512-U9HdZ32bre6OKA5akJVmQMxNB8Art3Nqdn3s7m2W83I5NhLg9Tehaf8ua8jxPZtxCa1nuN7tUbzHmMCkcdqDTw==
-  dependencies:
-    "@stencil/core" "4.20.0"
-    ionicons "^7.2.2"
-    tslib "^2.1.0"
-
 "@ionic/pwa-elements@3.1.1":
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/@ionic/pwa-elements/-/pwa-elements-3.1.1.tgz#ae1a97260886545b3285364974674576f2b090a7"
   integrity sha512-BoEX1pSrKn5dP4VQwaf8DweAmT4ynmpW+9f6oj/W1xLe54bmuXcUY07ziuZX1DLu50xHSYcO5qJ/dbYC/w6wgA==
 
-"@ionic/react@8.4.3":
-  version "8.4.3"
-  resolved "https://registry.yarnpkg.com/@ionic/react/-/react-8.4.3.tgz#c9505e6eb2bee2a3192c35804d59cfb1b58d8ad2"
-  integrity sha512-AqwmoRCjTDBIgmywE6VnOOacOry21ma6TWMS8Dg8ZGu41rT6edDSmX/lKvAAV+jg4TkjE/U5n//OxzHBY/0+Zg==
+"@ionic/react@7.0.0":
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/@ionic/react/-/react-7.0.0.tgz#35abdaab505fd01e1f2fd03a81d273cc10b11d81"
+  integrity sha512-t9NlHZTiH/NvT3GLcO4yS5Whe9stpsZ9AtNOYS+aPcKM5vhxJSFGXDUvKtABOLi2CniW2kFE8krHwjz9V0GQYA==
   dependencies:
-    "@ionic/core" "8.4.3"
+    "@ionic/core" "7.0.0"
     ionicons "^7.0.0"
     tslib "*"
 
@@ -1863,11 +1854,6 @@
   version "4.35.0"
   resolved "https://registry.yarnpkg.com/@rollup/rollup-win32-x64-msvc/-/rollup-win32-x64-msvc-4.35.0.tgz#05f25dbc9981bee1ae6e713daab10397044a46ca"
   integrity sha512-PIQeY5XDkrOysbQblSW7v3l1MDZzkTEzAfTPkj5VAu3FW8fS4ynyLg2sINp0fp3SjZ8xkRYpLqoKcYqAkhU1dw==
-
-"@stencil/core@4.20.0":
-  version "4.20.0"
-  resolved "https://registry.yarnpkg.com/@stencil/core/-/core-4.20.0.tgz#221f2b36ab999891560449b02d6915862c435f49"
-  integrity sha512-WPrTHFngvN081RY+dJPneKQLwnOFD60OMCOQGmmSHfCW0f4ujPMzzhwWU1gcSwXPWXz5O+8cBiiCaxAbJU7kAg==
 
 "@stencil/core@^3.1.0":
   version "3.4.2"
@@ -3047,7 +3033,7 @@ internal-slot@^1.1.0:
     hasown "^2.0.2"
     side-channel "^1.1.0"
 
-ionicons@^7.0.0, ionicons@^7.1.0, ionicons@^7.2.2:
+ionicons@^7.0.0, ionicons@^7.1.0:
   version "7.4.0"
   resolved "https://registry.yarnpkg.com/ionicons/-/ionicons-7.4.0.tgz#9c285aaa8089befbd6c5a89ae13292d364cd9ace"
   integrity sha512-ZK94MMqgzMCPPMhmk8Ouu6goyVHFIlw/ACP6oe3FrikcI0N7CX0xcwVaEbUc0G/v3W0shI93vo+9ve/KpvcNhQ==
