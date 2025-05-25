@@ -255,7 +255,7 @@ export const FairForm = ({
                 fieldState: { error },
               }) => (
                 <TextArea
-                  placeholder="Direccion"
+                  placeholder="Dirección"
                   Icon={<TbMap2 />}
                   onIonInput={onChange}
                   onIonBlur={onBlur}

@@ -94,6 +94,7 @@ export const Datetime = forwardRef<HTMLIonDatetimeElement, ComponentProps>(
             cancelText="Cancelar"
             onIonChange={handleChange}
             onIonCancel={() => setOpen(false)}
+            locale="es-ES"
           />
         </IonModal>
       </IonItem>
