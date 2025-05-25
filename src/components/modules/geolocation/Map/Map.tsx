@@ -127,8 +127,10 @@ export const Map = ({
                   interactive
                   permanent
                 >
-                  <b>{marker.title}</b>
-                  {marker.onClick && <small>Ver detalles</small>}
+                  <b className={styles.name}>{marker.title}</b>
+                  {marker.onClick && (
+                    <small className={styles.seeDetails}>Ver detalles</small>
+                  )}
                 </Tooltip>
               }
             />

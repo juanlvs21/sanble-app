@@ -20,3 +20,12 @@
 .mapError svg {
   color: var(--ion-color-primary);
 }
+
+.name {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.seeDetails {
+  font-size: 14px;
+}
