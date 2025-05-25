@@ -22,10 +22,10 @@ export const standSchema = yupResolver<TStandForm>(
         ),
       description: yup
         .string()
-        .required("Ingrese descripcion del stand")
+        .required("Ingrese descripción del stand")
         .max(
           lengthMaxLong,
-          `El descripcion debe tener máximo ${lengthMaxLong} caracteres`
+          `El descripción debe tener máximo ${lengthMaxLong} caracteres`
         ),
       contactEmail: yup
         .string()

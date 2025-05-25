@@ -133,7 +133,7 @@ export const InvitationCardList = ({
                   <h1>Invitación enviada</h1>
                   <p>
                     Haz invitado al stand <b>{invitationFrom.name}</b> a formar
-                    parte de tu feria Feria <b>{invitationTo.name}</b>
+                    parte de tu feria <b>{invitationTo.name}</b>
                   </p>
                 </>
               )}

@@ -22,10 +22,10 @@ export const fairSchema = yupResolver<TFairForm>(
         ),
       description: yup
         .string()
-        .required("Ingrese descripcion de la feria")
+        .required("Ingrese descripción de la feria")
         .max(
           lengthMaxLong,
-          `El descripcion debe tener máximo ${lengthMaxLong} caracteres`
+          `El descripción debe tener máximo ${lengthMaxLong} caracteres`
         ),
       type: yup
         .string()
