@@ -163,7 +163,7 @@ export const FairDetails = () => {
                     <TiStar size={25} />
                   </span>
                   <span className="animate__animated animate__fadeIn">
-                    {`${fair?.stars || 0}`}
+                    {`${fair?.stars ? fair.stars.toFixed(1) : "0"}`}
                   </span>
                 </>
               )}

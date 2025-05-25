@@ -158,7 +158,7 @@ export const StandDetails = () => {
                     <TiStar size={25} />
                   </span>
                   <span className="animate__animated animate__fadeIn">
-                    {`${stand?.stars || 0}`}
+                    {`${stand?.stars ? stand.stars.toFixed(1) : "0.0"}`}
                   </span>
                 </>
               )}

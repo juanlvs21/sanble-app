@@ -46,9 +46,9 @@ export const Stars = ({
         .map((_, i) => (
           <TiStarFullOutline
             key={i}
-            className={`${styles.star} ${i < value ? styles.starFull : ""} ${
-              disable ? styles.disable : ""
-            }`}
+            className={`${styles.star} ${
+              i < Math.floor(value) ? styles.starFull : ""
+            } ${disable ? styles.disable : ""}`}
             size={size}
             onClick={onChange && !disable ? () => onChange(i + 1) : undefined}
           />
