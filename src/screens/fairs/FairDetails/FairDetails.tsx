@@ -40,7 +40,7 @@ import styles from "./FairDetails.module.css";
 const MODAL_INFO_ID = "fair-info-open-modal";
 const MODAL_STANDS_ID = "fair-stands-open-modal";
 
-const SEGMENT_ITEMS = ["Publicaciónes", "Opiniones"];
+const SEGMENT_ITEMS = ["Publicaciones", "Opiniones"];
 
 type TRouteParams = { fairID: string };
 

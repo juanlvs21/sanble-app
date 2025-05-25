@@ -40,7 +40,7 @@ const MODAL_FAIRS_ID = "stand-fairs-open-modal";
 
 type TRouteParams = { standID: string };
 
-const SEGMENT_ITEMS = ["Publicaciónes", "Opiniones"];
+const SEGMENT_ITEMS = ["Publicaciones", "Opiniones"];
 
 export const StandDetails = () => {
   const navigate = useNavigate();
