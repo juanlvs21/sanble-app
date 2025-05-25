@@ -148,7 +148,6 @@
 .fairType {
   min-height: 20px;
   margin: 5px 0;
-  color: var(--sanble-gray-color-2);
 }
 
 .fairDescription {
@@ -220,6 +219,14 @@
 .fairFloatBtn {
   transition: all 500ms ease-in-out;
   margin-bottom: 20px;
+}
+
+.fairCelebrationDate {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12;
+  color: var(--sanble-gray-color-2);
 }
 
 @media (max-width: 375px) {

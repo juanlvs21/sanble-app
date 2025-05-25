@@ -1,7 +1,9 @@
 import { IonFab, IonFabButton } from "@ionic/react";
+import dayjs from "dayjs";
+import { useEffect } from "react";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import { FiEdit2, FiMapPin } from "react-icons/fi";
-import { HiOutlinePhotograph } from "react-icons/hi";
+import { HiOutlineCalendar, HiOutlinePhotograph } from "react-icons/hi";
 import { MdOutlineStorefront } from "react-icons/md";
 import { TiStar } from "react-icons/ti";
 import {
@@ -34,7 +36,6 @@ import { useSegmentDetails } from "@/hooks/useSegmentDetails";
 import { useTopBarMain } from "@/hooks/useTopBarMain";
 import { useUser } from "@/hooks/useUser";
 import { ERoutesName } from "@/types/TRoutes";
-import { useEffect } from "react";
 import styles from "./FairDetails.module.css";
 
 const MODAL_INFO_ID = "fair-info-open-modal";
@@ -181,6 +182,23 @@ export const FairDetails = () => {
                 {fair ? fairType[`${fair?.type}_long`] : ""}
               </h6>
             )}
+            {isLoadingDetails ? (
+              <Skeleton
+                width="100%"
+                height={23}
+                style={{ margin: "5px 0px" }}
+              />
+            ) : (
+              <div className={styles.fairCelebrationDate}>
+                <HiOutlineCalendar size={15} />
+                <span>
+                  {fair?.celebrationDate
+                    ? dayjs(fair?.celebrationDate).format("DD MMM - hh:mm a")
+                    : "Próximamente"}
+                </span>
+              </div>
+            )}
+
             <section className={styles.fairDescription}>
               {isLoadingDetails ? (
                 Array(5)
