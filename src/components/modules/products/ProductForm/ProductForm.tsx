@@ -325,6 +325,7 @@ export const ProductForm = ({
                   disabled={isSubmitting}
                   classNameItem={styles.productFormCurrency}
                   helperIsError
+                  cancelText="Cancelar"
                   {...field}
                 >
                   <IonSelectOption value={EProductTypeKey.CLOTHES}>
