@@ -35,7 +35,6 @@ export const StandProducts = () => {
     handleActions,
     handleOpenModalNewProduct,
     toggleModalProductForm,
-    isEmpty,
   } = useStandProducts(standID ?? "");
 
   useDocumentTitleApp(`${stand?.name || "Productos"} 🛒`);
@@ -61,7 +60,7 @@ export const StandProducts = () => {
         isLoading={isLoading}
       >
         <>
-          {isEmpty && !isLoading && (
+          {!products.length && !isLoading && (
             <EmptyList title="Este Stand no cuenta con productos actualmente" />
           )}
 
