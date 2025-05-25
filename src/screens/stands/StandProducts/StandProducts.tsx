@@ -81,7 +81,9 @@ export const StandProducts = () => {
                   <ProductList
                     key={product.id}
                     product={product}
-                    handleActions={handleActions}
+                    handleActions={
+                      stand?.owner.uid === user?.uid ? handleActions : undefined
+                    }
                   />
                 ))}
           </div>

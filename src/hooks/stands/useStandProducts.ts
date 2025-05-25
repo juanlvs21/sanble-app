@@ -210,7 +210,7 @@ export const useStandProducts = (standID: string) => {
 
   const handleActions = (product: TProduct) => {
     present({
-      header: "Actions",
+      header: "Acciones",
       buttons: [
         {
           text: "Editar Producto",
@@ -253,6 +253,8 @@ export const useStandProducts = (standID: string) => {
       setIsRefresh(false);
     }
   }, [isRefresh]);
+
+  console.log({ stand });
 
   return {
     stand,
