@@ -3,12 +3,10 @@ import { Link } from "react-router-dom";
 
 import { Button } from "@/components/common/buttons/Button";
 import { useDocumentTitleApp } from "@/hooks/useDocumentTitle";
-import { useLanding } from "@/hooks/useLanding";
 import { ERoutesName } from "@/types/TRoutes";
 import styles from "./Landing.module.css";
 
 export const Landing = () => {
-  const { handleGetDownloadAppLink } = useLanding();
   useDocumentTitleApp("¡Bienvenido! 🎉");
 
   return (
@@ -33,14 +31,15 @@ export const Landing = () => {
               </Button>
             </Link>
 
-            <Button
-              onClick={handleGetDownloadAppLink}
-              color="secondary"
-              fill="outline"
-              className={styles.btn}
+            <a
+              href="https://staticsanble.juanl.dev/downloads/sanble.apk"
+              target="_blank"
+              rel="noopener noreferrer"
             >
-              Descargar Android
-            </Button>
+              <Button color="secondary" fill="outline" className={styles.btn}>
+                Descargar Android
+              </Button>
+            </a>
           </div>
 
           <img
