@@ -11,45 +11,41 @@ export type ComponentProps = {
    * Product Details
    */
   product: TProduct;
+  onSelect?: (product: TProduct) => void;
 };
 
-export const ProductCardRecent = ({ product }: ComponentProps) => {
+export const ProductCardRecent = ({ product, onSelect }: ComponentProps) => {
   return (
-    <Link
-      to={`${ERoutesName.STANDS_LIST}/${product.stand?.id}/productos`}
-      state={{
-        standID: product.stand?.id,
-        goBackUrl: ERoutesName.APP,
-      }}
+    <article
+      className={styles.productRecentCard}
+      onClick={() => onSelect?.(product)}
     >
-      <article className={styles.productRecentCard}>
-        <ImageExtended
-          src={product.fileUrl}
-          alt={product.name}
-          classNamePicture={styles.productRecentCover}
-          className={styles.productRecentCoverImg}
-          skeletonProps={{
-            className: styles.productRecentCoverImg,
-          }}
-        />
+      <ImageExtended
+        src={product.fileUrl}
+        alt={product.name}
+        classNamePicture={styles.productRecentCover}
+        className={styles.productRecentCoverImg}
+        skeletonProps={{
+          className: styles.productRecentCoverImg,
+        }}
+      />
 
-        <div className={styles.productRecentContent}>
-          <h1>{product.name}</h1>
+      <div className={styles.productRecentContent}>
+        <h1>{product.name}</h1>
+        <p>
+          <b>Categoría:</b> {getProductTypeNameByKey(product.type)}
+        </p>
+
+        {product.stand && (
           <p>
-            <b>Categoría:</b> {getProductTypeNameByKey(product.type)}
+            <b>Stand:</b> {product.stand?.name}
           </p>
+        )}
 
-          {product.stand && (
-            <p>
-              <b>Stand:</b> {product.stand?.name}
-            </p>
-          )}
-
-          <div className={styles.productRecentPrice}>
-            {product.currency} {product.price}
-          </div>
+        <div className={styles.productRecentPrice}>
+          {product.currency} {product.price}
         </div>
-      </article>
-    </Link>
+      </div>
+    </article>
   );
 };

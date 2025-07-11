@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useMediaQuery } from "usehooks-ts";
 
 import { Carousel } from "@/components/common/Carousel";
@@ -6,6 +7,7 @@ import { Fetcher } from "@/components/common/Fetcher";
 import { FairCardBest } from "@/components/modules/fairs/FairCardBest";
 // import { ProductCarouselCard } from "@/components/modules/products/ProductCard";
 import { ProductCardRecent } from "@/components/modules/products/ProductCardRecent";
+import { ProductDetailsModal } from "@/components/modules/products/ProductDetailsModal";
 import { StandCardBest } from "@/components/modules/stands/StandCardBest";
 import { TFair } from "@/types/TFair";
 import { TProduct } from "@/types/TProduct";
@@ -63,60 +65,74 @@ export const HomeScreenContent = ({
 }: // isLoadingProductTypes,
 ComponentProps) => {
   const isLaptop = useMediaQuery("(min-width: 1024px)");
+  const [selectedProduct, setSelectedProduct] = useState<TProduct>();
 
   return (
-    <Fetcher
-      handleRefresh={handleLoadData}
-      classNameContent={styles.homeContainer}
-      classNameSection="animate__animated animate__screenInUp"
-    >
-      {/* <InputSearch
+    <>
+      <Fetcher
+        handleRefresh={handleLoadData}
+        classNameContent={styles.homeContainer}
+        classNameSection="animate__animated animate__screenInUp"
+      >
+        {/* <InputSearch
         placeholder="Buscar Ferias, Stands, etc..."
         classNameItem={`${styles.homeSearchInput} ${
           isCapacitor ? styles.homeSearchInputCapacitor : ""
         }`}
       /> */}
-      <Carousel
-        title="Mejores Ferias"
-        isLoading={isLoadingFairsBest}
-        items={
-          fairsBest.map((fair) => <FairCardBest key={fair.id} fair={fair} />) ||
-          []
-        }
-        skeletonProps={{
-          width: "100%",
-          height: isLaptop ? 200 : 110,
-        }}
-        className={styles.homeCarousel}
+        <Carousel
+          title="Mejores Ferias"
+          isLoading={isLoadingFairsBest}
+          items={
+            fairsBest.map((fair) => (
+              <FairCardBest key={fair.id} fair={fair} />
+            )) || []
+          }
+          skeletonProps={{
+            width: "100%",
+            height: isLaptop ? 200 : 110,
+          }}
+          className={styles.homeCarousel}
+        />
+        <Carousel
+          title="Mejores Stands"
+          isLoading={isLoadingStandsBest}
+          items={
+            standsBest.map((stand) => (
+              <StandCardBest key={stand.id} stand={stand} />
+            )) || []
+          }
+          skeletonProps={{
+            width: "100%",
+            height: isLaptop ? 200 : 110,
+          }}
+          className={styles.homeCarousel}
+        />
+        <Carousel
+          title="Productos Recientes"
+          isLoading={isLoadingProductsRecent}
+          items={
+            productsRecent.map((product) => (
+              <ProductCardRecent
+                key={product.id}
+                product={product}
+                onSelect={setSelectedProduct}
+              />
+            )) || []
+          }
+          skeletonProps={{
+            width: "100%",
+            height: isLaptop ? 200 : 110,
+          }}
+          className={styles.homeCarousel}
+        />
+      </Fetcher>
+
+      <ProductDetailsModal
+        product={selectedProduct}
+        isOpen={!!selectedProduct}
+        onDismiss={() => setSelectedProduct(undefined)}
       />
-      <Carousel
-        title="Mejores Stands"
-        isLoading={isLoadingStandsBest}
-        items={
-          standsBest.map((stand) => (
-            <StandCardBest key={stand.id} stand={stand} />
-          )) || []
-        }
-        skeletonProps={{
-          width: "100%",
-          height: isLaptop ? 200 : 110,
-        }}
-        className={styles.homeCarousel}
-      />
-      <Carousel
-        title="Productos Recientes"
-        isLoading={isLoadingProductsRecent}
-        items={
-          productsRecent.map((product) => (
-            <ProductCardRecent key={product.id} product={product} />
-          )) || []
-        }
-        skeletonProps={{
-          width: "100%",
-          height: isLaptop ? 200 : 110,
-        }}
-        className={styles.homeCarousel}
-      />
-    </Fetcher>
+    </>
   );
 };
