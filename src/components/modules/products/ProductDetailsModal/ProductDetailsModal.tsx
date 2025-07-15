@@ -16,6 +16,7 @@ import styles from "./ProductDetailsModal.module.css";
 import { ImageExtended } from "@/components/common/ImageExtended";
 import { getProductTypeNameByKey } from "@/helpers/productTypes";
 import { ERoutesName } from "@/types/TRoutes";
+import { useModalGoBack } from "@/hooks/useModalGoBack";
 
 export type ComponentProps = {
   /**
@@ -28,9 +29,11 @@ export type ComponentProps = {
 
 export const ProductDetailsModal = ({
   product,
-  isOpen,
+  isOpen = false,
   onDismiss,
 }: ComponentProps) => {
+  useModalGoBack(isOpen, onDismiss);
+
   return (
     <IonModal
       isOpen={isOpen}
