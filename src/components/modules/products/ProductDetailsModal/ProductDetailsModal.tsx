@@ -31,7 +31,6 @@ export const ProductDetailsModal = ({
   isOpen,
   onDismiss,
 }: ComponentProps) => {
-  console.log({ product });
   return (
     <IonModal
       isOpen={isOpen}
@@ -85,15 +84,8 @@ export const ProductDetailsModal = ({
                 <p>
                   <b>Stand:</b> {product.stand?.name || "No asignado"}
                 </p>
-                <Link
-                  to={`${ERoutesName.STANDS_LIST}/${product.stand?.id}/productos`}
-                >
-                  <Button
-                    expand="block"
-                    size="default"
-                    color="light"
-                    className={styles.btn}
-                  >
+                <Link to={`${ERoutesName.STANDS_LIST}/${product.stand?.id}`}>
+                  <Button expand="block" size="default" color="light">
                     Ir al Stand
                   </Button>
                 </Link>
