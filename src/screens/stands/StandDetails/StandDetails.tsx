@@ -301,7 +301,7 @@ export const StandDetails = () => {
           slot="fixed"
           vertical="bottom"
           horizontal="end"
-          className={`animate__animated animate__fadeIn`}
+          className={`${styles.standFloatBtn} animate__animated animate__fadeIn`}
         >
           <IonFabButton
             color="secondary"

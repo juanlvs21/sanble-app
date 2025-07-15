@@ -1,7 +1,7 @@
 .inviteBtnContainer {
   width: 100%;
   position: absolute;
-  bottom: 20px;
+  bottom: 32px;
   display: flex;
   justify-content: center;
 }

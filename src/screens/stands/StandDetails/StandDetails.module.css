@@ -232,6 +232,11 @@
   margin-top: 50px;
 }
 
+.standFloatBtn {
+  transition: all 500ms ease-in-out;
+  margin-bottom: 28px;
+}
+
 @media (max-width: 375px) {
   .standInfo .standInfoCard h5 {
     font-size: 14px;
