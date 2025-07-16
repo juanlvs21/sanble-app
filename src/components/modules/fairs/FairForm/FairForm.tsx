@@ -229,7 +229,7 @@ export const FairForm = ({
                   Icon={<BiPhone />}
                   onIonInput={onChange}
                   onIonBlur={onBlur}
-                  label="+58"
+                  prefix="+58"
                   value={value}
                   helper={error?.message}
                   helperIsError

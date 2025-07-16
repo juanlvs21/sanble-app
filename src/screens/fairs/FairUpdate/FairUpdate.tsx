@@ -18,8 +18,6 @@ export const FairUpdate = () => {
     formValues,
   } = useFairUpdate(fairID ?? "");
 
-  console.log({ formValues });
-
   return (
     <FairForm
       formValues={formValues}

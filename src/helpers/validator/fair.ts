@@ -42,7 +42,7 @@ export const fairSchema = yupResolver<TFairForm>(
           lengthMaxShort,
           `El correo electrónico debe tener máximo ${lengthMaxShort} caracteres`
         )
-        .required("Ingrese un teléfono de contacto"), // TODO: Update this message to "Ingrese un correo de contacto"
+        .required("Ingrese un correo electrónico de contacto"),
       contactPhone: yup
         .string()
         .transform((value) => {

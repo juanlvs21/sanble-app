@@ -21,12 +21,21 @@ export type ComponentProps = typeof IonInput.defaultProps &
      * ClassName item css
      */
     classNameItem?: string;
+    prefix?: string;
   };
 
 export const Input = forwardRef<HTMLIonInputElement, ComponentProps>(function (
-  { Icon, helper, helperIsError, classNameItem = "", ...rest }: ComponentProps,
+  {
+    Icon,
+    helper,
+    helperIsError,
+    classNameItem = "",
+    prefix,
+    ...rest
+  }: ComponentProps,
   ref
 ) {
+  console.log({ prefix });
   return (
     <IonItem
       fill="outline"
@@ -38,6 +47,18 @@ export const Input = forwardRef<HTMLIonInputElement, ComponentProps>(function (
         </span>
       )}
       <IonInput ref={ref} {...rest} />
+      {prefix && (
+        <span
+          style={{
+            marginRight: 8,
+            paddingBottom: 3.5,
+            color: "var(--sanble-gray-color-2)",
+          }}
+          slot="start"
+        >
+          {prefix}
+        </span>
+      )}
       <IonNote slot={helperIsError ? "error" : "helper"}>{helper}</IonNote>
     </IonItem>
   );

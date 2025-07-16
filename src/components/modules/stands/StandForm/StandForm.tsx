@@ -75,7 +75,7 @@ export const StandForm = ({ formValues, handleSave }: ComponentProps) => {
               control={control}
               name="contactPhone"
               render={({
-                field: { onChange, onBlur, value, ...field },
+                field: { onChange, onBlur, ...field },
                 fieldState: { error },
               }) => (
                 <Input
@@ -85,8 +85,7 @@ export const StandForm = ({ formValues, handleSave }: ComponentProps) => {
                   Icon={<BiPhone />}
                   onIonInput={onChange}
                   onIonBlur={onBlur}
-                  label="+58"
-                  value={value}
+                  prefix="+58"
                   disabled={isSubmitting}
                   helper={error?.message}
                   helperIsError

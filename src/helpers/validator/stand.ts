@@ -33,7 +33,7 @@ export const standSchema = yupResolver<TStandForm>(
           lengthMaxShort,
           `El correo electrónico debe tener máximo ${lengthMaxShort} caracteres`
         )
-        .required("Ingrese un teléfono de contacto"),
+        .required("Ingrese un correo electrónico de contacto"),
       contactPhone: yup
         .string()
         .transform((value) => {

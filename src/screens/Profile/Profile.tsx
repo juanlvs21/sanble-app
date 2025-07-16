@@ -145,7 +145,7 @@ export const Profile = () => {
                 control={controlUpdate}
                 name="phoneNumber"
                 render={({
-                  field: { onChange, onBlur, value, ...field },
+                  field: { onChange, onBlur, ...field },
                   fieldState: { error },
                 }) => (
                   <Input
@@ -156,8 +156,7 @@ export const Profile = () => {
                     disabled={isSubmittingUpdate}
                     onIonInput={onChange}
                     onIonBlur={onBlur}
-                    label="+58"
-                    value={value}
+                    prefix="+58"
                     helper={error?.message}
                     helperIsError
                     {...field}

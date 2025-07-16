@@ -152,7 +152,7 @@ ion-item.inputItem.textareItem textarea {
 }
 
 ion-item.inputItem.textareItem.inputWithIcon textarea {
-  padding-left: 45px;
+  padding-left: 0px;
 }
 
 ion-item.inputItem.textareItem {
