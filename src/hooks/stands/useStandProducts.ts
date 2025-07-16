@@ -217,7 +217,7 @@ export const useStandProducts = (standID: string) => {
           handler: () => handleOpenModalUpdateProduct(product),
         },
         {
-          text: "Eliminar Product",
+          text: "Eliminar Producto",
           handler: () => handleDeleteProduct(product.id),
         },
         {
