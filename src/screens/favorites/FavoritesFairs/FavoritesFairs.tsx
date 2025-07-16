@@ -133,6 +133,7 @@ export const FavoritesFairs = () => {
                     key={fair.id}
                     fair={fair}
                     goBackUrl={ERoutesName.FAVORITES_FAIRS}
+                    withConfirmRemove
                   />
                 ))}
           </div>

@@ -20,14 +20,21 @@ export type ComponentProps = {
    * Custom className component
    */
   className?: string;
+  /**
+   * If true, the button will ask for confirmation before removing from favorites.
+   */
+  withConfirmRemove?: boolean;
 };
 
 export const StandCardList = ({
   stand,
   goBackUrl,
   className = "",
+  withConfirmRemove = false,
 }: ComponentProps) => {
   const { user, isLoading: loadingSetFav, handleSetFavoriteStand } = useUser();
+
+  const isFavorite = user?.favoriteStands.includes(stand.id);
 
   return (
     <article
@@ -59,8 +66,12 @@ export const StandCardList = ({
       <ButtonFav
         className={styles.standListCardBtnFav}
         isLoading={loadingSetFav}
-        isActive={user?.favoriteStands.includes(stand.id)}
-        onClick={() => handleSetFavoriteStand(stand.id)}
+        isActive={isFavorite}
+        onClick={() =>
+          handleSetFavoriteStand(stand.id, isFavorite, {
+            withConfirmRemove,
+          })
+        }
       />
     </article>
   );

@@ -166,13 +166,7 @@ export const PostList = ({
                   scrollPostID == post.id ? styles.postCardSelect : ""
                 } animate__animated animate__fadeIn`}
                 ref={(el) => {
-                  if (el) {
-                    postRefs.current[post.id] = el;
-                    console.log(
-                      `Asignado ref a ${post.id}`,
-                      postRefs.current[post.id]
-                    );
-                  }
+                  if (el) postRefs.current[post.id] = el;
                 }}
               >
                 {isOwner && (

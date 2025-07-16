@@ -125,6 +125,7 @@ export const FavoritesStands = () => {
                     key={stand.id}
                     stand={stand}
                     goBackUrl={ERoutesName.MY_SANBLE_STANDS}
+                    withConfirmRemove
                   />
                 ))}
           </div>

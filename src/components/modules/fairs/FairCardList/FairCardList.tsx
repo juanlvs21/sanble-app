@@ -22,11 +22,21 @@ export type ComponentProps = {
    *  Go back url details
    */
   goBackUrl?: string;
+  /**
+   * If true, the button will ask for confirmation before removing from favorites.
+   */
+  withConfirmRemove?: boolean;
 };
 
-export const FairCardList = ({ fair, goBackUrl }: ComponentProps) => {
+export const FairCardList = ({
+  fair,
+  goBackUrl,
+  withConfirmRemove = false,
+}: ComponentProps) => {
   const isMobileS = useMediaQuery("(max-width: 320px)");
   const { user, isLoading: loadingSetFav, handleSetFavoriteFair } = useUser();
+
+  const isFavorite = user?.favoriteFairs.includes(fair.id);
 
   return (
     <article
@@ -68,8 +78,12 @@ export const FairCardList = ({ fair, goBackUrl }: ComponentProps) => {
       <ButtonFav
         className={styles.fairListCardBtnFav}
         isLoading={loadingSetFav}
-        isActive={user?.favoriteFairs.includes(fair.id)}
-        onClick={() => handleSetFavoriteFair(fair.id)}
+        isActive={isFavorite}
+        onClick={() =>
+          handleSetFavoriteFair(fair.id, isFavorite, {
+            withConfirmRemove,
+          })
+        }
       />
     </article>
   );

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { UseFormReset } from "react-hook-form";
+import { useIonAlert } from "@ionic/react";
 
 import { authActions } from "@/context/actions/authActions";
 import { useAuthContext } from "@/context/AuthContext";
@@ -12,6 +13,7 @@ import {
 import { EUserFav, TChangePassword, TUpdateUser } from "@/types/TUser";
 
 export const useUser = () => {
+  const [presentAlert] = useIonAlert();
   const [{ user }, dispatch] = useAuthContext();
   const { setUser } = authActions(dispatch);
   const { toast } = useToast();
@@ -53,12 +55,56 @@ export const useUser = () => {
     }
   };
 
-  const handleSetFavoriteFair = async (favoriteID: string) => {
-    await setFavorite(EUserFav.FAIR, favoriteID);
+  const handleSetFavoriteFair = async (
+    favoriteID: string,
+    currentIsFavorite?: boolean,
+    options?: { withConfirmRemove?: boolean }
+  ) => {
+    if (currentIsFavorite && options?.withConfirmRemove) {
+      presentAlert({
+        header: "Eliminar Favorito",
+        message: "¿Estás seguro de que deseas eliminar este favorito?",
+        buttons: [
+          {
+            text: "Cerrar",
+            role: "cancel",
+          },
+          {
+            text: "Confirmar",
+            role: "confirm",
+            handler: async () => await setFavorite(EUserFav.FAIR, favoriteID),
+          },
+        ],
+      });
+    } else {
+      await setFavorite(EUserFav.FAIR, favoriteID);
+    }
   };
 
-  const handleSetFavoriteStand = async (favoriteID: string) => {
-    await setFavorite(EUserFav.STAND, favoriteID);
+  const handleSetFavoriteStand = async (
+    favoriteID: string,
+    currentIsFavorite?: boolean,
+    options?: { withConfirmRemove?: boolean }
+  ) => {
+    if (currentIsFavorite && options?.withConfirmRemove) {
+      presentAlert({
+        header: "Eliminar Favorito",
+        message: "¿Estás seguro de que deseas eliminar este favorito?",
+        buttons: [
+          {
+            text: "Cerrar",
+            role: "cancel",
+          },
+          {
+            text: "Confirmar",
+            role: "confirm",
+            handler: async () => await setFavorite(EUserFav.STAND, favoriteID),
+          },
+        ],
+      });
+    } else {
+      await setFavorite(EUserFav.STAND, favoriteID);
+    }
   };
 
   const handleUpdateUser = async (userForm: TUpdateUser) => {
