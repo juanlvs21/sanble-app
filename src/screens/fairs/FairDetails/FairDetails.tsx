@@ -226,16 +226,6 @@ export const FairDetails = () => {
                 <AiOutlineInfoCircle size={35} />
                 <h5>Información de Contacto</h5>
               </div>
-              <Link to={`${ERoutesName.FAIRS_LIST}/${fair?.id}/mapa`}>
-                <div
-                  className={`${styles.fairInfoCard} ${
-                    isLoadingDetails ? styles.isLoading : ""
-                  }`}
-                >
-                  <FiMapPin size={35} />
-                  <h5>Localización en Mapa</h5>
-                </div>
-              </Link>
               <Link to={`${ERoutesName.FAIRS_LIST}/${fair?.id}/fotos`}>
                 <div
                   className={`${styles.fairInfoCard} ${
@@ -244,6 +234,16 @@ export const FairDetails = () => {
                 >
                   <HiOutlinePhotograph size={35} />
                   <h5>Fotos</h5>
+                </div>
+              </Link>
+              <Link to={`${ERoutesName.FAIRS_LIST}/${fair?.id}/mapa`}>
+                <div
+                  className={`${styles.fairInfoCard} ${
+                    isLoadingDetails ? styles.isLoading : ""
+                  }`}
+                >
+                  <FiMapPin size={35} />
+                  <h5>Localización en Mapa</h5>
                 </div>
               </Link>
               <div
