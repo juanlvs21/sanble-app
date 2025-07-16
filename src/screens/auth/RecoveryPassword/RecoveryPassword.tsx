@@ -22,6 +22,7 @@ export const RecoveryPassword = () => {
     handleSubmit,
     formState: { isSubmitting },
   } = useForm<TRecoverPassword>({
+    mode: "all",
     defaultValues: {
       email: "",
     },

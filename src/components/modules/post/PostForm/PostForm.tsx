@@ -85,6 +85,7 @@ export const PostForm = ({
     watch,
     formState: { isSubmitting, errors },
   } = useForm<TPostForm>({
+    mode: "all",
     values: {
       id: post?.id ?? undefined,
       text: post?.text ?? "",

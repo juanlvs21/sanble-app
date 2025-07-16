@@ -44,6 +44,7 @@ export const ReviewForm = ({
     watch,
     formState: { isSubmitting },
   } = useForm<TReviewForm>({
+    mode: "all",
     values: {
       comment: review?.comment || "",
       stars: review?.stars || 0,

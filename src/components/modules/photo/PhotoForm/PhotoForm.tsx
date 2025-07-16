@@ -82,6 +82,7 @@ export const PhotoForm = ({
     reset,
     formState: { isSubmitting, errors },
   } = useForm<TPhotographForm>({
+    mode: "all",
     values: {
       id: photo?.id ?? "",
       description: photo?.description ?? "",

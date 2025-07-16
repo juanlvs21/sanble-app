@@ -124,6 +124,7 @@ export const ProductForm = ({
     reset,
     formState: { isSubmitting, errors },
   } = useForm<TProductForm>({
+    mode: "all",
     values: {
       id: product?.id ?? undefined,
       name: product?.name ?? "",
