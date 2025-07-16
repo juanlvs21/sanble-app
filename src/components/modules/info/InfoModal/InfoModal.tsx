@@ -78,15 +78,14 @@ export const InfoModal = ({
           <h1>Información de Contacto</h1>
 
           {address && (
-            <p
-              onClick={() => handleCopyClipBoard(address, "Dirección copiada")}
-            >
+            <p>
               <FiMapPin size={20} />
               <span>{address}</span>
             </p>
           )}
           {contactPhone && (
             <p
+              className="info-contact-clickable"
               onClick={() =>
                 handleCopyClipBoard(
                   parsePhoneNumberFromString(contactPhone, "VE")?.number,
@@ -102,6 +101,7 @@ export const InfoModal = ({
           )}
           {contactEmail && (
             <p
+              className="info-contact-clickable"
               onClick={() =>
                 handleCopyClipBoard(
                   contactEmail,
