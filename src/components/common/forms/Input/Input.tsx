@@ -35,7 +35,6 @@ export const Input = forwardRef<HTMLIonInputElement, ComponentProps>(function (
   }: ComponentProps,
   ref
 ) {
-  console.log({ prefix });
   return (
     <IonItem
       fill="outline"
