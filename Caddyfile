@@ -1,0 +1,10 @@
+:80 {
+    # Establece el directorio raíz donde se encuentran los archivos compilados
+    root * /app/dist
+
+    # Redirige todas las solicitudes que no se puedan resolver a un archivo a index.html
+    try_files {path} /index.html
+
+    # Habilita el servidor de archivos
+    file_server
+}

@@ -16,11 +16,15 @@ RUN yarn install
 # Copiar el resto de los archivos de la aplicación al contenedor
 COPY . .
 
+# Copiar el Caddyfile a la configuración de Caddy
+# Caddy buscará este archivo automáticamente al iniciar
+COPY Caddyfile /etc/caddy/Caddyfile
+
 # Construir la aplicación
 RUN yarn build
 
 # Exponer el puerto en el que Caddy escuchará
 EXPOSE 80
 
-# Comando para iniciar Caddy y servir la aplicación
-CMD ["caddy", "file-server", "--root", "/app/dist", "--browse"]
+# Comando para iniciar Caddy usando la configuración del Caddyfile
+CMD ["caddy", "run", "--config", "/etc/caddy/Caddyfile"]
