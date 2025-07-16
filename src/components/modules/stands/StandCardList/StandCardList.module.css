@@ -36,11 +36,9 @@
   margin: 0;
   margin-bottom: 5px;
   max-height: 22px;
-
-  -webkit-line-clamp: 1;
-  -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .standListCardContent .standListCardSlogan {

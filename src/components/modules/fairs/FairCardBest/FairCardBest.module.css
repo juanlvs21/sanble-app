@@ -40,11 +40,9 @@
   font-weight: 600;
   font-size: 14px;
   margin: 0;
-
-  -webkit-line-clamp: 1;
-  -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
+  white-space: nowrap;
   transition: all 400ms ease-in-out;
 }
 
@@ -55,10 +53,9 @@
   margin-top: 5px;
   margin-bottom: 10px;
   height: 16px;
-  -webkit-line-clamp: 1;
-  -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
+  white-space: nowrap;
   transition: all 400ms ease-in-out;
 }
 

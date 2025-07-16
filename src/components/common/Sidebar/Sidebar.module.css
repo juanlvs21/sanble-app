@@ -70,12 +70,13 @@
   margin: 0;
   font-size: 24px;
   height: 24px;
-  -webkit-line-clamp: 1;
-  -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
+  white-space: nowrap;
   padding: 0 5px;
   text-align: center;
+  width: 260px;
+  transition: width 400ms ease-in-out;
 }
 
 .sidebarUserContainer span {
@@ -159,6 +160,10 @@
 
   .sidebarItem::part(native) {
     padding-left: 8px;
+  }
+
+  .sidebarUserContainer h4 {
+    width: 200px;
   }
 }
 

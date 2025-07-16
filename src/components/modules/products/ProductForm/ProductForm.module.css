@@ -33,10 +33,6 @@
 
 .productFormFileDescription {
   margin-left: 20px;
-  -webkit-line-clamp: 1;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
   padding-right: 40px;
 }
 
