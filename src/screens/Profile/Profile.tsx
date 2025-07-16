@@ -33,6 +33,7 @@ export const Profile = () => {
     handleSubmit: handleSubmitUpdate,
     formState: { isSubmitting: isSubmittingUpdate },
   } = useForm<TUpdateUser>({
+    mode: "onChange",
     values: {
       displayName: user?.displayName ?? "",
       email: user?.email ?? "",

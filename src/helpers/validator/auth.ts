@@ -18,7 +18,11 @@ export const signUpSchema = yupResolver<TAuthSignupForm>(
       name: yup
         .string()
         .required("Ingrese su nombre")
-        .max(lengthMax, `El nombre debe tener máximo ${lengthMax} caracteres`),
+        .max(lengthMax, `El nombre debe tener máximo ${lengthMax} caracteres`)
+        .matches(
+          /^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/,
+          "El nombre solo debe contener letras"
+        ),
       email: yup
         .string()
         .required("Ingrese su correo electrónico")
