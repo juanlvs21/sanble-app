@@ -118,23 +118,25 @@ export const Sidebar = () => {
         <IoIosCloseCircleOutline size={24} />
       </IonButton>
 
-      <div className={styles.sidebarUserContainer}>
-        <ImageExtended
-          src={user?.photoURL}
-          alt="Perfil"
-          classNamePicture={styles.sidebarUserPicture}
-          className={styles.sidebarUserImg}
-          skeletonProps={{
-            className: styles.sidebarUserImg,
-          }}
-        />
-        <IonText>
-          <h4>{user?.displayName}</h4>
-        </IonText>
-        <IonText>
-          <span>{user?.email}</span>
-        </IonText>
-      </div>
+      <Link to={ERoutesName.PROFILE} state={{ prevRoute: location.pathname }}>
+        <div className={styles.sidebarUserContainer}>
+          <ImageExtended
+            src={user?.photoURL}
+            alt="Perfil"
+            classNamePicture={styles.sidebarUserPicture}
+            className={styles.sidebarUserImg}
+            skeletonProps={{
+              className: styles.sidebarUserImg,
+            }}
+          />
+          <IonText>
+            <h4>{user?.displayName}</h4>
+          </IonText>
+          <IonText>
+            <span>{user?.email}</span>
+          </IonText>
+        </div>
+      </Link>
 
       <section className={styles.sidebarListContainer}>
         <IonList className={styles.sidebarList}>
