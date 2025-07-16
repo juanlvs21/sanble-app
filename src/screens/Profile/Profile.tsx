@@ -1,5 +1,4 @@
 import { IonAvatar, IonButton, IonCol, IonGrid, IonRow } from "@ionic/react";
-import parsePhoneNumberFromString from "libphonenumber-js";
 import { useRef } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { BiEnvelope, BiImageAdd, BiPhone, BiUser } from "react-icons/bi";
@@ -33,11 +32,11 @@ export const Profile = () => {
     handleSubmit: handleSubmitUpdate,
     formState: { isSubmitting: isSubmittingUpdate },
   } = useForm<TUpdateUser>({
-    mode: "onChange",
+    mode: "all",
     values: {
       displayName: user?.displayName ?? "",
       email: user?.email ?? "",
-      phoneNumber: user?.phoneNumber ?? "",
+      phoneNumber: user?.phoneNumber.replace("+58", "") ?? "",
     },
     resolver: userSchema,
   });
@@ -154,13 +153,11 @@ export const Profile = () => {
                     type="tel"
                     inputmode="tel"
                     Icon={<BiPhone />}
+                    disabled={isSubmittingUpdate}
                     onIonInput={onChange}
                     onIonBlur={onBlur}
                     label="+58"
-                    value={(
-                      parsePhoneNumberFromString(value, "VE")?.nationalNumber ||
-                      value
-                    ).slice(0, 10)}
+                    value={value}
                     helper={error?.message}
                     helperIsError
                     {...field}
@@ -168,14 +165,16 @@ export const Profile = () => {
                 )}
               />
 
-              <Button
-                expand="block"
-                color="primary"
-                type="submit"
-                isLoading={isSubmittingUpdate}
-              >
-                Guardar
-              </Button>
+              <div style={{ paddingTop: 12 }}>
+                <Button
+                  expand="block"
+                  color="primary"
+                  type="submit"
+                  isLoading={isSubmittingUpdate}
+                >
+                  Guardar
+                </Button>
+              </div>
             </form>
 
             <span className={`${styles.divider}`} />
@@ -229,14 +228,16 @@ export const Profile = () => {
                 )}
               />
 
-              <Button
-                expand="block"
-                color="primary"
-                type="submit"
-                isLoading={isSubmittingChangePass}
-              >
-                Cambiar Contraseña
-              </Button>
+              <div style={{ paddingTop: 12 }}>
+                <Button
+                  expand="block"
+                  color="primary"
+                  type="submit"
+                  isLoading={isSubmittingChangePass}
+                >
+                  Cambiar Contraseña
+                </Button>
+              </div>
             </form>
           </IonCol>
         </IonRow>

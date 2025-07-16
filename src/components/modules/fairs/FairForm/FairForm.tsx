@@ -16,7 +16,6 @@ import {
   IonToolbar,
 } from "@ionic/react";
 import { LatLngTuple } from "leaflet";
-import { parsePhoneNumberFromString } from "libphonenumber-js";
 import { useRef } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { BiDirections, BiEnvelope, BiPhone } from "react-icons/bi";
@@ -77,13 +76,7 @@ export const FairForm = ({
   onOpenMapModal,
 }: ComponentProps) => {
   const formRef = useRef<HTMLFormElement>(null);
-  const {
-    control,
-    handleSubmit,
-    setValue,
-    watch,
-    formState: { isSubmitting },
-  } = useForm<TFairForm>({
+  const { control, handleSubmit, setValue, watch } = useForm<TFairForm>({
     mode: "all",
     values: formValues,
     resolver: fairSchema,
@@ -237,10 +230,7 @@ export const FairForm = ({
                   onIonInput={onChange}
                   onIonBlur={onBlur}
                   label="+58"
-                  value={(
-                    parsePhoneNumberFromString(value, "VE")?.nationalNumber ||
-                    value
-                  ).slice(0, 10)}
+                  value={value}
                   helper={error?.message}
                   helperIsError
                   {...field}

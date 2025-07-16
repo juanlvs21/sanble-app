@@ -35,6 +35,7 @@ export const StandForm = ({ formValues, handleSave }: ComponentProps) => {
     handleSubmit,
     formState: { isSubmitting },
   } = useForm<TStandForm>({
+    mode: "all",
     values: formValues,
     resolver: standSchema,
   });
@@ -85,10 +86,7 @@ export const StandForm = ({ formValues, handleSave }: ComponentProps) => {
                   onIonInput={onChange}
                   onIonBlur={onBlur}
                   label="+58"
-                  value={(
-                    parsePhoneNumberFromString(value, "VE")?.nationalNumber ||
-                    value
-                  ).slice(0, 10)}
+                  value={value}
                   disabled={isSubmitting}
                   helper={error?.message}
                   helperIsError

@@ -67,6 +67,8 @@ export const useUser = () => {
 
       const newUser = await updateUserRequest(userForm);
 
+      toast("Datos del usuario cambiados existosamente", { type: "success" });
+
       setUser(newUser);
     } catch (error) {
       toast(error, { type: "error" });

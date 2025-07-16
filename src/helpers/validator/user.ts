@@ -1,5 +1,4 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import parsePhoneNumberFromString from "libphonenumber-js";
 import * as yup from "yup";
 
 import { prefixPhoneVE } from "@/helpers/prefixPhoneVE";
@@ -30,31 +29,31 @@ export const userSchema = yupResolver<TUpdateUser>(
         ),
       phoneNumber: yup
         .string()
-        .transform((value) =>
-          (parsePhoneNumberFromString(value, "VE")?.nationalNumber
-            ? parsePhoneNumberFromString(value, "VE")?.nationalNumber
-            : value
-          ).slice(0, 10)
-        )
+        .transform((value) => {
+          if (!value) return value;
+          let phone = value.replace("+58", "");
+
+          return phone;
+        })
+        .matches(/^\+?[0-9]*$/, "Formato inválido, solo se permiten números.")
         .test(
-          "valid-phone-ve",
-          "Ingrese un teléfono válido para Venezuela",
-          (value = "") => {
+          "valid-prefix",
+          "Ingrese un teléfono válido para Venezuela (412, 414, 416, 424, 426, 422, 295, etc.)",
+          (value) => {
             if (!value) return true;
 
-            const parsedNumber = parsePhoneNumberFromString(value, "VE");
-
-            if (!Boolean(parsedNumber)) return false;
-            else {
-              return prefixPhoneVE.includes(
-                (parsedNumber?.nationalNumber || "").slice(0, 3)
-              );
-            }
+            const prefix = value.substring(0, 3);
+            return prefixPhoneVE.includes(prefix);
           }
         )
-        .max(
-          lengthMaxPhone,
-          `El teléfono debe tener ${lengthMaxPhone} digitos`
+        .test(
+          "valid-length",
+          `El teléfono debe tener ${lengthMaxPhone} dígitos`,
+          (value) => {
+            if (!value) return true;
+
+            return value.length === lengthMaxPhone;
+          }
         ),
     })
     .required()

@@ -1,6 +1,5 @@
-import { parsePhoneNumberFromString } from "libphonenumber-js";
-import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 
 import { prefixPhoneVE } from "@/helpers/prefixPhoneVE";
 import { TStandForm } from "@/types/TStand";
@@ -37,31 +36,31 @@ export const standSchema = yupResolver<TStandForm>(
         .required("Ingrese un teléfono de contacto"),
       contactPhone: yup
         .string()
-        .required("Ingrese un teléfono de contacto")
-        .transform((value) =>
-          (parsePhoneNumberFromString(value, "VE")?.nationalNumber
-            ? parsePhoneNumberFromString(value, "VE")?.nationalNumber
-            : value
-          ).slice(0, 10)
-        )
-        .test(
-          "valid-phone-ve",
-          "Ingrese un teléfono válido para Venezuela",
-          (value = "") => {
-            const parsedNumber = parsePhoneNumberFromString(value, "VE");
+        .transform((value) => {
+          if (!value) return value;
+          let phone = value.replace("+58", "");
 
-            if (!Boolean(parsedNumber)) return false;
-            else {
-              return prefixPhoneVE.includes(
-                (parsedNumber?.nationalNumber || "").slice(0, 3)
-              );
-            }
+          return phone;
+        })
+        .matches(/^\+?[0-9]*$/, "Formato inválido, solo se permiten números.")
+        .test(
+          "valid-prefix",
+          "Ingrese un teléfono válido para Venezuela (412, 414, 416, 424, 426, 422, 295, etc.)",
+          (value) => {
+            if (!value) return true;
+
+            const prefix = value.substring(0, 3);
+            return prefixPhoneVE.includes(prefix);
           }
         )
-        .min(lengthMaxPhone, `El teléfono debe tener ${lengthMaxPhone} digitos`)
-        .max(
-          lengthMaxPhone,
-          `El teléfono debe tener ${lengthMaxPhone} digitos`
+        .test(
+          "valid-length",
+          `El teléfono debe tener ${lengthMaxPhone} dígitos`,
+          (value) => {
+            if (!value) return true;
+
+            return value.length === lengthMaxPhone;
+          }
         ),
       slogan: yup
         .string()
