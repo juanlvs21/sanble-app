@@ -101,6 +101,7 @@
 
 .fairNameStars {
   width: 80px;
+  min-width: 80px;
   display: flex;
   justify-content: center;
   align-items: center;
