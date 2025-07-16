@@ -297,7 +297,7 @@ export const PostForm = ({
         disabled={isLoading}
         isLoading={isSubmitting || isLoading}
       >
-        Guardar
+        Publicar
       </Button>
     </form>
   );
