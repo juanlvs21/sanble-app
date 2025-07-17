@@ -50,6 +50,32 @@
   transition: all 400ms ease-in-out;
 }
 
+.standCover .standDetailsChangePhoto {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(3px);
+  border-radius: var(--sanble-border-radius);
+  color: var(--ion-color-light);
+  opacity: 0;
+  transition: all 400ms ease-in-out;
+  pointer-events: none;
+  z-index: 50;
+}
+
+.standCover:hover .standDetailsChangePhoto {
+  opacity: 1;
+  pointer-events: all;
+}
+
 .standCover .standSkeleton {
   border-radius: var(--sanble-border-radius);
   box-shadow: 0px 0px 5px 5px rgba(200, 200, 200, 0.1);

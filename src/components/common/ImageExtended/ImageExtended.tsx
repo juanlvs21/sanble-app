@@ -29,12 +29,14 @@ export type ComponentProps = DetailedHTMLProps<
    * Component Loading
    */
   isLoading?: boolean;
+  children?: React.ReactNode;
 };
 
 export const ImageExtended = ({
   classNamePicture = "",
   skeletonProps = {},
   isLoading = false,
+  children,
   ...props
 }: ComponentProps) => {
   const [image, setImage] = useState("");
@@ -80,6 +82,7 @@ export const ImageExtended = ({
           className={`${styles.imageSkeleton} ${skeletonProps?.className} animate__animated animate__fadeIn`}
         />
       )}
+      {children}
     </picture>
   );
 };

@@ -1,6 +1,6 @@
 import { IonFab, IonFabButton } from "@ionic/react";
 import { AiOutlineInfoCircle } from "react-icons/ai";
-import { BiStoreAlt } from "react-icons/bi";
+import { BiImageAdd, BiStoreAlt } from "react-icons/bi";
 import { FiEdit2 } from "react-icons/fi";
 import { HiOutlinePhotograph, HiOutlineShoppingBag } from "react-icons/hi";
 import { TiStar } from "react-icons/ti";
@@ -132,7 +132,18 @@ export const StandDetails = () => {
             skeletonProps={{
               className: styles.standSkeleton,
             }}
-          />
+          >
+            {user?.uid === stand?.owner.uid && (
+              <Link to={`${ERoutesName.STANDS_LIST}/${stand?.id}/fotos/nueva`}>
+                <div className={styles.standDetailsChangePhoto}>
+                  <BiImageAdd size={64} />
+                  <span>
+                    {stand?.coverUrl ? "Cambiar Foto" : "Añadir Foto"}
+                  </span>
+                </div>
+              </Link>
+            )}
+          </ImageExtended>
         </div>
         <section className={`${styles.standContent}`}>
           <div className={styles.standNameContainer}>

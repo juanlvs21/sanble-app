@@ -2,6 +2,7 @@ import { IonFab, IonFabButton } from "@ionic/react";
 import dayjs from "dayjs";
 import { useEffect } from "react";
 import { AiOutlineInfoCircle } from "react-icons/ai";
+import { BiImageAdd } from "react-icons/bi";
 import { FiEdit2, FiMapPin } from "react-icons/fi";
 import { HiOutlineCalendar, HiOutlinePhotograph } from "react-icons/hi";
 import { MdOutlineStorefront } from "react-icons/md";
@@ -140,7 +141,16 @@ export const FairDetails = () => {
             skeletonProps={{
               className: styles.fairSkeleton,
             }}
-          />
+          >
+            {user?.uid === fair?.owner.uid && (
+              <Link to={`${ERoutesName.FAIRS_LIST}/${fair?.id}/fotos/nueva`}>
+                <div className={styles.fairDetailsChangePhoto}>
+                  <BiImageAdd size={64} />
+                  <span>{fair?.coverUrl ? "Cambiar Foto" : "Añadir Foto"}</span>
+                </div>
+              </Link>
+            )}
+          </ImageExtended>
         </div>
         <section className={`${styles.fairContent}`}>
           <div className={styles.fairNameContainer}>
