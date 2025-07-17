@@ -67,14 +67,6 @@ export const FavoritesFairs = () => {
                   handler: () => handleShorting("stars", "asc"),
                 },
                 {
-                  text: "Fechas cercanas",
-                  cssClass: actionCssClasses(
-                    orderBy === "celebrationDate",
-                    orderDir === "desc"
-                  ),
-                  handler: () => handleShorting("celebrationDate", "desc"),
-                },
-                {
                   text: "Por nombre",
                   cssClass: actionCssClasses(
                     orderBy === "name",
