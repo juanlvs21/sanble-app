@@ -18,8 +18,10 @@ import { useModalGoBack } from "@/hooks/useModalGoBack";
 import { TStand } from "@/types/TStand";
 import styles from "./FairModalStands.module.css";
 import { ButtonLoadMore } from "@/components/common/buttons/ButtonLoadMore";
+import { useFairRemoveStand } from "@/hooks/fairs/useFairRemoveStand";
 
 export type ComponentProps = {
+  fairID: string;
   /**
    * Stands list
    */
@@ -55,6 +57,7 @@ export type ComponentProps = {
 };
 
 export const FairModalStands = ({
+  fairID,
   stands,
   trigger,
   isLoading,
@@ -70,6 +73,8 @@ export const FairModalStands = ({
   const handleDismiss = () => modalRef.current?.dismiss();
 
   useModalGoBack(isOpen, handleDismiss);
+
+  const { handleRemove } = useFairRemoveStand({ fairID, handleRefresh });
 
   return (
     <IonModal
@@ -112,7 +117,11 @@ export const FairModalStands = ({
                         />
                       ))
                   : stands.map((stand) => (
-                      <StandCardList key={stand.id} stand={stand} />
+                      <StandCardList
+                        key={stand.id}
+                        stand={stand}
+                        handleRemove={handleRemove}
+                      />
                     ))}
               </div>
             )}

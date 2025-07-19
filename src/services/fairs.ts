@@ -187,3 +187,8 @@ export const deleteFairPhotoRequest = (fairID: string, photoID: string) =>
       `${URL_PREFIX}/${fairID}/photograph/${photoID}`
     )
     .then(({ data }) => data.data);
+
+export const deleteFairStandRequest = (fairID: string, standID: string) =>
+  api
+    .delete<AxiosResponse>(`${URL_PREFIX}/${fairID}/stands/${standID}`)
+    .then(({ data }) => data.data);

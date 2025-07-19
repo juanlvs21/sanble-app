@@ -366,6 +366,7 @@ export const FairDetails = () => {
       />
       <FairModalStands
         trigger={MODAL_STANDS_ID}
+        fairID={finalFairID}
         stands={stands}
         handleRefresh={handleRefreshStands}
         handleLoadMore={handleLoadMoreStands}

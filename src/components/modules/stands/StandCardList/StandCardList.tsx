@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 
+import { Button } from "@/components/common/buttons/Button";
 import { ButtonFav } from "@/components/common/buttons/ButtonFav";
 import { ImageExtended } from "@/components/common/ImageExtended";
 import { Stars } from "@/components/common/Stars";
@@ -23,14 +24,16 @@ export type ComponentProps = {
   /**
    * If true, the button will ask for confirmation before removing from favorites.
    */
-  withConfirmRemove?: boolean;
+  withConfirmRemoveFav?: boolean;
+  handleRemove?: (standId: string) => void;
 };
 
 export const StandCardList = ({
   stand,
   goBackUrl,
+  handleRemove,
   className = "",
-  withConfirmRemove = false,
+  withConfirmRemoveFav = false,
 }: ComponentProps) => {
   const { user, isLoading: loadingSetFav, handleSetFavoriteStand } = useUser();
 
@@ -39,6 +42,7 @@ export const StandCardList = ({
   return (
     <article
       className={`animate__animated animate__fadeIn ${styles.standListCard} ${className}`}
+      style={handleRemove ? { height: 160 } : {}}
     >
       <Link
         to={`/app/stands/${stand.id}`}
@@ -50,6 +54,21 @@ export const StandCardList = ({
           <Stars value={stand.stars} />
 
           <p className={styles.standListCardSlogan}>{stand.slogan}</p>
+
+          {handleRemove && (
+            <Button
+              color="danger"
+              onClick={(e) => {
+                e.stopPropagation();
+                e.preventDefault();
+                handleRemove(stand.id);
+              }}
+              size="small"
+              style={{ marginTop: "auto" }}
+            >
+              Eliminar Stand
+            </Button>
+          )}
         </div>
         <ImageExtended
           src={stand?.coverUrl}
@@ -69,7 +88,7 @@ export const StandCardList = ({
         isActive={isFavorite}
         onClick={() =>
           handleSetFavoriteStand(stand.id, isFavorite, {
-            withConfirmRemove,
+            withConfirmRemove: withConfirmRemoveFav,
           })
         }
       />

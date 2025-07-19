@@ -74,7 +74,11 @@ export const useAuth = () => {
       await signUpRequest(userForm);
       try {
         await signinRequest(userForm);
-        location.replace(ERoutesName.APP);
+        if (isCapacitor) {
+          navigate(ERoutesName.APP, { replace: true });
+        } else {
+          location.replace(ERoutesName.APP);
+        }
       } catch (error) {
         await signOutRequest();
         await clearSessionRedirect({ withLogout: true });
