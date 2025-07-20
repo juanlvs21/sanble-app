@@ -7,7 +7,7 @@ import styles from "./ErrorScreen.module.css";
 export const ErrorScreen = () => {
   let error = useRouteError();
 
-  console.info("ErrorScreen: ", error);
+  console.info("ErrorScreen: ", location, error);
 
   return (
     <div className={styles.errorScreen}>
