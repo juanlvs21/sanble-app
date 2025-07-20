@@ -126,8 +126,54 @@ export const FairForm = ({
               )}
             />
           </IonCol>
-          <IonCol size="12" size-sm="6">
+          <IonCol size="12" size-sm="12" size-md="6">
             <Controller
+              control={control}
+              name="contactEmail"
+              render={({
+                field: { onChange, onBlur, ...field },
+                fieldState: { error },
+              }) => (
+                <Input
+                  placeholder="Correo electrónico de contacto"
+                  type="email"
+                  inputmode="email"
+                  Icon={<BiEnvelope />}
+                  onIonInput={onChange}
+                  onIonBlur={onBlur}
+                  helper={error?.message}
+                  helperIsError
+                  {...field}
+                />
+              )}
+            />
+          </IonCol>
+          <IonCol size="12" size-sm="12" size-md="6">
+            <Controller
+              control={control}
+              name="contactPhone"
+              render={({
+                field: { onChange, onBlur, value, ...field },
+                fieldState: { error },
+              }) => (
+                <Input
+                  placeholder="Teléfono de contacto"
+                  type="tel"
+                  inputmode="tel"
+                  Icon={<BiPhone />}
+                  onIonInput={onChange}
+                  onIonBlur={onBlur}
+                  prefix="+58"
+                  value={value}
+                  helper={error?.message}
+                  helperIsError
+                  {...field}
+                />
+              )}
+            />
+          </IonCol>
+          <IonCol size="12" size-sm="12" size-md="6">
+            {/* <Controller
               control={control}
               name="type"
               render={({
@@ -172,7 +218,7 @@ export const FairForm = ({
                   {...field}
                 />
               )}
-            />
+            /> */}
             <Controller
               control={control}
               name="description"
@@ -197,48 +243,6 @@ export const FairForm = ({
           <IonCol>
             <Controller
               control={control}
-              name="contactEmail"
-              render={({
-                field: { onChange, onBlur, ...field },
-                fieldState: { error },
-              }) => (
-                <Input
-                  placeholder="Correo electrónico de contacto"
-                  type="email"
-                  inputmode="email"
-                  Icon={<BiEnvelope />}
-                  onIonInput={onChange}
-                  onIonBlur={onBlur}
-                  helper={error?.message}
-                  helperIsError
-                  {...field}
-                />
-              )}
-            />
-            <Controller
-              control={control}
-              name="contactPhone"
-              render={({
-                field: { onChange, onBlur, value, ...field },
-                fieldState: { error },
-              }) => (
-                <Input
-                  placeholder="Teléfono de contacto"
-                  type="tel"
-                  inputmode="tel"
-                  Icon={<BiPhone />}
-                  onIonInput={onChange}
-                  onIonBlur={onBlur}
-                  prefix="+58"
-                  value={value}
-                  helper={error?.message}
-                  helperIsError
-                  {...field}
-                />
-              )}
-            />
-            <Controller
-              control={control}
               name="address"
               render={({
                 field: { onChange, onBlur, ...field },
@@ -260,7 +264,7 @@ export const FairForm = ({
           </IonCol>
         </IonRow>
         <IonRow className={styles.formFairNextRow}>
-          <IonCol size="12" size-sm="6">
+          <IonCol size="12" size-sm="12" size-md="6">
             <Button expand="block" color="primary" type="submit">
               Siguiente
             </Button>

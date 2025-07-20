@@ -181,7 +181,7 @@ export const FairDetails = () => {
             </div>
           </div>
           <div>
-            {isLoadingDetails ? (
+            {/* {isLoadingDetails ? (
               <Skeleton
                 width="100%"
                 height={20}
@@ -191,7 +191,7 @@ export const FairDetails = () => {
               <h6 className={styles.fairType}>
                 {fair ? fairType[`${fair?.type}_long`] : ""}
               </h6>
-            )}
+            )} */}
             {isLoadingDetails ? (
               <Skeleton
                 width="100%"

@@ -43,9 +43,9 @@ export const FairCardBest = ({ fair }: ComponentProps) => {
         <div className={styles.fairBestContent}>
           <h1>{fair.name}</h1>
 
-          <span className={styles.fairBestCardType}>
+          {/* <span className={styles.fairBestCardType}>
             {fairType[`${fair.type}${isMobileM ? "_short" : "_long"}`]}
-          </span>
+          </span> */}
 
           <Stars value={fair.stars} />
 

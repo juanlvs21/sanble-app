@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 import { useToast } from "@/hooks/useToast";
 import { saveFairRequest } from "@/services";
-import { TFairForm } from "@/types/TFair";
+import { EFairType, TFairForm } from "@/types/TFair";
 import { ERoutesName } from "@/types/TRoutes";
 
 export const useNewFair = () => {
@@ -21,7 +21,7 @@ export const useNewFair = () => {
     name: "",
     description: "",
     address: "",
-    type: undefined,
+    type: EFairType.ENTREPRENEURSHIP,
     celebrationDate: undefined,
     contactEmail: "",
     contactPhone: "",

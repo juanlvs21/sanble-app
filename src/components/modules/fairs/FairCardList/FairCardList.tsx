@@ -63,9 +63,9 @@ export const FairCardList = ({
         <div className={styles.fairListCardContent}>
           <h1>{fair.name}</h1>
           <Stars value={fair.stars} />
-          <span className={styles.fairListCardType}>
+          {/* <span className={styles.fairListCardType}>
             {fairType[`${fair.type}${isMobileS ? "_short" : "_long"}`]}
-          </span>
+          </span> */}
 
           <div className={styles.fairListCardDate}>
             <HiOutlineCalendar size={17} />

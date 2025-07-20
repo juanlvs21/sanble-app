@@ -8,7 +8,7 @@ import { useSWRConfig } from "swr";
 import { useFairDetails } from "@/hooks/fairs/useFairDetails";
 import { useToast } from "@/hooks/useToast";
 import { updateFairRequest } from "@/services";
-import { TFairForm } from "@/types/TFair";
+import { EFairType, TFairForm } from "@/types/TFair";
 import { ERoutesName } from "@/types/TRoutes";
 
 export const useFairUpdate = (fairID: string) => {
@@ -25,7 +25,7 @@ export const useFairUpdate = (fairID: string) => {
     name: "",
     description: "",
     address: "",
-    type: undefined,
+    type: EFairType.ENTREPRENEURSHIP,
     celebrationDate: "",
     contactEmail: "",
     contactPhone: "",

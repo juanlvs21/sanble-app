@@ -28,7 +28,7 @@ export const TextArea = forwardRef<HTMLIonTextareaElement, ComponentProps>(
         </IonNote>
         {rest.maxlength && (
           <IonNote slot="helper">
-            {rest?.value?.toString().length}/{rest.maxlength}
+            {(rest?.value || "")?.toString().length}/{rest.maxlength}
           </IonNote>
         )}
       </IonItem>
