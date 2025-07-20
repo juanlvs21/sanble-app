@@ -21,6 +21,14 @@
   height: 120px !important;
 }
 
+.divider {
+  border-top: 1px solid var(--sanble-gray-color-1);
+  display: block;
+  width: 100%;
+  margin: 40px 0;
+  opacity: 0.5;
+}
+
 @media (max-width: 768px) {
   .formFairContainer {
     overflow-y: auto;

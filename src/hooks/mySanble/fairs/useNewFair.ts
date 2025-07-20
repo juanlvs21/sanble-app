@@ -22,9 +22,12 @@ export const useNewFair = () => {
     description: "",
     address: "",
     type: EFairType.ENTREPRENEURSHIP,
-    celebrationDate: undefined,
     contactEmail: "",
     contactPhone: "",
+    celebrationType: undefined,
+    celebrationDate: undefined,
+    celebrationMonthlyDay: undefined,
+    celebrationWeeklyDay: undefined,
   });
 
   const handleFormNext = (values: TFairForm) => {

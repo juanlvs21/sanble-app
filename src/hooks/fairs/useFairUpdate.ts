@@ -26,10 +26,13 @@ export const useFairUpdate = (fairID: string) => {
     description: "",
     address: "",
     type: EFairType.ENTREPRENEURSHIP,
-    celebrationDate: "",
     contactEmail: "",
     contactPhone: "",
     geopoint: undefined,
+    celebrationType: undefined,
+    celebrationWeeklyDay: undefined,
+    celebrationMonthlyDay: undefined,
+    celebrationDate: undefined,
   });
 
   const handleFormNext = (values: TFairForm) => {
@@ -73,16 +76,20 @@ export const useFairUpdate = (fairID: string) => {
 
   useEffect(() => {
     if (fair) {
+      console.log({ fair });
       setFormValues({
         id: fair.id,
         name: fair.name,
         description: fair.description,
         address: fair.address,
         type: fair.type,
-        celebrationDate: fair.celebrationDate,
         contactEmail: fair.contactEmail,
         contactPhone: fair.contactPhone,
         geopoint: fair.geopoint,
+        celebrationType: fair.celebrationType,
+        celebrationWeeklyDay: fair.celebrationWeeklyDay,
+        celebrationMonthlyDay: fair.celebrationMonthlyDay,
+        celebrationDate: fair.celebrationDate,
       });
     }
   }, [fair]);

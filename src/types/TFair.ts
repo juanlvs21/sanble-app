@@ -15,11 +15,21 @@ export enum EFairOrderBy {
   CELEBRATIONDATE = "celebrationDate",
 }
 
+export enum EFairCelebrationType {
+  "WEEKLY" = "WEEKLY",
+  "MONTHLY" = "MONTHLY",
+  "SPECIFIC_DATE" = "SPECIFIC_DATE",
+  "NOT_SPECIFIED" = "NOT_SPECIFIED",
+}
+
 export type TFair = {
   id: string;
   name: string;
   geopoint?: LatLngTuple;
   creationTime: string;
+  celebrationType?: EFairCelebrationType;
+  celebrationWeeklyDay?: number;
+  celebrationMonthlyDay?: number;
   celebrationDate?: string;
   ownerRef: DocumentReference;
   owner: TUserOwnerData;
@@ -46,11 +56,14 @@ export type TFairForm = {
   id?: string;
   name: string;
   geopoint?: LatLngTuple;
-  celebrationDate?: string;
   address: string;
   description: string;
   stars?: number;
   type?: EFairType;
   contactEmail?: string;
   contactPhone: string;
+  celebrationType?: EFairCelebrationType;
+  celebrationWeeklyDay?: number;
+  celebrationMonthlyDay?: number;
+  celebrationDate?: string;
 };

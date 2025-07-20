@@ -71,10 +71,6 @@ export const fairSchema = yupResolver<TFairForm>(
             return value.length === lengthMaxPhone;
           }
         ),
-      celebrationDate: yup
-        .date()
-        .nullable()
-        .default(() => new Date()),
       address: yup
         .string()
         .required("Ingrese la dirección de la feria")
@@ -82,6 +78,10 @@ export const fairSchema = yupResolver<TFairForm>(
           lengthMaxLong,
           `La dirección debe tener máximo ${lengthMaxLong} caracteres`
         ),
+      // celebrationType: yup.string().nullable().optional(),
+      // celebrationDate: yup.date().nullable().optional(),
+      // celebrationWeeklyDay: yup.number().nullable().optional(),
+      // celebrationMonthlyDay: yup.number().nullable().optional(),
     })
     .required()
 );
