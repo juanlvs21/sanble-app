@@ -1,0 +1,29 @@
+.errorScreen {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 20px;
+}
+
+.errorScreen h1 {
+  font-size: 38px;
+}
+
+.errorScreen span {
+  font-size: 22px;
+  color: var(--ion-color-secondary-tint);
+}
+
+@media screen and (max-width: 600px) {
+  .errorScreen h1 {
+    font-size: 28px;
+  }
+
+  .errorScreen span {
+    font-size: 18px;
+  }
+}

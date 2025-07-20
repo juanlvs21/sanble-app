@@ -27,6 +27,8 @@ export const Home = () => {
     handleLoadAllData,
   } = useHome();
 
+  throw new Error("This is a test error for the Home screen");
+
   return (
     <>
       {/* {renderTopBarActionEnd(
