@@ -13,6 +13,7 @@ import { useUser } from "@/hooks/useUser";
 import { ERoutesName } from "@/types/TRoutes";
 import styles from "./FairCardList.module.css";
 import { Button } from "@/components/common/buttons/Button";
+import { getCelebrationFair } from "@/helpers/celebrationFair";
 
 export type ComponentProps = {
   /**
@@ -41,6 +42,8 @@ export const FairCardList = ({
 
   const isFavorite = user?.favoriteFairs.includes(fair.id);
 
+  const celebration = getCelebrationFair(fair);
+
   return (
     <article
       className={`animate__animated animate__fadeIn ${styles.fairListCard}`}
@@ -67,14 +70,12 @@ export const FairCardList = ({
             {fairType[`${fair.type}${isMobileS ? "_short" : "_long"}`]}
           </span> */}
 
-          <div className={styles.fairListCardDate}>
-            <HiOutlineCalendar size={17} />
-            <span>
-              {fair.celebrationDate
-                ? dayjs(fair.celebrationDate).format("DD MMM")
-                : "Próximamente"}
-            </span>
-          </div>
+          {celebration && (
+            <div className={styles.fairListCardDate}>
+              <HiOutlineCalendar size={17} />
+              <span>{celebration}</span>
+            </div>
+          )}
 
           {handleRemove && (
             <Button

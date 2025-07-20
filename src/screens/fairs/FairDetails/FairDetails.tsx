@@ -27,7 +27,6 @@ import { PostForm } from "@/components/modules/post/PostForm";
 import { PostList } from "@/components/modules/post/PostList";
 import { ReviewForm } from "@/components/modules/reviews/ReviewForm";
 import { ReviewsList } from "@/components/modules/reviews/ReviewsList";
-import { fairType } from "@/helpers/fairs";
 import { getNavStateText } from "@/helpers/navigation";
 import { useFairDetails } from "@/hooks/fairs/useFairDetails";
 import { useFairStands } from "@/hooks/fairs/useFairStands";
@@ -38,6 +37,7 @@ import { useTopBarMain } from "@/hooks/useTopBarMain";
 import { useUser } from "@/hooks/useUser";
 import { ERoutesName } from "@/types/TRoutes";
 import styles from "./FairDetails.module.css";
+import { getCelebrationFair } from "@/helpers/celebrationFair";
 
 const MODAL_INFO_ID = "fair-info-open-modal";
 const MODAL_STANDS_ID = "fair-stands-open-modal";
@@ -101,6 +101,8 @@ export const FairDetails = () => {
       "Feria"
     } 🛍️`
   );
+
+  const celebration = getCelebrationFair(fair);
 
   useEffect(() => {
     handleLoadAll();
@@ -199,14 +201,14 @@ export const FairDetails = () => {
                 style={{ margin: "5px 0px" }}
               />
             ) : (
-              <div className={styles.fairCelebrationDate}>
-                <HiOutlineCalendar size={15} />
-                <span>
-                  {fair?.celebrationDate
-                    ? dayjs(fair?.celebrationDate).format("DD MMM - hh:mm a")
-                    : "Próximamente"}
-                </span>
-              </div>
+              <>
+                {celebration && (
+                  <div className={styles.fairCelebrationDate}>
+                    <HiOutlineCalendar size={15} />
+                    <span>{celebration}</span>
+                  </div>
+                )}
+              </>
             )}
 
             <section className={styles.fairDescription}>

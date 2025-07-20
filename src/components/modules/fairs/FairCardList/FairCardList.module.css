@@ -63,7 +63,7 @@
 }
 
 .fairListCardContent .fairListCardDate span {
-  color: var(--ion-text-color, #000);
+  color: var(--sanble-gray-color-2);
   font-weight: 600;
   font-size: 12px;
   margin-top: 3px;

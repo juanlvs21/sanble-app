@@ -9,6 +9,7 @@ import { ERoutesName } from "@/types/TRoutes";
 import { HiOutlineCalendar } from "react-icons/hi";
 import styles from "./FairCardBest.module.css";
 import { Stars } from "@/components/common/Stars";
+import { getCelebrationFair } from "@/helpers/celebrationFair";
 
 export type ComponentProps = {
   /**
@@ -19,6 +20,8 @@ export type ComponentProps = {
 
 export const FairCardBest = ({ fair }: ComponentProps) => {
   const isMobileM = useMediaQuery("(max-width: 375px)");
+
+  const celebration = getCelebrationFair(fair);
 
   return (
     <Link
@@ -49,13 +52,12 @@ export const FairCardBest = ({ fair }: ComponentProps) => {
 
           <Stars value={fair.stars} />
 
-          <div className={styles.fairBestCardDate}>
+          <div
+            className={styles.fairBestCardDate}
+            style={{ opacity: celebration ? 1 : 0 }}
+          >
             <HiOutlineCalendar size={15} />
-            <span>
-              {fair.celebrationDate
-                ? dayjs(fair.celebrationDate).format("DD MMM - hh:mm a")
-                : "Próximamente"}
-            </span>
+            <span>{celebration}</span>
           </div>
         </div>
       </article>
