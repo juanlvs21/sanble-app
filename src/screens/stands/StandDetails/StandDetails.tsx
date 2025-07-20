@@ -340,6 +340,7 @@ export const StandDetails = () => {
       <StandModalFairs
         trigger={MODAL_FAIRS_ID}
         fairs={fairs}
+        stand={stand}
         handleRefresh={handleRefreshFairs}
         handleLoadMore={handleLoadMoreFairs}
         isLoading={isLoadingFairs}

@@ -254,8 +254,6 @@ export const useStandProducts = (standID: string) => {
     }
   }, [isRefresh]);
 
-  console.log({ stand });
-
   return {
     stand,
     products,

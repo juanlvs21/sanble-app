@@ -72,8 +72,6 @@ export const TopBar = ({
   const { scrollTop, showSidebar, isCapacitor } = useApp();
 
   const navigateToBack = () => {
-    console.log({ startGoBackUrl });
-
     startGoBackUrl
       ? navigate(startGoBackUrl, { replace: true })
       : history.go(-1);

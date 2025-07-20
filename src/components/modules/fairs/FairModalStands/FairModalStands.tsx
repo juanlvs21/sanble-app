@@ -19,9 +19,11 @@ import { TStand } from "@/types/TStand";
 import styles from "./FairModalStands.module.css";
 import { ButtonLoadMore } from "@/components/common/buttons/ButtonLoadMore";
 import { useFairRemoveStand } from "@/hooks/fairs/useFairRemoveStand";
+import { TFair } from "@/types/TFair";
+import { useUser } from "@/hooks/useUser";
 
 export type ComponentProps = {
-  fairID: string;
+  fair?: TFair;
   /**
    * Stands list
    */
@@ -57,7 +59,7 @@ export type ComponentProps = {
 };
 
 export const FairModalStands = ({
-  fairID,
+  fair,
   stands,
   trigger,
   isLoading,
@@ -67,6 +69,7 @@ export const FairModalStands = ({
   handleRefresh,
   handleLoadMore,
 }: ComponentProps) => {
+  const { user } = useUser();
   const modalRef = useRef<HTMLIonModalElement>(null);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -74,7 +77,12 @@ export const FairModalStands = ({
 
   useModalGoBack(isOpen, handleDismiss);
 
-  const { handleRemove } = useFairRemoveStand({ fairID, handleRefresh });
+  const { handleRemove } = useFairRemoveStand({
+    fairID: fair?.id || "",
+    handleRefresh,
+  });
+
+  const isOwner = user?.uid === fair?.owner?.uid;
 
   return (
     <IonModal
@@ -120,7 +128,7 @@ export const FairModalStands = ({
                       <StandCardList
                         key={stand.id}
                         stand={stand}
-                        handleRemove={handleRemove}
+                        handleRemove={isOwner ? handleRemove : undefined}
                       />
                     ))}
               </div>

@@ -12,6 +12,7 @@ import { dayjs } from "@/helpers/time";
 import { useUser } from "@/hooks/useUser";
 import { ERoutesName } from "@/types/TRoutes";
 import styles from "./FairCardList.module.css";
+import { Button } from "@/components/common/buttons/Button";
 
 export type ComponentProps = {
   /**
@@ -25,13 +26,15 @@ export type ComponentProps = {
   /**
    * If true, the button will ask for confirmation before removing from favorites.
    */
-  withConfirmRemove?: boolean;
+  withConfirmRemoveFav?: boolean;
+  handleRemove?: (fairId: string) => void;
 };
 
 export const FairCardList = ({
   fair,
   goBackUrl,
-  withConfirmRemove = false,
+  withConfirmRemoveFav = false,
+  handleRemove,
 }: ComponentProps) => {
   const isMobileS = useMediaQuery("(max-width: 320px)");
   const { user, isLoading: loadingSetFav, handleSetFavoriteFair } = useUser();
@@ -41,6 +44,7 @@ export const FairCardList = ({
   return (
     <article
       className={`animate__animated animate__fadeIn ${styles.fairListCard}`}
+      style={handleRemove ? { height: 160 } : {}}
     >
       <Link
         to={`${ERoutesName.FAIRS_LIST}/${fair.id}`}
@@ -71,6 +75,21 @@ export const FairCardList = ({
                 : "Próximamente"}
             </span>
           </div>
+
+          {handleRemove && (
+            <Button
+              color="danger"
+              onClick={(e) => {
+                e.stopPropagation();
+                e.preventDefault();
+                handleRemove(fair.id);
+              }}
+              size="small"
+              style={{ marginTop: "auto", width: 180 }}
+            >
+              Abandonar Feria
+            </Button>
+          )}
         </div>
       </Link>
 
@@ -81,7 +100,7 @@ export const FairCardList = ({
         isActive={isFavorite}
         onClick={() =>
           handleSetFavoriteFair(fair.id, isFavorite, {
-            withConfirmRemove,
+            withConfirmRemove: withConfirmRemoveFav,
           })
         }
       />

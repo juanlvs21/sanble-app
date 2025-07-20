@@ -64,7 +64,7 @@ export const StandCardList = ({
                 handleRemove(stand.id);
               }}
               size="small"
-              style={{ marginTop: "auto" }}
+              style={{ marginTop: "auto", width: 180 }}
             >
               Eliminar Stand
             </Button>

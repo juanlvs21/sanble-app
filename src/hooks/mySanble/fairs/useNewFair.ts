@@ -59,7 +59,6 @@ export const useNewFair = () => {
         },
       });
     } catch (error) {
-      console.log({ error });
       toast(error, { type: "error" });
     } finally {
       dismissLoading();

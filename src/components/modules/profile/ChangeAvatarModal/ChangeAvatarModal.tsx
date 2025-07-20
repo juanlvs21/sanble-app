@@ -88,8 +88,6 @@ export const ChangeAvatarModal = ({
     }
   }, [isOpen]);
 
-  console.log({ isCapacitor });
-
   return (
     <IonModal isOpen={isOpen} backdropDismiss={false}>
       <HeaderModal>

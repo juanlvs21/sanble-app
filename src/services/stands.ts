@@ -231,3 +231,8 @@ export const deleteStandProductRequest = (standID: string, productID: string) =>
   api
     .delete<AxiosResponse>(`${URL_PREFIX}/${standID}/products/${productID}`)
     .then(({ data }) => data.data);
+
+export const deleteStandFairRequest = (standID: string, fairID: string) =>
+  api
+    .delete<AxiosResponse>(`${URL_PREFIX}/${standID}/fairs/${fairID}`)
+    .then(({ data }) => data.data);

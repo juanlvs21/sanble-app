@@ -140,7 +140,6 @@ export const FairPhotoSlides = () => {
         getIndexPhoto(state?.photoActiveID, fair?.photographs),
         0
       );
-      console.log({ ref: slidesRef.current });
       setPhotoShown(true);
     }
   }, [isLoadingDetails, state]);
